@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Студия братьев Петрович — интерактивные экспонаты</title>
+  <link rel="stylesheet" href="fresh/fresh.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <!--
+    Основная страница (бывший черновик fresh.html): светлый фон, огромный заголовок с роликами
+    внутри строки, рендеры и петли экспонатов (fresh/media), движение при прокрутке и курсор «Смотреть».
+    Прежняя версия страницы — index-old.html.
+  -->
+  <!--
+    Шапка: один логотип в две строки; после прокрутки он плавно уменьшается, шапка
+    на светлой подложке. Вниз шапка уезжает, вверх возвращается.
+  -->
+  <header class="top">
+    <a class="top__logo" href="./" aria-label="Студия братьев Петрович">
+      <img src="fresh/logo-vertical.svg" alt="Petrovich Brothers" width="244" height="121">
+    </a>
+    <nav class="top__nav">
+      <a href="#projects">Проекты</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+    <a class="top__btn" href="mailto:art@petrovichbrothers.ru">Написать</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1 class="hero__title">
+        <span class="line"><span>Создаем <i class="pill"><video src="fresh/media/khakasy.mp4" poster="fresh/media/khakasy.jpg" muted loop playsinline autoplay></video></i></span></span>
+        <span class="line"><span>интерактивные</span></span>
+        <span class="line"><span>экспонаты для</span></span>
+        <span class="line"><span>музеев и&nbsp;выставок</span></span>
+      </h1>
+      <div class="hero__foot">
+        <p class="hero__note reveal">Студия братьев Петрович. Придумываем экспонаты, которые хочется трогать руками</p>
+      </div>
+    </section>
+
+    <section class="reel" aria-label="Шоурил">
+      <div class="reel__frame">
+        <video class="auto" src="fresh/media/reel.mp4" poster="fresh/media/reel.jpg" muted loop playsinline preload="metadata"></video>
+      </div>
+    </section>
+
+    <!--
+      Второй экран: крупный вынос «что мы делаем». Слова проявляются из серого в черный
+      по мере прокрутки (script). Текст — черновик, заменить своим.
+    -->
+    <section class="about">
+      <p class="about__label reveal">Что мы делаем</p>
+      <p class="about__text" data-words>Придумываем и&nbsp;собираем интерактивные экспонаты под&nbsp;ключ&nbsp;— от&nbsp;идеи и&nbsp;3D-графики до&nbsp;механики, электроники и&nbsp;программ. Такие, что посетитель подходит, трогает руками и&nbsp;не&nbsp;хочет отпускать.</p>
+      <p class="about__list reveal">Идея и&nbsp;сценарий, 3D-графика и&nbsp;игры, механика и&nbsp;электроника, программы и&nbsp;запуск</p>
+    </section>
+
+    <section class="projects" id="projects">
+      <h2 class="projects__title reveal">Наши проекты</h2>
+
+      <article class="card">
+        <div class="card__media" data-cursor="Смотреть обзор" data-video="Video/01_Khakasia_Attractions.mp4" data-title="Достопримечательности Хакасии — видеообзор">
+          <video class="auto" data-pause="5" src="fresh/media/khakasy-render.mp4" poster="fresh/media/khakasy-render.jpg" muted loop playsinline preload="metadata"></video>
+        </div>
+        <div class="card__row">
+          <h3 class="card__title reveal">Достопримечательности Хакасии</h3>
+          <div class="card__info">
+            <p class="card__desc reveal">Посетитель поворачивает столешницу и&nbsp;совмещает метку места с&nbsp;указателем&nbsp;— на&nbsp;экране появляются карта и&nbsp;ролик о&nbsp;достопримечательности.</p>
+            <p class="card__meta reveal"><span>Стенд Хакасии, выставка «Россия», 2023</span><span>Диаметр 1500&nbsp;мм, высота 850&nbsp;мм</span></p>
+            <button class="card__review reveal" type="button" data-video="Video/01_Khakasia_Attractions.mp4" data-title="Достопримечательности Хакасии — видеообзор">
+              <i class="card__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i>
+              <span>Видеообзор&nbsp;· 1:20</span>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card__media" data-cursor="Смотреть обзор" data-video="Video/02_Khakasia_Menhirs.mp4" data-title="Менгиры Хакасии — видеообзор">
+          <video class="auto" data-pause="5" src="fresh/media/mengiry-render.mp4" poster="fresh/media/mengiry-render.jpg" muted loop playsinline preload="metadata"></video>
+        </div>
+        <div class="card__row">
+          <h3 class="card__title reveal">Менгиры Хакасии</h3>
+          <div class="card__info">
+            <p class="card__desc reveal">Игра на&nbsp;сенсорном экране: собрать изображение древнего изваяния. Головоломка решена&nbsp;— на&nbsp;макете менгира загорается подсветка.</p>
+            <p class="card__meta reveal"><span>Стенд Хакасии, выставка «Россия», 2023</span><span>Композиция: ширина 6500&nbsp;мм, высота 4000&nbsp;мм</span></p>
+            <button class="card__review reveal" type="button" data-video="Video/02_Khakasia_Menhirs.mp4" data-title="Менгиры Хакасии — видеообзор">
+              <i class="card__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i>
+              <span>Видеообзор&nbsp;· 1:16</span>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card__media" data-cursor="Смотреть обзор" data-video="Video/03_Chersonesus_Wheel.mp4" data-title="Штурвал — видеообзор">
+          <video class="auto" data-pause="5" src="fresh/media/shturval-render.mp4" poster="fresh/media/shturval-render.jpg" muted loop playsinline preload="metadata"></video>
+        </div>
+        <div class="card__row">
+          <h3 class="card__title reveal">Штурвал</h3>
+          <div class="card__info">
+            <p class="card__desc reveal">Посетитель ведет парусник к&nbsp;выбранному месту, вращая настоящий штурвал, а&nbsp;ветер и&nbsp;волны сбивают его с&nbsp;курса. В&nbsp;конце&nbsp;— рассказ о&nbsp;месте и&nbsp;оценка точности.</p>
+            <p class="card__meta reveal"><span>Зал Черноморского флота, Новый Херсонес, 2025</span><span>Ширина 3500&nbsp;мм, высота 2500&nbsp;мм</span></p>
+            <button class="card__review reveal" type="button" data-video="Video/03_Chersonesus_Wheel.mp4" data-title="Штурвал — видеообзор">
+              <i class="card__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i>
+              <span>Видеообзор&nbsp;· 1:21</span>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card__media" data-cursor="Смотреть обзор" data-video="Video/04_Chersonesus_Scanners.mp4" data-title="Сканер «Парусный флот» — видеообзор">
+          <video class="auto" data-pause="5" src="fresh/media/scanner-render.mp4" poster="fresh/media/scanner-render.jpg" muted loop playsinline preload="metadata"></video>
+        </div>
+        <div class="card__row">
+          <h3 class="card__title reveal">Сканер «Парусный флот»</h3>
+          <div class="card__info">
+            <p class="card__desc reveal">Экран на&nbsp;направляющих. Посетитель двигает его к&nbsp;чертежу&nbsp;— и&nbsp;на&nbsp;нем оживает 3D-модель корабля и&nbsp;видны его данные.</p>
+            <p class="card__meta reveal"><span>Зал Черноморского флота, Новый Херсонес, 2025</span><span>Ширина 5500&nbsp;мм</span></p>
+            <button class="card__review reveal" type="button" data-video="Video/04_Chersonesus_Scanners.mp4" data-title="Сканер «Парусный флот» — видеообзор">
+              <i class="card__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i>
+              <span>Видеообзор&nbsp;· 0:55</span>
+            </button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="contact" id="contact">
+      <p class="contact__lead reveal">Есть зал, идея или&nbsp;только сроки? <span class="contact__note">(Даем скидку за&nbsp;срочность)</span></p>
+      <h2 class="contact__title">
+        <span class="line"><span>Давайте <span class="acc">сделаем</span></span></span>
+        <span class="line"><span><span class="acc">экспонат</span> <i class="pill"><video src="fresh/media/mengiry.mp4" poster="fresh/media/mengiry.jpg" muted loop playsinline autoplay></video></i></span></span>
+      </h2>
+      <div class="contact__links">
+        <div class="contact__ways">
+          <a class="contact__mail" href="mailto:art@petrovichbrothers.ru">art@petrovichbrothers.ru</a>
+          <a class="contact__mail" href="tel:+79151978652">+7&nbsp;915&nbsp;197-86-52</a>
+        </div>
+        <a class="contact__btn" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Написать в Telegram ↗</a>
+      </div>
+    </section>
+  </main>
+
+  <a class="badge" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener" aria-label="Обсудить проект в Telegram">
+    <span class="badge__label">Обсудить проект</span>
+    <span class="badge__arrow" aria-hidden="true">↗</span>
+  </a>
+
+  <div class="cursor" aria-hidden="true"><span></span></div>
+
+  <dialog class="modal" aria-label="Видео">
+    <button class="modal__close" type="button" aria-label="Закрыть">✕</button>
+    <video class="modal__video" controls playsinline></video>
+  </dialog>
+
+  <script src="fresh/fresh.js"></script>
+</body>
+</html>

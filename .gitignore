@@ -1,0 +1,8 @@
+# Архивы старых версий — не публикуем
+archive-v1/
+archive-media/
+
+# Системный мусор
+Thumbs.db
+desktop.ini
+.DS_Store

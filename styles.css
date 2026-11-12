@@ -1,0 +1,420 @@
+/*
+  Milligram — фирменный шрифт макета. Подключён файлами из fonts/ (на сайте нужны только
+  два начертания: Milligram Medium и Milligram Text Regular), поэтому виден и там, где он
+  не установлен, — на телефоне. Если файл не загрузился, используется Onest.
+  Перед публикацией нужна веб-лицензия на шрифт и перевод файлов в woff2.
+*/
+@font-face {
+  font-family: "Milligram";
+  font-weight: 500;
+  font-display: swap;
+  src: local("Milligram Medium"), local("Milligram-Medium"), url("fonts/Milligram-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Milligram Text";
+  font-weight: 400;
+  font-display: swap;
+  src: local("Milligram Text"), local("MilligramText-Regular"), url("fonts/MilligramText-Regular.ttf") format("truetype");
+}
+:root {
+  --bg: #f1f0ec;
+  --text: #2b2b29;
+  --stub: #e2e0da;
+  --light-text: #f1f0ec;
+
+  --font: "Milligram", "Onest", system-ui, sans-serif;
+  --font-text: "Milligram Text", "Onest", system-ui, sans-serif;
+
+  /*
+    Значения макета даны для 1440. Кегли плавные: 1440 → 1920 растут, ниже 1440 чуть уменьшаются.
+    Сетка: 12 колонок, поля --gutter, промежуток --gap.
+  */
+  --gutter: 40px;
+  --gap: 20px;
+  /* Расстояние между карточками — от высоты окна: соседняя карточка выглядывает одинаково на любом экране */
+  --projects-gap: 25svh;
+  --link-speed: 550ms;
+  --row-top: 21px;
+  --focus-gap: 32px;
+
+  --fs-title: clamp(24px, 16px + 0.833vw, 32px);
+  --fs-desc: clamp(16px, 12px + 0.417vw, 20px);
+  --fs-small: 14px;
+}
+@media (min-width: 1600px) {
+  :root { --gutter: 64px; --gap: 24px; --row-top: 24px; }
+}
+/* Низкие экраны: текст карточки плотнее, чтобы картинка и описание поместились в окно */
+@media (max-height: 720px) {
+  :root { --fs-desc: 16px; --row-top: 16px; --focus-gap: 20px; }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-weight: 500;
+  font-size: var(--fs-small);
+  line-height: 1.45;
+}
+p, h1, h2 { margin: 0; }
+a { color: inherit; }
+img { display: block; max-width: 100%; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  padding-inline: var(--gutter);
+}
+
+/* Шапка: от верха окна до первой картинки 202px на 1440 */
+.header {
+  align-items: start;
+  padding-top: 28px;
+  padding-bottom: 54px;
+}
+.logo { grid-column: 1 / 5; }
+.logo { --logo-w: clamp(190px, 15vw, 240px); --logo-scale: .85; }
+/* Логотип — 85% от прежнего размера, верх чуть выше отступа шапки (подобрано на глаз) */
+.logo__full {
+  width: calc(var(--logo-w) * var(--logo-scale));
+  height: auto;
+  margin-top: -2px;
+}
+.logo__line { display: none; }
+
+/*
+  Сжатие шапки при прокрутке (только десктоп и только со скриптами).
+  Шапка закреплена сверху, а её высота --header-now уменьшается вместе с прокруткой
+  от полной до --bar-h: нижний край шапки идёт ровно за картинкой первой карточки,
+  поэтому до сжатия всё выглядит как обычная прокрутка. Положение и прозрачность
+  логотипов, заголовка и контактов скрипт считает от доли сжатия.
+*/
+@media (min-width: 1024px) {
+  .js body { padding-top: var(--header-h, 0px); }
+  .js .header {
+    --bar-h: 76px;
+    --line-logo: 156px;
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 10;
+    height: var(--header-now, auto);
+    /* Нижний отступ шапки входит в --header-h (скрипт прибавляет его сам), иначе строка не сожмётся ниже отступов */
+    --header-space: 54px;
+    padding-bottom: 0;
+    background: var(--bg);
+  }
+  .js .logo__line {
+    display: block;
+    position: absolute;
+    left: var(--gutter);
+    top: calc((var(--bar-h) - var(--line-logo) * 48 / 188) / 2);
+    width: var(--line-logo);
+    height: auto;
+    opacity: 0;
+    /* В файле логотипа есть белые и светло-серые заливки внутри букв — умножение растворяет их в цвете фона */
+    mix-blend-mode: multiply;
+  }
+  /* Появление страницы не держит transform после окончания — иначе оно перекрывает сдвиги из скрипта */
+  .js :is(.logo, .header__title, .header__contacts) { animation-fill-mode: backwards; }
+}
+.header__title {
+  grid-column: 5 / 10;
+  margin-top: 31px;
+  font-size: var(--fs-title);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+.header__contacts {
+  grid-column: 11 / 13;
+  margin-top: 31px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  white-space: nowrap;
+}
+.header__contacts a { text-decoration: none; }
+
+/*
+  Подчёркивание ссылок: линия прорисовывается слева и уходит вправо.
+  Каждая строка текста — отдельный .link-line, поэтому у двухстрочной кнопки
+  линии появляются и исчезают на обеих строках одновременно.
+*/
+.link-line {
+  display: inline-block;
+  background: linear-gradient(currentColor, currentColor) no-repeat right bottom / 0 1px;
+  transition: background-size var(--link-speed) cubic-bezier(.2, .7, .2, 1);
+}
+:is(.header__contacts a, .project__review):is(:hover, :focus-visible) .link-line {
+  background-size: 100% 1px;
+  background-position: left bottom;
+}
+
+/* Проекты */
+.projects { display: flex; flex-direction: column; gap: var(--projects-gap); }
+
+/*
+  Карточка целиком помещается в окно: высота не больше окна минус --focus-gap.
+  Картинка — 16:9 на всю ширину, а если места не хватает, сжимается по высоте
+  (обрезка по краям, кадр по центру), но не уже 3:1.
+*/
+.project {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100svh - var(--focus-gap));
+}
+.project__media {
+  position: relative;
+  flex: 0 1 auto;
+  aspect-ratio: 16 / 9;
+  min-height: calc(100cqw / 3);
+  overflow: hidden;
+  background: var(--stub);
+}
+/*
+  Кадр по центру шириной --box-w (её считает script.js): на низких экранах кадр уже,
+  чем карточка, чтобы не срезать слишком много сверху и снизу. Оставшиеся поля
+  заполняет .project__fill — фон, снятый с краёв кадра, а края кадра растворяются
+  в нём на ширину --fade.
+*/
+.project__cover,
+.project__loop {
+  position: absolute;
+  top: 50%;
+  left: calc(50% + var(--box-x, 0px));
+  width: var(--box-w, 100%);
+  height: var(--box-h, 100%);
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  object-position: var(--focus, 50% 50%);
+}
+.project__fill {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+.project__media:is(.has-fill, .has-fill-v) .project__fill { display: block; }
+.project__media.has-fill :is(.project__cover, .project__loop) {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent);
+}
+/* Телефон, режим «достроить фон»: кадр уже по высоте, чем карточка, — поля сверху и снизу */
+.project__media.has-fill-v :is(.project__cover, .project__loop) {
+  -webkit-mask-image: linear-gradient(transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent);
+  mask-image: linear-gradient(transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent);
+}
+.project__loop {
+  opacity: 0;
+  transition: opacity .35s ease;
+  pointer-events: none;
+}
+.project__media.is-playing .project__loop { opacity: 1; }
+/* Пока карточка не показана, ролик встаёт поверх обложки мгновенно — её подмену никто не видит */
+.project__media:not(.is-ready) .project__loop { transition: none; }
+
+/* Строка текста: название 1–4 · описание 5–9 · видеообзор 11–12 */
+.project__row {
+  flex: none;
+  align-items: start;
+  padding-top: var(--row-top);
+}
+.project__head {
+  grid-column: 1 / 5;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.project__title {
+  font-size: var(--fs-title);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+}
+.project__desc {
+  grid-column: 5 / 10;
+  font-family: var(--font-text);
+  font-weight: 400;
+  font-size: var(--fs-desc);
+  line-height: 1.45;
+  /* Переносы только в длинных словах: слово от 9 букв, на строке остаётся и уходит не меньше 4 */
+  hyphens: auto;
+  hyphenate-limit-chars: 9 4 4;
+}
+
+/* Иконка вынесена влево, чтобы текст кнопки стоял по колонке, как контакты в шапке */
+.project__review {
+  grid-column: 11 / 13;
+  margin-left: -16px;
+  display: inline-flex;
+  align-items: flex-start;
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  line-height: 20px;
+  color: #000;
+  text-align: left;
+  cursor: pointer;
+}
+.project__review img { flex: none; }
+
+/*
+  Появление страницы: логотип → заголовок → контакты → картинка первой карточки → её текст.
+  Каждый элемент проявляется и чуть поднимается; всё вместе укладывается в ~0,9 с.
+  Только первая карточка — остальные ниже первого экрана.
+*/
+@keyframes intro {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+.logo,
+.header__title,
+.header__contacts,
+.project:first-child .project__media,
+.project:first-child .project__row {
+  animation: intro .55s cubic-bezier(.2, .7, .2, 1) both;
+}
+.header__title { animation-delay: 70ms; }
+.header__contacts { animation-delay: 140ms; }
+.project:first-child .project__media { animation-delay: 220ms; }
+.project:first-child .project__row { animation-delay: 340ms; }
+/*
+  Картинка первой карточки ждёт, пока будет готов первый кадр ролика (script.js ставит .is-ready),
+  и появляется сразу с ним: обложка на экране не мелькает, подменять нечего.
+  Ждём не больше 1,5 с — потом показываем обложку.
+*/
+.js .project:first-child .project__media:not(.is-ready) { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .logo, .header__title, .header__contacts,
+  .project:first-child .project__media, .project:first-child .project__row { animation: none; }
+}
+
+/*
+  Окно с видео. Плавно: фон затемняется, окно проявляется и чуть подрастает,
+  само видео проявляется, когда готов первый кадр. Закрытие — в обратную сторону.
+  Анимация открытия/закрытия <dialog> — через @starting-style и allow-discrete;
+  где это не поддерживается, окно просто появляется сразу, как раньше.
+*/
+.video-modal {
+  --fade: .45s;
+  width: min(92vw, calc(85svh * 16 / 9));
+  max-width: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+  opacity: 0;
+  transform: scale(.97);
+  transition:
+    opacity var(--fade) ease,
+    transform var(--fade) cubic-bezier(.2, .7, .2, 1),
+    overlay var(--fade) allow-discrete,
+    display var(--fade) allow-discrete;
+}
+.video-modal[open] { opacity: 1; transform: none; }
+.video-modal::backdrop {
+  background: rgba(20, 20, 19, 0);
+  transition:
+    background-color var(--fade) ease,
+    overlay var(--fade) allow-discrete,
+    display var(--fade) allow-discrete;
+}
+.video-modal[open]::backdrop { background: rgba(20, 20, 19, .88); }
+@starting-style {
+  .video-modal[open] { opacity: 0; transform: scale(.97); }
+  .video-modal[open]::backdrop { background: rgba(20, 20, 19, 0); }
+}
+.video-modal__inner { position: relative; }
+.video-modal__video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: transparent;
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+.video-modal__video.is-ready { opacity: 1; }
+.video-modal__close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  background: none;
+  color: var(--light-text);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Ниже 1024 — временная раскладка в одну колонку, пока нет мобильного макета */
+@media (max-width: 1023px) {
+  :root { --gutter: 20px; }
+  .logo, .header__title, .header__contacts,
+  .project__head, .project__desc, .project__review { grid-column: 1 / -1; }
+  .header__title, .header__contacts { margin-top: 20px; }
+  .header { padding-bottom: 32px; }
+  .project { max-height: none; }
+  .project__desc { margin-top: 16px; }
+  .project__review { margin: 16px 0 0; }
+}
+
+/*
+  Телефон. Картинка на всю ширину экрана, квадрат, бока кадра обрезаются;
+  кадр чуть левее центра (51%) — подобрано по столу Хакасии.
+  Запасной режим «достроить фон» (mediaFill.phone.mode = 'extend' в script.js): кадр шире экрана,
+  а поля сверху и снизу заливаются фоном с верхнего и нижнего края кадра.
+*/
+@media (max-width: 767px) {
+  :root {
+    --gutter: 16px;
+    --fs-title: 22px;
+    --fs-desc: 16px;
+    --projects-gap: 85px;
+  }
+  .header {
+    grid-template-columns: auto 1fr;
+    padding-top: 16px;
+    padding-bottom: 28px;
+  }
+  .logo { grid-column: 1; }
+  .logo { --logo-w: 128px; --logo-scale: 1; }
+  .logo__full { margin-top: 0; }
+  .header__contacts {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    align-items: flex-end;
+    margin-top: 4px;
+  }
+  .header__title {
+    grid-column: 1 / -1;
+    margin-top: 24px;
+    font-size: 26px;
+    line-height: 1.1;
+  }
+  .header__title br { display: none; }
+  .project__media {
+    aspect-ratio: 1;
+    min-height: 0;
+  }
+  /*
+    Место под карточку постоянное (script.js, «Рост карточки»). Картинка прижата к верху места
+    и растёт вниз, поэтому расстояние до подписи над ней не меняется; запас места — под текстом.
+  */
+  .project { justify-content: flex-start; }
+  .project__media { flex: none; }
+  .project__row { padding-top: 16px; }
+  .project__head { gap: 8px; }
+  .project__desc { margin-top: 12px; }
+}

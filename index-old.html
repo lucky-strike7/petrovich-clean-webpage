@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Студия братьев Петрович — интерактивные экспонаты</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Отметка «скрипты работают»: только тогда первая карточка ждёт готовности ролика перед появлением -->
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <!--
+    Шапка: логотип 1–4 · заголовок 5–9 · контакты 11–12.
+    При прокрутке сжимается в строку (script.js): вертикальный логотип гаснет и появляется
+    горизонтальный, заголовок растворяется, контакты переезжают в ряд справа.
+  -->
+  <header class="header grid">
+    <a class="logo" href="/" aria-label="Студия братьев Петрович">
+      <img class="logo__full" src="assets/logo-vertical.svg" alt="Petrovich Brothers" width="243" height="120">
+      <img class="logo__line" src="assets/logo-horizontal.svg" alt="" width="188" height="48">
+    </a>
+    <h1 class="header__title">Создаем интерактивные экспонаты <br>для&nbsp;музеев и&nbsp;выставок</h1>
+    <nav class="header__contacts">
+      <a href="mailto:art@petrovichbrothers.ru"><span class="link-line">art@petrovichbrothers.ru</span></a>
+      <a href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener"><span class="link-line">Telegram ↗</span></a>
+    </nav>
+  </header>
+
+  <main class="projects">
+    <!--
+      Карточка: картинка на всю ширину + строка текста.
+      Кадрирование при сужении картинки — по центру; сдвинуть можно так: style="--focus: 50% 40%".
+      Кнопка «Видеообзор» открывает ролик из папки Video.
+    -->
+    <article class="project">
+      <div class="project__media" data-loop="media/khakasy-pingpong-v4.mp4" data-loop-uhd="media/khakasy-pingpong-v4-4k.mp4">
+        <img class="project__cover" src="assets/project-khakasy-v5.jpg" srcset="assets/project-khakasy-v5.jpg 1920w, assets/project-khakasy-v5-4k.jpg 3840w" sizes="100vw" alt="Круглый стол с экраном и поворотной столешницей">
+      </div>
+      <div class="project__row grid">
+        <div class="project__head">
+          <h2 class="project__title">Достопримечательности Хакасии</h2>
+          <p class="project__context">Стенд Хакасии&nbsp;· выставка «Россия»&nbsp;· 2023</p>
+        </div>
+        <p class="project__desc">Круглый стол с&nbsp;экраном и&nbsp;поворотной столешницей, на&nbsp;которой расположены названия достопримечательностей Хакасии. Посетитель поворачивает столешницу и&nbsp;совмещает метку выбранного места с&nbsp;указателем на&nbsp;экране. На&nbsp;экране появляются карта с&nbsp;расположением достопримечательности и&nbsp;короткий видеоролик о&nbsp;ней.</p>
+        <button class="project__review" type="button" data-video="Video/01_Khakasia_Attractions.mp4" data-title="Достопримечательности Хакасии — видеообзор">
+          <img src="assets/play.svg" alt="" width="16" height="16">
+          <span><span class="link-line">Видеообзор реального</span><br><span class="link-line">экспоната&nbsp;1:20</span></span>
+        </button>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project__media">
+        <img class="project__cover" src="assets/project-mengiry.png" alt="Каменные изваяния и сенсорные экраны" loading="lazy">
+      </div>
+      <div class="project__row grid">
+        <div class="project__head">
+          <h2 class="project__title">Менгиры Хакасии</h2>
+          <p class="project__context">Стенд Хакасии&nbsp;· выставка «Россия»&nbsp;· 2023</p>
+        </div>
+        <p class="project__desc">Игра на&nbsp;сенсорном экране, в&nbsp;которой нужно собрать изображение древнего каменного изваяния. Посетитель перемещает фрагменты, восстанавливая рисунок. Когда головоломка решена, на&nbsp;макете менгира загорается подсветка.</p>
+        <button class="project__review" type="button" data-video="Video/02_Khakasia_Menhirs.mp4" data-title="Менгиры Хакасии — видеообзор">
+          <img src="assets/play.svg" alt="" width="16" height="16">
+          <span><span class="link-line">Видеообзор реального</span><br><span class="link-line">экспоната&nbsp;1:16</span></span>
+        </button>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project__media">
+        <img class="project__cover" src="assets/project-shturval.png" alt="Штурвал перед экраном с парусным кораблём" loading="lazy">
+      </div>
+      <div class="project__row grid">
+        <div class="project__head">
+          <h2 class="project__title">Штурвал</h2>
+          <p class="project__context">Зал Черноморского Флота&nbsp;· Новый Херсонес&nbsp;· 2025</p>
+        </div>
+        <p class="project__desc">Посетитель выбирает достопримечательность на&nbsp;карте и&nbsp;отправляется к&nbsp;ней на&nbsp;парусном корабле. Вращая настоящий штурвал, он&nbsp;управляет курсом, а&nbsp;на&nbsp;экране видит движение корабля и&nbsp;побережье.</p>
+        <button class="project__review" type="button" data-video="Video/03_Chersonesus_Wheel.mp4" data-title="Штурвал — видеообзор">
+          <img src="assets/play.svg" alt="" width="16" height="16">
+          <span><span class="link-line">Видеообзор реального</span><br><span class="link-line">экспоната&nbsp;1:21</span></span>
+        </button>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project__media">
+        <img class="project__cover" src="assets/project-scanner.png" alt="Подвижный экран на направляющих и панель с чертежами подводных лодок" loading="lazy">
+      </div>
+      <div class="project__row grid">
+        <div class="project__head">
+          <h2 class="project__title">Сканер «Подводный флот»</h2>
+          <p class="project__context">Зал Черноморского Флота&nbsp;· Новый Херсонес&nbsp;· 2025</p>
+        </div>
+        <p class="project__desc">Подвижный экран на&nbsp;направляющих и&nbsp;панель с&nbsp;чертежами подводных лодок. Посетитель передвигает экран к&nbsp;выбранному чертежу&nbsp;— на&nbsp;нем появляется анимированная 3D-модель лодки и&nbsp;дополнительная информация о&nbsp;ней.</p>
+        <button class="project__review" type="button" data-video="Video/04_Chersonesus_Scanners.mp4" data-title="Сканер «Подводный флот» — видеообзор">
+          <img src="assets/play.svg" alt="" width="16" height="16">
+          <span><span class="link-line">Видеообзор реального</span><br><span class="link-line">экспоната&nbsp;0:55</span></span>
+        </button>
+      </div>
+    </article>
+  </main>
+
+  <dialog class="video-modal" aria-label="Видео">
+    <div class="video-modal__inner">
+      <button class="video-modal__close" type="button" aria-label="Закрыть">✕</button>
+      <video class="video-modal__video" controls playsinline></video>
+    </div>
+  </dialog>
+
+  <script src="script.js"></script>
+  <!-- Временная панель подбора роста карточки на телефоне — убрать после выбора -->
+  <script src="tuner-grow.js"></script></body>
+</html>
