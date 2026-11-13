@@ -9,6 +9,19 @@
   }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
   document.querySelectorAll('.hero__title, .projects__title, .contact__title, .reveal, .card__media')
     .forEach((el) => io.observe(el));
+  /*
+    Подпись карточки проявляется целиком, как только ее верх показался в окне: название, описание,
+    место с размерами и кнопки «Смотреть разбор» / «Как устроено» — вместе, а не по одному.
+    Иначе кнопки внизу появлялись поздно, когда ролик уже удобно смотреть.
+  */
+  const rowIO = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      e.target.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-in'));
+      rowIO.unobserve(e.target);
+    }
+  }, { threshold: 0 });
+  document.querySelectorAll('.card__row').forEach((row) => rowIO.observe(row));
   // Первый экран — сразу после загрузки шрифта, чтобы строки выехали уже нужным начертанием
   (document.fonts?.ready || Promise.resolve()).then(() => requestAnimationFrame(() => {
     document.querySelectorAll('.hero__title, .hero .reveal').forEach((el) => el.classList.add('is-in'));
@@ -126,14 +139,47 @@
   }
 
   /* Картинка у ссылки достижения (data-peek): кружок у курсора, идет за мышью без задержки */
+  /*
+    Если у ссылки есть data-peek-video, поверх картинки в кружке играет короткий ролик по кругу.
+    Ролики подгружаются заранее, когда блок «Достижения студии» подъезжает к окну, —
+    к моменту наведения они уже в памяти. Пока ролик не пошел, видна картинка.
+  */
   const peek = document.querySelector('.peek');
   if (peek && fine) {
-    const img = peek.firstElementChild;
-    document.querySelectorAll('[data-peek]').forEach((a) => {
+    const circle = peek.firstElementChild;
+    const img = circle.firstElementChild;
+    const links = [...document.querySelectorAll('[data-peek]')];
+    links.forEach((a) => {
       new Image().src = a.dataset.peek; // загрузить заранее, чтобы кружок не появлялся пустым
-      a.addEventListener('pointerenter', () => { img.src = a.dataset.peek; peek.classList.add('is-on'); });
-      a.addEventListener('pointerleave', () => peek.classList.remove('is-on'));
+      if (a.dataset.peekVideo) {
+        const v = document.createElement('video');
+        Object.assign(v, { muted: true, loop: true, playsInline: true, preload: 'none' });
+        v.src = a.dataset.peekVideo;
+        v.addEventListener('playing', () => v.classList.add('is-playing'));
+        circle.appendChild(v);
+        a.peekVideo = v;
+      }
+      a.addEventListener('pointerenter', () => {
+        img.src = a.dataset.peek;
+        peek.classList.add('is-on');
+        const v = a.peekVideo;
+        if (v) { v.currentTime = 0; v.play().catch(() => {}); }
+      });
+      a.addEventListener('pointerleave', () => {
+        peek.classList.remove('is-on');
+        const v = a.peekVideo;
+        if (v) { v.pause(); v.classList.remove('is-playing'); }
+      });
     });
+    const awards = links[0]?.closest('section');
+    if (awards) {
+      const pio = new IntersectionObserver(([e]) => {
+        if (!e.isIntersecting) return;
+        links.forEach((a) => { if (a.peekVideo) { a.peekVideo.preload = 'auto'; a.peekVideo.load(); } });
+        pio.disconnect();
+      }, { rootMargin: '600px 0px' });
+      pio.observe(awards);
+    }
     addEventListener('pointermove', (e) => { peek.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`; });
     addEventListener('scroll', () => peek.classList.remove('is-on'), { passive: true });
   }

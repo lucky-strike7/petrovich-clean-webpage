@@ -173,7 +173,7 @@ html:not(.js) .reel__frame { opacity: 1; transform: none; }
 /* «Наши проекты» — тихой подписью второстепенным шрифтом, как у раздела «Что мы делаем» */
 .projects__title {
   font-family: var(--font-text); font-weight: 400; font-size: 20px;
-  padding-bottom: 6px;
+  padding-bottom: clamp(28px, 3vw, 48px); /* воздух между подписью и первой карточкой */
 }
 /* Что внутри видеообзоров — тихая строка под «Наши проекты» */
 .projects__note {
@@ -240,21 +240,27 @@ main > .about:first-child { padding-top: clamp(150px, 20svh, 240px); }
 .card__info { grid-column: 8 / 13; max-width: 30em; padding-top: .45em; }
 .card__desc { font-family: var(--font-text); font-weight: 400; line-height: 1.45; transition-delay: .05s; }
 /*
-  «Как устроено +»: тихая ссылка под описанием. По нажатию плюс поворачивается в крестик,
-  под ней плавно раскрываются 2–3 факта из видеообзора (высота анимируется через grid 0fr → 1fr).
+  «Как устроено»: устроена так же, как «Смотреть разбор» — синий кружок и черная подпись.
+  Внутри кружка белый плюс; по нажатию он поворачивается в крестик, а под строкой плавно
+  раскрываются 2–3 факта из видеообзора (высота анимируется через grid 0fr → 1fr).
+  Наведение одно на обе кнопки: кружок чуть увеличивается, подпись синеет.
 */
 .card__more {
-  display: inline-flex; gap: 8px; align-items: center; margin-top: 14px; padding: 0; border: 0; background: none;
-  font-family: var(--font-text); font-weight: 400; font-size: 16px; color: var(--accent); cursor: pointer;
+  display: inline-flex; gap: 10px; align-items: center; margin-top: 14px; padding: 0; border: 0; background: none;
+  font-family: var(--font-text); font-weight: 400; font-size: 16px; color: var(--ink); cursor: pointer;
   transition-delay: .08s;
 }
-.card__more i { position: relative; width: 11px; height: 11px; transition: transform .5s var(--ease); }
-.card__more i::before, .card__more i::after {
-  content: ""; position: absolute; left: 0; top: 5px; width: 11px; height: 1.5px; background: currentColor;
+.card__plus { position: relative; }
+.card__plus::before, .card__plus::after {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 11px; height: 1.5px; margin: -.75px 0 0 -5.5px;
+  background: var(--on-accent); transition: transform .5s var(--ease);
 }
-.card__more i::after { transform: rotate(90deg); }
-.card__more[aria-expanded="true"] i { transform: rotate(45deg); }
-.card__more:hover span { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.card__plus::after { transform: rotate(90deg); }
+.card__more[aria-expanded="true"] .card__plus::before { transform: rotate(45deg); }
+.card__more[aria-expanded="true"] .card__plus::after { transform: rotate(135deg); }
+.card__more:hover .card__play { transform: scale(1.15); }
+.card__review span, .card__more span { transition: color .3s; }
+.card__more:hover span { color: var(--accent); }
 .card__how {
   display: grid; grid-template-rows: 0fr;
   transition: grid-template-rows .6s var(--ease);
@@ -490,13 +496,35 @@ html:not(.js) .line > span, html:not(.js) .reveal, html:not(.js) .pill { transfo
 .peek { display: none; }
 @media (pointer: fine) {
   .peek { display: block; position: fixed; left: 0; top: 0; z-index: 30; pointer-events: none; }
-  .peek img {
-    display: block; width: 200px; height: 200px; margin: 24px 0 0 24px; border-radius: 50%; object-fit: cover;
-    box-shadow: 0 12px 40px rgba(17, 17, 16, .18);
+  .peek__c {
+    position: relative; width: 200px; height: 200px; margin: 24px 0 0 24px; border-radius: 50%; overflow: hidden;
+    background: #111; box-shadow: 0 12px 40px rgba(17, 17, 16, .18);
     transform: scale(0); transition: transform .45s var(--ease);
   }
-  .peek.is-on img { transform: none; }
+  .peek.is-on .peek__c { transform: none; }
+  /* Картинка видна сразу; ролик (если есть) проявляется поверх, как только пошел */
+  .peek__c img, .peek__c video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .peek__c video { opacity: 0; transition: opacity .25s; }
+  .peek__c video.is-playing { opacity: 1; }
 }
 @media (pointer: coarse) {
   .facts__thumb { display: block; width: 88px; height: 88px; margin-bottom: 14px; border-radius: 50%; object-fit: cover; }
+}
+
+/*
+  Строка действий внизу карточки: «Смотреть разбор» и «Как устроено +» рядом.
+  Описание и место с размерами над ней остаются чистым текстом; факты раскрываются под строкой.
+*/
+.card__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 32px; margin-top: 18px; }
+.card__actions .card__review, .card__actions .card__more { margin-top: 0; }
+.card__actions .card__more { transition-delay: .18s; }
+
+/*
+  На широком экране факты «Как устроено» раскрываются в пустое место под строкой действий
+  и не сдвигают следующую карточку. Уже 1180 px места под строкой не хватает (проверено на 1024 и 1100:
+  факты Менгиров наезжали на следующую картинку), поэтому там факты раздвигают карточку, как раньше.
+*/
+@media (min-width: 1180px) {
+  .card__info { position: relative; }
+  .card__how { position: absolute; left: 0; right: 0; top: 100%; }
 }
