@@ -315,17 +315,15 @@ html:not(.js) .card__how ul { opacity: 1; }
 .sect li p { margin-top: 10px; font-family: var(--font-text); font-weight: 400; font-size: 16px; line-height: 1.45; color: var(--muted); }
 :where(.sect) ol, :where(.sect) ul { margin: 0; padding: 0; list-style: none; }
 
-/* Этапы: четыре колонки с синими номерами */
+/* Этапы: четыре колонки */
 .steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px 20px; margin-top: clamp(48px, 5vw, 88px); }
-.steps__n { display: block; margin-bottom: 18px; font-family: var(--font-text); font-weight: 400; font-size: 16px; color: var(--accent); }
 .steps li:nth-child(2) { transition-delay: .06s; }
 .steps li:nth-child(3) { transition-delay: .12s; }
 .steps li:nth-child(4) { transition-delay: .18s; }
 
-/* Студия: сверху три главных проекта крупно, под ними три коротких факта о студии */
+/* Студия: три главных проекта крупно, под каждым пояснение */
 .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 44px 20px; }
-.facts--key { margin-bottom: clamp(56px, 6vw, 96px); }
-.facts--key h3 { font-size: clamp(26px, 2.4vw, 40px); line-height: 1.05; }
+/* Названия проектов того же размера, что этапы в «Как работаем» (общее правило .sect h3) */
 .facts li:nth-child(3n+2) { transition-delay: .06s; }
 .facts li:nth-child(3n) { transition-delay: .12s; }
 
@@ -464,4 +462,41 @@ html:not(.js) .line > span, html:not(.js) .reveal, html:not(.js) .pill { transfo
   .about__clients { font-size: 17px; }
   .steps, .facts { grid-template-columns: 1fr; gap: 32px; }
   .price li { flex-direction: column; gap: 12px; }
+}
+
+/* «Как работаем»: фраза о команде слева, справа фото братьев в кружке */
+.process__head { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+.process__photo {
+  flex: none; width: clamp(140px, 14vw, 240px); height: auto; aspect-ratio: 1;
+  border-radius: 50%; object-fit: cover; background: #eaeaea;
+}
+@media (max-width: 600px) {
+  /* На телефоне кружок над фразой, поменьше */
+  .process__head { flex-direction: column-reverse; align-items: flex-start; gap: 24px; }
+  .process__photo { width: 120px; }
+}
+
+/* Ссылка-подтверждение у достижения: открывается в новой вкладке, стрелка синяя, при наведении синеет и название */
+.facts__link span { color: var(--accent); }
+.facts__link { transition: color .3s; }
+.facts__link:hover { color: var(--accent); }
+
+/*
+  Картинка у достижения. На компьютере: при наведении на ссылку рядом с курсором
+  раскрывается кружок с картинкой (как «Смотреть обзор»), идет за мышью без задержки.
+  На телефоне наведения нет — там тот же кружок стоит маленьким над названием.
+*/
+.facts__thumb { display: none; }
+.peek { display: none; }
+@media (pointer: fine) {
+  .peek { display: block; position: fixed; left: 0; top: 0; z-index: 30; pointer-events: none; }
+  .peek img {
+    display: block; width: 200px; height: 200px; margin: 24px 0 0 24px; border-radius: 50%; object-fit: cover;
+    box-shadow: 0 12px 40px rgba(17, 17, 16, .18);
+    transform: scale(0); transition: transform .45s var(--ease);
+  }
+  .peek.is-on img { transform: none; }
+}
+@media (pointer: coarse) {
+  .facts__thumb { display: block; width: 88px; height: 88px; margin-bottom: 14px; border-radius: 50%; object-fit: cover; }
 }

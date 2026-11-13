@@ -125,6 +125,19 @@
     document.addEventListener('pointerleave', () => cursor.classList.remove('is-on'));
   }
 
+  /* Картинка у ссылки достижения (data-peek): кружок у курсора, идет за мышью без задержки */
+  const peek = document.querySelector('.peek');
+  if (peek && fine) {
+    const img = peek.firstElementChild;
+    document.querySelectorAll('[data-peek]').forEach((a) => {
+      new Image().src = a.dataset.peek; // загрузить заранее, чтобы кружок не появлялся пустым
+      a.addEventListener('pointerenter', () => { img.src = a.dataset.peek; peek.classList.add('is-on'); });
+      a.addEventListener('pointerleave', () => peek.classList.remove('is-on'));
+    });
+    addEventListener('pointermove', (e) => { peek.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`; });
+    addEventListener('scroll', () => peek.classList.remove('is-on'), { passive: true });
+  }
+
   /* «Как устроено +»: раскрывает факты под описанием карточки */
   document.querySelectorAll('.card__more').forEach((btn) => {
     const panel = document.getElementById(btn.getAttribute('aria-controls'));
