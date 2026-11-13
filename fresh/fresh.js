@@ -13,7 +13,7 @@
   (document.fonts?.ready || Promise.resolve()).then(() => requestAnimationFrame(() => {
     document.querySelectorAll('.hero__title, .hero .reveal').forEach((el) => el.classList.add('is-in'));
     // Шоурил проявляется следом, когда заголовок почти набрался
-    setTimeout(() => document.querySelector('.reel__frame').classList.add('is-in'), reduce ? 0 : 450);
+    setTimeout(() => document.querySelector('.reel__frame')?.classList.add('is-in'), reduce ? 0 : 450);
   }));
 
   /* «Что мы делаем»: слова загораются по одному, пока блок проходит через окно */
@@ -82,9 +82,11 @@
   const onScroll = () => {
     ticking = false;
     const vh = innerHeight, y = scrollY;
-    const r = reel.getBoundingClientRect();
-    const p = reduce ? 1 : Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.85)));
-    reel.style.setProperty('--p', (p * p * (3 - 2 * p)).toFixed(4));
+    if (reel) {
+      const r = reel.getBoundingClientRect();
+      const p = reduce ? 1 : Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.85)));
+      reel.style.setProperty('--p', (p * p * (3 - 2 * p)).toFixed(4));
+    }
     lightWords();
     playCards();
 
