@@ -23,6 +23,8 @@
     </a>
     <nav class="top__nav">
       <a href="#projects">Проекты</a>
+      <a href="#process">Как работаем</a>
+      <a href="#prices">Цены</a>
       <a href="#contact">Контакты</a>
     </nav>
     <a class="top__btn" href="mailto:art@petrovichbrothers.ru">Написать</a>
@@ -34,13 +36,13 @@
       пока убран: страница начинается с «Что мы делаем». Прежняя разметка — в истории git.
     -->
     <!--
-      Второй экран: крупный вынос «что мы делаем». Слова проявляются из серого в черный
-      по мере прокрутки (script). Текст — черновик, заменить своим.
+      Вступление: подпись «Что мы делаем» слева, справа короткий заголовок страницы
+      и описание под ним. Слова заголовка проявляются из серого в черный (script).
     -->
     <section class="about">
       <p class="about__label reveal">Что мы делаем</p>
-      <p class="about__text" data-words>Придумываем и&nbsp;собираем интерактивные экспонаты&nbsp;— от&nbsp;идеи и&nbsp;3D-графики до&nbsp;механики, электроники и&nbsp;программ. Такие, к&nbsp;которым выстраивается очередь.</p>
-      <p class="about__list reveal">Идея и&nbsp;сценарий, 3D-графика и&nbsp;игры, механика и&nbsp;электроника, программы и&nbsp;запуск</p>
+      <h1 class="about__text" data-words>Придумываем и&nbsp;создаем интерактивные экспонаты</h1>
+      <p class="about__desc reveal">Для музеев и&nbsp;выставок. Берем на&nbsp;себя контент, программирование, инженерные решения и&nbsp;настройку на&nbsp;площадке. Работаем с&nbsp;музеями, застройщиками и&nbsp;генеральными подрядчиками.</p>
     </section>
 
     <section class="projects" id="projects">
@@ -54,10 +56,17 @@
           <h3 class="card__title reveal">Достопримечательности Хакасии</h3>
           <div class="card__info">
             <p class="card__desc reveal">Посетитель поворачивает столешницу и&nbsp;совмещает метку места с&nbsp;указателем&nbsp;— на&nbsp;экране появляются карта и&nbsp;ролик о&nbsp;достопримечательности.</p>
+            <button class="card__more reveal" type="button" aria-expanded="false" aria-controls="how-1"><span>Как устроено</span><i aria-hidden="true"></i></button>
+            <div class="card__how" id="how-1">
+              <ul>
+                  <li>Место считывают RFID-метки: поворот столешницы сразу запускает нужный ролик, без датчика угла.</li>
+                  <li>Карта и&nbsp;анимация меток сделаны в&nbsp;3D, движение камеры настроено заранее.</li>
+              </ul>
+            </div>
             <p class="card__meta reveal"><span>Стенд Хакасии, выставка «Россия», 2023</span><span>Диаметр 1500&nbsp;мм, высота 850&nbsp;мм</span></p>
             <button class="card__review reveal" type="button" data-video="Video/01_Khakasia_Attractions.mp4" data-title="Достопримечательности Хакасии — видеообзор">
               <i class="card__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i>
-              <span>Видеообзор&nbsp;· 1:20</span>
+              <span>Смотреть разбор&nbsp;· 1:20</span>
             </button>
           </div>
         </div>
@@ -71,10 +80,18 @@
           <h3 class="card__title reveal">Менгиры Хакасии</h3>
           <div class="card__info">
             <p class="card__desc reveal">Игра на&nbsp;сенсорном экране: собрать изображение древнего изваяния. Головоломка решена&nbsp;— на&nbsp;макете менгира загорается подсветка.</p>
+            <button class="card__more reveal" type="button" aria-expanded="false" aria-controls="how-2"><span>Как устроено</span><i aria-hidden="true"></i></button>
+            <div class="card__how" id="how-2">
+              <ul>
+                  <li>После тестов головоломку упростили: даже 3&nbsp;×&nbsp;3 собиралась слишком долго для выставки, оставили 2&nbsp;×&nbsp;3.</li>
+                  <li>Рисунок на&nbsp;отсканированной модели менгира доработали и&nbsp;разрезали на&nbsp;игровые элементы.</li>
+                  <li>Интерфейс собран в&nbsp;фирменном стиле республики.</li>
+              </ul>
+            </div>
             <p class="card__meta reveal"><span>Стенд Хакасии, выставка «Россия», 2023</span><span>Композиция: ширина 6500&nbsp;мм, высота 4000&nbsp;мм</span></p>
             <button class="card__review reveal" type="button" data-video="Video/02_Khakasia_Menhirs.mp4" data-title="Менгиры Хакасии — видеообзор">
               <i class="card__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i>
-              <span>Видеообзор&nbsp;· 1:16</span>
+              <span>Смотреть разбор&nbsp;· 1:16</span>
             </button>
           </div>
         </div>
@@ -88,10 +105,17 @@
           <h3 class="card__title reveal">Штурвал</h3>
           <div class="card__info">
             <p class="card__desc reveal">Посетитель ведет парусник к&nbsp;выбранному месту, вращая настоящий штурвал, а&nbsp;ветер и&nbsp;волны сбивают его с&nbsp;курса. В&nbsp;конце&nbsp;— рассказ о&nbsp;месте и&nbsp;оценка точности.</p>
+            <button class="card__more reveal" type="button" aria-expanded="false" aria-controls="how-3"><span>Как устроено</span><i aria-hidden="true"></i></button>
+            <div class="card__how" id="how-3">
+              <ul>
+                  <li>Энкодер на&nbsp;валу передает поворот штурвала через промышленный контроллер в&nbsp;компьютер.</li>
+                  <li>Локации собраны в&nbsp;Unreal Engine, маршруты отрендерены заранее, а&nbsp;сдвиг картинки при повороте создает ощущение смены курса.</li>
+              </ul>
+            </div>
             <p class="card__meta reveal"><span>Зал Черноморского флота, Новый Херсонес, 2025</span><span>Ширина 3500&nbsp;мм, высота 2500&nbsp;мм</span></p>
             <button class="card__review reveal" type="button" data-video="Video/03_Chersonesus_Wheel.mp4" data-title="Штурвал — видеообзор">
               <i class="card__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i>
-              <span>Видеообзор&nbsp;· 1:21</span>
+              <span>Смотреть разбор&nbsp;· 1:21</span>
             </button>
           </div>
         </div>
@@ -105,18 +129,80 @@
           <h3 class="card__title reveal">Сканер «Парусный флот»</h3>
           <div class="card__info">
             <p class="card__desc reveal">Экран на&nbsp;направляющих. Посетитель двигает его к&nbsp;чертежу&nbsp;— и&nbsp;на&nbsp;нем оживает 3D-модель корабля и&nbsp;видны его данные.</p>
+            <button class="card__more reveal" type="button" aria-expanded="false" aria-controls="how-4"><span>Как устроено</span><i aria-hidden="true"></i></button>
+            <div class="card__how" id="how-4">
+              <ul>
+                  <li>Модели кораблей построены по&nbsp;фотографиям и&nbsp;чертежам.</li>
+                  <li>Воду делали в&nbsp;Houdini и&nbsp;Unreal Engine.</li>
+                  <li>Это один из&nbsp;трех сканеров зала: еще есть броненосный и&nbsp;разнородный флот и&nbsp;подводный.</li>
+              </ul>
+            </div>
             <p class="card__meta reveal"><span>Зал Черноморского флота, Новый Херсонес, 2025</span><span>Ширина 5500&nbsp;мм</span></p>
             <button class="card__review reveal" type="button" data-video="Video/04_Chersonesus_Scanners.mp4" data-title="Сканер «Парусный флот» — видеообзор">
               <i class="card__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i>
-              <span>Видеообзор&nbsp;· 0:55</span>
+              <span>Смотреть разбор&nbsp;· 0:55</span>
             </button>
           </div>
         </div>
       </article>
     </section>
 
+    <!--
+      Новые блоки после карточек. Все по одной сетке с «Что мы делаем»: тихая подпись слева
+      (колонки 1–3), содержание справа (4–12).
+    -->
+    <section class="sect process" id="process">
+      <h2 class="sect__label reveal">Как работаем</h2>
+      <div class="sect__body">
+        <p class="sect__lead reveal">Артем отвечает за&nbsp;концепцию и&nbsp;дизайн, Арсений&nbsp;— за&nbsp;код и&nbsp;датчики. Дизайн и&nbsp;инженерию ведем параллельно: нарисовать экспонат, а&nbsp;потом встроить картинку в&nbsp;железо без изменений почти невозможно.</p>
+        <ol class="steps">
+          <li class="reveal"><span class="steps__n">01</span><h3>Концепция</h3><p>Для музея опираемся на&nbsp;архитектурную концепцию экспозиции, для стенда&nbsp;— на&nbsp;его стиль и&nbsp;задачи компании.</p></li>
+          <li class="reveal"><span class="steps__n">02</span><h3>Контент и&nbsp;дизайн</h3><p>Сценарий, интерфейсы, 3D-графика и&nbsp;анимация. Информацию перерабатываем под каждый экран, а&nbsp;не&nbsp;переносим с&nbsp;сайта.</p></li>
+          <li class="reveal"><span class="steps__n">03</span><h3>Инженерия и&nbsp;код</h3><p>Датчики, механика, контроллеры и&nbsp;программа. На&nbsp;тачскринах отключаем системные жесты, чтобы посетитель не&nbsp;вышел из&nbsp;экспоната.</p></li>
+          <li class="reveal"><span class="steps__n">04</span><h3>Запуск</h3><p>Настраиваем на&nbsp;площадке по&nbsp;всей России. Для долгих экспозиций делаем панель управления и&nbsp;обучаем сотрудников.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="sect studio">
+      <h2 class="sect__label reveal">Студия</h2>
+      <div class="sect__body">
+        <!-- Сначала главные проекты и награды крупно, под ними — коротко о студии -->
+        <ul class="facts facts--key">
+          <li class="reveal"><h3>«Страна Света-2025»</h3><p>Призовое место за&nbsp;мэппинг на&nbsp;Дворцовой площади в&nbsp;Санкт-Петербурге.</p></li>
+          <li class="reveal"><h3>Заставка для HBO&nbsp;Max</h3><p>Вступительная графика к&nbsp;документальному сериалу «Игры Уолл-стрит».</p></li>
+          <li class="reveal"><h3>Фестиваль «Среда»</h3><p>Счетчик подписчиков YouTube из&nbsp;советского электросчетчика вошел в&nbsp;шорт-лист.</p></li>
+        </ul>
+        <ul class="facts">
+          <li class="reveal"><h3>Все внутри студии</h3><p>Дизайн, разработка и&nbsp;инженерные решения в&nbsp;одной команде, поэтому правки вносим быстро.</p></li>
+          <li class="reveal"><h3>Больше 10&nbsp;лет в&nbsp;графике</h3><p>Учились в&nbsp;Британской школе дизайна, работали арт-директорами в&nbsp;медиа и&nbsp;банке.</p></li>
+          <li class="reveal"><h3>Растем под проект</h3><p>Для больших задач подключаем проверенных специалистов, не&nbsp;раздувая штат и&nbsp;смету.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="sect prices" id="prices">
+      <h2 class="sect__label reveal">Сколько стоит</h2>
+      <div class="sect__body">
+        <ul class="price">
+          <li class="reveal"><div><h3>Программа для тачскрина</h3><p>Например, тест или карта объектов</p></div><b>от&nbsp;500&nbsp;тыс.&nbsp;₽</b></li>
+          <li class="reveal"><div><h3>Видеоролик</h3><p>На&nbsp;один или несколько экранов</p></div><b>от&nbsp;700&nbsp;тыс.&nbsp;₽</b></li>
+          <li class="reveal"><div><h3>Интерактивный экспонат</h3><p>С&nbsp;физическими датчиками или управлением светом, как стол о&nbsp;Хакасии</p></div><b>от&nbsp;1&nbsp;млн&nbsp;₽</b></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Видео: пока ссылка на канал; сетку разборов добавим, когда будут файлы роликов -->
+    <section class="sect videos">
+      <h2 class="sect__label reveal">Видео</h2>
+      <div class="sect__body">
+        <p class="sect__lead reveal">Снимаем разборы мультимедиа-проектов&nbsp;— своих и&nbsp;чужих: как устроены, на&nbsp;чем работают и&nbsp;что из&nbsp;этого стоит повторить.</p>
+        <a class="sect__link reveal" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener">Смотреть на&nbsp;YouTube&nbsp;↗</a>
+      </div>
+    </section>
+
     <section class="contact" id="contact">
-      <p class="contact__lead reveal">Есть зал, идея или&nbsp;только сроки? <span class="contact__note">(Даем скидку за&nbsp;срочность)</span></p>
+      <p class="contact__lead reveal">Есть проект экспозиции или&nbsp;задача по&nbsp;отдельному экспонату? Пришлите материалы и&nbsp;сроки&nbsp;— обсудим. <span class="contact__note">(Даем скидку за&nbsp;срочность)</span></p>
       <h2 class="contact__title">
         <span class="line"><span>Давайте <span class="acc">сделаем</span></span></span>
         <span class="line"><span><span class="acc">экспонат</span> <i class="pill"><video src="fresh/media/mengiry.mp4" poster="fresh/media/mengiry.jpg" muted loop playsinline autoplay></video></i></span></span>
@@ -128,6 +214,7 @@
         </div>
         <a class="contact__btn" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Написать в Telegram ↗</a>
       </div>
+      <p class="contact__foot"><span>Telegram: <a href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Артем</a> · <a href="https://t.me/ArsenyPetrovich" target="_blank" rel="noopener">Арсений</a></span><span>Москва, ул.&nbsp;Бауманская, 6, стр.&nbsp;2</span></p>
     </section>
   </main>
 

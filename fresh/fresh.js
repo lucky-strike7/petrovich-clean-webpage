@@ -101,18 +101,18 @@
   addEventListener('resize', onScroll);
   onScroll();
 
-  /* Курсор «Смотреть»: догоняет мышь с запаздыванием */
+  /*
+    Курсор «Смотреть»: идет прямо за указателем, без запаздывания и инерции.
+    Плавным остается только появление (масштаб кружка в CSS).
+  */
   const cursor = document.querySelector('.cursor');
   if (fine && !reduce) {
     const label = cursor.firstElementChild;
-    let x = -200, y = -200, cx = x, cy = y;
-    addEventListener('pointermove', (e) => { x = e.clientX; y = e.clientY; });
-    const loop = () => {
-      cx += (x - cx) * 0.18; cy += (y - cy) * 0.18;
-      cursor.style.transform = `translate(${cx}px, ${cy}px)`;
-      requestAnimationFrame(loop);
-    };
-    loop();
+    let x = -200, y = -200;
+    addEventListener('pointermove', (e) => {
+      x = e.clientX; y = e.clientY;
+      cursor.style.transform = `translate(${x}px, ${y}px)`;
+    });
     // Показываем круг, только когда под мышью картинка с data-cursor. Проверяем и при движении мыши,
     // и при прокрутке: картинка может уехать из-под неподвижной мыши без событий pointerleave
     const check = () => {
@@ -124,6 +124,16 @@
     addEventListener('scroll', check, { passive: true });
     document.addEventListener('pointerleave', () => cursor.classList.remove('is-on'));
   }
+
+  /* «Как устроено +»: раскрывает факты под описанием карточки */
+  document.querySelectorAll('.card__more').forEach((btn) => {
+    const panel = document.getElementById(btn.getAttribute('aria-controls'));
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') !== 'true';
+      btn.setAttribute('aria-expanded', open);
+      panel.classList.toggle('is-open', open);
+    });
+  });
 
   /* Окно с полным видеообзором */
   const modal = document.querySelector('.modal');
