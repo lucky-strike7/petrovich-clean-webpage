@@ -1,0 +1,356 @@
+/* Черновик «свежее» (fresh.html). Шрифт тот же — Milligram, файлы из ../fonts */
+@font-face {
+  font-family: "Milligram";
+  font-weight: 500;
+  font-display: swap;
+  src: local("Milligram Medium"), local("Milligram-Medium"), url("../fonts/Milligram-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Milligram Text";
+  font-weight: 400;
+  font-display: swap;
+  src: local("Milligram Text"), local("MilligramText-Regular"), url("../fonts/MilligramText-Regular.ttf") format("truetype");
+}
+:root {
+  --bg: #f6f6f3;
+  --ink: #111110;
+  --muted: #6f6f6a;
+  --line: #dcdcd6;
+  --accent: #154ed5; /* фирменный синий */
+  --on-accent: #fff;
+
+  --font: "Milligram", system-ui, sans-serif;
+  --font-text: "Milligram Text", system-ui, sans-serif;
+
+  --pad: clamp(16px, 3vw, 48px);
+  --radius: clamp(14px, 1.6vw, 28px);
+  --fs-hero: clamp(46px, 9.4vw, 176px);
+  --fs-h2: clamp(40px, 7vw, 128px);
+  --fs-card: clamp(26px, 2.6vw, 44px);
+  --fs-text: clamp(16px, 1.1vw, 20px);
+  --ease: cubic-bezier(.2, .7, 0, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-weight: 500;
+  font-size: var(--fs-text);
+  line-height: 1.4;
+  overflow-x: hidden;
+}
+h1, h2, h3, p { margin: 0; font-weight: 500; }
+a { color: inherit; text-decoration: none; }
+img, video { display: block; }
+video { width: 100%; height: 100%; object-fit: cover; }
+
+/*
+  ---------- Шапка ----------
+  Один логотип — в две строки. Наверху крупный, на прозрачном фоне. После прокрутки
+  (is-solid) плавно уменьшается, шапка ниже и на светлой подложке. Вниз уезжает (is-hidden).
+*/
+.top {
+  --logo-full: 185px;
+  --logo-small: 116px;
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  padding: 24px var(--pad);
+  transition: transform .5s var(--ease), background-color .3s, padding .5s var(--ease);
+}
+.top.is-solid { padding-block: 14px; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(12px); }
+.top.is-hidden { transform: translateY(-100%); }
+.top__logo img { width: var(--logo-full); height: auto; transition: width .5s var(--ease); }
+.is-solid .top__logo img { width: var(--logo-small); }
+
+.top__nav { display: flex; gap: 32px; margin-left: auto; }
+.top__nav a, .top__btn { font-family: var(--font-text); font-weight: 400; font-size: 17px; }
+.top__nav a { position: relative; }
+.top__nav a::after, .contact__mail::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 1.5px;
+  background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .45s var(--ease);
+}
+.top__nav a:hover::after, .contact__mail:hover::after { transform: scaleX(1); transform-origin: left; }
+.top__btn {
+  padding: 13px 24px; border-radius: 999px;
+  background: var(--accent); color: var(--on-accent); line-height: 1;
+  transition: background-color .3s;
+}
+.top__btn:hover, .contact__btn:hover { background: color-mix(in srgb, var(--accent) 82%, #000); }
+
+/* ---------- Заголовки: строки быстро «набираются» снизу ---------- */
+.line { display: block; overflow: hidden; padding-bottom: .06em; margin-bottom: -.06em; }
+.line > span { display: inline-block; transform: translateY(105%); transition: transform .6s var(--ease); }
+.is-in .line > span, .line.is-in > span { transform: none; }
+.line:nth-child(2) > span { transition-delay: .05s; }
+.line:nth-child(3) > span { transition-delay: .1s; }
+.line:nth-child(4) > span { transition-delay: .15s; }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.reveal.is-in { opacity: 1; transform: none; }
+
+/*
+  Ролик внутри строки текста. Когда строки встали: вытянутое окошко появляется кружком
+  и раздвигается вбок, круглое — проявляется по прозрачности.
+*/
+.pill {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1.9em; height: .82em;
+  margin: -.12em .04em 0;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--line);
+  transition: width .6s var(--ease);
+}
+.pill--round { width: .82em; }
+.is-in .pill { animation: pill-open 1.9s .5s backwards; }
+.is-in .pill--round { animation: pill-fade 1.2s cubic-bezier(.25, .6, .3, 1) .7s backwards; }
+.pill:hover { width: 2.4em; }
+.pill--round:hover { width: 1.4em; }
+/* Кружок мягко вырастает (замедляясь), короткая пауза, затем плавно разъезжается вбок */
+@keyframes pill-open {
+  0% { width: .82em; transform: scale(.2); opacity: 0; animation-timing-function: cubic-bezier(.25, .6, .3, 1); }
+  38% { width: .82em; transform: none; opacity: 1; }
+  45% { width: .82em; animation-timing-function: cubic-bezier(.65, 0, .25, 1); }
+  100% { width: 1.9em; transform: none; opacity: 1; }
+}
+@keyframes pill-fade { from { opacity: 0; transform: scale(.85); } }
+
+/* Слова для будущего акцентного шрифта (.acc). Пока шрифт не выбран — обычный Milligram */
+
+/* ---------- Первый экран ---------- */
+/*
+  Первый экран ниже окна: снизу сразу выглядывает шоурил (около пятой части высоты) —
+  он и приглашает прокрутить. Заголовок ограничен и по высоте окна, чтобы на низких
+  ноутбуках ролик тоже был виден.
+*/
+.hero {
+  min-height: 80svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 164px var(--pad) 32px;
+}
+.hero__title {
+  font-size: min(var(--fs-hero), 13.5svh);
+  line-height: .86;
+  letter-spacing: -.035em;
+}
+
+.hero__foot { margin-top: clamp(20px, 2.6vw, 40px); }
+.hero__note { max-width: 26em; font-family: var(--font-text); font-weight: 400; font-size: 20px; line-height: 1.35; }
+
+/* ---------- Шоурил: прижат к левому полю и при прокрутке разъезжается вправо до полного экрана ---------- */
+.reel { padding: 0 0 clamp(80px, 12vw, 200px); }
+.reel__frame {
+  --p: 0;
+  width: calc(100% - 2 * var(--pad) * (1 - var(--p)) - 30% * (1 - var(--p)));
+  margin-left: calc(var(--pad) * (1 - var(--p)));
+  aspect-ratio: 16 / 9;
+  max-height: 100svh;
+  border-radius: calc(var(--radius) * (1 - var(--p)));
+  overflow: hidden;
+  background: var(--line);
+  /* При первом появлении страницы: мягко проявляется и чуть дорастает вправо */
+  transform-origin: left center;
+  opacity: 0;
+  transform: scale(.96);
+  transition: opacity 2.2s cubic-bezier(.33, 0, .2, 1), transform 2.8s cubic-bezier(.22, 1, .36, 1);
+}
+.reel__frame.is-in { opacity: 1; transform: none; }
+html:not(.js) .reel__frame { opacity: 1; transform: none; }
+
+/* ---------- Проекты ---------- */
+.projects { padding: 0 var(--pad) clamp(140px, 26svh, 300px); }
+/* «Наши проекты» — тихой подписью второстепенным шрифтом, как у раздела «Что мы делаем» */
+.projects__title {
+  font-family: var(--font-text); font-weight: 400; font-size: 20px;
+  padding-bottom: clamp(20px, 2vw, 32px);
+}
+.projects__title sup { font-size: .7em; vertical-align: top; position: relative; top: -.1em; margin-left: 4px; color: var(--accent); }
+
+/* ---------- «Что мы делаем»: подпись 1–3, крупный текст 4–12 ---------- */
+/* Пока первого экрана нет, страница начинается с этого блока — отступ под шапку */
+main > .about:first-child { padding-top: clamp(150px, 20svh, 240px); }
+.about {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 20px;
+  padding: 0 var(--pad) clamp(140px, 24svh, 280px);
+}
+.about__label { grid-column: 1 / 4; padding-top: .7em; font-family: var(--font-text); font-weight: 400; font-size: 20px; }
+.about__text {
+  grid-column: 4 / 13;
+  font-size: clamp(32px, 3.9vw, 68px); line-height: 1.06; letter-spacing: -.035em;
+}
+/* Слова проявляются по прокрутке: серые → чёрные */
+.about__text .w { color: #c4c4be; transition: color .35s; }
+.about__text .w.is-on { color: var(--ink); }
+.about__list {
+  grid-column: 4 / 13;
+  margin-top: clamp(36px, 3.6vw, 64px);
+  font-family: var(--font-text); font-weight: 400; font-size: 20px;
+}
+
+/* Между карточками — от высоты окна: ритм одинаковый на любом экране */
+.card + .card { padding-top: clamp(140px, 26svh, 300px); }
+/*
+  Появление карточки: ролик всё время в масштабе 100% (масштабирование видео даёт дрожание),
+  а раскрывается только окно вокруг него — маска clip-path от 4% поля к краям карточки.
+*/
+.card__media {
+  aspect-ratio: 2 / 1; /* рендеры 16:9 режутся сверху и снизу всего на ~6% */
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--line);
+  clip-path: inset(4% 3% round var(--radius));
+  transition: clip-path 1.4s var(--ease);
+}
+.card__media.is-in { clip-path: inset(0 round var(--radius)); }
+
+.card__media { position: relative; }
+
+/*
+  Подпись по сетке 12 колонок: слева крупное название (1–7). Справа (8–12) одним блоком:
+  описание, ниже тихая строка «размер · где и когда» и скромная ссылка на видеообзор.
+*/
+.card__row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 20px;
+  align-items: start;
+  padding-top: clamp(24px, 2.4vw, 40px);
+}
+.card__title { grid-column: 1 / 8; padding-right: 40px; font-size: clamp(34px, 4.2vw, 72px); line-height: .98; letter-spacing: -.04em; }
+.card__info { grid-column: 8 / 13; max-width: 30em; padding-top: .45em; }
+.card__desc { font-family: var(--font-text); font-weight: 400; line-height: 1.45; transition-delay: .05s; }
+.card__meta {
+  display: flex; flex-direction: column; gap: 2px; margin-top: 18px;
+  font-family: var(--font-text); font-weight: 400; font-size: 16px; color: var(--muted); transition-delay: .1s;
+}
+.card__review {
+  display: flex; gap: 10px; align-items: center; margin-top: 18px; padding: 0; border: 0; background: none;
+  font-family: var(--font-text); font-weight: 400; font-size: 16px; color: var(--ink); cursor: pointer;
+  transition-delay: .15s;
+}
+.card__play {
+  flex: none; display: grid; place-items: center;
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--accent);
+  transition: transform .5s var(--ease);
+}
+.card__play svg { width: 11px; height: 11px; fill: var(--on-accent); margin-left: 2px; }
+.card__review:hover .card__play { transform: scale(1.15); }
+.card__review:hover span { color: var(--accent); }
+
+/* ---------- Контакты ---------- */
+.contact {
+  padding: clamp(80px, 10vw, 180px) var(--pad) clamp(48px, 6vw, 96px);
+  background: var(--ink);
+  color: var(--bg);
+}
+.contact__lead { color: #9c9c96; margin-bottom: 24px; }
+.contact__note { color: var(--bg); }
+.contact__title { font-size: var(--fs-h2); line-height: .95; letter-spacing: -.04em; }
+.contact__links {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px;
+  margin-top: clamp(48px, 6vw, 96px);
+}
+/* Почта и телефон — столбиком, крупно */
+.contact__ways { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.contact__mail { position: relative; font-size: clamp(22px, 2.6vw, 44px); letter-spacing: -.02em; }
+.contact__btn {
+  display: inline-block; padding: 22px 36px; border-radius: 999px;
+  background: var(--accent); color: var(--on-accent); font-size: 18px;
+}
+
+.hero .reveal { transition-delay: .6s; }
+
+/*
+  ---------- Кнопка «Обсудить проект» в углу ----------
+  Синий кружок со стрелкой. При наведении раздвигается влево в таблетку с надписью —
+  тот же приём «кружок → таблетка», что у ролика в заголовке. Появляется после первого
+  экрана и прячется у блока контактов (script).
+*/
+.badge {
+  --d: 64px;
+  position: fixed; right: var(--pad); bottom: var(--pad); z-index: 15;
+  display: flex; align-items: center; justify-content: flex-end;
+  width: var(--d); height: var(--d); border-radius: 999px; overflow: hidden;
+  background: var(--accent); color: var(--on-accent);
+  transform: scale(0);
+  transition: transform .6s cubic-bezier(.25, .6, .3, 1), width .7s cubic-bezier(.65, 0, .25, 1), background-color .3s;
+}
+.badge.is-shown { transform: none; }
+.badge__label {
+  flex: none; padding-left: 26px; white-space: nowrap;
+  font-family: var(--font-text); font-weight: 400; font-size: 17px;
+  opacity: 0; transition: opacity .25s;
+}
+.badge__arrow { flex: none; display: grid; place-items: center; width: var(--d); height: var(--d); font-size: 24px; }
+.badge.is-shown:hover { width: 238px; background: color-mix(in srgb, var(--accent) 88%, #000); }
+.badge:hover .badge__label { opacity: 1; transition: opacity .35s .3s; }
+
+/* ---------- Курсор «Смотреть» (только мышь) ---------- */
+.cursor { display: none; }
+@media (pointer: fine) {
+  .cursor { display: block; position: fixed; left: 0; top: 0; z-index: 30; pointer-events: none; }
+  .cursor span {
+    display: grid; place-items: center;
+    width: 112px; height: 112px; margin: -56px 0 0 -56px; padding: 12px; border-radius: 50%;
+    background: var(--accent); color: var(--on-accent);
+    font-size: 15px; text-align: center; line-height: 1.1;
+    transform: scale(0); transition: transform .45s var(--ease);
+  }
+  .cursor.is-on span { transform: none; }
+  [data-cursor] { cursor: none; }
+}
+
+/* ---------- Окно с видеообзором ---------- */
+.modal {
+  width: min(92vw, 1600px); max-width: none; padding: 0; border: 0; background: #000; border-radius: var(--radius); overflow: hidden;
+}
+.modal::backdrop { background: rgba(10, 10, 9, .85); backdrop-filter: blur(6px); }
+.modal__video { aspect-ratio: 16 / 9; object-fit: contain; }
+.modal__close {
+  position: absolute; top: 14px; right: 14px; z-index: 1;
+  width: 44px; height: 44px; border: 0; border-radius: 50%;
+  background: rgba(255,255,255,.9); font: inherit; font-size: 18px; cursor: pointer;
+}
+
+/* Без скриптов и при «уменьшить движение» всё видно сразу */
+html:not(.js) .line > span, html:not(.js) .reveal, html:not(.js) .pill { transform: none; opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .line > span, .reveal, .pill, .reel__frame, .card__media, .card__media video { transition: none !important; animation: none !important; transform: none !important; opacity: 1 !important; }
+  .card__media { clip-path: none !important; }
+  .badge { transition: none; }
+}
+
+/* ---------- Планшет и телефон (мобильную доводим позже) ---------- */
+@media (max-width: 900px) {
+  .card__row { row-gap: 14px; }
+  .card__title, .card__info { grid-column: 1 / -1; padding-right: 0; }
+  .about__label, .about__text, .about__list { grid-column: 1 / -1; }
+  .about__label { padding: 0 0 16px; }
+}
+@media (max-width: 600px) {
+  .top { --logo-full: 96px; --logo-small: 80px; padding-block: 14px; gap: 16px; }
+  .top__nav { display: none; }
+  .top__btn { margin-left: auto; padding: 11px 18px; font-size: 15px; }
+  .hero { min-height: 92svh; justify-content: center; padding-bottom: 24px; }
+  .hero__title { font-size: 12.2vw; line-height: .95; }
+  .hero__note { font-size: 17px; }
+  .reel__frame { aspect-ratio: 4 / 5; }
+  .card__media { aspect-ratio: 1; }
+  .card__media video { object-position: 40% 50%; }
+  .badge { --d: 52px; right: 12px; bottom: 12px; }
+  .contact__btn { width: 100%; text-align: center; }
+}
