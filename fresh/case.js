@@ -34,6 +34,22 @@
   }
 
   /*
+    Кнопка «Смотреть обзор» слева прячется, пока на экране обложка обзора,
+    и появляется, когда обложка ушла: два входа в одно видео рядом не нужны.
+  */
+  const cover = document.querySelector('.case-review');
+  const asideReview = document.querySelector('.case-aside__review');
+  if (cover && asideReview) {
+    const updReview = () => {
+      const r = cover.getBoundingClientRect();
+      asideReview.classList.toggle('is-away', r.bottom > 0 && r.top < innerHeight);
+    };
+    addEventListener('scroll', updReview, { passive: true });
+    addEventListener('resize', updReview);
+    updReview();
+  }
+
+  /*
     Круглое видео: играет, пока видно, вне экрана стоит. Кнопок нет.
     При «уменьшить движение» само не запускается — виден постер.
   */

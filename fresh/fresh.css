@@ -240,7 +240,7 @@ main > .about:first-child { padding-top: clamp(150px, 20svh, 240px); }
 .card__info { grid-column: 8 / 13; max-width: 30em; padding-top: .45em; }
 .card__desc { font-family: var(--font-text); font-weight: 400; line-height: 1.45; transition-delay: .05s; }
 /*
-  «Как устроено»: устроена так же, как «Смотреть разбор» — синий кружок и черная подпись.
+  «Как устроено»: устроена так же, как «Смотреть обзор» — синий кружок и черная подпись.
   Внутри кружка белый плюс; по нажатию он поворачивается в крестик, а под строкой плавно
   раскрываются 2–3 факта из видеообзора (высота анимируется через grid 0fr → 1fr).
   Наведение одно на обе кнопки: кружок чуть увеличивается, подпись синеет.
@@ -512,7 +512,7 @@ html:not(.js) .line > span, html:not(.js) .reveal, html:not(.js) .pill { transfo
 }
 
 /*
-  Строка действий внизу карточки: «Смотреть разбор» и «Как устроено +» рядом.
+  Строка действий внизу карточки: «Смотреть обзор» и «Как устроено +» рядом.
   Описание и место с размерами над ней остаются чистым текстом; факты раскрываются под строкой.
 */
 .card__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 32px; margin-top: 18px; }
@@ -537,8 +537,8 @@ html:not(.js) .line > span, html:not(.js) .reveal, html:not(.js) .pill { transfo
 a.card__media { display: block; }
 #khakasia .card__media { view-transition-name: case-khakasia; }
 @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
-.card__link { transition: color .3s; }
-.card__link:hover { color: var(--accent); }
+/* Заголовок карточки — ссылка на кейс: не красится, над ним тот же синий кружок «Посмотреть проект» */
+.card__link { color: inherit; text-decoration: none; }
 .card { scroll-margin-top: 120px; }
 
 /* Ссылка внутри обычного текста (например, на кейс из «Сколько стоит») */
@@ -554,3 +554,17 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 .lenis.lenis-stopped { overflow: hidden; }
+
+/*
+  Переносы и ровные строки.
+  Основной текст: браузер переносит слова по словарю русского языка (lang="ru")
+  и не оставляет одно короткое слово в последней строке абзаца.
+  Заголовки и крупные выносы не переносим — только выравниваем длину строк.
+  Старые браузеры просто покажут текст как раньше.
+*/
+.about__desc, .card__desc, .sect li p, .case-brief p, .case-p, .case-more__desc {
+  -webkit-hyphens: auto; hyphens: auto;
+  hyphenate-limit-chars: 7 3 3; /* переносим только слова от 7 букв, на строке остается минимум 3 */
+  text-wrap: pretty;
+}
+h1, h2, h3, .sect__lead, .case-lead, .contact__title, .case-more__title { text-wrap: balance; }

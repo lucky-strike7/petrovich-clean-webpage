@@ -38,18 +38,34 @@
 .case-aside { grid-column: 1 / 4; grid-row: 1 / 12; align-self: stretch; }
 .case-aside__back { margin-bottom: 28px; }
 .case-aside__in { position: sticky; top: 130px; }
+/* «О проекте» и «Что сделали»: серая подпись, под ней черные строки; кнопка обзора — внизу колонки */
 .case-aside__meta {
-  display: flex; flex-direction: column; gap: 2px;
-  font-family: var(--font-text); font-weight: 400; font-size: 16px; color: var(--muted);
+  display: flex; flex-direction: column; gap: 10px; margin-top: 8px; /* каждый факт своего рода — между ними немного воздуха */
+  font-family: var(--font-text); font-weight: 400; font-size: 16px; line-height: 1.5;
 }
-/* Отбивка между «где и какого размера» и фактами о проекте */
-.case-aside__gap { margin-top: 12px; }
-.case-aside__review { margin-top: 20px; }
-/* Что сделали: тихий список, как титры */
-.case-aside__label { margin-top: 36px; }
+.case-aside__review { margin-top: 28px; }
+/* Пока на экране обложка обзора, кнопка слева спрятана (место под нее остается, список не прыгает) */
+.case-aside__review { transition: opacity .4s var(--ease), visibility .4s; }
+.case-aside__review.is-away { opacity: 0; visibility: hidden; }
+.case-aside__meta + .case-aside__label { margin-top: 36px; }
 .case-aside__done { margin: 8px 0 0; padding: 0; list-style: none; font-family: var(--font-text); font-weight: 400; font-size: 16px; line-height: 1.5; }
 
 .case-main { grid-column: 4 / 9; }
+/* Обложка видеообзора: справа от «Задачи» и «Решения» (колонки 10–12, та же строка), синяя кнопка ▶ в центре, подпись под кадром */
+.case-brief { grid-row: 1; }
+.case-review { grid-column: 10 / 13; grid-row: 1; align-self: start; margin: 0; }
+.case-review__btn { position: relative; display: block; width: 100%; padding: 0; border: 0; border-radius: var(--radius); overflow: hidden; background: var(--line); cursor: pointer; }
+.case-review__btn img { display: block; width: 100%; height: auto; transition: transform 1s var(--ease); }
+.case-review__play {
+  position: absolute; left: 50%; top: 50%; display: grid; place-items: center;
+  width: clamp(60px, 5vw, 84px); aspect-ratio: 1; margin: 0; border-radius: 50%;
+  background: var(--accent); transform: translate(-50%, -50%); transition: transform .45s var(--ease);
+}
+.case-review__play svg { width: 64%; height: 64%; fill: var(--on-accent); } /* треугольник сам по центру круга */
+.case-review__btn:hover img { transform: scale(1.03); }
+.case-review__btn:hover .case-review__play { transform: translate(-50%, -50%) scale(1.12); }
+.case-review__btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.case-review__cap { margin-top: 12px; font-family: var(--font-text); font-weight: 400; font-size: 16px; color: var(--muted); }
 .case-wide { grid-column: 4 / 13; margin: 0; border-radius: var(--radius); overflow: hidden; background: var(--line); }
 
 /* Задача и решение — обычным текстом, подписи серым */
@@ -123,10 +139,11 @@ div.case-more__card:hover .case-more__title { color: inherit; }
 @media (max-width: 1100px) and (min-width: 901px) {
   .case-main { grid-column: 4 / 10; }
   .case-circle { grid-column: 10 / 13; }
+  .case-review { grid-column: 10 / 13; }
 }
 @media (max-width: 900px) {
   .case-grid { --row: 48px; }
-  .case-aside, .case-main, .case-wide, .case-circle { grid-column: 1 / -1; grid-row: auto; }
+  .case-aside, .case-main, .case-wide, .case-review, .case-circle { grid-column: 1 / -1; grid-row: auto; }
   .case-aside__back { display: none; } /* есть сверху и внизу экрана */
   .case-rfid { width: 100%; }
   .case-circle { justify-self: start; width: min(100%, 260px); }
