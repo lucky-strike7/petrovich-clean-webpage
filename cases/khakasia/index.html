@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Значок сайта: буква «П» на фирменном синем. SVG — основной, PNG и ICO — для старых браузеров и телефонов -->
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../../favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <meta name="theme-color" content="#F6F6F3">
+  <title>Интерактивный стол «Достопримечательности Хакасии» — экспонат для выставки «Россия» | Студия братьев Петрович</title>
+  <meta name="description" content="Интерактивный экспонат для стенда Республики Хакасия на выставке «Россия»: круглый стол с вращающимся кольцом и экраном. Посетитель выбирает одно из 10 мест — на экране появляется видеосюжет. Оформление, 3D-сцены, программирование, монтаж и поддержка.">
+  <!--
+    Адрес сайта ниже — временный (GitHub Pages). При переезде на свой хостинг заменить
+    во всех canonical, og:url, og:image и в блоке JSON-LD.
+  -->
+  <link rel="canonical" href="https://lucky-strike7.github.io/petrovich-clean-webpage/cases/khakasia/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Студия братьев Петрович">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:title" content="Интерактивный стол «Достопримечательности Хакасии»">
+  <meta property="og:description" content="Круглый стол с вращающимся кольцом и экраном для стенда Хакасии на выставке «Россия». 10 мест, о каждом — видеосюжет.">
+  <meta property="og:url" content="https://lucky-strike7.github.io/petrovich-clean-webpage/cases/khakasia/">
+  <meta property="og:image" content="https://lucky-strike7.github.io/petrovich-clean-webpage/cases/khakasia/media/interaktivnyj-stol-khakasiya-og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="image" href="media/interaktivnyj-stol-khakasiya.webp" imagesrcset="media/interaktivnyj-stol-khakasiya-960.webp 960w, media/interaktivnyj-stol-khakasiya.webp 1920w" imagesizes="100vw">
+  <link rel="stylesheet" href="../../fresh/fresh.css">
+  <link rel="stylesheet" href="../../fresh/case.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "Интерактивный стол «Достопримечательности Хакасии»",
+    "description": "Круглый стол с вращающимся кольцом и экраном в центре для стенда Республики Хакасия на выставке «Россия». Посетитель поворачивает кольцо, совмещает название места с указателем, и на экране появляется видеосюжет.",
+    "url": "https://lucky-strike7.github.io/petrovich-clean-webpage/cases/khakasia/",
+    "image": "https://lucky-strike7.github.io/petrovich-clean-webpage/cases/khakasia/media/interaktivnyj-stol-khakasiya.webp",
+    "inLanguage": "ru",
+    "genre": "Интерактивный экспонат",
+    "keywords": "интерактивный стол, интерактивный экспонат, выставка «Россия», стенд Хакасии, RFID, 3D-сцены",
+    "creator": { "@type": "Organization", "name": "Студия братьев Петрович", "url": "https://lucky-strike7.github.io/petrovich-clean-webpage/" },
+    "video": {
+      "@type": "VideoObject",
+      "name": "Достопримечательности Хакасии — видеообзор экспоната",
+      "description": "Как устроен интерактивный стол: кольцо с названиями мест, RFID-метки, 3D-сцены и движение камеры.",
+      "thumbnailUrl": "https://lucky-strike7.github.io/petrovich-clean-webpage/cases/khakasia/media/videoobzor-interaktivnyj-stol-khakasiya.jpg",
+      "contentUrl": "https://lucky-strike7.github.io/petrovich-clean-webpage/Video/01_Khakasia_Attractions.mp4",
+      "duration": "PT1M21S",
+      "uploadDate": "2024-09-30T05:03:31-07:00",
+      "embedUrl": "https://www.youtube.com/embed/wiF-vy0dEb0",
+      "url": "https://www.youtube.com/watch?v=wiF-vy0dEb0",
+      "inLanguage": "ru"
+    }
+  }
+  </script>
+</head>
+<body class="case-page">
+  <!--
+    Страница кейса: один экспонат. Тексты — из комплекта khakasia-case-package (case-text.txt),
+    формулировки не менять. Промежуточных заголовков нет: только «Задача» и «Решение»,
+    остальное разделено отступами и картинками.
+  -->
+  <header class="top">
+    <a class="top__logo" href="../../" aria-label="Студия братьев Петрович — на главную">
+      <img src="../../fresh/logo-vertical.svg" alt="Petrovich Brothers" width="244" height="121">
+    </a>
+    <nav class="top__nav">
+      <a href="../../#projects">Проекты</a>
+      <a href="../../#process">Как работаем</a>
+      <a href="../../#prices">Цены</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+    <a class="top__btn" href="mailto:art@petrovichbrothers.ru">Написать</a>
+  </header>
+
+  <main>
+    <!-- 1. Первый экран: название над картинкой, чтобы не закрывать графику крышки -->
+    <section class="case-hero">
+      <a class="case-back" href="../../#khakasia" data-back>← Все проекты</a>
+      <p class="case-kicker">Интерактивный экспонат</p>
+      <h1 class="case-hero__title">Достопримечательности Хакасии</h1>
+      <figure class="case-hero__media">
+        <img src="media/interaktivnyj-stol-khakasiya.webp" srcset="media/interaktivnyj-stol-khakasiya-960.webp 960w, media/interaktivnyj-stol-khakasiya.webp 1920w" sizes="100vw"
+             alt="Интерактивный стол «Достопримечательности Хакасии»: посетительница поворачивает кольцо с названиями мест, на круглом экране в центре — гора Сундуки на закате" width="1920" height="1080" fetchpriority="high">
+      </figure>
+    </section>
+
+    <!--
+      Тело кейса — три колонки по сетке 12:
+      1–3  стоит на месте при прокрутке: место, размеры и кнопка «Смотреть обзор» (всегда на виду);
+      4–8  основной текст — история экспоната; широкие картинки — 4–12;
+      10–12 устройство: абзацы про RFID и риг камеры рядом со своими иллюстрациями.
+      На телефоне все в одну колонку, кнопка обзора — плавающая таблетка внизу.
+    -->
+    <div class="case-grid">
+      <aside class="case-aside">
+        <div class="case-aside__in">
+          <a class="case-back case-aside__back" href="../../#khakasia" data-back>← Все проекты</a>
+          <p class="case-aside__meta"><span>Стенд Хакасии, выставка «Россия»</span><span>Диаметр 1500&nbsp;мм, высота 850&nbsp;мм</span><span class="case-aside__gap">10 мест, сюжет каждого около 40&nbsp;секунд</span><span>Компьютер в&nbsp;корпусе mini-ATX</span><span>Сделано за&nbsp;30&nbsp;дней</span></p>
+          <button class="card__review case-aside__review" type="button" data-video="../../Video/01_Khakasia_Attractions.mp4" data-title="Достопримечательности Хакасии — видеообзор">
+            <i class="card__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i>
+            <span>Смотреть обзор&nbsp;· 1:20</span>
+          </button>
+          <!-- Что сделала студия — пункты из фразы «Мы разработали оформление крышки…»; монтаж и поддержка — во всех кейсах -->
+          <h2 class="case-label case-aside__label">Что сделали</h2>
+          <ul class="case-aside__done">
+            <li>Оформление крышки</li>
+            <li>Видеоконтент</li>
+            <li>3D-сцены</li>
+            <li>Логика переключения</li>
+            <li>Программирование</li>
+            <li>Монтаж на&nbsp;выставке</li>
+            <li>Поддержка</li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Задача и решение -->
+      <div class="case-main case-brief reveal">
+        <h2 class="case-label">Задача</h2>
+        <p>Показать достопримечательности Хакасии в&nbsp;интерактивном формате. Дать посетителям возможность самостоятельно выбирать места и&nbsp;знакомиться с&nbsp;ними через видео и&nbsp;3D-сцены.</p>
+        <h2 class="case-label">Решение</h2>
+        <p>Круглый стол с&nbsp;вращающимся кольцом и&nbsp;экраном в&nbsp;центре. Посетитель поворачивает кольцо, совмещает название места с&nbsp;указателем, и&nbsp;на&nbsp;экране появляется соответствующая история.</p>
+      </div>
+
+      <p class="case-main case-lead reveal">Этот экспонат стал частью нашего большого проекта для стенда Республики Хакасия на&nbsp;выставке «Россия»</p>
+
+      <figure class="case-wide reveal">
+        <img src="media/interaktivnyj-stol-khakasiya-vid-sverhu.webp" srcset="media/interaktivnyj-stol-khakasiya-vid-sverhu-960.webp 960w, media/interaktivnyj-stol-khakasiya-vid-sverhu.webp 1920w" sizes="(max-width: 900px) 100vw, 75vw"
+             alt="Интерактивный стол сверху: на кольце названия 10 достопримечательностей Хакасии, короткие описания и петроглифы, на экране — Салбыкский курган" width="1920" height="1080" loading="lazy">
+      </figure>
+
+      <p class="case-main case-p reveal">На&nbsp;крышке стола расположены названия достопримечательностей Хакасии, короткие описания и&nbsp;графические символы. Посетитель поворачивает кольцо и&nbsp;совмещает выбранное место с&nbsp;указателем. На&nbsp;экране в&nbsp;центре появляется соответствующий видеосюжет.</p>
+
+      <!-- Места на крышке стола — как написано на самом столе -->
+      <div class="case-main case-places reveal">
+        <h2 class="case-label">10&nbsp;мест на&nbsp;столе</h2>
+        <ul>
+          <li>Гладенькая</li>
+          <li>Бородинская пещера</li>
+          <li>Улуг Хуртуях Тас</li>
+          <li>Туимский провал</li>
+          <li>Тропа предков</li>
+          <li>Сундуки</li>
+          <li>Салбыкские степи и&nbsp;курган</li>
+          <li>Озеро Шира</li>
+          <li>Оглахты</li>
+          <li>Ивановские озера</li>
+        </ul>
+      </div>
+
+      <figure class="case-wide reveal">
+        <img src="media/interaktivnyj-stol-khakasiya-koltso.webp" srcset="media/interaktivnyj-stol-khakasiya-koltso-960.webp 960w, media/interaktivnyj-stol-khakasiya-koltso.webp 1920w" sizes="(max-width: 900px) 100vw, 75vw"
+             alt="Руки посетительницы поворачивают кольцо интерактивного стола, красный указатель стоит у названия «Сундуки»" width="1920" height="1080" loading="lazy">
+      </figure>
+
+
+      <!--
+        Устройство. Правило то же, что выше: текст в центральной колонке, картинка широкая.
+        RFID-иллюстрация квадратная — крупно и целиком, высотой почти в окно, без доливки фона.
+        Справа только небольшое круглое видео рядом с текстом про камеру.
+      -->
+      <p class="case-main case-lead reveal">Чтобы переключать контент, нужно было надежно определять положение кольца</p>
+
+      <p class="case-main case-p reveal">Мы рассматривали энкодер, но&nbsp;у&nbsp;него две проблемы: механические части и&nbsp;сложность запоминания начального угла. Поэтому мы использовали RFID-метки.</p>
+
+      <figure class="case-wide case-rfid reveal">
+        <img class="case-rfid__img" src="media/interaktivnyj-stol-khakasiya-ustrojstvo-rfid.webp" srcset="media/interaktivnyj-stol-khakasiya-ustrojstvo-rfid-900.webp 900w, media/interaktivnyj-stol-khakasiya-ustrojstvo-rfid.webp 1400w" sizes="(max-width: 900px) 100vw, 75vw"
+             alt="Устройство интерактивного стола по слоям: крышка с вращающимся кольцом, экран, металлическая конструкция, кольцо с RFID-метками, считыватель и основание" width="1400" height="1050" loading="lazy">
+      </figure>
+
+      <p class="case-main case-p reveal">Все держится на&nbsp;металлической конструкции, верхняя часть которой свободно вращается. На&nbsp;ней закреплены 10&nbsp;карточек с&nbsp;RFID-чипами. Они проходят мимо неподвижного считывателя, он посылает сигнал в&nbsp;компьютер, и&nbsp;запускается нужный сюжет. Такое решение не&nbsp;требует механической связи кольца с&nbsp;датчиком. Это было важно для экспоната, который работал на&nbsp;выставке около полугода.</p>
+
+      <p class="case-main case-p reveal">Трехмерная карта Хакасии сделана в&nbsp;Cinema&nbsp;4D. Анимации всех меток мы настроили заранее, а&nbsp;камера летает между ними. Чтобы при каждом пролете она возвращалась в&nbsp;правильное положение, мы разработали риг: он управляет только высотой подъема камеры и&nbsp;точкой, на&nbsp;которую она смотрит. Так движение получается плавным, а&nbsp;внимание остается на&nbsp;объекте.</p>
+      <div class="case-circle reveal">
+        <video muted loop playsinline preload="metadata" poster="media/3d-karta-khakasii-cinema-4d-poster.webp" aria-label="Пролет камеры над 3D-картой Хакасии, сделанной в Cinema 4D">
+          <source src="media/3d-karta-khakasii-cinema-4d.webm" type="video/webm">
+          <source src="media/3d-karta-khakasii-cinema-4d.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+    <!-- Завершающий общий план -->
+    <figure class="case-img case-img--last reveal">
+      <img src="media/interaktivnyj-stol-khakasiya-na-vystavke.webp" srcset="media/interaktivnyj-stol-khakasiya-na-vystavke-960.webp 960w, media/interaktivnyj-stol-khakasiya-na-vystavke.webp 1920w" sizes="100vw"
+           alt="Интерактивный стол «Достопримечательности Хакасии» на выставке: на экране Салбыкские степи и курган с древними камнями" width="1920" height="1080" loading="lazy">
+    </figure>
+
+    <!-- Предложение: похожий экспонат для своего музея. Ведет к контактам внизу страницы -->
+    <section class="case-offer">
+      <p class="case-lead reveal">Сделаем похожий стол для вашего музея или выставки&nbsp;— со&nbsp;своими местами, картой и&nbsp;сюжетами</p>
+      <a class="sect__link reveal" href="#contact">Обсудить проект</a>
+    </section>
+
+    <!-- На телефоне возврат к проектам и обзор всегда внизу экрана -->
+    <div class="case-fabs">
+    <a class="case-fab case-fab--back" href="../../#khakasia" data-back aria-label="Все проекты">←</a>
+    <button class="case-fab" type="button" data-video="../../Video/01_Khakasia_Attractions.mp4" data-title="Достопримечательности Хакасии — видеообзор">
+      <i class="card__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i>
+      <span>Обзор&nbsp;· 1:20</span>
+    </button>
+    </div>
+
+    <!--
+      Весь стенд Хакасии: три экспоната (по субтитрам общего ролика MainCut.srt).
+      У Менгиров пока нет своей страницы — ссылка ведет к карточке на главной; когда кейс появится,
+      заменить на ../mengiry/. «Достижений Хакасии» на главной нет — карточка пока без ссылки.
+    -->
+    <section class="case-more">
+      <h2 class="case-label">Стенд Хакасии на&nbsp;выставке «Россия»</h2>
+      <div class="case-more__body">
+        <p class="case-p reveal">Для стенда Республики Хакасия мы сделали три интерактивных экспоната: этот стол, игру про менгиры и&nbsp;карту достижений республики. Для всех трех мы рисовали графику и&nbsp;писали код: он управляет поворотом круглого стола, подсветкой менгира и&nbsp;столом Displax, который распознает фишки.</p>
+        <ul class="case-more__list">
+          <li class="reveal">
+            <a class="case-more__card" href="../../#mengiry">
+              <span class="case-more__img"><img src="../../fresh/media/mengiry-render.jpg" alt="Интерактивный экспонат «Менгиры Хакасии»: копии древних каменных статуй и сенсорный экран с игрой" width="1920" height="1080" loading="lazy"></span>
+              <span class="case-more__title">Менгиры Хакасии</span>
+              <span class="case-more__desc">Головоломка на&nbsp;сенсорном экране: когда лицо менгира собрано, на&nbsp;статуе загорается подсветка</span>
+            </a>
+          </li>
+          <li class="reveal">
+            <div class="case-more__card">
+              <span class="case-more__img"><img src="media/displax-dostizheniya-khakasii.jpg" alt="Стол Displax «Достижения Хакасии»: посетитель ставит фишку на карту республики, место подсвечивается зеленым" width="1200" height="676" loading="lazy"></span>
+              <span class="case-more__title">Достижения Хакасии</span>
+              <span class="case-more__desc">Пять фишек с&nbsp;названиями достижений. Чем ближе фишка к&nbsp;нужному месту на&nbsp;карте, тем зеленее подсветка</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <p class="contact__lead reveal">Есть проект экспозиции или&nbsp;задача по&nbsp;отдельному экспонату? Пришлите материалы и&nbsp;сроки&nbsp;— обсудим. <span class="contact__note">(Даем скидку за&nbsp;срочность)</span></p>
+      <h2 class="contact__title">
+        <span class="line"><span>Давайте <span class="acc">сделаем</span></span></span>
+        <span class="line"><span><span class="acc">экспонат</span> <i class="pill"><video src="../../fresh/media/mengiry.mp4" poster="../../fresh/media/mengiry.jpg" muted loop playsinline autoplay></video></i></span></span>
+      </h2>
+      <div class="contact__links">
+        <div class="contact__ways">
+          <a class="contact__mail" href="mailto:art@petrovichbrothers.ru">art@petrovichbrothers.ru</a>
+          <a class="contact__mail" href="tel:+79151978652">+7&nbsp;915&nbsp;197-86-52</a>
+        </div>
+        <a class="contact__btn" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Написать в Telegram ↗</a>
+      </div>
+      <p class="contact__foot"><span>Telegram: <a href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Артем</a> · <a href="https://t.me/ArsenyPetrovich" target="_blank" rel="noopener">Арсений</a></span><span>Москва, ул.&nbsp;Бауманская, 6, стр.&nbsp;2</span></p>
+    </section>
+  </main>
+
+  <a class="badge" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener" aria-label="Обсудить проект в Telegram">
+    <span class="badge__label">Обсудить проект</span>
+    <span class="badge__arrow" aria-hidden="true">↗</span>
+  </a>
+
+  <div class="cursor" aria-hidden="true"><span></span></div>
+
+  <dialog class="modal" aria-label="Видео">
+    <button class="modal__close" type="button" aria-label="Закрыть">✕</button>
+    <video class="modal__video" controls playsinline></video>
+  </dialog>
+
+  <script src="../../fresh/vendor/lenis.min.js"></script>
+  <script src="../../fresh/fresh.js"></script>
+  <script src="../../fresh/case.js"></script>
+</body>
+</html>

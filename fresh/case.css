@@ -1,0 +1,158 @@
+/*
+  ---------- Страница кейса (cases/<экспонат>/) ----------
+  Подключается после fresh.css: те же шрифты, цвета, поля и сетка 12 колонок.
+*/
+
+.case-label { font-family: var(--font-text); font-weight: 400; font-size: 16px; color: var(--muted); }
+
+/* ---------- Первый экран: название над картинкой ---------- */
+.case-hero { padding: clamp(150px, 20svh, 240px) var(--pad) 0; }
+.case-back {
+  display: inline-block; margin-bottom: clamp(24px, 3vw, 48px);
+  font-family: var(--font-text); font-weight: 400; font-size: 17px; transition: color .3s;
+}
+.case-back:hover { color: var(--accent); }
+/* Тихая строка над названием: что это за проект (для людей и поисковиков) */
+.case-kicker { margin-bottom: 14px; font-family: var(--font-text); font-weight: 400; font-size: 20px; color: var(--muted); }
+.case-hero__title {
+  max-width: 12em; font-size: clamp(44px, 6.4vw, 120px); line-height: .98; letter-spacing: -.025em;
+}
+.case-hero__media {
+  margin: clamp(32px, 4vw, 64px) 0 0; border-radius: var(--radius); overflow: hidden;
+  background: var(--line); view-transition-name: case-khakasia; /* сюда «перетекает» картинка карточки с главной */
+}
+.case-hero__media img, .case-img img, .case-wide img { width: 100%; height: auto; }
+
+/*
+  ---------- Тело кейса: три колонки ----------
+  1–3 — стоит на месте (место, размеры, «Смотреть обзор»);
+  4–8 — основной текст, широкие картинки 4–12;
+  10–12 — устройство: пояснения рядом со своими иллюстрациями.
+*/
+.case-grid {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px;
+  --row: clamp(56px, 6vw, 112px); row-gap: var(--row); align-items: start;
+  padding: clamp(80px, 9vw, 160px) var(--pad) 0;
+}
+/* grid-row 1 / 12 — все одиннадцать строк тела кейса; добавили блок — увеличить */
+.case-aside { grid-column: 1 / 4; grid-row: 1 / 12; align-self: stretch; }
+.case-aside__back { margin-bottom: 28px; }
+.case-aside__in { position: sticky; top: 130px; }
+.case-aside__meta {
+  display: flex; flex-direction: column; gap: 2px;
+  font-family: var(--font-text); font-weight: 400; font-size: 16px; color: var(--muted);
+}
+/* Отбивка между «где и какого размера» и фактами о проекте */
+.case-aside__gap { margin-top: 12px; }
+.case-aside__review { margin-top: 20px; }
+/* Что сделали: тихий список, как титры */
+.case-aside__label { margin-top: 36px; }
+.case-aside__done { margin: 8px 0 0; padding: 0; list-style: none; font-family: var(--font-text); font-weight: 400; font-size: 16px; line-height: 1.5; }
+
+.case-main { grid-column: 4 / 9; }
+.case-wide { grid-column: 4 / 13; margin: 0; border-radius: var(--radius); overflow: hidden; background: var(--line); }
+
+/* Задача и решение — обычным текстом, подписи серым */
+.case-brief p { margin-top: 10px; font-family: var(--font-text); font-weight: 400; font-size: clamp(18px, 1.35vw, 23px); line-height: 1.4; }
+.case-brief p + .case-label { margin-top: 32px; }
+
+.case-lead { font-size: clamp(28px, 2.8vw, 48px); line-height: 1.08; letter-spacing: -.015em; }
+.case-p p + p { margin-top: 1em; }
+/* Пояснение сразу под выносом — ближе к нему, чем общий отступ между блоками */
+/* Места на столе: список размером основного текста, в две колонки, ближе к абзацу про крышку */
+.case-p + .case-places { margin-top: calc(32px - var(--row)); }
+.case-places ul {
+  display: grid; grid-template-rows: repeat(5, auto); grid-auto-flow: column; column-gap: 20px; margin: 10px 0 0; padding: 0; list-style: none;
+  font-family: var(--font-text); font-weight: 400; font-size: clamp(18px, 1.35vw, 23px); line-height: 1.5; /* как основной текст */
+}
+.case-places li { break-inside: avoid; }
+.case-lead + .case-p { margin-top: calc(28px - var(--row)); }
+.case-p { font-family: var(--font-text); font-weight: 400; font-size: clamp(18px, 1.35vw, 23px); line-height: 1.4; }
+
+/*
+  RFID-иллюстрация 4:3 (пустые поля сверху и снизу квадрата обрезаны). Левый край — по линии текста,
+  высота не больше 85% окна, чтобы картинка всегда помещалась на экране.
+*/
+.case-rfid { justify-self: start; width: min(100%, 85svh * 4 / 3); }
+
+/* Круглое видео: небольшой акцент справа от текста про камеру, без кнопок */
+.case-circle { grid-column: 10 / 13; align-self: center; justify-self: center; width: min(100%, 300px); }
+.case-circle video { width: 100%; height: auto; aspect-ratio: 1; border-radius: 50%; object-fit: cover; background: transparent; }
+.case-circle { transition-delay: .08s; }
+
+/* Завершающий общий план во всю ширину */
+.case-img { margin: 0 var(--pad); border-radius: var(--radius); overflow: hidden; background: var(--line); }
+.case-img--last { margin-top: clamp(120px, 14vw, 240px); }
+
+/* Предложение в конце кейса: крупная фраза по линии текста (колонки 4–9) и кнопка к контактам */
+.case-offer {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px;
+  padding: clamp(96px, 11vw, 180px) var(--pad) 0;
+}
+.case-offer > * { grid-column: 4 / 10; justify-self: start; }
+
+/* Плавающая кнопка обзора — только на телефоне и планшете */
+.case-fabs { display: none; }
+
+/* ---------- Еще из этой экспозиции ---------- */
+/* Стенд целиком: подпись слева (1–3), текст и карточки справа (4–12) — как блоки на главной */
+.case-more {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px;
+  padding: clamp(120px, 14vw, 220px) var(--pad);
+}
+.case-more > .case-label { grid-column: 1 / 4; padding-top: .2em; }
+.case-more__body { grid-column: 4 / 13; }
+.case-more__body > .case-p { max-width: 34em; }
+.case-more .case-label { font-size: 20px; color: var(--ink); }
+/* Карточка без ссылки (у экспоната пока нет страницы) — без эффектов наведения */
+div.case-more__card:hover img { transform: none; }
+div.case-more__card:hover .case-more__title { color: inherit; }
+.case-more__list {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 20px;
+  margin: clamp(40px, 4vw, 64px) 0 0; padding: 0; list-style: none;
+}
+.case-more__card { display: block; }
+.case-more__img { display: block; aspect-ratio: 3 / 2; border-radius: var(--radius); overflow: hidden; background: var(--line); }
+.case-more__img img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
+.case-more__card:hover img { transform: scale(1.04); }
+.case-more__title { display: block; margin-top: 16px; font-size: clamp(22px, 1.8vw, 30px); line-height: 1.1; letter-spacing: -.015em; transition: color .3s; }
+.case-more__card:hover .case-more__title { color: var(--accent); }
+.case-more__desc { display: block; margin-top: 6px; font-family: var(--font-text); font-weight: 400; font-size: 16px; color: var(--muted); }
+
+/* ---------- Планшет и телефон: одна колонка ---------- */
+@media (max-width: 1100px) and (min-width: 901px) {
+  .case-main { grid-column: 4 / 10; }
+  .case-circle { grid-column: 10 / 13; }
+}
+@media (max-width: 900px) {
+  .case-grid { --row: 48px; }
+  .case-aside, .case-main, .case-wide, .case-circle { grid-column: 1 / -1; grid-row: auto; }
+  .case-aside__back { display: none; } /* есть сверху и внизу экрана */
+  .case-rfid { width: 100%; }
+  .case-circle { justify-self: start; width: min(100%, 260px); }
+  .case-aside__in { position: static; }
+  .case-aside__review { display: none; } /* вместо нее — плавающая кнопка */
+  .case-more > .case-label, .case-more__body, .case-offer > * { grid-column: 1 / -1; }
+  .case-more > .case-label { padding: 0 0 20px; }
+
+  .case-fabs {
+    position: fixed; left: 12px; bottom: 12px; z-index: 15; display: flex; gap: 8px;
+    transform: translateY(160%); transition: transform .5s var(--ease);
+  }
+  .case-fabs.is-shown { transform: none; }
+  .case-fab {
+    display: flex; align-items: center; justify-content: center; gap: 10px; height: 52px; padding: 0 20px 0 11px;
+    border: 0; border-radius: 999px; background: var(--ink); color: var(--bg);
+    font-family: var(--font-text); font-weight: 400; font-size: 16px;
+  }
+  .case-fab--back { width: 52px; padding: 0; font-size: 22px; }
+}
+@media (max-width: 600px) {
+  .case-hero { padding-top: 120px; }
+  /* «Достопримечательности» — 21 буква: размер от ширины экрана, чтобы слово влезало целиком */
+  .case-hero__title { font-size: 8.2vw; }
+  .case-more__list { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .case-fabs { transition: none; }
+}

@@ -104,8 +104,14 @@
     playCards();
 
     top.classList.toggle('is-solid', y > 40);
-    top.classList.toggle('is-hidden', y > lastY && y > 200);
-    lastY = y;
+    /*
+      Шапка прячется при прокрутке вниз и возвращается при прокрутке вверх. Реагируем только на сдвиг
+      больше 8 px: плавная прокрутка в конце движения может чуть «качнуть» страницу назад, и без порога
+      шапка выскакивала при каждой остановке.
+    */
+    const dy = y - lastY;
+    if (y <= 200) { top.classList.remove('is-hidden'); lastY = y; }
+    else if (Math.abs(dy) > 8) { top.classList.toggle('is-hidden', dy > 0); lastY = y; }
 
     const c = contact.getBoundingClientRect();
     badge.classList.toggle('is-shown', y > vh * 0.6 && c.top > vh * 0.75);
@@ -138,11 +144,12 @@
     document.addEventListener('pointerleave', () => cursor.classList.remove('is-on'));
   }
 
-  /* Картинка у ссылки достижения (data-peek): кружок у курсора, идет за мышью без задержки */
+  /* Картинка у ссылки (data-peek): кружок у курсора, идет за мышью без задержки */
   /*
     Если у ссылки есть data-peek-video, поверх картинки в кружке играет короткий ролик по кругу.
-    Ролики подгружаются заранее, когда блок «Достижения студии» подъезжает к окну, —
-    к моменту наведения они уже в памяти. Пока ролик не пошел, видна картинка.
+    Ролики маленькие (вместе около 1,2 МБ), поэтому сразу после загрузки страницы, когда браузер
+    освободится, скачиваем их целиком в память. При наведении ролик берется из памяти и стартует
+    мгновенно, без докачки. Если навели раньше, чем он скачался, — грузится обычным способом.
   */
   const peek = document.querySelector('.peek');
   if (peek && fine) {
@@ -154,7 +161,6 @@
       if (a.dataset.peekVideo) {
         const v = document.createElement('video');
         Object.assign(v, { muted: true, loop: true, playsInline: true, preload: 'none' });
-        v.src = a.dataset.peekVideo;
         v.addEventListener('playing', () => v.classList.add('is-playing'));
         circle.appendChild(v);
         a.peekVideo = v;
@@ -163,7 +169,10 @@
         img.src = a.dataset.peek;
         peek.classList.add('is-on');
         const v = a.peekVideo;
-        if (v) { v.currentTime = 0; v.play().catch(() => {}); }
+        if (!v) return;
+        if (!v.getAttribute('src')) v.src = a.dataset.peekVideo; // еще не скачался — грузим как обычно
+        v.currentTime = 0;
+        v.play().catch(() => {});
       });
       a.addEventListener('pointerleave', () => {
         peek.classList.remove('is-on');
@@ -171,15 +180,21 @@
         if (v) { v.pause(); v.classList.remove('is-playing'); }
       });
     });
-    const awards = links[0]?.closest('section');
-    if (awards) {
-      const pio = new IntersectionObserver(([e]) => {
-        if (!e.isIntersecting) return;
-        links.forEach((a) => { if (a.peekVideo) { a.peekVideo.preload = 'auto'; a.peekVideo.load(); } });
-        pio.disconnect();
-      }, { rootMargin: '600px 0px' });
-      pio.observe(awards);
-    }
+    const warm = () => links.forEach((a) => {
+      if (!a.peekVideo) return;
+      fetch(a.dataset.peekVideo)
+        .then((r) => (r.ok ? r.blob() : Promise.reject()))
+        .then((blob) => {
+          const v = a.peekVideo;
+          if (v.getAttribute('src')) return; // уже успели навести и загрузить обычным способом
+          v.src = URL.createObjectURL(blob);
+          v.preload = 'auto';
+          v.load(); // первый кадр готов заранее
+        })
+        .catch(() => {});
+    });
+    const idle = () => (window.requestIdleCallback ? requestIdleCallback(warm, { timeout: 2000 }) : setTimeout(warm, 1000));
+    if (document.readyState === 'complete') idle(); else addEventListener('load', idle, { once: true });
     addEventListener('pointermove', (e) => { peek.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`; });
     addEventListener('scroll', () => peek.classList.remove('is-on'), { passive: true });
   }
@@ -194,6 +209,29 @@
     });
   });
 
+  /*
+    Плавная прокрутка (Lenis): колесико мыши двигает страницу с мягким «доездом».
+    На телефонах прокрутка остается родной. При «уменьшить движение» не включается.
+    Lenis прокручивает саму страницу, поэтому липкие колонки, появления и ролики работают как раньше.
+  */
+  const lenis = !reduce && window.Lenis ? new window.Lenis({ lerp: 0.1 }) : null;
+  if (lenis) {
+    const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
+    requestAnimationFrame(raf);
+    // Ссылки-якоря на этой же странице («Проекты», «Контакты», «Обсудить проект») — тоже плавно
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[href*="#"]');
+      if (!a || e.defaultPrevented) return;
+      const url = new URL(a.href, location.href);
+      if (url.pathname !== location.pathname || !url.hash) return;
+      const target = document.getElementById(decodeURIComponent(url.hash.slice(1)));
+      if (!target) return;
+      e.preventDefault();
+      lenis.scrollTo(target, { offset: -24, duration: 1.4 });
+      history.replaceState(null, '', url.hash);
+    });
+  }
+
   /* Окно с полным видеообзором */
   const modal = document.querySelector('.modal');
   const mv = modal.querySelector('video');
@@ -202,11 +240,12 @@
       mv.src = el.dataset.video;
       modal.setAttribute('aria-label', el.dataset.title || 'Видео');
       modal.showModal();
+      lenis?.stop(); // страница под окном не прокручивается
       mv.play().catch(() => {});
       cursor.classList.remove('is-on');
     });
   });
-  const close = () => { mv.pause(); mv.removeAttribute('src'); mv.load(); modal.close(); };
+  const close = () => { mv.pause(); mv.removeAttribute('src'); mv.load(); modal.close(); lenis?.start(); };
   modal.querySelector('.modal__close').addEventListener('click', close);
   modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
   modal.addEventListener('cancel', (e) => { e.preventDefault(); close(); });

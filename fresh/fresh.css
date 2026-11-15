@@ -1,15 +1,15 @@
-/* Черновик «свежее» (fresh.html). Шрифт тот же — Milligram, файлы из ../fonts */
+/* Черновик «свежее» (fresh.html). Шрифт тот же — Milligram, файлы из ../fonts: WOFF2 (легче), TTF — запасной */
 @font-face {
   font-family: "Milligram";
   font-weight: 500;
   font-display: swap;
-  src: local("Milligram Medium"), local("Milligram-Medium"), url("../fonts/Milligram-Medium.ttf") format("truetype");
+  src: local("Milligram Medium"), local("Milligram-Medium"), url("../fonts/Milligram-Medium.woff2") format("woff2"), url("../fonts/Milligram-Medium.ttf") format("truetype");
 }
 @font-face {
   font-family: "Milligram Text";
   font-weight: 400;
   font-display: swap;
-  src: local("Milligram Text"), local("MilligramText-Regular"), url("../fonts/MilligramText-Regular.ttf") format("truetype");
+  src: local("Milligram Text"), local("MilligramText-Regular"), url("../fonts/MilligramText-Regular.woff2") format("woff2"), url("../fonts/MilligramText-Regular.ttf") format("truetype");
 }
 :root {
   --bg: #f6f6f3;
@@ -528,3 +528,29 @@ html:not(.js) .line > span, html:not(.js) .reveal, html:not(.js) .pill { transfo
   .card__info { position: relative; }
   .card__how { position: absolute; left: 0; right: 0; top: 100%; }
 }
+
+/*
+  Карточка со страницей кейса: ролик и название — ссылки на кейс.
+  При переходе картинка карточки «перетекает» в первый экран кейса (View Transitions, Chrome и Safari).
+*/
+@view-transition { navigation: auto; }
+a.card__media { display: block; }
+#khakasia .card__media { view-transition-name: case-khakasia; }
+@media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+.card__link { transition: color .3s; }
+.card__link:hover { color: var(--accent); }
+.card { scroll-margin-top: 120px; }
+
+/* Ссылка внутри обычного текста (например, на кейс из «Сколько стоит») */
+.text-link { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; transition: color .3s; }
+.text-link:hover { color: var(--accent); }
+
+/*
+  ---------- Плавная прокрутка (Lenis, fresh/vendor/lenis.min.js) ----------
+  Страница «доезжает» после колесика мыши. Пока Lenis работает, встроенная плавная прокрутка
+  браузера (scroll-behavior: smooth) должна быть выключена, иначе они спорят.
+*/
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
