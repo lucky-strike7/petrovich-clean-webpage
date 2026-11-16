@@ -178,9 +178,22 @@
 
       <p class="case-main case-p reveal">Мы рассматривали энкодер, но&nbsp;у&nbsp;него две проблемы: механические части и&nbsp;сложность запоминания начального угла. Поэтому мы использовали RFID-метки.</p>
 
-      <figure class="case-wide case-rfid reveal">
-        <img class="case-rfid__img" src="media/interaktivnyj-stol-khakasiya-ustrojstvo-rfid.webp" srcset="media/interaktivnyj-stol-khakasiya-ustrojstvo-rfid-900.webp 900w, media/interaktivnyj-stol-khakasiya-ustrojstvo-rfid.webp 1400w" sizes="(max-width: 900px) 100vw, 75vw"
-             alt="Устройство интерактивного стола по слоям: крышка с вращающимся кольцом, экран, металлическая конструкция, кольцо с RFID-метками, считыватель и основание" width="1400" height="1050" loading="lazy">
+      <!--
+        Стол раскрывается по прокрутке: блок встает посреди экрана, кадры (96 шт.) меняются колесом,
+        в конце появляются подписи. Подписи — текстом на сайте, не в кадре.
+      -->
+      <figure class="case-scrub" data-frames="96" data-src="media/rfid-scroll/">
+        <div class="case-scrub__stage">
+          <canvas class="case-scrub__canvas" width="1280" height="1280" role="img"
+                  aria-label="Устройство интерактивного стола по слоям: крышка с вращающимся кольцом, экран, металлическая конструкция, карты с RFID-метками, считыватель и основание"></canvas>
+          <svg class="case-scrub__lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <!-- линии растут от детали к подписи -->
+            <path pathLength="1" d="M53.8 44.4L65.6 42.3H90"/>
+            <path pathLength="1" d="M46.7 44L34.4 50.4H9.8"/>
+          </svg>
+          <span class="case-scrub__label case-scrub__label--r">Карты с&nbsp;RFID-метками</span>
+          <span class="case-scrub__label case-scrub__label--l">Считыватель карт</span>
+        </div>
       </figure>
 
       <p class="case-main case-p reveal">Все держится на&nbsp;металлической конструкции, верхняя часть которой свободно вращается. На&nbsp;ней закреплены 10&nbsp;карточек с&nbsp;RFID-чипами. Они проходят мимо неподвижного считывателя, он посылает сигнал в&nbsp;компьютер, и&nbsp;запускается нужный сюжет. Такое решение не&nbsp;требует механической связи кольца с&nbsp;датчиком. Это было важно для экспоната, который работал на&nbsp;выставке около полугода.</p>

@@ -91,6 +91,36 @@
 */
 .case-rfid { justify-self: start; width: min(100%, 85svh * 4 / 3); }
 
+/*
+  Стол раскрывается по прокрутке. Высокий блок дает «ход» колесу, квадрат внутри
+  прилипает посреди экрана. Квадрат не шире колонки и не выше окна (минус шапка).
+  --p — прогресс подписей (0…1), его задает case.js.
+*/
+.case-scrub { grid-column: 4 / 13; margin: 0; height: 260svh; container-type: inline-size; }
+.case-scrub__stage {
+  --s: min(100cqi, 100svh - 150px);
+  position: sticky; top: calc(50svh - var(--s) / 2 + 40px);
+  width: var(--s); aspect-ratio: 1; container-type: inline-size;
+  border-radius: var(--radius); overflow: hidden; background: #633b29; /* средний цвет кадра — пока кадры грузятся */
+}
+.case-scrub__canvas { display: block; width: 100%; height: 100%; }
+.case-scrub__lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.case-scrub__lines path {
+  fill: none; stroke: #fff; stroke-width: .16; /* в долях квадрата 100×100: около 1px при 600px */
+  stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--p, 0));
+}
+.case-scrub__label {
+  position: absolute; bottom: calc(100% - 42.3% + .5em); /* над линией */
+  font-family: var(--font-text); font-weight: 500; font-size: clamp(11px, 1.9cqi, 17px); line-height: 1.2;
+  color: #fff; white-space: nowrap;
+  opacity: clamp(0, var(--p, 0) * 2 - 1, 1); /* текст проявляется во второй половине, когда линия почти дотянулась */
+}
+.case-scrub__label--r { right: 10%; }
+.case-scrub__label--l { left: 9.8%; bottom: calc(100% - 50.4% + .5em); }
+/* Без JS или при «уменьшить движение» — просто последний кадр с подписями, без прилипания */
+.case-scrub.is-static { height: auto; }
+.case-scrub.is-static .case-scrub__stage { position: relative; top: auto; --p: 1; }
+
 /* Круглое видео: небольшой акцент справа от текста про камеру, без кнопок */
 .case-circle { grid-column: 10 / 13; align-self: center; justify-self: center; width: min(100%, 300px); }
 .case-circle video { width: 100%; height: auto; aspect-ratio: 1; border-radius: 50%; object-fit: cover; background: transparent; }
@@ -146,6 +176,7 @@ div.case-more__card:hover .case-more__title { color: inherit; }
   .case-aside, .case-main, .case-wide, .case-review, .case-circle { grid-column: 1 / -1; grid-row: auto; }
   .case-aside__back { display: none; } /* есть сверху и внизу экрана */
   .case-rfid { width: 100%; }
+  .case-scrub { grid-column: 1 / -1; height: 220svh; }
   .case-circle { justify-self: start; width: min(100%, 260px); }
   .case-aside__in { position: static; }
   .case-aside__review { display: none; } /* вместо нее — плавающая кнопка */
