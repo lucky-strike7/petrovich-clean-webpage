@@ -628,6 +628,15 @@ h1, h2, h3, .sect__lead, .case-lead, .contact__title, .case-more__title { text-w
   /* …и цветом тела страницы (body): тело черное, все содержимое лежит на светлой подложке main */
   body { background: var(--ink); }
   main { background: var(--bg); }
+  /*
+    Страница не двигается пальцем вбок: ролики во всю ширину выходили за экран на доли пикселя,
+    и iPhone позволял таскать страницу вправо-влево. clip режет лишнее, не ломая прокрутку и прилипание.
+  */
+  html, body { overflow-x: clip; }
+  /* Safari на iPhone обрезку у html/body частично игнорирует — режем на main и запрещаем жест вбок
+     (вертикальная прокрутка и увеличение двумя пальцами остаются; ленты внутри листаются вбок сами) */
+  main { overflow-x: clip; touch-action: pan-y pinch-zoom; }
+  .facts--key, .price { touch-action: pan-x pan-y; }
   /* Шапка всегда со светлым фоном: по ней Safari красит верхнюю полоску (иначе бралось бы черное тело страницы) */
   .top { background: var(--bg); }
   /*
