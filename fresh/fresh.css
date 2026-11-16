@@ -81,9 +81,10 @@ video { width: 100%; height: 100%; object-fit: cover; }
 .top__btn {
   padding: 13px 24px; border-radius: 999px;
   background: var(--accent); color: var(--on-accent); line-height: 1;
-  transition: background-color .3s, opacity .3s, visibility .3s;
+  transition: background-color .3s;
 }
-/* У блока контактов кнопка в шапке не нужна — там уже большая «Написать в Telegram»: растворяется, логотип остается */
+/* У блока контактов кнопка в шапке не нужна — там уже большая «Написать в Telegram». Пропадает сразу:
+   при плавном растворении Safari на миг рисовал текст кнопки белым прямоугольником */
 .top.is-at-contact .top__btn { opacity: 0; visibility: hidden; pointer-events: none; }
 .top__btn:hover, .contact__btn:hover { background: color-mix(in srgb, var(--accent) 82%, #000); }
 
@@ -478,7 +479,8 @@ html:not(.js) .line > span, html:not(.js) .reveal, html:not(.js) .pill { transfo
   .card__media { aspect-ratio: 4 / 5; }
   /* Менгиры пока горизонтальные — квадрат, пока нет вертикального рендера */
   #mengiry .card__media { aspect-ratio: 1; } /* ролик для телефона уже квадратный */
-  .card__go { color: var(--accent); } /* «Смотреть проект →» у карточки с кейсом */
+  /* «Интерактивный стол · Смотреть проект →» — одна строка одним шрифтом и цветом, синяя только стрелка */
+  .card__arrow { color: var(--accent); }
   /* Длинное «Достопримечательности» переносится по &shy; в разметке */
   .card__title { font-size: min(8.2vw, 34px); }
 
