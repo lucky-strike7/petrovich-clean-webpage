@@ -62,8 +62,23 @@
     когда карточка целиком ушла с экрана; при возвращении снова играют с начала.
     data-pause="5" у ролика: проиграть один раз, постоять 5 секунд, повторить.
   */
-  const cards = [...document.querySelectorAll('.card__media video')].map((v) => {
-    const card = { v, box: v.closest('.card__media'), on: false, timer: 0 };
+  // На телефоне — легкий вертикальный постер (сам ролик выбирается через <source media>)
+  const phone = matchMedia('(max-width: 600px)').matches;
+  if (phone) {
+    document.querySelectorAll('video[data-poster-m]').forEach((v) => { v.poster = v.dataset.posterM; });
+  }
+  const cards = [...document.querySelectorAll('.card__media video')].map((v, i) => {
+    const card = { v, box: v.closest('.card__media'), on: false, timer: 0, first: i === 0 };
+    /*
+      Под роликом — его же первый кадр фоном: пока ролик стартует или перематывается,
+      iPhone на миг показывает пустой кадр, и сквозь него мелькал светлый фон страницы.
+    */
+    if (v.poster) card.box.style.background = `var(--line) url("${v.poster}") center / cover no-repeat`;
+    /*
+      На телефоне ролики легкие (1–3 МБ) — грузим их заранее, а не в момент запуска:
+      иначе первые доли секунды ролик подтормаживает, пока докачивается.
+    */
+    if (phone) v.preload = 'auto';
     const pause = parseFloat(v.dataset.pause) || 0;
     if (pause) {
       v.loop = false;
@@ -73,13 +88,34 @@
     }
     return card;
   });
+  /*
+    Достижения на телефоне — лента вбок с роликами. Ролик грузится, когда плитка подъезжает
+    к экрану (по вертикали или вбок), и играет, только пока плитка видна больше чем наполовину.
+  */
+  if (phone) {
+    const tileIO = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        const v = e.target;
+        if (e.isIntersecting && e.intersectionRatio >= 0.5) {
+          if (!v.src) v.src = v.dataset.src;
+          v.play().catch(() => {});
+        } else v.pause();
+      }
+    }, { threshold: [0, 0.5] });
+    document.querySelectorAll('.facts__vid[data-src]').forEach((v) => tileIO.observe(v));
+  }
+
   const playCards = () => {
     const vh = innerHeight;
     for (const c of cards) {
       const r = c.box.getBoundingClientRect();
       const mid = r.top + r.height / 2;
-      if (!c.on && mid < vh * 0.6 && r.bottom > 0) {
-        c.on = true; c.v.currentTime = 0; c.v.play().catch(() => {});
+      // На телефоне первая карточка (она видна уже на первом экране) играет сразу, без прокрутки
+      // Остальные на телефоне — как только карточка заметно въехала (верх выше 75% экрана), а не к середине
+      const ready = phone ? (c.first ? r.top < vh : r.top < vh * 0.75) && r.bottom > 0 : mid < vh * 0.6 && r.bottom > 0;
+      if (!c.on && ready) {
+        // Перематываем, только если ролик не в начале: лишняя перемотка дает пустой кадр
+        c.on = true; if (c.v.currentTime > 0) c.v.currentTime = 0; c.v.play().catch(() => {});
       } else if (c.on && (r.bottom < 0 || r.top > vh)) {
         c.on = false; clearTimeout(c.timer); c.v.pause(); c.v.currentTime = 0;
       }
@@ -91,6 +127,7 @@
   const top = document.querySelector('.top');
   const badge = document.querySelector('.badge');
   const contact = document.querySelector('.contact');
+  const contactBtn = document.querySelector('.contact__btn');
   let lastY = scrollY, ticking = false;
   const onScroll = () => {
     ticking = false;
@@ -110,11 +147,14 @@
       шапка выскакивала при каждой остановке.
     */
     const dy = y - lastY;
-    if (y <= 200) { top.classList.remove('is-hidden'); lastY = y; }
+    // На телефоне шапка не прячется: узкая полоска с «Написать» всегда наверху
+    if (phone || y <= 200) { top.classList.remove('is-hidden'); lastY = y; }
     else if (Math.abs(dy) > 8) { top.classList.toggle('is-hidden', dy > 0); lastY = y; }
 
     const c = contact.getBoundingClientRect();
     badge.classList.toggle('is-shown', y > vh * 0.6 && c.top > vh * 0.75);
+    // Большая «Написать в Telegram» целиком на экране — кнопку в шапке прячем (дублирует ее)
+    if (contactBtn) top.classList.toggle('is-at-contact', contactBtn.getBoundingClientRect().bottom < vh);
   };
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
   addEventListener('resize', onScroll);

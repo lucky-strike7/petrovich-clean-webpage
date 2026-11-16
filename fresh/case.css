@@ -152,7 +152,6 @@
 .case-more .case-label { font-size: 20px; color: var(--ink); }
 /* Карточка без ссылки (у экспоната пока нет страницы) — без эффектов наведения */
 div.case-more__card:hover img { transform: none; }
-div.case-more__card:hover .case-more__title { color: inherit; }
 .case-more__list {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 20px;
   margin: clamp(40px, 4vw, 64px) 0 0; padding: 0; list-style: none;
@@ -161,8 +160,8 @@ div.case-more__card:hover .case-more__title { color: inherit; }
 .case-more__img { display: block; aspect-ratio: 3 / 2; border-radius: var(--radius); overflow: hidden; background: var(--line); }
 .case-more__img img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
 .case-more__card:hover img { transform: scale(1.04); }
-.case-more__title { display: block; margin-top: 16px; font-size: clamp(22px, 1.8vw, 30px); line-height: 1.1; letter-spacing: -.015em; transition: color .3s; }
-.case-more__card:hover .case-more__title { color: var(--accent); }
+.case-more__title { display: block; margin-top: 16px; font-size: clamp(22px, 1.8vw, 30px); line-height: 1.1; letter-spacing: -.015em; }
+/* Название при наведении не меняет цвет — достаточно того, что картинка увеличивается */
 .case-more__desc { display: block; margin-top: 6px; font-family: var(--font-text); font-weight: 400; font-size: 16px; color: var(--muted); }
 
 /* ---------- Планшет и телефон: одна колонка ---------- */
@@ -184,7 +183,7 @@ div.case-more__card:hover .case-more__title { color: inherit; }
   .case-more > .case-label { padding: 0 0 20px; }
 
   .case-fabs {
-    position: fixed; left: 12px; bottom: 12px; z-index: 15; display: flex; gap: 8px;
+    position: fixed; left: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 15; display: flex; gap: 8px;
     transform: translateY(160%); transition: transform .5s var(--ease);
   }
   .case-fabs.is-shown { transform: none; }

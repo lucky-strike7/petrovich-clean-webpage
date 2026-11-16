@@ -81,8 +81,10 @@ video { width: 100%; height: 100%; object-fit: cover; }
 .top__btn {
   padding: 13px 24px; border-radius: 999px;
   background: var(--accent); color: var(--on-accent); line-height: 1;
-  transition: background-color .3s;
+  transition: background-color .3s, opacity .3s, visibility .3s;
 }
+/* У блока контактов кнопка в шапке не нужна — там уже большая «Написать в Telegram»: растворяется, логотип остается */
+.top.is-at-contact .top__btn { opacity: 0; visibility: hidden; pointer-events: none; }
 .top__btn:hover, .contact__btn:hover { background: color-mix(in srgb, var(--accent) 82%, #000); }
 
 /* ---------- Заголовки: строки быстро «набираются» снизу ---------- */
@@ -238,6 +240,9 @@ main > .about:first-child { padding-top: clamp(150px, 20svh, 240px); }
 }
 .card__title { grid-column: 1 / 8; padding-right: 40px; font-size: clamp(34px, 4.2vw, 72px); line-height: .98; letter-spacing: -.025em; }
 .card__info { grid-column: 8 / 13; max-width: 30em; padding-top: .45em; }
+.card__kind { display: none; } /* тип экспоната показываем только на телефоне */
+/* Название без balance: иначе «Достопримеча-тельности» переносится по &shy;, даже когда слово влезает */
+.card__title { text-wrap: wrap; }
 .card__desc { font-family: var(--font-text); font-weight: 400; line-height: 1.45; transition-delay: .05s; }
 /*
   «Как устроено»: устроена так же, как «Смотреть обзор» — синий кружок и черная подпись.
@@ -351,11 +356,12 @@ html:not(.js) .card__how ul { opacity: 1; }
 
 /* ---------- Контакты ---------- */
 .contact {
-  padding: clamp(80px, 10vw, 180px) var(--pad) clamp(48px, 6vw, 96px);
+  /* снизу + высота полоски «домой» на iPhone (viewport-fit=cover), чтобы контакты не уходили под нее */
+  padding: clamp(80px, 10vw, 180px) var(--pad) calc(clamp(48px, 6vw, 96px) + env(safe-area-inset-bottom, 0px));
   background: var(--ink);
   color: var(--bg);
 }
-.contact__lead { color: #9c9c96; margin-bottom: 24px; }
+.contact__lead { color: #9c9c96; margin-bottom: 24px; font-family: var(--font-text); font-weight: 400; } /* мелкий текст — текстовым начертанием, как везде */
 .contact__note { color: var(--bg); }
 .contact__title { font-size: var(--fs-h2); line-height: .95; letter-spacing: -.025em; }
 .contact__links {
@@ -367,7 +373,7 @@ html:not(.js) .card__how ul { opacity: 1; }
 .contact__mail { position: relative; font-size: clamp(22px, 2.6vw, 44px); letter-spacing: -.02em; }
 .contact__btn {
   display: inline-block; padding: 22px 36px; border-radius: 999px;
-  background: var(--accent); color: var(--on-accent); font-size: 18px;
+  background: var(--accent); color: var(--on-accent); font-size: 17px; /* как остальные кнопки */
 }
 /* Оба телеграма и адрес — тихой строкой внизу */
 .contact__foot {
@@ -453,16 +459,47 @@ html:not(.js) .line > span, html:not(.js) .reveal, html:not(.js) .pill { transfo
 @media (max-width: 1100px) and (min-width: 901px) {
   .top__nav { gap: 22px; }
 }
+/* Кнопка в шапке: на десктопе «Обсудить проект», на телефоне короче — «Написать» */
+.top__btn-short { display: none; }
 @media (max-width: 600px) {
-  .top { --logo-full: 96px; --logo-small: 80px; padding-block: 14px; gap: 16px; }
+  .top__btn-full { display: none; }
+  .top__btn-short { display: inline; }
+  /* Наверху логотип крупнее, после прокрутки уменьшается до прежних 96 px */
+  .top { --logo-full: 130px; --logo-small: 96px; padding-block: 14px; gap: 16px; }
+  /* Поля по бокам 24 px: текст в рамке, ролики карточек во всю ширину */
+  :root { --pad: 24px; }
   .top__nav { display: none; }
-  .top__btn { margin-left: auto; padding: 11px 18px; font-size: 15px; }
+  .top__btn { margin-left: auto; padding: 11px 18px; font-size: 15px; white-space: nowrap; }
   .hero { min-height: 92svh; justify-content: center; padding-bottom: 24px; }
   .hero__title { font-size: 12.2vw; line-height: .95; }
   .hero__note { font-size: 17px; }
   .reel__frame { aspect-ratio: 4 / 5; }
-  .card__media { aspect-ratio: 1; }
-  .card__media video { object-position: 40% 50%; }
+  /* Карточки на телефоне вертикальные 4:5: свои вертикальные ролики (source media в index.html) */
+  .card__media { aspect-ratio: 4 / 5; }
+  /* Менгиры пока горизонтальные — квадрат, пока нет вертикального рендера */
+  #mengiry .card__media { aspect-ratio: 1; } /* ролик для телефона уже квадратный */
+  .card__go { color: var(--accent); } /* «Смотреть проект →» у карточки с кейсом */
+  /* Длинное «Достопримечательности» переносится по &shy; в разметке */
+  .card__title { font-size: min(8.2vw, 34px); }
+
+  /* Первый экран: без подписи «Что мы делаем», заголовок сразу под шапкой и крупнее, стол ближе */
+  .about__label { display: none; }
+  /* Заголовок и абзац — одна группа (плотно), до стола одна пауза побольше */
+  main > .about:first-child { padding-top: 130px; }
+  .about { padding-bottom: 32px; }
+  .about__text { font-size: 40px; line-height: 1; max-width: none; }
+  .about__desc { margin-top: 18px; font-size: 16px; }
+  .about__more { display: none; } /* на телефоне текст заканчивается на «настройку на площадке» */
+
+  /* Карточка: ролик, название и тип экспоната. Описание, размеры и кнопки — в обзоре и кейсе */
+  .card__info { display: none; }
+  .card__kind { display: block; grid-column: 1 / -1; margin-top: -6px; font-family: var(--font-text); font-weight: 400; font-size: 16px; color: var(--muted); }
+  .card + .card { padding-top: 88px; }
+  /* Ролик во всю ширину экрана, без скруглений; название и подпись — с обычным отступом */
+  .card__media { --radius: 0px; margin-inline: calc(var(--pad) * -1); border-radius: 0; }
+  /* Раскрытие ролика из окошка на телефоне не нужно: ролик во всю ширину, раскрытие выглядит как рывок */
+  .card__media, .card__media.is-in { clip-path: none; transition: none; }
+  /* Касание карточки без кейса открывает видеообзор (значка на ролике нет) */
   .badge { --d: 52px; right: 12px; bottom: 12px; }
   .contact__btn { width: 100%; text-align: center; }
   .about__clients { font-size: 17px; }
@@ -493,6 +530,9 @@ html:not(.js) .line > span, html:not(.js) .reveal, html:not(.js) .pill { transfo
   На телефоне наведения нет — там тот же кружок стоит маленьким над названием.
 */
 .facts__thumb { display: none; }
+/* Плитка с роликом — только на телефоне (лента вбок); в остальных случаях обертка не влияет на раскладку */
+.facts__media { display: contents; }
+.facts__vid { display: none; }
 .peek { display: none; }
 @media (pointer: fine) {
   .peek { display: block; position: fixed; left: 0; top: 0; z-index: 30; pointer-events: none; }
@@ -568,3 +608,89 @@ html.lenis, html.lenis body { height: auto; }
   text-wrap: pretty;
 }
 h1, h2, h3, .sect__lead, .case-lead, .contact__title, .case-more__title { text-wrap: balance; }
+
+/*
+  Телефон: нижние блоки проще. Без фото братьев в «Как работаем», без кружков у достижений,
+  в черном блоке — только «Давайте сделаем экспонат» и контакты, без подводки и нижней строки.
+  Фраза о команде с переносами, чтобы правый край не был рваным.
+*/
+@media (max-width: 600px) {
+  /* Синий кружок «Обсудить проект» на телефоне не нужен: шапка с «Написать» всегда наверху */
+  .contact__lead, .contact__foot, .contact__title .pill, .badge { display: none; }
+  /*
+    Под черным блоком контактов при «оттягивании» страницы снизу и в нижней полосе Safari был светлый фон.
+    Фон холста (html) и тела страницы черные, содержимое лежит на светлой подложке main; верх Safari берет цвет из светлой шапки.
+  */
+  html { background: var(--ink); } /* без градиента: он повторялся за концом страницы и давал светлую линию под черным блоком */
+  /* Safari красит подложку под нижней адресной строкой цветом фона страницы (не градиентом) — поэтому сам цвет черный */
+  /* …и цветом тела страницы (body): тело черное, все содержимое лежит на светлой подложке main */
+  body { background: var(--ink); }
+  main { background: var(--bg); }
+  /* Шапка всегда со светлым фоном: по ней Safari красит верхнюю полоску (иначе бралось бы черное тело страницы) */
+  .top { background: var(--bg); }
+  /*
+    Достижения — лента вбок: квадратные плитки ~72% ширины, следующая выглядывает справа.
+    В плитке короткий ролик (запускается, когда плитка на экране, fresh.js), под ней название и текст.
+  */
+  .facts--key {
+    display: flex; gap: 16px; overflow-x: auto; overflow-y: hidden; /* только вбок: иначе ленту можно было таскать вверх-вниз */
+    scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+    margin-inline: calc(var(--pad) * -1); padding-inline: var(--pad); scroll-padding-inline: var(--pad); scrollbar-width: none;
+  }
+  .facts--key::-webkit-scrollbar { display: none; }
+  .facts--key > li { flex: 0 0 72%; scroll-snap-align: start; }
+  /*
+    «Сколько стоит» — такая же лента вбок. Плитка светлая, наверху мелко «от»,
+    внизу огромное число и «тыс. ₽» под ним; название и пояснение под плиткой.
+  */
+  .price {
+    display: flex; gap: 16px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+    margin-inline: calc(var(--pad) * -1); padding-inline: var(--pad); scroll-padding-inline: var(--pad); scrollbar-width: none;
+  }
+  .price::-webkit-scrollbar { display: none; }
+  /*
+    Плитки в лентах не «выезжают» по одной: те, что справа за краем экрана, стояли
+    смещенными вниз, пока их не долистаешь, и ряд выглядел неровным. Лента появляется целиком.
+  */
+  /*
+    На телефоне текст не «выезжает» при прокрутке: заголовки, абзацы и подписи сразу на месте.
+    Двигаются только ролики. Остается загорание слов первого заголовка (цвет, без движения).
+  */
+  .reveal, .reveal.is-in { opacity: 1; transform: none; transition: none; }
+  /* …и строки крупных заголовков («Давайте сделаем экспонат» и др.) тоже не выезжают — на телефоне ничего не выезжает */
+  .line > span { transform: none; transition: none; }
+  .price li { flex: 0 0 72%; flex-direction: column; justify-content: flex-start; align-items: stretch; gap: 0; padding: 0; border: 0; scroll-snap-align: start; }
+  .price b {
+    order: -1; display: flex; flex-direction: column; aspect-ratio: 1; margin-bottom: 16px; padding: 18px; /* квадрат, как плитки достижений */
+    background: #ebebe6; white-space: normal;
+  }
+  .price__from { font-family: var(--font-text); font-weight: 400; font-size: 16px; letter-spacing: 0; }
+  .price__num { margin-top: auto; font-size: 112px; line-height: .82; letter-spacing: -.05em; }
+  .price__unit { margin-top: 8px; font-size: 26px; }
+  .facts__media { display: block; position: relative; aspect-ratio: 1; margin-bottom: 16px; overflow: hidden; background: var(--line); }
+  .facts__media .facts__thumb, .facts__vid { display: block; position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; border-radius: 0; object-fit: cover; }
+  /* Фото братьев крупно: квадрат во всю ширину экрана без скруглений, над фразой о команде — как ролики карточек */
+  .process__head { gap: 28px; }
+  .process__photo { width: calc(100% + 2 * var(--pad)); max-width: none; margin-inline: calc(var(--pad) * -1); border-radius: 0; }
+  /* Подписи разделов: тонкая линия во всю ширину и под ней тихая серая подпись, как «О проекте» в кейсе */
+  .sect__label { padding: 14px 0 28px; border-top: 1px solid var(--line); font-size: 15px; color: var(--muted); }
+  .process .sect__lead { -webkit-hyphens: auto; hyphens: auto; hyphenate-limit-chars: 7 3 3; text-wrap: pretty; }
+  /* Вводные фразы разделов на телефоне в 7–8 строк: свободнее межстрочный, буквы не поджаты */
+  .sect__lead { line-height: 1.22; letter-spacing: 0; }
+  /*
+    Шкала текста на телефоне — 7 стилей:
+    40 крупный · 32 название проекта · 26 вводная фраза · 20 подзаголовок · 16 текст · 15 подпись · 112 цифра цены
+  */
+  .contact__title { font-size: 40px; line-height: 1; }
+  .contact__mail { font-size: 26px; line-height: 1.22; }
+  /*
+    Кнопки — одна система: высота 56 px, текстовый шрифт 16 px.
+    Главная («Написать в Telegram») — синяя во всю ширину, второстепенная («Смотреть на YouTube») — с обводкой по тексту.
+  */
+  .contact__btn, .sect__link {
+    display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;
+    height: 56px; padding: 0 28px; font-family: var(--font-text); font-weight: 400; font-size: 16px; line-height: 1;
+  }
+  .contact__btn { display: flex; }
+}
+

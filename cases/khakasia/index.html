@@ -2,7 +2,8 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- viewport-fit=cover: страница уходит под нижнюю панель Safari и полоску «домой» на iPhone, внизу черный блок, а не белое поле -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <!-- Значок сайта: буква «П» на фирменном синем. SVG — основной, PNG и ICO — для старых браузеров и телефонов -->
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <link rel="icon" href="../../favicon-32.png" sizes="32x32" type="image/png">
@@ -71,8 +72,8 @@
       <a href="../../#projects">Проекты</a>
       <a href="../../#process">Студия</a>
     </nav>
-    <!-- «Написать» ведет к блоку контактов внизу (почта, телефон), а не сразу в почтовую программу -->
-    <a class="top__btn" href="#contact">Написать</a>
+    <!-- «Обсудить проект» (на телефоне короче — «Написать») ведет к блоку контактов внизу, а не сразу в почтовую программу -->
+    <a class="top__btn" href="#contact"><span class="top__btn-full">Обсудить проект</span><span class="top__btn-short">Написать</span></a>
   </header>
 
   <main>
