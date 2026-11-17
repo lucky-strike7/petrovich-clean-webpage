@@ -80,8 +80,8 @@
     <!-- 1. Первый экран: название над картинкой, чтобы не закрывать графику крышки -->
     <section class="case-hero">
       <a class="case-back" href="../../#khakasia" data-back>← Все проекты</a>
-      <p class="case-kicker">Интерактивный стол для выставки «Россия» на&nbsp;ВДНХ</p>
-      <h1 class="case-hero__title">Достопримечательности Хакасии</h1>
+      <p class="case-kicker">Интерактивный стол для выставки<br class="br-m"> «Россия» на&nbsp;ВДНХ</p>
+      <h1 class="case-hero__title">Достопримеча&shy;тельности Хакасии</h1>
       <figure class="case-hero__media">
         <img src="media/interaktivnyj-stol-khakasiya.webp" srcset="media/interaktivnyj-stol-khakasiya-960.webp 960w, media/interaktivnyj-stol-khakasiya.webp 1920w" sizes="100vw"
              alt="Интерактивный стол «Достопримечательности Хакасии»: посетительница поворачивает кольцо с названиями мест, на круглом экране в центре — гора Сундуки на закате" width="1920" height="1080" fetchpriority="high">
@@ -107,7 +107,7 @@
           <ul class="case-aside__done">
             <li>Оформление крышки</li>
             <li>Видеоконтент</li>
-            <li>3D-сцены</li>
+            <li><span class="nw">3D-сцены</span></li>
             <li>Логика переключения</li>
             <li>Программирование</li>
             <li>Монтаж на&nbsp;выставке</li>
@@ -123,7 +123,7 @@
       <!-- Задача и решение -->
       <div class="case-main case-brief reveal">
         <h2 class="case-label">Задача</h2>
-        <p>Показать достопримечательности Хакасии в&nbsp;интерактивном формате. Дать посетителям возможность самостоятельно выбирать места и&nbsp;знакомиться с&nbsp;ними через видео и&nbsp;3D-сцены.</p>
+        <p>Показать достопримечательности Хакасии в&nbsp;интерактивном формате. Дать посетителям возможность самостоятельно выбирать места и&nbsp;знакомиться с&nbsp;ними через видео и&nbsp;<span class="nw">3D-сцены</span>.</p>
         <h2 class="case-label">Решение</h2>
         <p>Круглый интерактивный стол с&nbsp;вращающимся кольцом и&nbsp;экраном в&nbsp;центре. Посетитель поворачивает кольцо, совмещает название места с&nbsp;указателем, и&nbsp;на&nbsp;экране появляется соответствующая история.</p>
       </div>
@@ -183,7 +183,13 @@
         Стол раскрывается по прокрутке: блок встает посреди экрана, кадры (96 шт.) меняются колесом,
         в конце появляются подписи. Подписи — текстом на сайте, не в кадре.
       -->
-      <figure class="case-scrub" data-frames="96" data-src="media/rfid-scroll/">
+      <figure class="case-scrub" data-frames="96" data-src="media/rfid-scroll/" data-v="2">
+        <!--
+          На телефоне стол прилипает под шапкой и занимает весь экран до низа: кадр обрезан по бокам
+          под пропорцию экрана (case.js), подписи деталей — внутри кадра, линии к ним пересчитываются там же.
+          На десктопе обертка не влияет на раскладку (display: contents).
+        -->
+        <div class="case-scrub__pin">
         <div class="case-scrub__stage">
           <canvas class="case-scrub__canvas" width="1280" height="1280" role="img"
                   aria-label="Устройство интерактивного стола по слоям: крышка с вращающимся кольцом, экран, металлическая конструкция, карты с RFID-метками, считыватель и основание"></canvas>
@@ -192,14 +198,31 @@
             <path pathLength="1" d="M53.8 44.4L65.6 42.3H90"/>
             <path pathLength="1" d="M46.7 44L34.4 50.4H9.8"/>
           </svg>
-          <span class="case-scrub__label case-scrub__label--r">Карты с&nbsp;RFID-метками</span>
-          <span class="case-scrub__label case-scrub__label--l">Считыватель карт</span>
+          <!-- Те же линии для вертикального кадра на телефоне: x пересчитан под обрезку 75% ширины -->
+          <svg class="case-scrub__lines case-scrub__lines--m" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path pathLength="1" d="M55.1 44.4L78 27H96"/>
+            <path pathLength="1" d="M45.6 44L25 55.5H4"/>
+          </svg>
+          <span class="case-scrub__label case-scrub__label--r">Карты<br class="br-m"> с&nbsp;RFID-<br class="br-m">метками</span>
+          <span class="case-scrub__label case-scrub__label--l">Считыватель<br class="br-m"> карт</span>
+        </div>
         </div>
       </figure>
 
       <p class="case-main case-p reveal">Все держится на&nbsp;металлической конструкции, верхняя часть которой свободно вращается. На&nbsp;ней закреплены 10&nbsp;карточек с&nbsp;RFID-чипами. Они проходят мимо неподвижного считывателя, он посылает сигнал в&nbsp;компьютер, и&nbsp;запускается нужный сюжет. Такое решение не&nbsp;требует механической связи кольца с&nbsp;датчиком. Это было важно для экспоната, который работал на&nbsp;выставке около полугода.</p>
 
-      <p class="case-main case-p reveal">Трехмерная карта Хакасии сделана в&nbsp;Cinema&nbsp;4D. Анимации всех меток мы настроили заранее, а&nbsp;камера летает между ними. Чтобы при каждом пролете она возвращалась в&nbsp;правильное положение, мы разработали риг: он управляет только высотой подъема камеры и&nbsp;точкой, на&nbsp;которую она смотрит. Так движение получается плавным, а&nbsp;внимание остается на&nbsp;объекте.</p>
+      <!--
+        Комментарий разработчика — отдельный жанр, не вынос: светлая плашка, цитата, ниже автор с фото. Тексты — из документа «Мини текст на сайт». Фото — круг 48 px (media/arseniy-petrovich.jpg, 240×240, тень слева обрезана).
+      -->
+      <figure class="case-main case-dev reveal">
+        <blockquote class="case-dev__quote">При сборке стола выяснилось, что металлический каркас мешает работе <span class="nw">RFID-датчика</span>. Чтобы добиться стабильного считывания, пришлось дополнительно экранировать датчик и&nbsp;провода</blockquote>
+        <figcaption class="case-dev__author">
+          <span class="case-dev__photo"><img src="media/arseniy-petrovich.jpg" alt="" width="240" height="240" loading="lazy"></span>
+          <span><b>Арсений Пе́трович</b><span>Технический директор</span></span>
+        </figcaption>
+      </figure>
+
+      <p class="case-main case-p case-3d reveal">Трехмерная карта Хакасии сделана в&nbsp;Cinema&nbsp;4D. Анимации всех меток мы настроили заранее, а&nbsp;камера летает между ними. Чтобы при каждом пролете она возвращалась в&nbsp;правильное положение, мы разработали риг: он управляет только высотой подъема камеры и&nbsp;точкой, на&nbsp;которую она смотрит. Так движение получается плавным, а&nbsp;внимание остается на&nbsp;объекте.</p>
       <div class="case-circle reveal">
         <video muted loop playsinline preload="metadata" poster="media/3d-karta-khakasii-cinema-4d-poster.webp" aria-label="Пролет камеры над 3D-картой Хакасии, сделанной в Cinema 4D">
           <source src="media/3d-karta-khakasii-cinema-4d.webm" type="video/webm">
@@ -258,7 +281,7 @@
     </section>
 
     <section class="contact" id="contact">
-      <p class="contact__lead reveal">Есть проект экспозиции или&nbsp;задача по&nbsp;отдельному экспонату? Пришлите материалы и&nbsp;сроки&nbsp;— обсудим. <span class="contact__note">(Даем скидку за&nbsp;срочность)</span></p>
+      <p class="contact__lead reveal">Есть проект экспозиции или&nbsp;задача по&nbsp;отдельному экспонату?<br>Пришлите материалы и&nbsp;сроки&nbsp;— обсудим. Даем скидку за&nbsp;срочность</p>
       <h2 class="contact__title">
         <span class="line"><span>Давайте <span class="acc">сделаем</span></span></span>
         <span class="line"><span><span class="acc">экспонат</span> <i class="pill"><video src="../../fresh/media/mengiry.mp4" poster="../../fresh/media/mengiry.jpg" muted loop playsinline autoplay></video></i></span></span>
@@ -267,10 +290,12 @@
         <div class="contact__ways">
           <a class="contact__mail" href="mailto:art@petrovichbrothers.ru">art@petrovichbrothers.ru</a>
           <a class="contact__mail" href="tel:+79151978652">+7&nbsp;915&nbsp;197-86-52</a>
+          <!-- Канал с разборами проектов. Позже — отдельная страница «Медиа» -->
+          <a class="contact__mail" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener">YouTube&nbsp;↗</a>
         </div>
         <a class="contact__btn" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Написать в Telegram ↗</a>
       </div>
-      <p class="contact__foot"><span>Telegram: <a href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Артем</a> · <a href="https://t.me/ArsenyPetrovich" target="_blank" rel="noopener">Арсений</a></span><span>Москва, ул.&nbsp;Бауманская, 6, стр.&nbsp;2</span></p>
+      <p class="contact__foot"><span>Москва, ул.&nbsp;Бауманская, 6, стр.&nbsp;2</span></p>
     </section>
   </main>
 

@@ -19,7 +19,7 @@
 }
 .case-hero__media {
   margin: clamp(32px, 4vw, 64px) 0 0; border-radius: var(--radius); overflow: hidden;
-  background: var(--line); view-transition-name: case-khakasia; /* сюда «перетекает» картинка карточки с главной */
+  background: var(--line);
 }
 .case-hero__media img, .case-img img, .case-wide img { width: 100%; height: auto; }
 
@@ -34,8 +34,8 @@
   --row: clamp(56px, 6vw, 112px); row-gap: var(--row); align-items: start;
   padding: clamp(80px, 9vw, 160px) var(--pad) 0;
 }
-/* grid-row 1 / 12 — все одиннадцать строк тела кейса; добавили блок — увеличить */
-.case-aside { grid-column: 1 / 4; grid-row: 1 / 12; align-self: stretch; }
+/* grid-row 1 / 13 — все двенадцать строк тела кейса; добавили блок — увеличить */
+.case-aside { grid-column: 1 / 4; grid-row: 1 / 13; align-self: stretch; }
 .case-aside__back { margin-bottom: 28px; }
 .case-aside__in { position: sticky; top: 130px; }
 /* «О проекте» и «Что сделали»: серая подпись, под ней черные строки; кнопка обзора — внизу колонки */
@@ -121,6 +121,25 @@
 .case-scrub.is-static { height: auto; }
 .case-scrub.is-static .case-scrub__stage { position: relative; top: auto; --p: 1; }
 
+/*
+  Комментарий разработчика — свой стиль, не путать с крупными выносами:
+  светлая плашка, цитата текстовым шрифтом чуть крупнее основного, ниже автор с круглым фото.
+*/
+.case-dev { margin: 0; padding: clamp(24px, 2.4vw, 40px); border-radius: var(--radius); background: #ecece6; }
+.case-dev__quote {
+  margin: 0; font-family: var(--font-text); font-weight: 400;
+  font-size: clamp(19px, 1.5vw, 26px); line-height: 1.35;
+}
+.case-dev__quote::before { content: "«"; } .case-dev__quote::after { content: "»"; }
+.case-dev__author { display: flex; align-items: center; gap: 12px; margin-top: 22px; font-family: var(--font-text); font-weight: 400; font-size: 15px; line-height: 1.3; }
+.case-dev__author b { display: block; font-weight: 400; color: var(--ink); }
+.case-dev__author b + span { color: var(--muted); }
+.case-dev__photo {
+  flex: none; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; overflow: hidden;
+  background: var(--ink); color: var(--bg); font-size: 15px; letter-spacing: .02em;
+}
+.case-dev__photo img { width: 100%; height: 100%; object-fit: cover; }
+
 /* Круглое видео: небольшой акцент справа от текста про камеру, без кнопок */
 .case-circle { grid-column: 10 / 13; align-self: center; justify-self: center; width: min(100%, 300px); }
 .case-circle video { width: 100%; height: auto; aspect-ratio: 1; border-radius: 50%; object-fit: cover; background: transparent; }
@@ -194,11 +213,118 @@ div.case-more__card:hover img { transform: none; }
   }
   .case-fab--back { width: 52px; padding: 0; font-size: 22px; }
 }
+/* Только для телефона: перенос в подписи над названием, фраза над столом, линии подписей под вертикальный кадр */
+.br-m, .case-scrub__lines--m { display: none; }
+.case-scrub__pin { display: contents; } /* на десктопе обертка не участвует в раскладке — прилипает сам квадрат */
+
+/*
+  ---------- Телефон: те же правила, что на главной ----------
+  Шкала текста главной (40 · 26 · 20 · 16 · 15), картинки во всю ширину без скруглений,
+  подписи разделов — линия и серая подпись 15 px, без плавающих кнопок, без повторов.
+*/
 @media (max-width: 600px) {
+  /* Первый экран: подпись, название 40, главная картинка квадратом во всю ширину */
   .case-hero { padding-top: 120px; }
-  /* «Достопримечательности» — 21 буква: размер от ширины экрана, чтобы слово влезало целиком */
-  .case-hero__title { font-size: 8.2vw; }
-  .case-more__list { grid-template-columns: 1fr; }
+  .case-back { display: none; } /* назад — логотипом и кнопкой браузера */
+  .case-kicker { margin-bottom: 12px; font-size: 15px; }
+  .case-hero__title { font-size: 40px; line-height: 1; -webkit-hyphens: manual; hyphens: manual; }
+  .case-hero__media, .case-wide, .case-img, .case-review__btn {
+    margin-inline: calc(var(--pad) * -1); border-radius: 0;
+  }
+  .case-hero__media { margin-top: 28px; aspect-ratio: 1; }
+  .case-hero__media img { height: 100%; object-fit: cover; object-position: 46% 50%; } /* в квадрате — посетительница и стол целиком */
+  .case-img { margin-inline: 0; }
+  /*
+    Один отступ между блоками — 48 px, как между блоками внутри тела кейса (--row):
+    от главной картинки до «О проекте», от последнего абзаца до общего плана, от плана до «Стенда Хакасии».
+    Плотнее только пары «вынос — его абзац» и «абзац — список мест»: это один смысловой блок.
+  */
+  .case-grid { padding-top: 48px; }
+  .case-img--last { margin-top: 48px; }
+  .case-review__btn { width: calc(100% + 2 * var(--pad)); } /* кнопка с width: 100% сама не растягивается */
+  /* Обзор играет на месте обложки (case.js): тот же размер, во всю ширину */
+  .case-review__video { display: block; width: calc(100% + 2 * var(--pad)); margin-inline: calc(var(--pad) * -1); aspect-ratio: 16 / 9; background: #000; }
+
+  /* Подписи разделов — как на главной: тонкая линия и серая подпись 15 px */
+  .case-label { font-size: 15px; color: var(--muted); } /* без линий: в кейсе подписей много, линии превращали страницу в тетрадь */
+  .case-more .case-label { font-size: 15px; color: var(--muted); }
+
+  /* «О проекте»: три главных факта серым; «Что сделали» — одной строкой через точку */
+  .case-aside__meta { gap: 4px; margin-top: 14px; font-size: 16px; line-height: 1.45; }
+  .case-aside__meta span:nth-child(3), .case-aside__meta span:nth-child(4) { display: none; } /* 10 мест и компьютер — есть в тексте ниже */
+  .case-aside__meta + .case-aside__label { margin-top: 32px; }
+  .case-aside__done { margin-top: 14px; font-size: 16px; line-height: 1.45; }
+  .case-aside__done li { display: inline; }
+  .case-aside__done li:not(:last-child)::after { content: "\00a0· "; }
+
+  /* Текст 16, вводные фразы 26 — как на главной */
+  .case-brief p, .case-p, .case-places ul { font-size: 16px; line-height: 1.45; }
+  .case-brief p { margin-top: 14px; }
+  .case-lead { font-size: 26px; line-height: 1.22; letter-spacing: 0; }
+  .case-places ul { margin-top: 14px; }
+
+  .br-m { display: inline; }
+
+  /*
+    Разлетающийся стол на весь экран: прилипает под шапкой и занимает экран до низа, вокруг ничего нет.
+    Кадры обрезаются по бокам под пропорцию экрана (case.js). Меняться начинают, когда стол показался
+    на 80%, еще до прилипания.
+  */
+  .case-scrub { margin-inline: calc(var(--pad) * -1); height: 240svh; }
+  .case-scrub__pin { display: block; position: sticky; top: var(--hdr, 92px); } /* --hdr — высота шапки, ставит case.js */
+  /* Подпись над столом — как подписи разделов (линия и серый текст 15 px); линия по полям текста */
+  .case-scrub__stage { position: relative; top: auto; width: 100%; height: calc(100svh - var(--hdr, 92px)); aspect-ratio: auto; border-radius: 0; }
+  /*
+    Без коричневой подложки: Safari на iPhone красит нижнюю панель цветом фона прилипшего блока
+    у края экрана — панель становилась коричневой и оставалась такой до конца страницы.
+    Прозрачный фон — панель берет черный цвет страницы, как на главной.
+  */
+  .case-scrub__stage { background: transparent; }
+  .case-scrub__lines { display: none; }
+  .case-scrub__lines--m { display: block; }
+  .case-scrub__label { font-size: 13px; }
+  .case-scrub__label--r { right: 4%; bottom: calc(100% - 27% + .5em); text-align: right; } /* сверху, в три строки — над кольцом рамы */ /* в две строки — на свободном фоне по бокам от конструкции */
+  .case-scrub__label--l { left: 4%; bottom: calc(100% - 55.5% + .5em); } /* выше серого блока компьютера */
+
+  /* Комментарий разработчика: цитата 20 px — подзаголовок из шкалы главной */
+  .case-dev { padding: 20px; }
+  .case-dev__quote { font-size: 20px; line-height: 1.3; }
+  /* Обзор — сразу после «О проекте», перед «Задачей»: иначе до видео большой блок текста */
+  .case-aside { order: -2; }
+  .case-review { order: -1; }
+  /* Круглое видео с картой — после абзаца про 3D-карту: так оно не стоит вплотную к цитате Арсения */
+  .case-3d { order: 1; }
+  .case-circle { order: 2; }
+
+  /* Без блока-предложения: ниже и так «Давайте сделаем экспонат» */
+  .case-offer { display: none; }
+  /*
+    Возврат к проектам — синяя круглая «←» внизу слева, видна все время (кнопку «Обзор» не показываем:
+    обзор и так второй блок страницы). Чтобы она не закрывала «Написать в Telegram», у контактов
+    снизу добавлен запас на высоту кнопки — страница докручивается дальше и кнопка Telegram встает выше.
+  */
+  .case-fabs, .case-fabs.is-shown { transform: none; transition: none; }
+  .case-fabs .case-fab:not(.case-fab--back) { display: none; }
+  /* 78 px, по левой границе текста и с таким же отступом снизу */
+  .case-fabs { left: var(--pad); bottom: calc(var(--pad) + env(safe-area-inset-bottom, 0px)); }
+  .case-fab--back { width: 78px; height: 78px; font-size: 44px; line-height: 1; background: var(--accent); color: var(--on-accent); }
+  /* Запас у контактов: кнопка 78 + отступ 24 + воздух — «Написать в Telegram» в конце встает выше стрелки */
+  .case-page .contact { padding-bottom: calc(48px + 120px + env(safe-area-inset-bottom, 0px)); }
+
+  /* Стенд Хакасии: экспонаты лентой вбок квадратными плитками, как достижения на главной */
+  .case-more { padding-top: 48px; padding-bottom: 88px; }
+  .case-more > .case-label { padding: 0; }
+  .case-more__body { margin-top: 18px; }
+  .case-more__list {
+    display: flex; gap: 16px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory;
+    margin: 32px calc(var(--pad) * -1) 0; padding-inline: var(--pad); scroll-padding-inline: var(--pad);
+    scrollbar-width: none; touch-action: pan-x pan-y;
+  }
+  .case-more__list::-webkit-scrollbar { display: none; }
+  .case-more__list > li { flex: 0 0 72%; scroll-snap-align: start; }
+  .case-more__img { aspect-ratio: 1; border-radius: 0; }
+  .case-more__title { margin-top: 14px; font-size: 20px; }
+  .case-more__desc { font-size: 15px; line-height: 1.4; }
 }
 @media (prefers-reduced-motion: reduce) {
   .case-fabs { transition: none; }

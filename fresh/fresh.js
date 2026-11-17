@@ -3,12 +3,20 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = matchMedia('(pointer: fine)').matches;
 
-  /* Появление: строки заголовков, абзацы, картинки карточек */
+  /* Появление: строки заголовков, абзацы */
   const io = new IntersectionObserver((entries) => {
     for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
   }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.hero__title, .projects__title, .contact__title, .reveal, .card__media')
+  document.querySelectorAll('.hero__title, .projects__title, .contact__title, .reveal')
     .forEach((el) => io.observe(el));
+  /*
+    Картинка карточки начинает раскрываться, как только ее край показался в окне, —
+    медленно и по времени, а не по прокрутке: иначе она сначала стояла, а потом щелкала.
+  */
+  const mediaIO = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-in'); mediaIO.unobserve(e.target); }
+  }, { threshold: 0 });
+  document.querySelectorAll('.card__media').forEach((el) => mediaIO.observe(el));
   /*
     Подпись карточки проявляется целиком, как только ее верх показался в окне: название, описание,
     место с размерами и кнопки «Смотреть обзор» / «Как устроено» — вместе, а не по одному.

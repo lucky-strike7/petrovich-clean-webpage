@@ -107,8 +107,8 @@
 
       <article class="card" id="mengiry">
         <div class="card__media" data-cursor="Смотреть обзор" data-video="Video/02_Khakasia_Menhirs.mp4" data-title="Менгиры Хакасии — видеообзор">
-          <!-- На телефоне — легкий квадратный ролик (до вертикального рендера) -->
-          <video class="auto" data-pause="5" poster="fresh/media/mengiry-render.jpg" data-poster-m="fresh/media/mengiry-render-m.jpg" muted loop playsinline preload="metadata"><source src="fresh/media/mengiry-render-m.mp4" type="video/mp4" media="(max-width: 600px)"><source src="fresh/media/mengiry-render.mp4" type="video/mp4"></video>
+          <!-- На телефоне — вертикальный рендер 1080×1350 (rndr/Mengiry01_hires_vertical.mov) -->
+          <video class="auto" data-pause="5" poster="fresh/media/mengiry-render.jpg" data-poster-m="fresh/media/mengiry-render-m.jpg?v=2" muted loop playsinline preload="metadata"><source src="fresh/media/mengiry-render-m.mp4?v=2" type="video/mp4" media="(max-width: 600px)"><source src="fresh/media/mengiry-render.mp4" type="video/mp4"></video>
         </div>
         <div class="card__row">
           <h3 class="card__title reveal">Менгиры Хакасии</h3>
@@ -191,6 +191,34 @@
     </section>
 
     <!--
+      «Страна Света-2025» — отдельный крупный блок, не карточка проекта: мэппинг, а не интерактивный экспонат.
+      Устроен как карточка проекта, но на черном фоне; ролик — петля из трех кусков фильма (стекающий фасад, гроза, девушка с фонарем).
+      Полный фильм открывается в том же окне, что и видеообзоры. Подпись про ПФКИ обязательна.
+    -->
+    <section class="event" id="strana-sveta" aria-labelledby="event-title">
+      <article class="card">
+        <div class="card__media" data-cursor="Смотреть мэппинг" data-video="Video/strana-sveta-2025.mp4" data-title="«Устьянские легенды» — мэппинг на конкурсе «Страна Света-2025»">
+          <video poster="fresh/media/strana-loop.jpg?v=2" data-poster-m="fresh/media/strana-loop-m.jpg?v=2" muted loop playsinline preload="metadata"><source src="fresh/media/strana-loop-m.mp4?v=2" type="video/mp4" media="(max-width: 600px)"><source src="fresh/media/strana-loop.mp4?v=2" type="video/mp4"></video>
+        </div>
+        <div class="card__row">
+          <h3 class="card__title reveal" id="event-title">Страна Света-2025 <span class="event__place">Третье место</span></h3>
+          <!-- Только на телефоне, вместо описания и кнопки, как у карточек проектов; касание открывает фильм -->
+          <p class="card__kind" data-video="Video/strana-sveta-2025.mp4" data-title="«Устьянские легенды» — мэппинг на конкурсе «Страна Света-2025»">Третье место на&nbsp;конкурсе современного медиаискусства «Страна Света-2025» при поддержке ПФКИ&nbsp;· Смотреть мэппинг&nbsp;<span class="card__arrow">→</span></p>
+          <div class="card__info">
+            <p class="card__desc reveal">Мэппинг на&nbsp;фасаде в&nbsp;Санкт-Петербурге перед тысячами зрителей. Рассказали легенды села Устье под Вологдой.</p>
+            <p class="card__meta reveal"><span>Конкурс современного медиаискусства «Страна Света-2025» при поддержке ПФКИ</span></p>
+            <div class="card__actions">
+              <button class="card__review reveal" type="button" data-video="Video/strana-sveta-2025.mp4" data-title="«Устьянские легенды» — мэппинг на конкурсе «Страна Света-2025»">
+                <i class="card__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i>
+                <span>Смотреть мэппинг&nbsp;· 2:36</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!--
       Новые блоки после карточек. Все по одной сетке с «Что мы делаем»: тихая подпись слева
       (колонки 1–3), содержание справа (4–12).
     -->
@@ -203,7 +231,7 @@
         </div>
         <ol class="steps">
           <li class="reveal"><h3>Концепция</h3><p>Можем сами придумать концепцию экспоната или экспозиции. Если у&nbsp;музея уже есть архитектурная концепция, развиваем ее.</p></li>
-          <li class="reveal"><h3>Контент и&nbsp;дизайн</h3><p>Сценарий, интерфейсы, 3D-графика и&nbsp;анимация. Берем информацию об&nbsp;экспозиции и&nbsp;экспонате и&nbsp;перерабатываем ее под каждый экран.</p></li>
+          <li class="reveal"><h3>Контент и&nbsp;дизайн</h3><p>Сценарий, интерфейсы, <span class="nw">3D-графика</span> и&nbsp;анимация. Берем информацию об&nbsp;экспозиции и&nbsp;экспонате и&nbsp;перерабатываем ее под каждый экран.</p></li>
           <li class="reveal"><h3>Инженерия и&nbsp;код</h3><p>Датчики, механика, контроллеры и&nbsp;разработка программ. Например, на&nbsp;тачскринах отключаем системные жесты, чтобы посетитель не&nbsp;вышел из&nbsp;экспоната.</p></li>
           <li class="reveal"><h3>Запуск</h3><p>Настраиваем на&nbsp;площадках по&nbsp;всей России. Для долгих экспозиций делаем панель управления и&nbsp;обучаем сотрудников.</p></li>
         </ol>
@@ -246,7 +274,7 @@
     </section>
 
     <section class="contact" id="contact">
-      <p class="contact__lead reveal">Есть проект экспозиции или&nbsp;задача по&nbsp;отдельному экспонату? Пришлите материалы и&nbsp;сроки&nbsp;— обсудим. <span class="contact__note">(Даем скидку за&nbsp;срочность)</span></p>
+      <p class="contact__lead reveal">Есть проект экспозиции или&nbsp;задача по&nbsp;отдельному экспонату?<br>Пришлите материалы и&nbsp;сроки&nbsp;— обсудим. Даем скидку за&nbsp;срочность</p>
       <h2 class="contact__title">
         <span class="line"><span>Давайте <span class="acc">сделаем</span></span></span>
         <span class="line"><span><span class="acc">экспонат</span> <i class="pill"><video src="fresh/media/mengiry.mp4" poster="fresh/media/mengiry.jpg" muted loop playsinline autoplay></video></i></span></span>
@@ -255,10 +283,12 @@
         <div class="contact__ways">
           <a class="contact__mail" href="mailto:art@petrovichbrothers.ru">art@petrovichbrothers.ru</a>
           <a class="contact__mail" href="tel:+79151978652">+7&nbsp;915&nbsp;197-86-52</a>
+          <!-- Канал с разборами проектов. Позже — отдельная страница «Медиа» -->
+          <a class="contact__mail" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener">YouTube&nbsp;↗</a>
         </div>
         <a class="contact__btn" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Написать в Telegram ↗</a>
       </div>
-      <p class="contact__foot"><span>Telegram: <a href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Артем</a> · <a href="https://t.me/ArsenyPetrovich" target="_blank" rel="noopener">Арсений</a></span><span>Москва, ул.&nbsp;Бауманская, 6, стр.&nbsp;2</span></p>
+      <p class="contact__foot"><span>Москва, ул.&nbsp;Бауманская, 6, стр.&nbsp;2</span></p>
     </section>
   </main>
 

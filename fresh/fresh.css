@@ -222,7 +222,8 @@ main > .about:first-child { padding-top: clamp(150px, 20svh, 240px); }
   overflow: hidden;
   background: var(--line);
   clip-path: inset(4% 3% round var(--radius));
-  transition: clip-path 1.4s var(--ease);
+  /* Раскрытие с первого появления: плавный разгон и плавное торможение, без щелчка в начале */
+  transition: clip-path 2.4s cubic-bezier(.4, 0, .2, 1);
 }
 .card__media.is-in { clip-path: inset(0 round var(--radius)); }
 
@@ -307,6 +308,8 @@ html:not(.js) .card__how ul { opacity: 1; }
 .card__review:hover span { color: var(--accent); }
 
 /* Текст только для поиска и экранных дикторов */
+/* Не переносить по дефису: «3D-сцены», «3D-графика» */
+.nw { white-space: nowrap; }
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .about__clients { grid-column: 4 / 13; margin-top: 10px; font-family: var(--font-text); font-weight: 400; font-size: 20px; color: var(--muted); }
 
@@ -477,8 +480,6 @@ html:not(.js) .line > span, html:not(.js) .reveal, html:not(.js) .pill { transfo
   .reel__frame { aspect-ratio: 4 / 5; }
   /* Карточки на телефоне вертикальные 4:5: свои вертикальные ролики (source media в index.html) */
   .card__media { aspect-ratio: 4 / 5; }
-  /* Менгиры пока горизонтальные — квадрат, пока нет вертикального рендера */
-  #mengiry .card__media { aspect-ratio: 1; } /* ролик для телефона уже квадратный */
   /* «Интерактивный стол · Смотреть проект →» — одна строка одним шрифтом и цветом, синяя только стрелка */
   .card__arrow { color: var(--accent); }
   /* Длинное «Достопримечательности» переносится по &shy; в разметке */
@@ -573,12 +574,24 @@ html:not(.js) .line > span, html:not(.js) .reveal, html:not(.js) .pill { transfo
 
 /*
   Карточка со страницей кейса: ролик и название — ссылки на кейс.
-  При переходе картинка карточки «перетекает» в первый экран кейса (View Transitions, Chrome и Safari).
+  Переход между страницами — плавная смена через фон (View Transitions, Chrome и Safari).
 */
 @view-transition { navigation: auto; }
 a.card__media { display: block; }
-#khakasia .card__media { view-transition-name: case-khakasia; }
 @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+/*
+  Постановка перехода: страница быстро гаснет в фон, новая плавно проявляется. Ничего не двигается.
+  Под обеими страницами — сплошной фон сайта, чтобы между ними не было просвета.
+  Шапка одинаковая на всех страницах и стоит на месте.
+*/
+::view-transition { background: var(--bg); }
+.top { view-transition-name: site-top; }
+::view-transition-group(site-top) { animation: none; }
+::view-transition-old(site-top), ::view-transition-new(site-top) { animation: none; }
+::view-transition-old(root) { animation: vt-fade-out .2s cubic-bezier(.4, 0, 1, 1) both; }
+::view-transition-new(root) { animation: vt-fade-in .6s cubic-bezier(.25, .1, .25, 1) .15s both; }
+@keyframes vt-fade-in { from { opacity: 0; } }
+@keyframes vt-fade-out { to { opacity: 0; } }
 /* Заголовок карточки — ссылка на кейс: не красится, над ним тот же синий кружок «Посмотреть проект» */
 .card__link { color: inherit; text-decoration: none; }
 .card { scroll-margin-top: 120px; }
@@ -651,6 +664,14 @@ h1, h2, h3, .sect__lead, .case-lead, .contact__title, .case-more__title { text-w
   .facts--key::-webkit-scrollbar { display: none; }
   .facts--key > li { flex: 0 0 72%; scroll-snap-align: start; }
   /*
+    Порядок в ленте на телефоне: «Страна Света» здесь третьей — она и так крупным блоком выше.
+    В разметке: Страна Света, Среда, HBO, Херсонес, Хакасия. На ленте: HBO, Среда, Страна Света, Херсонес, Хакасия.
+  */
+  .facts--key > li:nth-child(1) { order: 3; }
+  .facts--key > li:nth-child(2) { order: 2; }
+  .facts--key > li:nth-child(3) { order: 1; }
+  .facts--key > li:nth-child(n+4) { order: 4; }
+  /*
     «Сколько стоит» — такая же лента вбок. Плитка светлая, наверху мелко «от»,
     внизу огромное число и «тыс. ₽» под ним; название и пояснение под плиткой.
   */
@@ -705,3 +726,27 @@ h1, h2, h3, .sect__lead, .case-lead, .contact__title, .case-more__title { text-w
   .contact__btn { display: flex; }
 }
 
+
+/*
+  ---------- «Страна Света-2025»: карточка проекта на черном ----------
+  Та же раскладка, что у карточек проектов (ролик 2:1 в рамке, название слева, описание справа),
+  но весь блок черный от края до края. Цвета карточки переопределены переменными.
+  Награда — «3 место» серой второй строкой под названием.
+*/
+.event {
+  --ink: #f6f6f3; --muted: #8f8f89; --line: #262624;
+  margin-bottom: clamp(120px, 14vw, 220px);
+  padding: clamp(80px, 9vw, 160px) var(--pad) clamp(88px, 10vw, 180px);
+  background: #111110; color: var(--ink);
+}
+/* Награда — серой второй строкой под названием, тем же размером */
+.event__place { display: block; color: #3a3a36; white-space: nowrap; } /* всегда второй строкой под названием */
+
+@media (max-width: 600px) {
+  /* Как карточки проектов на телефоне: сверху сразу ролик, под ним название и одна серая строка (в ней подпись про ПФКИ) */
+  .event { margin-bottom: 88px; padding: 0 var(--pad) 48px; }
+  .event .card__kind { cursor: pointer; }
+  /* «Третье место» на телефоне уходит в серую строку; стрелка здесь белая, а не синяя */
+  .event__place { display: none; }
+  .event .card__arrow { color: var(--ink); }
+}

@@ -60,17 +60,35 @@
     const stage = scrub.querySelector('.case-scrub__stage');
     const ctx = canvas.getContext('2d');
     const n = +scrub.dataset.frames;
-    const size = canvas.getBoundingClientRect().width * (devicePixelRatio || 1) > 800 ? 1280 : 720;
-    const url = (i) => `${scrub.dataset.src}${size}/${String(i).padStart(2, '0')}.webp`;
+    /*
+      Телефон: стол на весь экран — прилипает под шапкой (--hdr — ее высота) и занимает экран до низа.
+      Квадратные кадры обрезаются по бокам под пропорцию экрана (crop — доля ширины квадрата),
+      линии к подписям деталей пересчитываются под эту обрезку.
+    */
+    const phone = matchMedia('(max-width: 600px)').matches;
+    const pin = scrub.querySelector('.case-scrub__pin');
+    if (phone) scrub.style.setProperty('--hdr', `${document.querySelector('.top').offsetHeight}px`);
+    const crop = phone ? Math.min(1, stage.clientWidth / stage.clientHeight) : 1;
+    const box = canvas.getBoundingClientRect();
+    const size = Math.max(box.width, box.height) * (devicePixelRatio || 1) > 800 ? 1280 : 720;
+    // data-v — версия кадров: меняем при новом рендере, чтобы браузер не показал старые из кэша
+    const url = (i) => `${scrub.dataset.src}${size}/${String(i).padStart(2, '0')}.webp${scrub.dataset.v ? `?v=${scrub.dataset.v}` : ''}`;
     const imgs = new Array(n);
     let started = false, cur = -1;
-    canvas.width = canvas.height = size;
+    canvas.width = Math.round(size * crop); canvas.height = size;
+    if (phone) {
+      // Точки деталей — из квадратного кадра (как в десктопных линиях), x пересчитан под обрезку
+      const X = (x) => (50 + (x - 50) / crop).toFixed(1);
+      const [toCards, toReader] = scrub.querySelectorAll('.case-scrub__lines--m path');
+      toCards.setAttribute('d', `M${X(53.8)} 44.4L78 27H96`);
+      toReader.setAttribute('d', `M${X(46.7)} 44L25 55.5H4`);
+    }
 
     const draw = (i) => {
       let k = i;
       while (k >= 0 && !(imgs[k] && imgs[k].complete && imgs[k].naturalWidth)) k--;
       if (k < 0) return;
-      if (k !== cur) { ctx.drawImage(imgs[k], 0, 0, size, size); cur = k; }
+      if (k !== cur) { ctx.drawImage(imgs[k], -size * (1 - crop) / 2, 0, size, size); cur = k; }
     };
     const load = (i) => new Promise((res) => {
       const im = new Image(); im.decoding = 'async'; im.src = url(i); imgs[i] = im;
@@ -95,7 +113,14 @@
           await Promise.all(Array.from({ length: 6 }, worker));
         });
       }
-      const p = clamp(-r.top / (r.height - innerHeight));
+      let p;
+      if (phone) {
+        // Старт — когда стол показался на 80% (еще до прилипания), конец — когда обертка отлипает
+        const ph = pin.offsetHeight, top = parseFloat(getComputedStyle(pin).top) || 0;
+        const start = innerHeight - stage.offsetTop - stage.offsetHeight * 0.8;
+        const end = top + ph - r.height;
+        p = clamp((start - r.top) / (start - end));
+      } else p = clamp(-r.top / (r.height - innerHeight));
       draw(Math.round(clamp(p / 0.82) * (n - 1)));
       stage.style.setProperty('--p', clamp((p - 0.72) / 0.2).toFixed(3));
     }
@@ -103,6 +128,27 @@
     addEventListener('resize', upd);
     upd();
   });
+
+  /*
+    Обзор на телефоне играет прямо на месте обложки, с обычными кнопками плеера, —
+    без черного окна поверх страницы: на телефоне оно не крупнее самой обложки.
+    Кнопку-обложку заменяем копией (так снимается обработчик окна из fresh.js).
+  */
+  if (matchMedia('(max-width: 600px)').matches) {
+    document.querySelectorAll('.case-review__btn').forEach((btn) => {
+      const copy = btn.cloneNode(true);
+      btn.replaceWith(copy);
+      copy.addEventListener('click', () => {
+        const v = document.createElement('video');
+        v.className = 'case-review__video';
+        v.src = copy.dataset.video;
+        v.poster = copy.querySelector('img').currentSrc || copy.querySelector('img').src;
+        v.controls = true; v.playsInline = true;
+        copy.replaceWith(v);
+        v.play().catch(() => {});
+      });
+    });
+  }
 
   /*
     Круглое видео: играет, пока видно, вне экрана стоит. Кнопок нет.
