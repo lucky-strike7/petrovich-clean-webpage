@@ -160,7 +160,11 @@
     else if (Math.abs(dy) > 8) { top.classList.toggle('is-hidden', dy > 0); lastY = y; }
 
     const c = contact.getBoundingClientRect();
-    badge.classList.toggle('is-shown', y > vh * 0.6 && c.top > vh * 0.75);
+    /*
+      «Обсудить проект» на экране всегда одна: шапка видна — кнопка в шапке, шапка уехала — синий шарик в углу,
+      у контактов — ни той ни другой (там своя большая кнопка).
+    */
+    badge.classList.toggle('is-shown', top.classList.contains('is-hidden') && c.top > vh * 0.75);
     // Большая «Написать в Telegram» целиком на экране — кнопку в шапке прячем (дублирует ее)
     if (contactBtn) top.classList.toggle('is-at-contact', contactBtn.getBoundingClientRect().bottom < vh);
   };
