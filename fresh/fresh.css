@@ -651,7 +651,7 @@ h1, h2, h3, .sect__lead, .case-lead, .contact__title, .case-more__title { text-w
   main { overflow-x: clip; touch-action: pan-y pinch-zoom; }
   .facts--key, .price { touch-action: pan-x pan-y; }
   /* Шапка всегда со светлым фоном: по ней Safari красит верхнюю полоску (иначе бралось бы черное тело страницы) */
-  .top { background: var(--bg); }
+  .top, .top.is-solid { background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; } /* сплошная: под полупрозрачной шапкой в Telegram просвечивал текст */
   /*
     Достижения — лента вбок: квадратные плитки ~72% ширины, следующая выглядывает справа.
     В плитке короткий ролик (запускается, когда плитка на экране, fresh.js), под ней название и текст.

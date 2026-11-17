@@ -306,7 +306,12 @@ div.case-more__card:hover img { transform: none; }
   .case-fabs, .case-fabs.is-shown { transform: none; transition: none; }
   .case-fabs .case-fab:not(.case-fab--back) { display: none; }
   /* 78 px, по левой границе текста и с таким же отступом снизу */
-  .case-fabs { left: var(--pad); bottom: calc(var(--pad) + env(safe-area-inset-bottom, 0px)); }
+  /*
+    Кнопка привязана к верху экрана по высоте, запомненной при загрузке (--vh), а не к низу окна:
+    в Telegram низ окна и env(safe-area-inset-bottom) меняются, когда появляется его панель, и кнопка прыгала.
+    58 px от низа — прежние 24 + 34 (полоска «домой»).
+  */
+  .case-fabs { left: var(--pad); bottom: auto; top: calc(var(--vh, 1svh) * 100 - 78px - 58px); }
   .case-fab--back { width: 78px; height: 78px; font-size: 44px; line-height: 1; background: var(--accent); color: var(--on-accent); }
   /* Запас у контактов: кнопка 78 + отступ 24 + воздух — «Написать в Telegram» в конце встает выше стрелки */
   .case-page .contact { padding-bottom: calc(48px + 120px + 34px); } /* постоянный запас: см. .contact в fresh.css */
