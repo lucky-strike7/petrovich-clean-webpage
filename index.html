@@ -38,8 +38,21 @@
     "sameAs": ["https://www.youtube.com/@PetrovichBrothers-b7q", "https://t.me/artem_petrovich_1"]
   }
   </script>
-  <link rel="stylesheet" href="fresh/fresh.css">
-  <script>document.documentElement.classList.add('js')</script>
+  <link rel="stylesheet" href="fresh/fresh.css?v=1117c">
+  <script>
+    document.documentElement.classList.add('js');
+    /*
+      --vh — сотая доля высоты экрана, запомненная при загрузке. На телефоне высоты считаем от нее, а не от svh:
+      встроенный браузер Telegram меняет высоту окна, когда показывает свою панель, и страница прыгала.
+      Пересчитываем только при смене ширины (поворот телефона).
+    */
+    (() => {
+      const h = document.documentElement;
+      const set = () => h.style.setProperty('--vh', `${innerHeight / 100}px`);
+      let w = innerWidth; set();
+      addEventListener('resize', () => { if (innerWidth !== w) { w = innerWidth; set(); } });
+    })();
+  </script>
 </head>
 <body>
   <!--
@@ -307,6 +320,6 @@
   </dialog>
 
   <script src="fresh/vendor/lenis.min.js"></script>
-  <script src="fresh/fresh.js"></script>
+  <script src="fresh/fresh.js?v=1117c"></script>
 </body>
 </html>

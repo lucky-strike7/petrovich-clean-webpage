@@ -28,9 +28,22 @@
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preload" as="image" href="media/interaktivnyj-stol-khakasiya.webp" imagesrcset="media/interaktivnyj-stol-khakasiya-960.webp 960w, media/interaktivnyj-stol-khakasiya.webp 1920w" imagesizes="100vw">
-  <link rel="stylesheet" href="../../fresh/fresh.css">
-  <link rel="stylesheet" href="../../fresh/case.css">
-  <script>document.documentElement.classList.add('js')</script>
+  <link rel="stylesheet" href="../../fresh/fresh.css?v=1117c">
+  <link rel="stylesheet" href="../../fresh/case.css?v=1117c">
+  <script>
+    document.documentElement.classList.add('js');
+    /*
+      --vh — сотая доля высоты экрана, запомненная при загрузке. На телефоне высоты считаем от нее, а не от svh:
+      встроенный браузер Telegram меняет высоту окна, когда показывает свою панель, и страница прыгала.
+      Пересчитываем только при смене ширины (поворот телефона).
+    */
+    (() => {
+      const h = document.documentElement;
+      const set = () => h.style.setProperty('--vh', `${innerHeight / 100}px`);
+      let w = innerWidth; set();
+      addEventListener('resize', () => { if (innerWidth !== w) { w = innerWidth; set(); } });
+    })();
+  </script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -312,7 +325,7 @@
   </dialog>
 
   <script src="../../fresh/vendor/lenis.min.js"></script>
-  <script src="../../fresh/fresh.js"></script>
-  <script src="../../fresh/case.js"></script>
+  <script src="../../fresh/fresh.js?v=1117c"></script>
+  <script src="../../fresh/case.js?v=1117c"></script>
 </body>
 </html>

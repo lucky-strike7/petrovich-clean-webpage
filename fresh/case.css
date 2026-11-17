@@ -270,10 +270,10 @@ div.case-more__card:hover img { transform: none; }
     Кадры обрезаются по бокам под пропорцию экрана (case.js). Меняться начинают, когда стол показался
     на 80%, еще до прилипания.
   */
-  .case-scrub { margin-inline: calc(var(--pad) * -1); height: 240svh; }
+  .case-scrub { margin-inline: calc(var(--pad) * -1); height: calc(var(--vh, 1svh) * 240); } /* --vh — см. <head> */
   .case-scrub__pin { display: block; position: sticky; top: var(--hdr, 92px); } /* --hdr — высота шапки, ставит case.js */
   /* Подпись над столом — как подписи разделов (линия и серый текст 15 px); линия по полям текста */
-  .case-scrub__stage { position: relative; top: auto; width: 100%; height: calc(100svh - var(--hdr, 92px)); aspect-ratio: auto; border-radius: 0; }
+  .case-scrub__stage { position: relative; top: auto; width: 100%; height: calc(var(--vh, 1svh) * 100 - var(--hdr, 92px)); aspect-ratio: auto; border-radius: 0; }
   /*
     Без коричневой подложки: Safari на iPhone красит нижнюю панель цветом фона прилипшего блока
     у края экрана — панель становилась коричневой и оставалась такой до конца страницы.

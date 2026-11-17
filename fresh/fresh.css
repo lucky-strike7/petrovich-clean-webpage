@@ -734,6 +734,9 @@ h1, h2, h3, .sect__lead, .case-lead, .contact__title, .case-more__title { text-w
     в Telegram он меняется, когда внизу появляется панель браузера, и страница дергалась в самом конце.
   */
   .contact { padding-bottom: calc(48px + 34px); }
+  /* Высоты от экрана — через --vh (запомненная высота при загрузке, см. <head>), а не svh: см. там же про Telegram */
+  .projects { padding-bottom: clamp(140px, calc(var(--vh, 1svh) * 26), 300px); }
+  .hero { min-height: calc(var(--vh, 1svh) * 92); }
 }
 
 
