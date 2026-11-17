@@ -651,7 +651,7 @@ h1, h2, h3, .sect__lead, .case-lead, .contact__title, .case-more__title { text-w
   main { overflow-x: clip; touch-action: pan-y pinch-zoom; }
   .facts--key, .price { touch-action: pan-x pan-y; }
   /* Шапка всегда со светлым фоном: по ней Safari красит верхнюю полоску (иначе бралось бы черное тело страницы) */
-  .top, .top.is-solid { background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; } /* сплошная: под полупрозрачной шапкой в Telegram просвечивал текст */
+  .top { background: var(--bg); }
   /*
     Достижения — лента вбок: квадратные плитки ~72% ширины, следующая выглядывает справа.
     В плитке короткий ролик (запускается, когда плитка на экране, fresh.js), под ней название и текст.
@@ -725,15 +725,10 @@ h1, h2, h3, .sect__lead, .case-lead, .contact__title, .case-more__title { text-w
   }
   .contact__btn { display: flex; }
   /*
-    Встроенный браузер Telegram рисует страницу и над нашей шапкой — под своей полупрозрачной панелью,
-    и там проезжал текст. Продлеваем фон шапки вверх: в Safari это место за краем экрана и не видно.
-  */
-  .top::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 100vh; background: var(--bg); }
-  /*
     Нижний запас контактов — постоянный (34 px — полоска «домой»), без env(safe-area-inset-bottom):
     в Telegram он меняется, когда внизу появляется панель браузера, и страница дергалась в самом конце.
   */
-  .contact { padding-bottom: calc(48px + 34px); }
+  .contact { padding-bottom: calc(48px + 100px); } /* +100: черный запас под нижней панелью Telegram (раньше там выезжал белый) */
   /* Высоты от экрана — через --vh (запомненная высота при загрузке, см. <head>), а не svh: см. там же про Telegram */
   .projects { padding-bottom: clamp(140px, calc(var(--vh, 1svh) * 26), 300px); }
   .hero { min-height: calc(var(--vh, 1svh) * 92); }
