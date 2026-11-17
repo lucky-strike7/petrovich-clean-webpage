@@ -617,12 +617,17 @@ html.lenis, html.lenis body { height: auto; }
   Заголовки и крупные выносы не переносим — только выравниваем длину строк.
   Старые браузеры просто покажут текст как раньше.
 */
-.about__desc, .card__desc, .sect li p, .case-brief p, .case-p, .case-more__desc {
+.card__desc, .sect li p, .case-brief p, .case-p, .case-more__desc {
   -webkit-hyphens: auto; hyphens: auto;
   hyphenate-limit-chars: 7 3 3; /* переносим только слова от 7 букв, на строке остается минимум 3 */
   text-wrap: pretty;
 }
 h1, h2, h3, .sect__lead, .case-lead, .contact__title, .case-more__title { text-wrap: balance; }
+/*
+  Вводные фразы, выносы и описание «Что мы делаем» — без автоматических переносов (iPhone не учитывает
+  ограничения по длине слова и рвал «ве-дем», «по-чти»). Только ручные &shy; там, где слово не влезает.
+*/
+.sect__lead, .case-lead, .about__desc { -webkit-hyphens: manual; hyphens: manual; }
 
 /*
   Телефон: нижние блоки проще. Без фото братьев в «Как работаем», без кружков у достижений,
@@ -706,7 +711,7 @@ h1, h2, h3, .sect__lead, .case-lead, .contact__title, .case-more__title { text-w
   .process__photo { width: calc(100% + 2 * var(--pad)); max-width: none; margin-inline: calc(var(--pad) * -1); border-radius: 0; }
   /* Подписи разделов: тонкая линия во всю ширину и под ней тихая серая подпись, как «О проекте» в кейсе */
   .sect__label { padding: 14px 0 28px; border-top: 1px solid var(--line); font-size: 15px; color: var(--muted); }
-  .process .sect__lead { -webkit-hyphens: auto; hyphens: auto; hyphenate-limit-chars: 7 3 3; text-wrap: pretty; }
+  .sect__lead, .case-lead { text-wrap: pretty; } /* на телефоне: ровнее правый край, без слова-сироты в конце */
   /* Вводные фразы разделов на телефоне в 7–8 строк: свободнее межстрочный, буквы не поджаты */
   .sect__lead { line-height: 1.22; letter-spacing: 0; }
   /*
