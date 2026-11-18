@@ -12,11 +12,13 @@ function sandbox(host,choice){
  return{context,handlers,scripts,nodes};
 }
 test('analytics never loads on previews even with previously accepted consent',()=>{
- for(const host of ['localhost','127.0.0.1','preview.petrovichbrothers.ru','lucky-strike7.github.io'])assert.equal(sandbox(host,'ok').scripts.length,0);
+ for(const host of ['localhost','127.0.0.1','preview.petrovichbrothers.ru','old.petrovichbrothers.ru','lucky-strike7.github.io'])assert.equal(sandbox(host,'ok').scripts.length,0);
 });
-test('production waits for consent and decline does not initialize',()=>{
- let s=sandbox('petrovichbrothers.ru',null);assert.equal(s.scripts.length,0);s.nodes[0].children.find(n=>n.textContent==='Без аналитики').click();assert.equal(s.scripts.length,0);
- s=sandbox('petrovichbrothers.ru',null);const accept=s.nodes[0].children.find(n=>n.textContent==='Хорошо');accept.click();accept.click();assert.equal(s.scripts.length,1);assert.equal(s.context.ym.a.length,1);
+test('production initializes automatically without a banner or saved-choice dependency',()=>{
+ for(const host of ['petrovichbrothers.ru','www.petrovichbrothers.ru'])for(const choice of [null,'ok','declined']){
+  const s=sandbox(host,choice);assert.equal(s.scripts.length,1);assert.equal(s.context.ym.a.length,1);assert.equal(s.nodes.length,0);
+  assert.deepEqual([...s.context.ym.a[0]].slice(0,2),[46078563,'init']);
+ }
 });
 test('goal allowlist only sends event names, not arbitrary payloads',()=>{
  const s=sandbox('petrovichbrothers.ru','ok');s.handlers['pb:goal']({detail:{name:'callback_success',phone:'secret'}});s.handlers['pb:goal']({detail:{name:'arbitrary'}});
