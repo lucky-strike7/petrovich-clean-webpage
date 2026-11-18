@@ -1,0 +1,23 @@
+{
+  "name": "petrovich-clean-webpage",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.14"
+  },
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env server.mjs",
+    "start": "node --env-file-if-exists=.env server.mjs",
+    "build": "node scripts/build.mjs",
+    "update": "node scripts/update.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check server.mjs && node --check server/site.mjs && node --check server/contact.mjs && node --check fresh/fresh.js && node --check fresh/case.js && node --check fresh/cookies.js",
+    "verify:build": "node scripts/check-build.mjs"
+  },
+  "dependencies": {
+    "nodemailer": "10.3.1"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}

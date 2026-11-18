@@ -9,23 +9,26 @@
   <link rel="icon" href="../../favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
   <link rel="manifest" href="../../site.webmanifest">
+  <link rel="preload" as="font" href="../../fonts/Milligram-Medium.woff2" type="font/woff2" crossorigin>
+  <link rel="preload" as="font" href="../../fonts/MilligramText-Regular.woff2" type="font/woff2" crossorigin>
   <meta name="theme-color" content="#F6F6F3">
   <title>Интерактивный стол о Хакасии для выставки «Россия» — студия братьев Петрович</title>
   <meta name="description" content="Интерактивный стол для стенда Хакасии на ВДНХ: посетитель вращает столешницу, выбирает одно из 10 мест и смотрит видео и 3D. Разработали и смонтировали за 30 дней">
   <!--
-    Адрес сайта ниже — временный (GitHub Pages). При переезде на свой хостинг заменить
-    во всех canonical, og:url, og:image и в блоке JSON-LD.
+    Основной адрес сайта используется в canonical, og:url, og:image и JSON-LD.
   -->
-  <link rel="canonical" href="https://lucky-strike7.github.io/petrovich-clean-webpage/cases/khakasia/">
+  <link rel="canonical" href="https://petrovichbrothers.ru/cases/khakasia/">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Студия братьев Пе́трович">
   <meta property="og:locale" content="ru_RU">
   <meta property="og:title" content="Интерактивный стол «Достопримечательности Хакасии»">
   <meta property="og:description" content="Круглый стол с вращающейся столешницей и экраном для стенда Хакасии на выставке «Россия». 10 мест, о каждом — видеосюжет.">
-  <meta property="og:url" content="https://lucky-strike7.github.io/petrovich-clean-webpage/cases/khakasia/">
-  <meta property="og:image" content="https://lucky-strike7.github.io/petrovich-clean-webpage/cases/khakasia/media/interaktivnyj-stol-khakasiya-og.jpg">
+  <meta property="og:url" content="https://petrovichbrothers.ru/cases/khakasia/">
+  <meta property="og:image" content="https://petrovichbrothers.ru/cases/khakasia/media/interaktivnyj-stol-khakasiya-og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="Посетительница поворачивает столешницу интерактивного стола о Хакасии">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preload" as="image" href="media/interaktivnyj-stol-khakasiya.webp" imagesrcset="media/interaktivnyj-stol-khakasiya-960.webp 960w, media/interaktivnyj-stol-khakasiya.webp 1920w" imagesizes="100vw">
   <link rel="stylesheet" href="../../fresh/fresh.css?v=1119m">
@@ -50,18 +53,18 @@
     "@type": "CreativeWork",
     "name": "Интерактивный стол «Достопримечательности Хакасии»",
     "description": "Круглый стол с вращающейся столешницей и экраном в центре для стенда Республики Хакасия на выставке «Россия». Посетитель поворачивает столешницу, совмещает название места с указателем, и на экране появляется видеосюжет.",
-    "url": "https://lucky-strike7.github.io/petrovich-clean-webpage/cases/khakasia/",
-    "image": "https://lucky-strike7.github.io/petrovich-clean-webpage/cases/khakasia/media/interaktivnyj-stol-khakasiya.webp",
+    "url": "https://petrovichbrothers.ru/cases/khakasia/",
+    "image": "https://petrovichbrothers.ru/cases/khakasia/media/interaktivnyj-stol-khakasiya.webp",
     "inLanguage": "ru",
     "genre": "Интерактивный экспонат",
     "keywords": "интерактивный стол, интерактивный экспонат, выставка «Россия», стенд Хакасии, RFID, 3D-сцены",
-    "creator": { "@type": "Organization", "name": "Студия братьев Петрович", "url": "https://lucky-strike7.github.io/petrovich-clean-webpage/" },
+    "creator": { "@type": "Organization", "name": "Студия братьев Петрович", "url": "https://petrovichbrothers.ru/" },
     "video": {
       "@type": "VideoObject",
       "name": "Достопримечательности Хакасии — видеообзор экспоната",
       "description": "Как устроен интерактивный стол: вращающаяся столешница с названиями мест, RFID-метки, 3D-сцены и движение камеры.",
-      "thumbnailUrl": "https://lucky-strike7.github.io/petrovich-clean-webpage/cases/khakasia/media/videoobzor-stol-khakasii-na-vystavke.jpg",
-      "contentUrl": "https://lucky-strike7.github.io/petrovich-clean-webpage/Video/01_Khakasia_Attractions.mp4",
+      "thumbnailUrl": "https://petrovichbrothers.ru/cases/khakasia/media/videoobzor-stol-khakasii-na-vystavke.jpg",
+      "contentUrl": "https://petrovichbrothers.ru/Video/01_Khakasia_Attractions.mp4",
       "duration": "PT1M21S",
       "uploadDate": "2024-09-30T05:03:31-07:00",
       "embedUrl": "https://www.youtube.com/embed/wiF-vy0dEb0",
@@ -235,9 +238,9 @@
 
       <p class="case-main case-p case-3d reveal">Трехмерная карта Хакасии сделана в&nbsp;Cinema&nbsp;4D. Анимации всех меток мы настроили заранее, а&nbsp;камера летает между ними. Чтобы при каждом пролете она возвращалась в&nbsp;правильное положение, мы разработали риг: он управляет только высотой подъема камеры и&nbsp;точкой, на&nbsp;которую она смотрит. Так движение получается плавным, а&nbsp;внимание остается на&nbsp;объекте.</p>
       <div class="case-circle reveal">
-        <video muted loop playsinline preload="metadata" poster="media/3d-karta-khakasii-cinema-4d-poster.webp" aria-label="Пролет камеры над 3D-картой Хакасии, сделанной в Cinema 4D">
-          <source src="media/3d-karta-khakasii-cinema-4d.webm" type="video/webm">
-          <source src="media/3d-karta-khakasii-cinema-4d.mp4" type="video/mp4">
+        <video muted loop playsinline poster="media/3d-karta-khakasii-cinema-4d-poster.webp" aria-label="Пролет камеры над 3D-картой Хакасии, сделанной в Cinema 4D" data-lazy preload="none">
+          <source data-src="media/3d-karta-khakasii-cinema-4d.webm" type="video/webm">
+          <source data-src="media/3d-karta-khakasii-cinema-4d.mp4" type="video/mp4">
         </video>
       </div>
     </div>
@@ -281,7 +284,7 @@
         <ul class="case-more__list">
           <li class="reveal">
             <button class="case-more__card" type="button" data-cursor="Смотреть обзор" data-video="../../Video/02_Khakasia_Menhirs.mp4" data-title="Менгиры Хакасии — видеообзор">
-              <span class="case-more__img"><img src="../../fresh/media/mengiry-render.jpg" alt="Интерактивный экспонат «Менгиры Хакасии»: копии древних каменных статуй и сенсорный экран с игрой" width="1920" height="1080" loading="lazy"><span class="case-review__play case-more__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></span></span>
+              <span class="case-more__img"><img src="../../fresh/media/mengiry-render.webp" alt="Интерактивный экспонат «Менгиры Хакасии»: копии древних каменных статуй и сенсорный экран с игрой" width="1920" height="1080" loading="lazy"><span class="case-review__play case-more__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></span></span>
               <span class="case-more__title">Менгиры Хакасии</span>
               <span class="case-more__desc">Головоломка на&nbsp;сенсорном экране: когда лицо менгира собрано, на&nbsp;статуе загорается подсветка</span>
             </button>
@@ -301,7 +304,7 @@
       <p class="contact__lead reveal">Есть проект экспозиции или&nbsp;задача по&nbsp;отдельному экспонату?<br>Пришлите материалы и&nbsp;сроки&nbsp;— обсудим. Даем скидку за&nbsp;срочность</p>
       <h2 class="contact__title">
         <span class="line"><span>Давайте <span class="acc">сделаем</span></span></span>
-        <span class="line"><span><span class="acc">экспонат</span> <i class="pill"><video src="../../fresh/media/mengiry.mp4" poster="../../fresh/media/mengiry.jpg" muted loop playsinline autoplay></video></i></span></span>
+        <span class="line"><span><span class="acc">экспонат</span> <i class="pill"><video data-src="../../fresh/media/mengiry.mp4" poster="../../fresh/media/mengiry.webp" muted loop playsinline data-lazy preload="none"></video></i></span></span>
       </h2>
       <div class="contact__links">
         <div class="contact__ways">

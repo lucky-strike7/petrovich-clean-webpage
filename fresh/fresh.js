@@ -2,6 +2,36 @@
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = matchMedia('(pointer: fine)').matches;
+  const saveData = navigator.connection?.saveData === true;
+  const hydratePoster = (video) => {
+    const poster = matchMedia('(max-width: 600px)').matches && video.dataset.posterM || video.dataset.poster;
+    if (poster && video.getAttribute('poster') !== poster) video.poster = poster;
+    const box=video.closest('.card__media');
+    if (poster && box) box.style.background = `var(--line) url("${poster}") center / cover no-repeat`;
+  };
+  const hydrateVideo = (video) => {
+    hydratePoster(video);
+    if (video.dataset.src) { video.src = video.dataset.src; delete video.dataset.src; }
+    video.querySelectorAll('source[data-src]').forEach(source => { source.src = source.dataset.src; delete source.dataset.src; });
+    if (!video.dataset.loaded && (video.getAttribute('src') || video.querySelector('source[src]'))) {
+      video.dataset.loaded = 'true'; video.preload = 'metadata'; video.load();
+    }
+  };
+  // Sources, not just playback, are deferred until the media approaches the viewport.
+  const nearMedia = new IntersectionObserver(entries => {
+    for (const entry of entries) if (entry.isIntersecting) {
+      hydratePoster(entry.target);
+      if (!reduce && !saveData) hydrateVideo(entry.target);
+      nearMedia.unobserve(entry.target);
+    }
+  }, { rootMargin: '250px 0px' });
+  document.querySelectorAll('video[data-lazy]').forEach(video => nearMedia.observe(video));
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { document.querySelectorAll('video').forEach(video => video.pause()); cards.forEach(card => { clearTimeout(card.timer); card.on=false; }); }
+    else { playCards(); document.querySelectorAll('.reel video, .pill video').forEach(video => {
+      const rect=video.getBoundingClientRect(); if (!reduce && !saveData && rect.top < innerHeight && rect.bottom > 0) video.play().catch(()=>{});
+    }); }
+  });
 
   /* Появление: строки заголовков, абзацы */
   const io = new IntersectionObserver((entries) => {
@@ -58,7 +88,7 @@
   const vio = new IntersectionObserver((entries) => {
     for (const e of entries) {
       const v = e.target;
-      if (e.isIntersecting) v.play().catch(() => {}); else v.pause();
+      if (e.isIntersecting && !reduce && !saveData && !document.hidden) { hydrateVideo(v); v.play().catch(() => {}); } else v.pause();
     }
   }, { threshold: 0.2 });
   document.querySelectorAll('.reel video, .pill video').forEach((v) => vio.observe(v));
@@ -72,21 +102,17 @@
   */
   // На телефоне — легкий вертикальный постер (сам ролик выбирается через <source media>)
   const phone = matchMedia('(max-width: 600px)').matches;
-  if (phone) {
-    document.querySelectorAll('video[data-poster-m]').forEach((v) => { v.poster = v.dataset.posterM; });
-  }
+  const firstCardVideo=document.querySelector('.card__media video');
+  if(firstCardVideo) hydratePoster(firstCardVideo);
   const cards = [...document.querySelectorAll('.card__media video')].map((v, i) => {
     const card = { v, box: v.closest('.card__media'), on: false, timer: 0, first: i === 0 };
     /*
       Под роликом — его же первый кадр фоном: пока ролик стартует или перематывается,
       iPhone на миг показывает пустой кадр, и сквозь него мелькал светлый фон страницы.
     */
-    if (v.poster) card.box.style.background = `var(--line) url("${v.poster}") center / cover no-repeat`;
-    /*
-      На телефоне ролики легкие (1–3 МБ) — грузим их заранее, а не в момент запуска:
-      иначе первые доли секунды ролик подтормаживает, пока докачивается.
-    */
-    if (phone) v.preload = 'auto';
+    // Posters for the remaining cards are loaded by nearMedia.
+    // Загрузкой управляют близость к экрану и начало воспроизведения.
+    v.preload = 'none';
     const pause = parseFloat(v.dataset.pause) || 0;
     if (pause) {
       v.loop = false;
@@ -104,7 +130,8 @@
     const tileIO = new IntersectionObserver((entries) => {
       for (const e of entries) {
         const v = e.target;
-        if (e.isIntersecting && e.intersectionRatio >= 0.5) {
+        if (e.isIntersecting && e.intersectionRatio >= 0.5 && !reduce && !saveData && !document.hidden) {
+          hydratePoster(v);
           if (!v.src) v.src = v.dataset.src;
           v.play().catch(() => {});
         } else v.pause();
@@ -121,9 +148,10 @@
       // На телефоне первая карточка (она видна уже на первом экране) играет сразу, без прокрутки
       // Остальные на телефоне — как только карточка заметно въехала (верх выше 75% экрана), а не к середине
       const ready = phone ? (c.first ? r.top < vh : r.top < vh * 0.75) && r.bottom > 0 : mid < vh * 0.6 && r.bottom > 0;
+      if (reduce || saveData || document.hidden) { c.v.pause(); c.on = false; clearTimeout(c.timer); continue; }
       if (!c.on && ready) {
         // Перематываем, только если ролик не в начале: лишняя перемотка дает пустой кадр
-        c.on = true; if (c.v.currentTime > 0) c.v.currentTime = 0; c.v.play().catch(() => {});
+        hydrateVideo(c.v); c.on = true; if (c.v.currentTime > 0) c.v.currentTime = 0; c.v.play().catch(() => {});
       } else if (c.on && (r.bottom < 0 || r.top > vh)) {
         c.on = false; clearTimeout(c.timer); c.v.pause(); c.v.currentTime = 0;
       }
@@ -199,9 +227,7 @@
   /* Картинка у ссылки (data-peek): кружок у курсора, идет за мышью без задержки */
   /*
     Если у ссылки есть data-peek-video, поверх картинки в кружке играет короткий ролик по кругу.
-    Ролики маленькие (вместе около 1,2 МБ), поэтому сразу после загрузки страницы, когда браузер
-    освободится, скачиваем их целиком в память. При наведении ролик берется из памяти и стартует
-    мгновенно, без докачки. Если навели раньше, чем он скачался, — грузится обычным способом.
+    Картинка и ролик загружаются только при наведении, без предварительного скачивания всех файлов.
   */
   const peek = document.querySelector('.peek');
   if (peek && fine) {
@@ -209,7 +235,7 @@
     const img = circle.firstElementChild;
     const links = [...document.querySelectorAll('[data-peek]')];
     links.forEach((a) => {
-      new Image().src = a.dataset.peek; // загрузить заранее, чтобы кружок не появлялся пустым
+      // The poster/video is loaded on actual pointer intent, not on initial page load.
       if (a.dataset.peekVideo) {
         const v = document.createElement('video');
         Object.assign(v, { muted: true, loop: true, playsInline: true, preload: 'none' });
@@ -221,7 +247,7 @@
         img.src = a.dataset.peek;
         peek.classList.add('is-on');
         const v = a.peekVideo;
-        if (!v) return;
+        if (!v || reduce || saveData || document.hidden) return;
         if (!v.getAttribute('src')) v.src = a.dataset.peekVideo; // еще не скачался — грузим как обычно
         v.currentTime = 0;
         v.play().catch(() => {});
@@ -232,21 +258,6 @@
         if (v) { v.pause(); v.classList.remove('is-playing'); }
       });
     });
-    const warm = () => links.forEach((a) => {
-      if (!a.peekVideo) return;
-      fetch(a.dataset.peekVideo)
-        .then((r) => (r.ok ? r.blob() : Promise.reject()))
-        .then((blob) => {
-          const v = a.peekVideo;
-          if (v.getAttribute('src')) return; // уже успели навести и загрузить обычным способом
-          v.src = URL.createObjectURL(blob);
-          v.preload = 'auto';
-          v.load(); // первый кадр готов заранее
-        })
-        .catch(() => {});
-    });
-    const idle = () => (window.requestIdleCallback ? requestIdleCallback(warm, { timeout: 2000 }) : setTimeout(warm, 1000));
-    if (document.readyState === 'complete') idle(); else addEventListener('load', idle, { once: true });
     addEventListener('pointermove', (e) => { peek.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`; });
     addEventListener('scroll', () => peek.classList.remove('is-on'), { passive: true });
   }
@@ -292,6 +303,7 @@
       mv.src = el.dataset.video;
       modal.setAttribute('aria-label', el.dataset.title || 'Видео');
       modal.showModal();
+      document.dispatchEvent(new CustomEvent('pb:goal', { detail: { name: 'video_open' } }));
       lenis?.stop(); // страница под окном не прокручивается
       mv.play().catch(() => {});
       cursor.classList.remove('is-on');
@@ -313,18 +325,34 @@
   const narrow = matchMedia('(max-width: 600px)'); // телефон — та же плашка шторкой снизу; планшет — прокрутка к контактам
   if (panel) {
     const root = document.documentElement;
+    panel.setAttribute('role', 'dialog');
+    panel.setAttribute('aria-modal', 'true');
+    panel.tabIndex = -1;
+    let opener = null, focusTimer, sentTimer;
+    const inertStates = new Map();
     const isOpen = () => root.classList.contains('is-panel');
-    const setOpen = (open, fromTop = false) => {
+    const setOpen = (open, fromTop = false, trigger = null) => {
       root.classList.toggle('is-panel', open);
       root.classList.toggle('is-panel-top', open && fromTop);
       panel.inert = !open;
+      clearTimeout(focusTimer);
+      if (open) {
+        opener = trigger || document.activeElement;
+        for (const node of document.body.children) if (node !== panel && !['SCRIPT','STYLE'].includes(node.tagName)) { inertStates.set(node,node.inert); node.inert=true; }
+        // Focus the close button without opening the phone keyboard automatically.
+        focusTimer=setTimeout(()=>panel.querySelector('.cpanel__close')?.focus({preventScroll:true}),0);
+      } else {
+        clearTimeout(sentTimer);
+        for (const [node,inert] of inertStates) node.inert=inert;
+        inertStates.clear(); opener?.focus({preventScroll:true});
+      }
       if (open) lenis?.stop(); else lenis?.start();
     };
     /*
       Кнопка «Назад» (Android, смахивание от края в iPhone) сначала закрывает плашку, а не уходит со страницы:
       при открытии добавляем шаг в историю, при закрытии своими кнопками — снимаем его.
     */
-    const openPanel = (fromTop) => { setOpen(true, fromTop); history.pushState({ cpanel: 1 }, ''); };
+    const openPanel = (fromTop, trigger) => { setOpen(true, fromTop, trigger); history.pushState({ cpanel: 1 }, ''); };
     const closePanel = () => {
       if (!isOpen()) return;
       if (history.state?.cpanel) history.back(); else setOpen(false);
@@ -335,12 +363,17 @@
       // Черный блок уже показался — плашка не нужна (форма и контакты в нем): докручиваем к нему
       if (!isOpen() && contact.getBoundingClientRect().top < innerHeight) return;
       e.preventDefault(); e.stopPropagation();
-      if (isOpen()) closePanel(); else openPanel(el.classList.contains('top__btn'));
-      // На десктопе курсор сразу в поле; на телефоне нет — иначе сразу выскочит клавиатура
-      if (isOpen() && wide.matches) setTimeout(() => panel.querySelector('.cpanel__input')?.focus({ preventScroll: true }), 650);
+      if (isOpen()) closePanel(); else openPanel(el.classList.contains('top__btn'), el);
     }));
     panel.querySelector('.cpanel__close').addEventListener('click', () => closePanel());
     addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) closePanel(); });
+    panel.addEventListener('keydown', e => {
+      if (e.key !== 'Tab' || !isOpen()) return;
+      const nodes=[...panel.querySelectorAll('a[href],button,input,[tabindex="0"]')].filter(node=>!node.disabled&&node.getClientRects().length);
+      const first=nodes[0],last=nodes.at(-1);
+      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus();}
+      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus();}
+    });
     document.addEventListener('click', (e) => {
       if (isOpen() && !panel.contains(e.target) && !e.target.closest('.top__btn')) closePanel();
     });
@@ -376,7 +409,7 @@
       vv.addEventListener('resize', fit);
       vv.addEventListener('scroll', fit);
     }
-    panel.addEventListener('sent', () => setTimeout(() => closePanel(), 2600));
+    panel.addEventListener('sent', () => { clearTimeout(sentTimer); sentTimer=setTimeout(() => closePanel(), 2600); });
   }
 
   /*
@@ -388,6 +421,8 @@
     const agree = cb.querySelector('input[name="agree"]');
     const btn = cb.querySelector('button[type="submit"]');
     const msg = cb.querySelector('.callback__msg');
+    let submitting = false, sent = false;
+    input.classList.add('ym-disable-keys');
     const digitsOf = (v) => {
       let d = v.replace(/\D/g, '');
       if (d[0] === '8') d = '7' + d.slice(1);
@@ -407,31 +442,37 @@
     const say = (text, err) => { msg.textContent = text; msg.classList.toggle('is-error', !!err); };
     // Кнопка активна, только когда набраны все 11 цифр (+7 или 8 и еще 10) и отмечено согласие
     const ready = () => digitsOf(input.value).length === 11 && agree.checked;
-    const sync = () => { btn.disabled = !ready(); };
+    const sync = () => { btn.disabled = submitting || sent || !ready(); };
     input.addEventListener('input', () => { input.value = fmt(digitsOf(input.value)); say(''); sync(); });
     agree.addEventListener('change', () => { say(''); sync(); });
     cb.addEventListener('reset', () => setTimeout(sync));
     sync();
     cb.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (submitting || sent) return;
       const d = digitsOf(input.value);
       if (d.length !== 11) { say('Проверьте номер: +7 и 10 цифр', true); input.focus(); return; }
       if (!agree.checked) { say('Отметьте согласие на обработку данных', true); return; }
       if (!ready()) return;
+      submitting = true; sync(); cb.setAttribute('aria-busy','true');
       btn.classList.add('is-sending'); say('Отправляем…');
       try {
         const r = await fetch('/api/contact', {
-          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ phone: '+' + d }),
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ phone: '+' + d, consent: true }), signal: AbortSignal.timeout(15000),
         });
         if (!r.ok) throw new Error(r.status);
+        const response = await r.json();
+        if (response.success !== true) throw new Error('Delivery failed');
+        sent = true;
+        document.dispatchEvent(new CustomEvent('pb:goal', { detail: { name: 'callback_success' } }));
         cb.classList.add('is-sent');
         say('Спасибо! Перезвоним в рабочее время');
         cb.dispatchEvent(new Event('sent', { bubbles: true }));
         // Когда плашка закроется — форма снова чистая
-        setTimeout(() => { cb.classList.remove('is-sent'); cb.reset(); say(''); }, 3200);
+        setTimeout(() => { sent=false; cb.classList.remove('is-sent'); cb.reset(); say(''); sync(); }, 3200);
       } catch {
         say('Не получилось отправить. Позвоните нам или напишите в Telegram', true);
-      } finally { btn.classList.remove('is-sending'); sync(); }
+      } finally { submitting=false; cb.removeAttribute('aria-busy'); btn.classList.remove('is-sending'); sync(); }
     });
   });
 })();

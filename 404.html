@@ -3,11 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <!--
-    Страница 404 открывается по любому несуществующему адресу, на любой глубине. Поэтому все пути —
-    от корня сайта через <base>: на GitHub Pages корень — /petrovich-clean-webpage/, на своем домене — /.
-  -->
-  <script>(() => { const p = '/petrovich-clean-webpage/'; document.write(`<base href="${location.pathname.startsWith(p) ? p : '/'}">`); })();</script>
+  <!-- Неизвестные адреса любой глубины используют ресурсы от корня сайта. -->
+  <base href="/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">

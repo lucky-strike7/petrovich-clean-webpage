@@ -349,3 +349,6 @@ button.case-more__card { width: 100%; padding: 0; border: 0; background: none; c
 @media (prefers-reduced-motion: reduce) {
   .case-fabs { transition: none; }
 }
+
+/* Readable author caption against the grey quotation panel. */
+.case-dev__author span span { color: #62625e; }

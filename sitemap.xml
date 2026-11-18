@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Карта сайта для поисковиков. Адрес временный (GitHub Pages): при переезде на свой домен
-  заменить https://lucky-strike7.github.io/petrovich-clean-webpage/ на него — здесь и в robots.txt.
-  Новый кейс — добавить строку <url> с его адресом и датой.
--->
+<!-- Основной домен сайта. Новый кейс — добавить строку url с адресом и датой. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://lucky-strike7.github.io/petrovich-clean-webpage/</loc>
-    <lastmod>2026-11-15</lastmod>
+    <loc>https://petrovichbrothers.ru/</loc>
+    <lastmod>2026-11-18</lastmod>
   </url>
   <url>
-    <loc>https://lucky-strike7.github.io/petrovich-clean-webpage/cases/khakasia/</loc>
-    <lastmod>2026-11-15</lastmod>
+    <loc>https://petrovichbrothers.ru/cases/khakasia/</loc>
+    <lastmod>2026-11-18</lastmod>
   </url>
 </urlset>

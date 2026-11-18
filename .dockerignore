@@ -1,0 +1,13 @@
+.git
+node_modules
+dist
+.env
+.env.*
+archive-v1
+archive-media
+v1
+media
+assets
+index-old.html
+fresh.html
+tests
