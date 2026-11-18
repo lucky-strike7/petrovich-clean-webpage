@@ -20,7 +20,13 @@ createServer((req, res) => {
   if (!file.startsWith(root)) { res.writeHead(403).end(); return; }
 
   stat(file, (err, st) => {
-    if (err || !st.isFile()) { res.writeHead(404).end('Not found'); return; }
+    if (err || !st.isFile()) {
+      // Как на GitHub Pages и на сервере: несуществующий адрес — своя страница 404
+      const nf = join(root, '404.html');
+      res.writeHead(404, { 'Content-Type': types['.html'], 'Cache-Control': 'no-cache' });
+      createReadStream(nf).on('error', () => res.end('Not found')).pipe(res);
+      return;
+    }
     const headers = { 'Content-Type': types[extname(file)] || 'application/octet-stream', 'Accept-Ranges': 'bytes', 'Cache-Control': 'no-cache' };
     const m = /bytes=(\d*)-(\d*)/.exec(req.headers.range || '');
     if (m) {

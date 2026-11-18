@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!--
+    Страница 404 открывается по любому несуществующему адресу, на любой глубине. Поэтому все пути —
+    от корня сайта через <base>: на GitHub Pages корень — /petrovich-clean-webpage/, на своем домене — /.
+  -->
+  <script>(() => { const p = '/petrovich-clean-webpage/'; document.write(`<base href="${location.pathname.startsWith(p) ? p : '/'}">`); })();</script>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="theme-color" content="#F6F6F3">
+  <meta name="robots" content="noindex">
+  <title>Страница не найдена — студия братьев Петрович</title>
+  <link rel="stylesheet" href="fresh/fresh.css?v=1119m">
+</head>
+<body class="doc-page">
+  <header class="top top--doc">
+    <a class="top__logo" href="./" aria-label="Студия братьев Пе́трович — на главную">
+      <img src="fresh/logo-vertical.svg" alt="Petrovich Brothers" width="244" height="121">
+    </a>
+    <nav class="top__nav">
+      <a href="./#projects">Проекты</a>
+      <a href="./#process">Студия</a>
+    </nav>
+    <a class="top__btn" href="./#contact">Контакты</a>
+  </header>
+  <main class="nf">
+    <p class="nf__code">404</p>
+    <h1 class="nf__title">Такой страницы нет</h1>
+    <p class="nf__text">Возможно, ссылка устарела: мы обновили сайт. Все проекты и&nbsp;контакты&nbsp;— на&nbsp;главной.</p>
+    <div class="nf__links">
+      <a class="nf__btn" href="./">На&nbsp;главную</a>
+      <a class="sect__link" href="cases/khakasia/">Интерактивный стол о&nbsp;Хакасии</a>
+    </div>
+  </main>
+  <script src="fresh/cookies.js?v=1119i"></script>
+</body>
+</html>
