@@ -2,9 +2,9 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <!-- viewport-fit=cover: страница уходит под нижнюю панель Safari и полоску «домой» на iPhone, внизу черный блок, а не белое поле -->
+
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <!-- Значок сайта: буква «П» на фирменном синем. SVG — основной, PNG и ICO — для старых браузеров и телефонов -->
+
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -14,7 +14,7 @@
   <meta name="theme-color" content="#F6F6F3">
   <title>Студия братьев Петрович — интерактивные экспонаты для музеев и выставок</title>
   <meta name="description" content="Придумываем и создаем интерактивные экспонаты для музеев и выставок: концепция, контент, 3D-графика, программирование, датчики, монтаж и поддержка. Москва, работаем по всей России.">
-  <!-- Основной домен: canonical и превью ссылок. -->
+
   <link rel="canonical" href="https://petrovichbrothers.ru/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Студия братьев Пе́трович">
@@ -61,15 +61,7 @@
   </script>
 </head>
 <body>
-  <!--
-    Основная страница (бывший черновик fresh.html): светлый фон, огромный заголовок с роликами
-    внутри строки, рендеры и петли экспонатов (fresh/media), движение при прокрутке и курсор «Смотреть».
-    Прежняя версия страницы — index-old.html.
-  -->
-  <!--
-    Шапка: один логотип в две строки; после прокрутки он плавно уменьшается, шапка
-    на светлой подложке. Вниз шапка уезжает, вверх возвращается.
-  -->
+
   <header class="top">
     <a class="top__logo" href="./" aria-label="Студия братьев Пе́трович">
       <img src="fresh/logo-vertical.svg" alt="Petrovich Brothers" width="244" height="121">
@@ -78,38 +70,30 @@
       <a href="#projects">Проекты</a>
       <a href="#process">Студия</a>
     </nav>
-    <!-- «Контакты»: при наведении слово уезжает вверх, снизу выезжает «Написать нам»; ведет к черному блоку контактов -->
+
     <a class="top__btn" href="#contact"><span class="roll"><span>Контакты</span><span aria-hidden="true">Написать нам</span></span></a>
   </header>
 
   <main>
-    <!--
-      Первый экран (заголовок «Создаем интерактивные экспонаты…» с роликом-таблеткой и шоурил)
-      пока убран: страница начинается с «Что мы делаем». Прежняя разметка — в истории git.
-    -->
-    <!--
-      Вступление: подпись «Что мы делаем» слева, справа короткий заголовок страницы
-      и описание под ним. Слова заголовка проявляются из серого в черный (script).
-    -->
+
     <section class="about">
       <p class="about__label reveal">Что мы делаем</p>
-      <!-- &shy; в «интерак-тивные»: на телефоне заголовок крупный и слово переносится с дефисом; на десктопе переноса нет -->
+
       <h1 class="about__text" data-words>Придумываем и&nbsp;создаем интерак&shy;тивные экспонаты</h1>
       <p class="about__desc reveal">Для музеев и&nbsp;выставок. Берем на&nbsp;себя контент, программирование, инженерные решения и&nbsp;настройку на&nbsp;площадке.<span class="about__more"> Работаем с&nbsp;музеями, застройщиками и&nbsp;генеральными подрядчиками.</span></p>
     </section>
 
     <section class="projects" id="projects">
-      <!-- Подпись «Наши проекты» на экране не показываем: и так понятно. Оставлена невидимой для поиска и экранных дикторов -->
+
       <h2 class="sr-only">Наши проекты</h2>
 
-      <!-- У карточки есть страница кейса: клик по ролику или названию открывает ее -->
       <article class="card" id="khakasia">
         <a class="card__media card__media--case" href="cases/khakasia/" data-cursor="Посмотреть проект" aria-label="Проект «Достопримечательности Хакасии»">
           <noscript><picture><source media="(max-width: 600px)" srcset="fresh/media/khakasy-render-m.webp"><img src="fresh/media/khakasy-render.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></picture></noscript><video class="auto" data-pause="5" data-poster="fresh/media/khakasy-render.webp" data-poster-m="fresh/media/khakasy-render-m.webp" muted loop playsinline data-lazy preload="none"><source data-src="fresh/media/khakasy-render-m.mp4" type="video/mp4" media="(max-width: 600px)"><source data-src="fresh/media/khakasy-render.mp4" type="video/mp4"></video>
         </a>
         <div class="card__row">
           <h3 class="card__title reveal"><a class="card__link" href="cases/khakasia/" data-cursor="Посмотреть проект">Достопримеча&shy;тельности Хакасии</a></h3>
-          <!-- Тип экспоната — только на телефоне, вместо описания и кнопок; «Смотреть проект» ведет в кейс -->
+
           <a class="card__kind" href="cases/khakasia/">Интерактивный стол&nbsp;· Смотреть проект&nbsp;<span class="card__arrow">→</span></a>
           <div class="card__info">
             <p class="card__desc reveal">Посетитель поворачивает столешницу и&nbsp;совмещает метку места с&nbsp;указателем&nbsp;— на&nbsp;экране появляются карта и&nbsp;ролик о&nbsp;достопримечательности.</p>
@@ -126,7 +110,7 @@
 
       <article class="card" id="mengiry">
         <div class="card__media" data-cursor="Смотреть обзор" data-video="Video/02_Khakasia_Menhirs.mp4" data-title="Менгиры Хакасии — видеообзор">
-          <!-- На телефоне — вертикальный рендер 1080×1350 (rndr/Mengiry01_hires_vertical.mov) -->
+
           <noscript><picture><source media="(max-width: 600px)" srcset="fresh/media/mengiry-render-m.webp?v=2"><img src="fresh/media/mengiry-render.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></picture></noscript><video class="auto" data-pause="5" data-poster="fresh/media/mengiry-render.webp" data-poster-m="fresh/media/mengiry-render-m.webp?v=2" muted loop playsinline data-lazy preload="none"><source data-src="fresh/media/mengiry-render-m.mp4?v=2" type="video/mp4" media="(max-width: 600px)"><source data-src="fresh/media/mengiry-render.mp4" type="video/mp4"></video>
         </div>
         <div class="card__row">
@@ -155,7 +139,7 @@
 
       <article class="card" id="shturval">
         <div class="card__media" data-cursor="Смотреть обзор" data-video="Video/03_Chersonesus_Wheel.mp4" data-title="Штурвал — видеообзор">
-          <!-- Монтаж v03: петля, пауза 3 с на первом кадре; на телефоне кадр 4:5 сдвинут на плане с картой и на быстром штурвале -->
+
           <noscript><picture><source media="(max-width: 600px)" srcset="fresh/media/shturval-render-m.webp?v=3"><img src="fresh/media/shturval-render.webp?v=3" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></picture></noscript><video class="auto" data-pause="3" data-poster="fresh/media/shturval-render.webp?v=3" data-poster-m="fresh/media/shturval-render-m.webp?v=3" muted loop playsinline data-lazy preload="none"><source data-src="fresh/media/shturval-render-m.mp4?v=3" type="video/mp4" media="(max-width: 600px)"><source data-src="fresh/media/shturval-render.mp4?v=3" type="video/mp4"></video>
         </div>
         <div class="card__row">
@@ -210,11 +194,6 @@
       </article>
     </section>
 
-    <!--
-      «Страна Света-2025» — отдельный крупный блок, не карточка проекта: мэппинг, а не интерактивный экспонат.
-      Устроен как карточка проекта, но на черном фоне; ролик — петля из трех кусков фильма (стекающий фасад, гроза, девушка с фонарем).
-      Полный фильм открывается в том же окне, что и видеообзоры. Подпись про ПФКИ обязательна.
-    -->
     <section class="event" id="strana-sveta" aria-labelledby="event-title">
       <article class="card">
         <div class="card__media" data-cursor="Смотреть мэппинг" data-video="Video/strana-sveta-2025.mp4" data-title="«Устьянские легенды» — мэппинг на конкурсе «Страна Света-2025»">
@@ -222,7 +201,7 @@
         </div>
         <div class="card__row">
           <h3 class="card__title reveal" id="event-title">Страна Света-2025 <span class="event__place">Третье место</span></h3>
-          <!-- Только на телефоне, вместо описания и кнопки, как у карточек проектов; касание открывает фильм -->
+
           <p class="card__kind" data-video="Video/strana-sveta-2025.mp4" data-title="«Устьянские легенды» — мэппинг на конкурсе «Страна Света-2025»">Третье место на&nbsp;конкурсе современного медиаискусства «Страна Света-2025» при поддержке ПФКИ&nbsp;· Смотреть мэппинг&nbsp;<span class="card__arrow">→</span></p>
           <div class="card__info">
             <p class="card__desc reveal">Мэппинг на&nbsp;фасаде в&nbsp;Санкт-Петербурге перед тысячами зрителей. Рассказали легенды села Устье под Вологдой.</p>
@@ -238,10 +217,6 @@
       </article>
     </section>
 
-    <!--
-      Новые блоки после карточек. Все по одной сетке с «Что мы делаем»: тихая подпись слева
-      (колонки 1–3), содержание справа (4–12).
-    -->
     <section class="sect process" id="process">
       <h2 class="sect__label reveal">Как работаем</h2>
       <div class="sect__body">
@@ -261,7 +236,7 @@
     <section class="sect studio" id="awards">
       <h2 class="sect__label reveal">Достижения студии</h2>
       <div class="sect__body">
-        <!-- Главные проекты и награды, без логотипов. На телефоне — лента вбок: квадратные плитки с короткими роликами (facts__media) -->
+
         <ul class="facts facts--key">
           <li class="reveal"><span class="facts__media"><img class="facts__thumb" src="fresh/media/strana-sveta.webp" alt="Мэппинг на Дворцовой площади, «Страна Света-2025»" width="440" height="440" loading="lazy"><video class="facts__vid" data-src="fresh/media/strana-sveta.mp4" data-poster="fresh/media/strana-sveta.webp" muted loop playsinline aria-hidden="true" preload="none"></video></span><h3><a class="facts__link" data-peek="fresh/media/strana-sveta.webp" data-peek-video="fresh/media/strana-sveta.mp4" href="https://stranasveta.com/news/pobediteli-2025" target="_blank" rel="noopener">«Страна Света-2025»<span aria-hidden="true">&nbsp;↗</span></a></h3><p>Призовое место за&nbsp;мэппинг на&nbsp;Дворцовой площади в&nbsp;Санкт-Петербурге.</p></li>
           <li class="reveal"><span class="facts__media"><img class="facts__thumb" src="fresh/media/sreda-counter.webp" alt="Счетчик подписчиков YouTube из советского электросчетчика" width="440" height="440" loading="lazy"><video class="facts__vid" data-src="fresh/media/sreda-counter.mp4" data-poster="fresh/media/sreda-counter.webp" muted loop playsinline aria-hidden="true" preload="none"></video></span><h3><a class="facts__link" data-peek="fresh/media/sreda-counter.webp" data-peek-video="fresh/media/sreda-counter.mp4" href="https://contest.festivalsreda.ru/shortlist/concept_art_instal/" target="_blank" rel="noopener">Фестиваль «Среда»<span aria-hidden="true">&nbsp;↗</span></a></h3><p>Счетчик подписчиков YouTube из&nbsp;советского электросчетчика вошел в&nbsp;шорт-лист.</p></li>
@@ -276,7 +251,7 @@
     <section class="sect prices" id="prices">
       <h2 class="sect__label reveal">Сколько стоит</h2>
       <div class="sect__body">
-        <!-- На телефоне — лента вбок: светлые плитки с огромной ценой (вариант А из макета) -->
+
         <ul class="price">
           <li class="reveal"><div><h3>Программа для тачскрина</h3><p>Например, тест или карта объектов</p></div><b><span class="price__from">от</span> <span class="price__num">500</span> <span class="price__unit">тыс.&nbsp;₽</span></b></li>
           <li class="reveal"><div><h3>Видеоролик</h3><p>На&nbsp;один или несколько экранов</p></div><b><span class="price__from">от</span> <span class="price__num">700</span> <span class="price__unit">тыс.&nbsp;₽</span></b></li>
@@ -285,7 +260,6 @@
       </div>
     </section>
 
-    <!-- Видео: пока ссылка на канал; сетку разборов добавим, когда будут файлы роликов -->
     <section class="sect videos">
       <h2 class="sect__label reveal">Видео</h2>
       <div class="sect__body">
@@ -308,7 +282,7 @@
           <a class="yt yt--m" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener" aria-label="YouTube-канал студии"><svg viewBox="0 0 48 34" aria-hidden="true"><rect width="48" height="34" rx="9" fill="currentColor"/><path d="M19.5 10v14l12-7z" fill="#111110"/></svg></a>
         </div>
         <a class="contact__btn contact__btn--m" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Написать в Telegram ↗</a>
-        <!-- Обратный звонок: на десктопе справа, верх — по верху контактов; на телефоне — столбиком под контактами -->
+
         <form class="callback contact__form" novalidate>
           <div class="contact__row">
             <input class="cpanel__input" type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="телефон" aria-label="Телефон">
@@ -322,12 +296,6 @@
     </section>
   </main>
 
-  <!--
-    Плашка контактов (десктоп): выезжает справа поверх страницы по «Контактам» в шапке и кружку «Написать нам».
-    Страница под ней не темнеет; шапка сдвигается влево, кнопка становится «Закрыть».
-    Сверху — обратный звонок (отправляет {phone} на /api/contact — обработчик на сервере студии), снизу — контакты.
-    На телефоне не используется: «Контакты» ведут к черному блоку внизу.
-  -->
   <aside class="cpanel" id="cpanel" aria-label="Контакты" inert>
     <span class="cpanel__grip" aria-hidden="true"></span>
     <button class="cpanel__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
@@ -353,7 +321,7 @@
   </a>
 
   <div class="cursor" aria-hidden="true"><span></span></div>
-  <!-- Картинка-подтверждение у достижения: появляется кружком у курсора при наведении на ссылку -->
+
   <div class="peek" aria-hidden="true"><div class="peek__c"><img alt=""></div></div>
 
   <dialog class="modal" aria-label="Видео">

@@ -2,9 +2,9 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <!-- viewport-fit=cover: страница уходит под нижнюю панель Safari и полоску «домой» на iPhone, внизу черный блок, а не белое поле -->
+
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <!-- Значок сайта: буква «П» на фирменном синем. SVG — основной, PNG и ICO — для старых браузеров и телефонов -->
+
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <link rel="icon" href="../../favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
@@ -14,9 +14,7 @@
   <meta name="theme-color" content="#F6F6F3">
   <title>Интерактивный стол о Хакасии для выставки «Россия» — студия братьев Петрович</title>
   <meta name="description" content="Интерактивный стол для стенда Хакасии на ВДНХ: посетитель вращает столешницу, выбирает одно из 10 мест и смотрит видео и 3D. Разработали и смонтировали за 30 дней">
-  <!--
-    Основной адрес сайта используется в canonical, og:url, og:image и JSON-LD.
-  -->
+
   <link rel="canonical" href="https://petrovichbrothers.ru/cases/khakasia/">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Студия братьев Пе́трович">
@@ -75,11 +73,7 @@
   </script>
 </head>
 <body class="case-page">
-  <!--
-    Страница кейса: один экспонат. Тексты — из комплекта khakasia-case-package (case-text.txt),
-    формулировки не менять. Промежуточных заголовков нет: только «Задача» и «Решение»,
-    остальное разделено отступами и картинками.
-  -->
+
   <header class="top">
     <a class="top__logo" href="../../" aria-label="Студия братьев Пе́трович — на главную">
       <img src="../../fresh/logo-vertical.svg" alt="Petrovich Brothers" width="244" height="121">
@@ -88,12 +82,12 @@
       <a href="../../#khakasia" data-back><span aria-hidden="true">←&nbsp;</span>Все проекты</a>
       <a href="../../#process">Студия</a>
     </nav>
-    <!-- «Контакты»: при наведении слово уезжает вверх, снизу выезжает «Написать нам»; ведет к черному блоку контактов -->
+
     <a class="top__btn" href="#contact"><span class="roll"><span>Контакты</span><span aria-hidden="true">Написать нам</span></span></a>
   </header>
 
   <main>
-    <!-- 1. Первый экран: название над картинкой, чтобы не закрывать графику столешницы -->
+
     <section class="case-hero">
       <p class="case-kicker">Интерактивный стол для выставки<br class="br-m"> «Россия» на&nbsp;ВДНХ</p>
       <h1 class="case-hero__title">Достопримеча&shy;тельности Хакасии</h1>
@@ -103,20 +97,13 @@
       </figure>
     </section>
 
-    <!--
-      Тело кейса — три колонки по сетке 12:
-      1–3  стоит на месте при прокрутке: место, размеры и кнопка «Смотреть обзор» (всегда на виду);
-      4–8  основной текст — история экспоната; широкие картинки — 4–12;
-      10–12 устройство: абзацы про RFID и риг камеры рядом со своими иллюстрациями.
-      На телефоне все в одну колонку, кнопка обзора — плавающая таблетка внизу.
-    -->
     <div class="case-grid">
       <aside class="case-aside">
         <div class="case-aside__in">
-          <!-- Серым подпись, черным содержание — как в остальном тексте кейса -->
+
           <h2 class="case-label case-aside__label">О&nbsp;проекте</h2>
           <p class="case-aside__meta"><span>Стенд Хакасии, выставка «Россия»</span><span>Диаметр 1500&nbsp;мм, высота 850&nbsp;мм</span><span>10 мест на&nbsp;столешнице, о&nbsp;каждом&nbsp;— видеосюжет около&nbsp;40&nbsp;секунд</span><span>Внутри&nbsp;— компьютер mini-ATX</span><span>Сделано за&nbsp;30&nbsp;дней</span></p>
-          <!-- Что сделала студия — пункты из фразы «Мы разработали оформление столешницы…»; монтаж и поддержка — во всех кейсах -->
+
           <h2 class="case-label case-aside__label">Что сделали</h2>
           <ul class="case-aside__done">
             <li>Оформление столешницы</li>
@@ -134,7 +121,6 @@
         </div>
       </aside>
 
-      <!-- Задача и решение -->
       <div class="case-main case-brief reveal">
         <h2 class="case-label">Задача</h2>
         <p>Показать достопримечательности Хакасии в&nbsp;интерактивном формате. Дать посетителям возможность самостоятельно выбирать места и&nbsp;знакомиться с&nbsp;ними через видео и&nbsp;<span class="nw">3D-сцены</span>.</p>
@@ -142,7 +128,6 @@
         <p>Круглый интерактивный стол с&nbsp;вращающейся столешницей и&nbsp;экраном в&nbsp;центре. Посетитель поворачивает столешницу, совмещает название места с&nbsp;указателем, и&nbsp;на&nbsp;экране появляется соответствующая история.</p>
       </div>
 
-      <!-- Обложка видеообзора: живой кадр с выставки, по нажатию — тот же просмотрщик, что у кнопки слева -->
       <figure class="case-review reveal">
         <button class="case-review__btn" type="button" data-video="../../Video/01_Khakasia_Attractions.mp4" data-title="Достопримечательности Хакасии — видеообзор" aria-label="Смотреть видеообзор экспоната, 1:20">
           <img src="media/videoobzor-stol-khakasii-na-vystavke.webp" srcset="media/videoobzor-stol-khakasii-na-vystavke-960.webp 960w, media/videoobzor-stol-khakasii-na-vystavke.webp 1920w" sizes="(max-width: 900px) 100vw, 75vw"
@@ -161,7 +146,6 @@
 
       <p class="case-main case-p reveal">На&nbsp;столешнице расположены названия достопримечательностей Хакасии, короткие описания и&nbsp;графические символы. Посетитель поворачивает ее и&nbsp;совмещает выбранное место с&nbsp;указателем. На&nbsp;экране в&nbsp;центре появляется соответствующий видеосюжет.</p>
 
-      <!-- Места на столешнице — как написано на самом столе -->
       <div class="case-main case-places reveal">
         <h2 class="case-label">10&nbsp;мест на&nbsp;столе</h2>
         <ul>
@@ -183,36 +167,22 @@
              alt="Руки посетительницы поворачивают столешницу интерактивного стола, красный указатель стоит у названия «Сундуки»" width="1920" height="1080" loading="lazy">
       </figure>
 
-
-      <!--
-        Устройство. Правило то же, что выше: текст в центральной колонке, картинка широкая.
-        RFID-иллюстрация квадратная — крупно и целиком, высотой почти в окно, без доливки фона.
-        Справа только небольшое круглое видео рядом с текстом про камеру.
-      -->
       <p class="case-main case-lead reveal">Чтобы переключать контент, нужно было надежно определять положение столешницы</p>
 
       <p class="case-main case-p reveal">Мы рассматривали энкодер, но&nbsp;у&nbsp;него две проблемы: механические части и&nbsp;сложность запоминания начального угла. Поэтому мы использовали RFID-метки.</p>
 
-      <!--
-        Стол раскрывается по прокрутке: блок встает посреди экрана, кадры (96 шт.) меняются колесом,
-        в конце появляются подписи. Подписи — текстом на сайте, не в кадре.
-      -->
       <figure class="case-scrub" data-frames="96" data-src="media/rfid-scroll/" data-v="2">
-        <!--
-          На телефоне стол прилипает под шапкой и занимает весь экран до низа: кадр обрезан по бокам
-          под пропорцию экрана (case.js), подписи деталей — внутри кадра, линии к ним пересчитываются там же.
-          На десктопе обертка не влияет на раскладку (display: contents).
-        -->
+
         <div class="case-scrub__pin">
         <div class="case-scrub__stage">
           <canvas class="case-scrub__canvas" width="1280" height="1280" role="img"
                   aria-label="Устройство интерактивного стола по слоям: вращающаяся столешница, экран, металлическая конструкция, карты с RFID-метками, считыватель и основание"></canvas>
           <svg class="case-scrub__lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <!-- линии растут от детали к подписи -->
+
             <path pathLength="1" d="M53.8 44.4L65.6 42.3H90"/>
             <path pathLength="1" d="M46.7 44L34.4 50.4H9.8"/>
           </svg>
-          <!-- Те же линии для вертикального кадра на телефоне: x пересчитан под обрезку 75% ширины -->
+
           <svg class="case-scrub__lines case-scrub__lines--m" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
             <path pathLength="1" d="M55.1 44.4L78 27H96"/>
             <path pathLength="1" d="M45.6 44L25 55.5H4"/>
@@ -225,9 +195,6 @@
 
       <p class="case-main case-p reveal">Все держится на&nbsp;металлической конструкции, верхняя часть которой свободно вращается. На&nbsp;ней закреплены 10&nbsp;карточек с&nbsp;RFID-чипами. Они проходят мимо неподвижного считывателя, он посылает сигнал в&nbsp;компьютер, и&nbsp;запускается нужный сюжет. Такое решение не&nbsp;требует механической связи столешницы с&nbsp;датчиком. Это было важно для экспоната, который работал на&nbsp;выставке около полугода.</p>
 
-      <!--
-        Комментарий разработчика — отдельный жанр, не вынос: светлая плашка, цитата, ниже автор с фото. Тексты — из документа «Мини текст на сайт». Фото — круг 48 px (media/arseniy-petrovich.jpg, 240×240, тень слева обрезана).
-      -->
       <figure class="case-main case-dev reveal">
         <blockquote class="case-dev__quote">При сборке стола выяснилось, что металлический каркас мешает работе <span class="nw">RFID-датчика</span>. Чтобы добиться стабильного считывания, пришлось дополнительно экранировать датчик и&nbsp;провода</blockquote>
         <figcaption class="case-dev__author">
@@ -245,25 +212,21 @@
       </div>
     </div>
 
-    <!-- Завершающий общий план -->
     <figure class="case-img case-img--last reveal">
       <img src="media/interaktivnyj-stol-khakasiya-na-vystavke.webp" srcset="media/interaktivnyj-stol-khakasiya-na-vystavke-960.webp 960w, media/interaktivnyj-stol-khakasiya-na-vystavke.webp 1920w" sizes="100vw"
            alt="Интерактивный стол «Достопримечательности Хакасии» на выставке: на экране Салбыкские степи и курган с древними камнями" width="1920" height="1080" loading="lazy">
     </figure>
 
-    <!-- Предложение: похожий экспонат для своего музея. Ведет к контактам внизу страницы -->
     <section class="case-offer">
       <p class="case-lead reveal">Сделаем похожий интерактивный стол для вашего музея или выставки&nbsp;— со&nbsp;своими местами, картой и&nbsp;сюжетами</p>
       <a class="sect__link reveal" href="#contact" data-panel>Обсудить проект</a>
     </section>
 
-    <!-- На десктопе возврат к проектам — синий кружок слева внизу, зеркально плашке «Обсудить проект» -->
     <a class="badge badge--back" href="../../#khakasia" data-back aria-label="Все проекты">
       <span class="badge__arrow" aria-hidden="true">←</span>
       <span class="badge__label">Все проекты</span>
     </a>
 
-    <!-- На телефоне возврат к проектам всегда внизу экрана — «← Все проекты» размером с кнопку «Контакты» в шапке -->
     <div class="case-fabs">
     <a class="case-fab case-fab--back" href="../../#khakasia" data-back><span aria-hidden="true">←</span>Все проекты</a>
     <button class="case-fab" type="button" data-video="../../Video/01_Khakasia_Attractions.mp4" data-title="Достопримечательности Хакасии — видеообзор">
@@ -272,11 +235,6 @@
     </button>
     </div>
 
-    <!--
-      Весь стенд Хакасии: три экспоната (по субтитрам общего ролика MainCut.srt).
-      У Менгиров пока нет своей страницы — карточка открывает видеообзор здесь же; когда кейс появится,
-      заменить на ссылку ../mengiry/. У «Достижений Хакасии» тоже — обзор (Video/05_Khakasia_Displax.mp4).
-    -->
     <section class="case-more">
       <h2 class="case-label">Стенд Хакасии на&nbsp;выставке «Россия»</h2>
       <div class="case-more__body">
@@ -314,7 +272,7 @@
           <a class="yt yt--m" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener" aria-label="YouTube-канал студии"><svg viewBox="0 0 48 34" aria-hidden="true"><rect width="48" height="34" rx="9" fill="currentColor"/><path d="M19.5 10v14l12-7z" fill="#111110"/></svg></a>
         </div>
         <a class="contact__btn contact__btn--m" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Написать в Telegram ↗</a>
-        <!-- Обратный звонок: на десктопе справа, верх — по верху контактов; на телефоне — столбиком под контактами -->
+
         <form class="callback contact__form" novalidate>
           <div class="contact__row">
             <input class="cpanel__input" type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="телефон" aria-label="Телефон">
@@ -328,12 +286,6 @@
     </section>
   </main>
 
-  <!--
-    Плашка контактов (десктоп): выезжает справа поверх страницы по «Контактам» в шапке и кружку «Написать нам».
-    Страница под ней не темнеет; шапка сдвигается влево, кнопка становится «Закрыть».
-    Сверху — обратный звонок (отправляет {phone} на /api/contact — обработчик на сервере студии), снизу — контакты.
-    На телефоне не используется: «Контакты» ведут к черному блоку внизу.
-  -->
   <aside class="cpanel" id="cpanel" aria-label="Контакты" inert>
     <span class="cpanel__grip" aria-hidden="true"></span>
     <button class="cpanel__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>

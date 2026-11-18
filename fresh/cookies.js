@@ -24,5 +24,15 @@
     else if(href.startsWith('mailto:'))goal('contact_email');
     else { try { if(new URL(link.href).hostname==='t.me')goal('contact_telegram'); } catch {} }
   });
+  function initializeOwnAnalytics() {
+    if (!production || navigator.doNotTrack === '1' || location.pathname.startsWith('/pb-search') || window.__pbMini || window.__pbMiniLoading) return;
+    window.__pbMiniLoading = true;
+    const script=document.createElement('script');
+    script.async=true;
+    script.src='/pb-search/t/script.js';
+    script.addEventListener('error',()=>{window.__pbMiniLoading=false;});
+    document.head.append(script);
+  }
   initialize();
+  initializeOwnAnalytics();
 })();
