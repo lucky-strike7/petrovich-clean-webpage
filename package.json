@@ -11,7 +11,7 @@
     "build": "node scripts/build.mjs",
     "update": "node scripts/update.mjs",
     "test": "node --test tests/*.test.mjs",
-    "check": "node --check server.mjs && node --check server/site.mjs && node --check server/contact.mjs && node --check fresh/fresh.js && node --check fresh/case.js && node --check fresh/cookies.js",
+    "check": "node --check server.mjs && node --check server/site.mjs && node --check server/contact.mjs && node --check fresh/fresh.js && node --check fresh/case.js && node --check fresh/cookies.js && node --check server/redirects.mjs && node --check scripts/check-release.mjs && bash -n deploy/publish.sh deploy/receive.sh deploy/ssh-command.sh",
     "verify:build": "node scripts/check-build.mjs"
   },
   "dependencies": {
