@@ -1,0 +1,38 @@
+// Run with docker exec -i CONTAINER node --input-type=module - COMMIT < this file.
+import assert from 'node:assert/strict';
+const expected = process.argv[2];
+assert.match(expected, /^[0-9a-f]{40}$/);
+const base = process.env.RELEASE_BASE_URL || 'http://127.0.0.1:3000';
+const resources = new Set();
+for (const path of ['/', '/cases/khakasia/', '/privacy/', '/consent/', '/robots.txt', '/sitemap.xml']) {
+  const r = await fetch(new URL(path, base), {signal: AbortSignal.timeout(5000)});
+  assert.equal(r.status, 200, path);
+  assert.equal(r.headers.get('x-site-release'), expected, 'Wrong deployed version');
+  assert(!r.headers.get('x-robots-tag')?.includes('noindex'), 'Production is blocked from indexing');
+  const text = await r.text();
+  if (path.endsWith('/')) {
+    assert(text.includes('<main'), `Page content missing: ${path}`);
+    for (const match of text.matchAll(/(?:src|href)="([^"]+\.(?:css|js)(?:\?[^"]*)?)"/g)) {
+      const url = new URL(match[1], new URL(path, base));
+      if (url.origin === new URL(base).origin) resources.add(url.href);
+    }
+  }
+}
+for (const url of resources) assert.equal((await fetch(url, {method:'HEAD'})).status, 200, url);
+for (const path of ['/not-a-real-page/', '/.env', '/.git/config', '/server/contact.mjs']) {
+  assert.equal((await fetch(new URL(path, base))).status, 404, path);
+}
+for (const [path, location] of [
+  ['/video-content?utm_source=check&yclid=123', '/?utm_source=check&yclid=123'],
+  ['/projects/khakasiya', '/cases/khakasia/'],
+  ['/projects/hersones?x=a%2Bb', '/?x=a%2Bb#shturval'],
+]) {
+  const r=await fetch(new URL(path,base),{redirect:'manual'});
+  assert.equal(r.status,301,path);assert.equal(r.headers.get('location'),location,path);
+}
+const range=await fetch(new URL('/Video/01_Khakasia_Attractions.mp4',base),{headers:{Range:'bytes=0-1023'}});
+assert.equal(range.status,206);assert.equal((await range.arrayBuffer()).byteLength,1024);
+// Invalid input only: this must never send an email/Telegram message.
+const rejected=await fetch(new URL('/api/contact',base),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:'invalid',consent:false})});
+assert.equal(rejected.status,400);assert.equal((await rejected.json()).success,false);
+console.log(`Release verified: ${expected}; pages, ${resources.size} assets, 301, 404, video Range and form rejection.`);
