@@ -1,0 +1,53 @@
+{
+  "http": {
+    "routers": {
+      "pb-restored-case": {
+        "rule": "(Host(`petrovichbrothers.ru`) || Host(`www.petrovichbrothers.ru`)) && PathRegexp(`^/cases/(artmonta|carrera|cyberbug|donstroy|etalon|gorodobrazovaniya|hbo|hersones|khakasia|nanolek|premiarb|referus|rosatom|rosnano|yantarny|zebralog)/?$`)",
+        "entryPoints": [
+          "websecure"
+        ],
+        "service": "pb",
+        "middlewares": [
+          "pb-restored-khakasia",
+          "pb-restored-cyberbug",
+          "pb-restored-gorodobrazovaniya",
+          "pb-restored-case"
+        ],
+        "priority": 100,
+        "tls": {
+          "certResolver": "letsencrypt"
+        }
+      }
+    },
+    "middlewares": {
+      "pb-restored-khakasia": {
+        "redirectRegex": {
+          "regex": "^https?://(?:www[.])?petrovichbrothers[.]ru/cases/khakasia/?(\\?.*)?$",
+          "replacement": "https://petrovichbrothers.ru/projects/khakasiya/${1}",
+          "permanent": true
+        }
+      },
+      "pb-restored-cyberbug": {
+        "redirectRegex": {
+          "regex": "^https?://(?:www[.])?petrovichbrothers[.]ru/cases/cyberbug/?(\\?.*)?$",
+          "replacement": "https://petrovichbrothers.ru/projects/amperka/${1}",
+          "permanent": true
+        }
+      },
+      "pb-restored-gorodobrazovaniya": {
+        "redirectRegex": {
+          "regex": "^https?://(?:www[.])?petrovichbrothers[.]ru/cases/gorodobrazovaniya/?(\\?.*)?$",
+          "replacement": "https://petrovichbrothers.ru/projects/gorodobrazovaniyya/${1}",
+          "permanent": true
+        }
+      },
+      "pb-restored-case": {
+        "redirectRegex": {
+          "regex": "^https?://(?:www[.])?petrovichbrothers[.]ru/cases/([^/?]+)/?(\\?.*)?$",
+          "replacement": "https://petrovichbrothers.ru/projects/${1}/${2}",
+          "permanent": true
+        }
+      }
+    }
+  }
+}
