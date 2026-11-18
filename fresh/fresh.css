@@ -402,6 +402,7 @@ html:not(.js) .card__how ul { opacity: 1; }
 .yt { display: block; width: 40px; height: 28px; color: var(--bg); transition: transform .45s var(--ease); }
 .yt svg { display: block; width: 100%; height: 100%; }
 .yt:hover { transform: scale(1.1); }
+.yt--m { display: none; }
 /* Десктоп: связь через плашку (кружок справа), Telegram — словом в контактах, YouTube — значком.
    Телефон: плашки нет — большая кнопка Telegram и YouTube словом, как раньше */
 .contact__btn--m, .contact__yt-m { display: none; }
@@ -457,6 +458,12 @@ html:not(.js) .card__how ul { opacity: 1; }
 }
 .cpanel__input::placeholder { color: #8a8a84; font-family: var(--font-text); font-weight: 400; } /* подсказка — тонким текстовым начертанием */
 .cpanel__input:hover, .cpanel__input:focus { border-color: var(--bg); }
+/* Автозаполнение номера (iPhone, Chrome) красило поле желтым: оставляем фон черным, текст светлым */
+.cpanel__input:-webkit-autofill, .cpanel__input:-webkit-autofill:hover, .cpanel__input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--bg); caret-color: var(--bg);
+  -webkit-box-shadow: 0 0 0 100px #111110 inset; box-shadow: 0 0 0 100px #111110 inset;
+  transition: background-color 600000s 0s;
+}
 .cpanel__btn {
   height: 64px; border: 1.5px solid var(--accent); border-radius: 999px; cursor: pointer;
   background: var(--accent); color: var(--on-accent); font: inherit; font-size: 18px;
@@ -494,6 +501,7 @@ html:not(.js) .card__how ul { opacity: 1; }
 .cpanel__close svg { display: block; width: 36px; height: 36px; fill: none; stroke: currentColor; stroke-width: 1.6; }
 .is-panel .cpanel__close { opacity: 1; transition: opacity .4s .35s, transform .45s var(--ease); }
 .cpanel__close:hover { transform: rotate(90deg); }
+.cpanel__grip { display: none; }
 
 /* Обратный звонок: галочка согласия и сообщение */
 .callback__agree { display: flex; align-items: flex-start; gap: 14px; color: #9c9c96; font-size: 15px; line-height: 1.3; cursor: pointer; }
@@ -757,7 +765,7 @@ h1, h2, h3, .sect__lead, .case-lead, .contact__title, .case-more__title { text-w
 */
 @media (max-width: 600px) {
   /* Синий кружок «Обсудить проект» на телефоне не нужен: шапка с «Написать» всегда наверху */
-  .contact__lead, .contact__foot, .contact__title .pill, .badge { display: none; }
+  .contact__lead, .contact__title .pill, .badge { display: none; }
   /*
     Под черным блоком контактов при «оттягивании» страницы снизу и в нижней полосе Safari был светлый фон.
     Фон холста (html) и тела страницы черные, содержимое лежит на светлой подложке main; верх Safari берет цвет из светлой шапки.
@@ -850,15 +858,58 @@ h1, h2, h3, .sect__lead, .case-lead, .contact__title, .case-more__title { text-w
     height: 56px; padding: 0 28px; font-family: var(--font-text); font-weight: 400; font-size: 16px; line-height: 1;
   }
   .contact__btn { display: flex; }
-  .contact__btn--m, .contact__yt-m { display: flex; }
-  .contact__form { display: none; }
-  .contact__yt-m { display: inline-block; }
-  .contact__tg { display: none; }
+  /* Телефон, вариант Б: как на десктопе — Telegram строчкой в контактах, единственная крупная кнопка — «Перезвоните мне» */
+  .contact__btn--m { display: none; }
+  /* YouTube на телефоне — значком справа в строке Telegram; нижней строки (адрес) нет */
+  .contact__foot { display: none; }
+  .contact__ways { display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 16px; }
+  .contact__ways > .contact__mail { grid-column: 1; justify-self: start; }
+  .yt--m { display: block; grid-column: 2; grid-row: 3; }
+  /* Порядок формы: поле, галочка, кнопка */
+  .contact__row { display: contents; }
+  .contact__form .cpanel__input { order: 1; }
+  .contact__form .callback__agree { order: 2; }
+  .contact__form .cpanel__btn { order: 3; }
+  .contact__form .callback__msg { order: 4; }
+  .contact__form { width: 100%; gap: 16px; margin-top: 40px; }
+  .contact__row { flex-direction: column; align-items: stretch; gap: 16px; }
+  .contact__form .cpanel__input { font-size: 26px; padding-bottom: 12px; } /* 26 px: крупно и без приближения страницы в iPhone (больше 16) */
+  .contact__form .cpanel__btn { height: 56px; font-size: 16px; }
+  .contact__form .callback__agree { gap: 12px; }
   /*
     Нижний запас контактов — постоянный (34 px — полоска «домой»), без env(safe-area-inset-bottom):
     в Telegram он меняется, когда внизу появляется панель браузера, и страница дергалась в самом конце.
   */
-  .cpanel { display: none; } /* на телефоне «Контакты» ведут к черному блоку внизу */
+  /*
+    Телефон: та же плашка — шторкой снизу. Под ней страница затемняется (касание по ней закрывает),
+    сверху «ручка» — шторку можно смахнуть вниз. Когда открыта клавиатура, шторка стоит над ней (--kb, script).
+  */
+  .cpanel {
+    top: auto; left: 0; width: auto; display: block;
+    bottom: var(--kb, 0px); max-height: calc(var(--vvh, 100svh) - 56px); overflow-y: auto; overscroll-behavior: contain;
+    padding: 64px var(--pad) calc(28px + env(safe-area-inset-bottom, 0px));
+    border-radius: 22px 22px 0 0; background: rgba(17, 17, 15, .96);
+    transform: translateY(105%); transition: transform .3s cubic-bezier(.5, 0, .75, 0), visibility 0s .3s;
+  }
+  .is-panel .cpanel { transform: translateY(var(--drag, 0px)); transition: transform .45s cubic-bezier(.2, .8, .2, 1); }
+  .cpanel.is-dragging { transition: none !important; }
+  .cpanel__grip { display: block; position: absolute; top: 10px; left: 50%; width: 40px; height: 4px; margin-left: -20px; border-radius: 2px; background: #5a5a55; }
+  .cpanel__close { top: 12px; right: 8px; }
+  .cpanel__close svg { width: 28px; height: 28px; }
+  .cpanel__title { font-size: 40px; line-height: 1; letter-spacing: -.025em; }
+  .cpanel__form { margin-top: 28px; gap: 16px; }
+  .cpanel__input { font-size: 26px; padding-bottom: 12px; }
+  .cpanel__btn { height: 56px; font-size: 16px; }
+  .cpanel__ways { margin-top: 32px; }
+  .cpanel__ways a { font-size: 20px; line-height: 1.4; }
+  /* Шапка на телефоне не сдвигается */
+  .is-panel-top .top__nav, .is-panel-top .top__btn { transform: none; }
+  /* Затемнение страницы под шторкой */
+  body::after {
+    content: ""; position: fixed; inset: 0; z-index: 24; background: rgba(0, 0, 0, .45);
+    opacity: 0; visibility: hidden; transition: opacity .3s, visibility 0s .3s;
+  }
+  .is-panel body::after { opacity: 1; visibility: visible; transition: opacity .35s; }
   .roll > span + span { display: none; } /* на телефоне наведения нет — кнопка по ширине «Контакты» */
   .contact { padding-bottom: calc(48px + 100px); } /* +100: черный запас под нижней панелью Telegram (раньше там выезжал белый) */
   /* Высоты от экрана — через --vh (запомненная высота при загрузке, см. <head>), а не svh: см. там же про Telegram */

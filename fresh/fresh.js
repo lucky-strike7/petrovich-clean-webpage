@@ -310,6 +310,7 @@
   */
   const panel = document.querySelector('.cpanel');
   const wide = matchMedia('(min-width: 901px)');
+  const narrow = matchMedia('(max-width: 600px)'); // телефон — та же плашка шторкой снизу; планшет — прокрутка к контактам
   if (panel) {
     const root = document.documentElement;
     const isOpen = () => root.classList.contains('is-panel');
@@ -319,21 +320,63 @@
       panel.inert = !open;
       if (open) lenis?.stop(); else lenis?.start();
     };
+    /*
+      Кнопка «Назад» (Android, смахивание от края в iPhone) сначала закрывает плашку, а не уходит со страницы:
+      при открытии добавляем шаг в историю, при закрытии своими кнопками — снимаем его.
+    */
+    const openPanel = (fromTop) => { setOpen(true, fromTop); history.pushState({ cpanel: 1 }, ''); };
+    const closePanel = () => {
+      if (!isOpen()) return;
+      if (history.state?.cpanel) history.back(); else setOpen(false);
+    };
+    addEventListener('popstate', () => { if (isOpen()) setOpen(false); });
     document.querySelectorAll('.top__btn, .badge[href="#contact"], [data-panel]').forEach((el) => el.addEventListener('click', (e) => {
-      if (!wide.matches) return; // телефон и планшет — обычная прокрутка к контактам
+      if (!wide.matches && !narrow.matches) return; // планшет — обычная прокрутка к контактам
       // Черный блок уже показался — плашка не нужна (форма и контакты в нем): докручиваем к нему
       if (!isOpen() && contact.getBoundingClientRect().top < innerHeight) return;
       e.preventDefault(); e.stopPropagation();
-      setOpen(!isOpen(), el.classList.contains('top__btn'));
-      if (isOpen()) setTimeout(() => panel.querySelector('.cpanel__input')?.focus({ preventScroll: true }), 650);
+      if (isOpen()) closePanel(); else openPanel(el.classList.contains('top__btn'));
+      // На десктопе курсор сразу в поле; на телефоне нет — иначе сразу выскочит клавиатура
+      if (isOpen() && wide.matches) setTimeout(() => panel.querySelector('.cpanel__input')?.focus({ preventScroll: true }), 650);
     }));
-    panel.querySelector('.cpanel__close').addEventListener('click', () => setOpen(false));
-    addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) setOpen(false); });
+    panel.querySelector('.cpanel__close').addEventListener('click', () => closePanel());
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) closePanel(); });
     document.addEventListener('click', (e) => {
-      if (isOpen() && !panel.contains(e.target) && !e.target.closest('.top__btn')) setOpen(false);
+      if (isOpen() && !panel.contains(e.target) && !e.target.closest('.top__btn')) closePanel();
     });
-    wide.addEventListener('change', () => { if (!wide.matches && isOpen()) setOpen(false); });
-    panel.addEventListener('sent', () => setTimeout(() => setOpen(false), 2600));
+    wide.addEventListener('change', () => { if (isOpen()) closePanel(); });
+    narrow.addEventListener('change', () => { if (isOpen()) closePanel(); });
+
+    /* Шторка (телефон): смахнуть вниз — закрыть. Тянем за верх шторки, пока она не прокручена */
+    let y0 = null, dy = 0;
+    panel.addEventListener('touchstart', (e) => {
+      if (!narrow.matches || panel.scrollTop > 0 || e.target.closest('input, button, a, label')) return;
+      y0 = e.touches[0].clientY; dy = 0; panel.classList.add('is-dragging');
+    }, { passive: true });
+    panel.addEventListener('touchmove', (e) => {
+      if (y0 === null) return;
+      dy = Math.max(0, e.touches[0].clientY - y0);
+      panel.style.setProperty('--drag', `${dy}px`);
+    }, { passive: true });
+    panel.addEventListener('touchend', () => {
+      if (y0 === null) return;
+      y0 = null; panel.classList.remove('is-dragging'); panel.style.removeProperty('--drag');
+      if (dy > 90) closePanel();
+    });
+
+    /* Клавиатура на телефоне: шторка поднимается над ней, высота — не больше видимой части экрана */
+    const vv = window.visualViewport;
+    if (vv) {
+      const fit = () => {
+        if (!narrow.matches) return;
+        const kb = Math.max(0, innerHeight - vv.height - vv.offsetTop);
+        panel.style.setProperty('--kb', `${Math.round(kb)}px`);
+        panel.style.setProperty('--vvh', `${Math.round(vv.height)}px`);
+      };
+      vv.addEventListener('resize', fit);
+      vv.addEventListener('scroll', fit);
+    }
+    panel.addEventListener('sent', () => setTimeout(() => closePanel(), 2600));
   }
 
   /*

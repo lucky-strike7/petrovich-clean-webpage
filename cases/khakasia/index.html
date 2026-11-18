@@ -28,8 +28,8 @@
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preload" as="image" href="media/interaktivnyj-stol-khakasiya.webp" imagesrcset="media/interaktivnyj-stol-khakasiya-960.webp 960w, media/interaktivnyj-stol-khakasiya.webp 1920w" imagesizes="100vw">
-  <link rel="stylesheet" href="../../fresh/fresh.css?v=1118v">
-  <link rel="stylesheet" href="../../fresh/case.css?v=1118x">
+  <link rel="stylesheet" href="../../fresh/fresh.css?v=1119d">
+  <link rel="stylesheet" href="../../fresh/case.css?v=1119f">
   <script>
     document.documentElement.classList.add('js');
     /*
@@ -272,7 +272,7 @@
     <!--
       Весь стенд Хакасии: три экспоната (по субтитрам общего ролика MainCut.srt).
       У Менгиров пока нет своей страницы — карточка открывает видеообзор здесь же; когда кейс появится,
-      заменить на ссылку ../mengiry/. У «Достижений Хакасии» нет ни страницы, ни обзора — карточка без ссылки.
+      заменить на ссылку ../mengiry/. У «Достижений Хакасии» тоже — обзор (Video/05_Khakasia_Displax.mp4).
     -->
     <section class="case-more">
       <h2 class="case-label">Стенд Хакасии на&nbsp;выставке «Россия»</h2>
@@ -281,17 +281,17 @@
         <ul class="case-more__list">
           <li class="reveal">
             <button class="case-more__card" type="button" data-cursor="Смотреть обзор" data-video="../../Video/02_Khakasia_Menhirs.mp4" data-title="Менгиры Хакасии — видеообзор">
-              <span class="case-more__img"><img src="../../fresh/media/mengiry-render.jpg" alt="Интерактивный экспонат «Менгиры Хакасии»: копии древних каменных статуй и сенсорный экран с игрой" width="1920" height="1080" loading="lazy"></span>
+              <span class="case-more__img"><img src="../../fresh/media/mengiry-render.jpg" alt="Интерактивный экспонат «Менгиры Хакасии»: копии древних каменных статуй и сенсорный экран с игрой" width="1920" height="1080" loading="lazy"><span class="case-review__play case-more__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></span></span>
               <span class="case-more__title">Менгиры Хакасии</span>
               <span class="case-more__desc">Головоломка на&nbsp;сенсорном экране: когда лицо менгира собрано, на&nbsp;статуе загорается подсветка</span>
             </button>
           </li>
           <li class="reveal">
-            <div class="case-more__card">
-              <span class="case-more__img"><img src="media/displax-dostizheniya-khakasii.jpg" alt="Стол Displax «Достижения Хакасии»: посетитель ставит фишку на карту республики, место подсвечивается зеленым" width="1200" height="676" loading="lazy"></span>
+            <button class="case-more__card" type="button" data-cursor="Смотреть обзор" data-video="../../Video/05_Khakasia_Displax.mp4" data-title="Достижения Хакасии — видеообзор">
+              <span class="case-more__img"><img src="media/displax-dostizheniya-khakasii.jpg" alt="Стол Displax «Достижения Хакасии»: посетитель ставит фишку на карту республики, место подсвечивается зеленым" width="1200" height="676" loading="lazy"><span class="case-review__play case-more__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></span></span>
               <span class="case-more__title">Достижения Хакасии</span>
               <span class="case-more__desc">Пять фишек с&nbsp;названиями достижений. Чем ближе фишка к&nbsp;нужному месту на&nbsp;карте, тем зеленее подсветка</span>
-            </div>
+            </button>
           </li>
         </ul>
       </div>
@@ -308,11 +308,10 @@
           <a class="contact__mail" href="mailto:art@petrovichbrothers.ru">art@petrovichbrothers.ru</a>
           <a class="contact__mail" href="tel:+79151978652">+7&nbsp;915&nbsp;197-86-52</a>
           <a class="contact__mail contact__tg" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Telegram&nbsp;↗</a>
-          <!-- Канал с разборами проектов. Позже — отдельная страница «Медиа» -->
-          <a class="contact__mail contact__yt-m" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener">YouTube&nbsp;↗</a>
+          <a class="yt yt--m" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener" aria-label="YouTube-канал студии"><svg viewBox="0 0 48 34" aria-hidden="true"><rect width="48" height="34" rx="9" fill="currentColor"/><path d="M19.5 10v14l12-7z" fill="#111110"/></svg></a>
         </div>
         <a class="contact__btn contact__btn--m" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Написать в Telegram ↗</a>
-        <!-- Десктоп: обратный звонок справа, верх — по верху контактов. На телефоне вместо нее кнопка Telegram -->
+        <!-- Обратный звонок: на десктопе справа, верх — по верху контактов; на телефоне — столбиком под контактами -->
         <form class="callback contact__form" novalidate>
           <div class="contact__row">
             <input class="cpanel__input" type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="телефон" aria-label="Телефон">
@@ -333,6 +332,7 @@
     На телефоне не используется: «Контакты» ведут к черному блоку внизу.
   -->
   <aside class="cpanel" id="cpanel" aria-label="Контакты" inert>
+    <span class="cpanel__grip" aria-hidden="true"></span>
     <button class="cpanel__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
     <div class="cpanel__top">
       <p class="cpanel__title"><span class="nw">Давайте сделаем</span><br>экспонат</p>
@@ -363,7 +363,7 @@
   </dialog>
 
   <script src="../../fresh/vendor/lenis.min.js"></script>
-  <script src="../../fresh/fresh.js?v=1118w"></script>
-  <script src="../../fresh/case.js?v=1118x"></script>
+  <script src="../../fresh/fresh.js?v=1119d"></script>
+  <script src="../../fresh/case.js?v=1119f"></script>
 </body>
 </html>

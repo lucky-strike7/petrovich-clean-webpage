@@ -38,7 +38,7 @@
     "sameAs": ["https://www.youtube.com/@PetrovichBrothers-b7q", "https://t.me/artem_petrovich_1"]
   }
   </script>
-  <link rel="stylesheet" href="fresh/fresh.css?v=1118v">
+  <link rel="stylesheet" href="fresh/fresh.css?v=1119d">
   <script>
     document.documentElement.classList.add('js');
     /*
@@ -298,11 +298,10 @@
           <a class="contact__mail" href="mailto:art@petrovichbrothers.ru">art@petrovichbrothers.ru</a>
           <a class="contact__mail" href="tel:+79151978652">+7&nbsp;915&nbsp;197-86-52</a>
           <a class="contact__mail contact__tg" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Telegram&nbsp;↗</a>
-          <!-- Канал с разборами проектов. Позже — отдельная страница «Медиа» -->
-          <a class="contact__mail contact__yt-m" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener">YouTube&nbsp;↗</a>
+          <a class="yt yt--m" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener" aria-label="YouTube-канал студии"><svg viewBox="0 0 48 34" aria-hidden="true"><rect width="48" height="34" rx="9" fill="currentColor"/><path d="M19.5 10v14l12-7z" fill="#111110"/></svg></a>
         </div>
         <a class="contact__btn contact__btn--m" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Написать в Telegram ↗</a>
-        <!-- Десктоп: обратный звонок справа, верх — по верху контактов. На телефоне вместо нее кнопка Telegram -->
+        <!-- Обратный звонок: на десктопе справа, верх — по верху контактов; на телефоне — столбиком под контактами -->
         <form class="callback contact__form" novalidate>
           <div class="contact__row">
             <input class="cpanel__input" type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="телефон" aria-label="Телефон">
@@ -323,6 +322,7 @@
     На телефоне не используется: «Контакты» ведут к черному блоку внизу.
   -->
   <aside class="cpanel" id="cpanel" aria-label="Контакты" inert>
+    <span class="cpanel__grip" aria-hidden="true"></span>
     <button class="cpanel__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
     <div class="cpanel__top">
       <p class="cpanel__title"><span class="nw">Давайте сделаем</span><br>экспонат</p>
@@ -355,6 +355,6 @@
   </dialog>
 
   <script src="fresh/vendor/lenis.min.js"></script>
-  <script src="fresh/fresh.js?v=1118w"></script>
+  <script src="fresh/fresh.js?v=1119d"></script>
 </body>
 </html>
