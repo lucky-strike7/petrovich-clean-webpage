@@ -11,8 +11,9 @@ exec 9>/var/lock/pb-website-deploy.lock
 flock -w 1800 9
 source_git="$base/source.git"
 if [[ ! -d "$source_git" ]]; then git init --bare "$source_git" >/dev/null; fi
-git --git-dir="$source_git" fetch --quiet --no-tags --depth=1 "$repository" refs/heads/main
-latest=$(git --git-dir="$source_git" rev-parse FETCH_HEAD)
+git --git-dir="$source_git" symbolic-ref HEAD refs/heads/main
+git --git-dir="$source_git" fetch --quiet --no-tags --depth=1 "$repository" +refs/heads/main:refs/heads/main
+latest=$(git --git-dir="$source_git" rev-parse refs/heads/main)
 if [[ "$latest" != "$commit" ]]; then
     printf 'Skipping superseded commit %s; current main is %s.\n' "$commit" "$latest"
     exit 0
@@ -21,7 +22,7 @@ release="$base/releases/$commit"
 if [[ ! -d "$release" ]]; then
     temporary=$(mktemp -d "$base/releases/.prepare-${commit:0:12}.XXXXXX")
     trap 'rm -rf -- "$temporary"' EXIT
-    git --git-dir="$source_git" archive "$commit" | tar --no-same-owner -x -C "$temporary"
+    git --git-dir="$source_git" archive "$commit" -- . ':(top,exclude)v1' ':(top,exclude)media' ':(top,exclude)assets' ':(top,exclude)archive-v1' ':(top,exclude)archive-media' ':(top,exclude)index-old.html' ':(top,exclude)fresh.html' | tar --no-same-owner -x -C "$temporary"
     mv "$temporary" "$release"
     trap - EXIT
 fi

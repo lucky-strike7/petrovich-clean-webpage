@@ -23,7 +23,7 @@ services:
     container_name: pb-archive-gateway
     restart: unless-stopped
     volumes:
-      - ./archive.conf:/etc/nginx/conf.d/default.conf:ro
+      - /srv/docker/sites/petrovich-clean-webpage/state/archive.conf:/etc/nginx/conf.d/default.conf:ro
     networks: [traefik-global]
     mem_limit: 64m
     logging:

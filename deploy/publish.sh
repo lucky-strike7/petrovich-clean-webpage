@@ -37,15 +37,25 @@ on_exit() {
         PB_RELEASE="$previous_image" docker compose -f "$previous_compose" up -d --no-deps web || printf 'ROLLBACK FAILED: operator action required.\n' >&2
     fi
     docker rm -f "$candidate" >/dev/null 2>&1 || true
+    if declare -F cleanup_history >/dev/null; then cleanup_history; fi
     exit "$result"
 }
 trap on_exit EXIT
 trap 'exit 130' INT
 trap 'exit 143' TERM
 trap 'exit 129' HUP
+cleanup_history() {
+    if [[ -f deploy/cleanup.py ]]; then
+        python3 deploy/cleanup.py "$base" --apply --locked || printf 'Warning: cleanup failed; healthy release retained.\n' >&2
+    fi
+}
+if [[ "$previous_image" == "$image" ]] && docker exec pb-website node --input-type=module -e 'const r=await fetch("http://127.0.0.1:3000/");if(r.status!==200||r.headers.get("x-site-release")!==process.argv[1])process.exit(1)' "$commit"; then
+    printf 'Already serving %s; no rebuild or restart.\n' "$commit"
+    exit 0
+fi
 existing=$(docker image inspect "$image" --format '{{index .Config.Labels "org.opencontainers.image.revision"}}' 2>/dev/null || true)
 if [[ "$existing" != "$commit" ]]; then
-    docker build --memory=1536m --cpu-quota=100000 --build-arg "BUILD_COMMIT=$commit" -t "$image" .
+    docker buildx build --builder pb-website --load --build-arg "BUILD_COMMIT=$commit" -t "$image" .
 fi
 # No credentials or external network in the candidate.
 docker run -d --name "$candidate" --network none --memory=256m \

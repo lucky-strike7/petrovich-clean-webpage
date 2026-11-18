@@ -15,7 +15,7 @@ async function fixture(t){
  flock:'exit 0',sleep:'exit 0',
  git:'count=$(cat "$TEST_BASE/git-count" 2>/dev/null || echo 0); count=$((count+1)); echo "$count" > "$TEST_BASE/git-count"; if [[ "${TEST_STALE:-}" == 1 && "$count" -gt 1 ]]; then echo "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb refs/heads/main"; else echo "$TEST_COMMIT refs/heads/main"; fi',
  docker:`case "$1" in
- inspect) if [[ "$*" == *com.docker.compose.project.config_files* ]]; then echo "$TEST_PREVIOUS"; else echo 'old-image:stable'; fi ;;
+ inspect) if [[ "$*" == *com.docker.compose.project.config_files* ]]; then echo "$TEST_PREVIOUS"; elif [[ "\${TEST_SAME_COMMIT:-}" == 1 ]]; then echo petrovich-clean:commit-aaaaaaaaaaaa; else echo 'old-image:stable'; fi ;;
  image) echo "$TEST_COMMIT" ;;
  run) echo candidate ;;
  exec) if [[ "$*" == *'pb-website node'* ]]; then [[ "\${TEST_PROD_FAIL:-}" != 1 ]]; else [[ "\${TEST_CANDIDATE_FAIL:-}" != 1 ]]; fi ;;
@@ -44,4 +44,8 @@ test('restricted SSH entry accepts only one full deploy SHA, never shell command
  const f=await fixture(t),script=new URL('../deploy/ssh-command.sh',import.meta.url).pathname;
  for(const command of ['', 'id', 'deploy main', 'deploy '+commit+'; id','deploy '+commit+' extra','deploy '+commit+'\n']){const r=spawnSync('bash',[script],{env:{...f.env,SSH_ORIGINAL_COMMAND:command},encoding:'utf8'});assert.equal(r.status,64,command);assert.equal(r.stdout,'');}
  const r=spawnSync('bash',[script],{env:{...f.env,SSH_ORIGINAL_COMMAND:'deploy '+commit},encoding:'utf8'});assert.equal(r.status,0);assert.equal(r.stdout.trim(),'-n /usr/local/sbin/pb-website-receive '+commit);
+});
+
+test('re-running the healthy same commit skips rebuild, restart and rollback-state changes',async t=>{
+ const f=await run(t,{TEST_SAME_COMMIT:'1'});assert.equal(f.result.status,0,f.result.stderr);assert.deepEqual(await calls(f.base),[]);assert.match(f.result.stdout,/no rebuild or restart/);
 });
