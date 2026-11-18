@@ -273,11 +273,11 @@
   });
 
   /*
-    Плавная прокрутка (Lenis): колесико мыши двигает страницу с мягким «доездом».
-    На телефонах прокрутка остается родной. При «уменьшить движение» не включается.
-    Lenis прокручивает саму страницу, поэтому липкие колонки, появления и ролики работают как раньше.
+    «Вязкая» прокрутка (Lenis) выключена: колесо мыши прокручивает страницу как обычно, без инерции
+    (отзыв дизайнера: «приколы со скролом бесят»). Ссылки-якоря едут плавно средствами браузера
+    (html { scroll-behavior: smooth }). Код Lenis оставлен: чтобы вернуть, заменить null на new window.Lenis({ lerp: 0.1 }).
   */
-  const lenis = !reduce && window.Lenis ? new window.Lenis({ lerp: 0.1 }) : null;
+  const lenis = null;
   if (lenis) {
     const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
     requestAnimationFrame(raf);
@@ -292,6 +292,27 @@
       e.preventDefault();
       lenis.scrollTo(target, { offset: -24, duration: 1.4 });
       history.replaceState(null, '', url.hash);
+    });
+  }
+
+  /*
+    Еще работы: при наведении мышью на карточку прячем ▶ и играем короткий ролик поверх обложки.
+    Ролик создается при первом наведении (не грузим 10 роликов заранее). На касаниях — только обложка и ▶.
+  */
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    document.querySelectorAll('.work[data-preview]').forEach((card) => {
+      let v;
+      card.addEventListener('mouseenter', () => {
+        if (!v) {
+          v = document.createElement('video');
+          v.src = card.dataset.preview; v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'auto';
+          v.setAttribute('aria-hidden', 'true');
+          card.querySelector('.work__media').append(v);
+        }
+        card.classList.add('is-previewing');
+        v.play().catch(() => {});
+      });
+      card.addEventListener('mouseleave', () => { card.classList.remove('is-previewing'); v?.pause(); });
     });
   }
 
@@ -352,6 +373,10 @@
     const block = (e) => { if (isOpen() && !panel.contains(e.target)) e.preventDefault(); };
     document.addEventListener('touchmove', block, { passive: false });
     if (!lenis) document.addEventListener('wheel', block, { passive: false });
+    // Окно с видеообзором: страница под ним тоже стоит
+    const blockModal = (e) => { if (document.querySelector('.modal[open]')) e.preventDefault(); };
+    document.addEventListener('wheel', blockModal, { passive: false });
+    document.addEventListener('touchmove', blockModal, { passive: false });
     /*
       Кнопка «Назад» (Android, смахивание от края в iPhone) сначала закрывает плашку, а не уходит со страницы:
       при открытии добавляем шаг в историю, при закрытии своими кнопками — снимаем его.

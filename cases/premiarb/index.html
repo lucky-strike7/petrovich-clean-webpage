@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../../favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <link rel="preload" as="font" href="../../fonts/Milligram-Medium.woff2" type="font/woff2" crossorigin>
+  <link rel="preload" as="font" href="../../fonts/MilligramText-Regular.woff2" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#F6F6F3">
+  <title>Графика для трех экранов на церемонии Премии РБ — студия братьев Петрович</title>
+  <meta name="description" content="Видеоконтент для трех пятиметровых экранов к театральному представлению: анимация символики премии, 3D-лица и ролики для всех номинаций">
+  <link rel="canonical" href="https://petrovichbrothers.ru/cases/premiarb/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Студия братьев Пе́трович">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:title" content="Графика для трех экранов на церемонии Премии РБ">
+  <meta property="og:description" content="Видеоконтент для трех пятиметровых экранов к театральному представлению: анимация символики премии, 3D-лица и ролики для всех номинаций">
+  <meta property="og:url" content="https://petrovichbrothers.ru/cases/premiarb/">
+  <meta property="og:image" content="https://petrovichbrothers.ru/cases/premiarb/media/premiarb-1.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../../fresh/fresh.css?v=1119z">
+  <link rel="stylesheet" href="../../fresh/case.css?v=1119r">
+  <script>
+    document.documentElement.classList.add('js');
+    /*
+      --vh — сотая доля высоты экрана, запомненная при загрузке. На телефоне высоты считаем от нее, а не от svh:
+      встроенный браузер Telegram меняет высоту окна, когда показывает свою панель, и страница прыгала.
+      Пересчитываем только при смене ширины (поворот телефона).
+    */
+    (() => {
+      const h = document.documentElement;
+      const set = () => h.style.setProperty('--vh', `${innerHeight / 100}px`);
+      let w = innerWidth; set();
+      addEventListener('resize', () => { if (innerWidth !== w) { w = innerWidth; set(); } });
+    })();
+  </script>
+</head>
+<body class="case-page">
+  <header class="top">
+    <a class="top__logo" href="../../" aria-label="Студия братьев Пе́трович — на главную">
+      <img src="../../fresh/logo-vertical.svg" alt="Petrovich Brothers" width="244" height="121">
+    </a>
+    <nav class="top__nav">
+      <a href="../../#works" data-back><span aria-hidden="true">←&nbsp;</span>Все проекты</a>
+      <a href="../../#process">Студия</a>
+    </nav>
+    <a class="top__btn" href="#contact"><span class="roll"><span>Контакты</span><span aria-hidden="true">Написать нам</span></span></a>
+  </header>
+
+  <main>
+    <section class="case-hero">
+      <p class="case-kicker">Графика для трех экранов<br class="br-m"> на&nbsp;церемонии премии</p>
+      <h1 class="case-hero__title">Премия РБ</h1>
+      <figure class="case-hero__media">
+        <img src="media/premiarb-1.jpg" srcset="media/premiarb-1-960.jpg 960w, media/premiarb-1.jpg 1920w" sizes="100vw" alt="Премия РБ" fetchpriority="high">
+      </figure>
+    </section>
+
+    <div class="case-grid">
+      <aside class="case-aside">
+        <div class="case-aside__in">
+          <h2 class="case-label case-aside__label">О&nbsp;проекте</h2>
+          <p class="case-aside__meta"><span>Международная премия РБ</span><span>Три экрана по&nbsp;5&nbsp;метров</span><span>Видео к&nbsp;театральному представлению</span><span>2023</span></p>
+          <h2 class="case-label case-aside__label">Что сделали</h2>
+          <ul class="case-aside__done">
+            <li>Анимация символики премии</li>
+            <li><span class="nw">3D-лица</span> для сцены</li>
+            <li>Ролики для всех номинаций</li>
+            <li>Скрипт для After Effects</li>
+          </ul>
+          <button class="card__review case-aside__review" type="button" data-video="../../Video/archive/premiarb.mp4" data-title="Премия РБ — видео">
+            <i class="card__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i>
+            <span>Смотреть видео&nbsp;· 0:28</span>
+          </button>
+        </div>
+      </aside>
+
+      <div class="case-main case-brief reveal">
+        <h2 class="case-label">Задача</h2>
+        <p>Премия РБ с&nbsp;2018 года отмечает успехи в&nbsp;спорте и&nbsp;букмекерстве, на&nbsp;ее аукционах поддерживают благотворительные проекты. Для церемонии нужен был видеоконтент на&nbsp;три пятиметровых экрана, который дополняет театральное представление.</p>
+        <h2 class="case-label">Решение</h2>
+        <p>Мы анимировали символику премии для номинаций так, чтобы линии бесшовно переходили между экранами, а&nbsp;для сцены с&nbsp;высшим разумом&nbsp;— трехмерные лица.</p>
+      </div>
+
+      <figure class="case-review reveal">
+        <button class="case-review__btn" type="button" data-video="../../Video/archive/premiarb.mp4" data-title="Премия РБ — видео" aria-label="Смотреть видео проекта, 0:28">
+          <img src="media/premiarb-2.jpg" srcset="media/premiarb-2-960.jpg 960w, media/premiarb-2.jpg 1920w" sizes="(max-width: 900px) 100vw, 75vw" alt="" loading="lazy">
+          <span class="case-review__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></span>
+        </button>
+        <figcaption class="case-review__cap">Видео проекта&nbsp;· 0:28</figcaption>
+      </figure>
+
+      <p class="case-main case-lead reveal">Ролики для всех номинаций рендерились одной кнопкой</p>
+      <p class="case-main case-p reveal">Специально для проекта мы написали скрипт для After Effects, который сразу рендерит ролики для всех номинаций. Это сильно ускорило работу.</p>
+      <figure class="case-wide reveal">
+        <img src="media/premiarb-3.jpg" srcset="media/premiarb-3-960.jpg 960w, media/premiarb-3.jpg 1920w" sizes="(max-width: 900px) 100vw, 75vw" alt="Премия РБ" loading="lazy">
+      </figure>
+      <figure class="case-wide reveal">
+        <img src="media/premiarb-4.jpg" srcset="media/premiarb-4-960.jpg 960w, media/premiarb-4.jpg 1920w" sizes="(max-width: 900px) 100vw, 75vw" alt="Премия РБ" loading="lazy">
+      </figure>
+      <figure class="case-wide reveal">
+        <img src="media/premiarb-5.jpg" srcset="media/premiarb-5-960.jpg 960w, media/premiarb-5.jpg 1920w" sizes="(max-width: 900px) 100vw, 75vw" alt="Премия РБ" loading="lazy">
+      </figure>
+    </div>
+
+    <section class="case-offer">
+      <p class="case-lead reveal">Сделаем графику для вашей сцены&nbsp;— на&nbsp;несколько экранов сразу</p>
+      <a class="sect__link reveal" href="#contact" data-panel>Обсудить проект</a>
+    </section>
+
+    <div class="case-fabs">
+    <a class="case-fab case-fab--back" href="../../#works" data-back><span aria-hidden="true">←</span>Все проекты</a>
+    <button class="case-fab" type="button" data-video="../../Video/archive/premiarb.mp4" data-title="Премия РБ — видео">
+      <i class="card__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i>
+      <span>Видео&nbsp;· 0:28</span>
+    </button>
+    </div>
+
+    <section class="case-more">
+      <h2 class="case-label">Еще работы</h2>
+      <div class="case-more__body">
+        <ul class="case-more__list">
+          <li class="reveal">
+            <a class="case-more__card" href="../hbo/">
+              <span class="case-more__img"><img src="../../fresh/media/archive/hbo.jpg" alt="" width="650" height="500" loading="lazy"></span>
+              <span class="case-more__title">«Игры Уолл-стрит», HBO&nbsp;Max</span>
+              <span class="case-more__desc">2022&nbsp;· Вступительная заставка к&nbsp;документальному сериалу</span>
+            </a>
+          </li>
+          <li class="reveal">
+            <a class="case-more__card" href="../rosnano/">
+              <span class="case-more__img"><img src="../../fresh/media/archive/rosnano.jpg" alt="" width="650" height="500" loading="lazy"></span>
+              <span class="case-more__title">Роснано</span>
+              <span class="case-more__desc">2021&nbsp;· Контент для стенда</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <p class="contact__lead reveal">Есть проект экспозиции или&nbsp;задача по&nbsp;отдельному экспонату?<br>Пришлите материалы и&nbsp;сроки&nbsp;— обсудим. Даем скидку за&nbsp;срочность</p>
+      <h2 class="contact__title">
+        <span class="line"><span>Давайте <span class="acc">сделаем</span></span></span>
+        <span class="line"><span><span class="acc">экспонат</span> <i class="pill"><video data-src="../../fresh/media/mengiry.mp4" poster="../../fresh/media/mengiry.webp" muted loop playsinline data-lazy preload="none"></video></i></span></span>
+      </h2>
+      <div class="contact__links">
+        <div class="contact__ways">
+          <a class="contact__mail" href="mailto:art@petrovichbrothers.ru">art@petrovichbrothers.ru</a>
+          <a class="contact__mail" href="tel:+79151978652">+7&nbsp;915&nbsp;197-86-52</a>
+          <a class="contact__mail contact__tg" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Telegram&nbsp;↗</a>
+          <a class="yt yt--m" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener" aria-label="YouTube-канал студии"><svg viewBox="0 0 48 34" aria-hidden="true"><rect width="48" height="34" rx="9" fill="currentColor"/><path d="M19.5 10v14l12-7z" fill="#111110"/></svg></a>
+        </div>
+        <a class="contact__btn contact__btn--m" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Написать в Telegram ↗</a>
+        <form class="callback contact__form" novalidate>
+          <div class="contact__row">
+            <input class="cpanel__input" type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="телефон" aria-label="Телефон">
+            <button class="cpanel__btn" type="submit">Перезвоните мне</button>
+          </div>
+          <label class="callback__agree"><input type="checkbox" name="agree"><span><a class="callback__doc" href="../../consent/" target="_blank">Согласие на&nbsp;обработку персональных данных</a></span></label>
+          <p class="callback__msg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <p class="contact__foot"><span>Москва, ул.&nbsp;Бауманская, 6, стр.&nbsp;2&nbsp;&nbsp;·&nbsp;&nbsp;<a class="contact__doc" href="../../privacy/">Политика конфиденциальности</a></span><a class="yt" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener" aria-label="YouTube-канал студии"><svg viewBox="0 0 48 34" aria-hidden="true"><rect width="48" height="34" rx="9" fill="currentColor"/><path d="M19.5 10v14l12-7z" fill="#111110"/></svg></a></p>
+    </section>
+  </main>
+
+  <aside class="cpanel" id="cpanel" aria-label="Контакты" inert>
+    <span class="cpanel__grip" aria-hidden="true"></span>
+    <button class="cpanel__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
+    <div class="cpanel__top">
+      <p class="cpanel__title"><span class="nw">Давайте сделаем</span><br>экспонат</p>
+      <form class="callback cpanel__form" novalidate>
+        <input class="cpanel__input" type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="телефон" aria-label="Телефон">
+        <label class="callback__agree"><input type="checkbox" name="agree"><span><a class="callback__doc" href="../../consent/" target="_blank">Согласие на&nbsp;обработку<br>персональных данных</a></span></label>
+        <button class="cpanel__btn" type="submit">Перезвоните мне</button>
+        <p class="callback__msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+    <div class="cpanel__ways">
+      <a href="mailto:art@petrovichbrothers.ru">art@petrovichbrothers.ru</a>
+      <a href="tel:+79151978652">+7&nbsp;915&nbsp;197-86-52</a>
+      <a href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Telegram&nbsp;↗</a>
+    </div>
+  </aside>
+
+  <a class="badge" href="#contact" aria-label="Контакты">
+    <span class="badge__label roll"><span>Контакты</span><span aria-hidden="true">Написать нам</span></span>
+    <span class="badge__arrow" aria-hidden="true">→</span>
+  </a>
+
+  <div class="cursor" aria-hidden="true"><span></span></div>
+
+  <dialog class="modal" aria-label="Видео">
+    <button class="modal__close" type="button" aria-label="Закрыть">✕</button>
+    <video class="modal__video" controls playsinline></video>
+  </dialog>
+
+  <script src="../../fresh/fresh.js?v=1119x"></script>
+  <script src="../../fresh/case.js?v=1119f"></script>
+  <script src="../../fresh/cookies.js?v=1119i"></script>
+</body>
+</html>
