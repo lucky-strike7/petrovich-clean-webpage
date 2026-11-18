@@ -4,6 +4,7 @@ import { stat, realpath } from 'node:fs/promises';
 import { resolve, extname, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createContactHandler } from './contact.mjs';
+import { legacyRedirect } from './redirects.mjs';
 
 const project = fileURLToPath(new URL('../', import.meta.url));
 const files = new Set(['index.html','404.html','robots.txt','sitemap.xml','site.webmanifest','favicon.svg','favicon.ico','favicon-32.png','apple-touch-icon.png','icon-192.png','icon-512.png']);
@@ -31,6 +32,8 @@ export function createApp({ root=resolve(project,process.env.NODE_ENV==='product
       if(!['GET','HEAD'].includes(req.method)){res.setHeader('Allow','GET, HEAD');send(405,'Method not allowed');return;}
       let path;try{path=decodeURIComponent(url.pathname);}catch{send(400,'Bad path');return;}
       if(path.split('/').some(p=>p.startsWith('.')||p.includes('\\')||p.includes('\0'))){send(404,'Not found');return;}
+      const redirect=legacyRedirect(path,url.search);
+      if(redirect){res.writeHead(301,{'Location':redirect,'Cache-Control':'public, max-age=3600','Content-Length':0});res.end();return;}
       if(path.endsWith('/'))path+='index.html';
       let file=resolve(root,'.'+path),info,status=200;
       const rel=relative(root,file);
