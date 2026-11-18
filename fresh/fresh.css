@@ -206,7 +206,7 @@ main > .about:first-child { padding-top: clamp(150px, 20svh, 240px); }
   padding: 0 var(--pad) clamp(140px, 24svh, 280px);
 }
 .about__label { grid-column: 1 / 4; padding-top: .7em; font-family: var(--font-text); font-weight: 400; font-size: 20px; }
-.about__since { display: block; color: var(--muted); }
+
 .about__text {
   grid-column: 4 / 13;
   max-width: 14em;
@@ -368,7 +368,7 @@ html:not(.js) .card__how ul { opacity: 1; }
 .work.is-previewing .work__play { opacity: 0; transform: translate(-50%, -50%) scale(.8); }
 .work__play { transition: transform .45s var(--ease), opacity .3s; }
 /* С мышью ▶ не нужна: при наведении и так появляется курсор «Смотреть видео». На телефоне ▶ остается */
-@media (hover: hover) and (pointer: fine) { .work__play { display: none; } }
+.work__play { display: none; } /* карточки «Еще работ» ведут на страницу проекта, а не в видео — ▶ не нужна нигде */
 .work:hover .work__media img { transform: scale(1.03); }
 .work:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 .work__title { display: block; margin-top: 14px; font-size: clamp(20px, 1.5vw, 26px); line-height: 1.15; letter-spacing: -.01em; }
@@ -667,7 +667,7 @@ html:not(.js) .line > span, html:not(.js) .reveal, html:not(.js) .pill { transfo
 
   /* Первый экран: без подписи «Что мы делаем», заголовок сразу под шапкой и крупнее, стол ближе */
   .about__label { padding: 0 0 14px; font-size: 15px; } /* на телефоне — одной строкой над заголовком */
-  .about__since { display: none; } /* на телефоне — только название, без «с 2017 года» */
+  .about__br { display: none; } /* на телефоне название одной строкой */
   /* Заголовок и абзац — одна группа (плотно), до стола одна пауза побольше */
   main > .about:first-child { padding-top: 130px; }
   .about { padding-bottom: 32px; }

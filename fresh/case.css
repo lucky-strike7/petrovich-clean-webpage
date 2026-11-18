@@ -352,3 +352,9 @@ button.case-more__card { width: 100%; padding: 0; border: 0; background: none; c
 
 /* Readable author caption against the grey quotation panel. */
 .case-dev__author span span { color: #62625e; }
+
+
+/* Короткие кейсы: левая колонка — ровно на столько строк, сколько блоков в тексте (--rows в разметке), без пустых строк сетки */
+@media (min-width: 901px) { .case-aside[style*="--rows"] { grid-row: 1 / span var(--rows); } }
+/* Видео проекта в шапке: играет само, без звука, по кругу */
+.case-hero__media--video video { display: block; width: 100%; height: auto; }

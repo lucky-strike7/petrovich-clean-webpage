@@ -21,8 +21,8 @@
   <meta property="og:url" content="https://petrovichbrothers.ru/cases/yantarny/">
   <meta property="og:image" content="https://petrovichbrothers.ru/cases/yantarny/media/yantarny-1.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="../../fresh/fresh.css?v=1119z">
-  <link rel="stylesheet" href="../../fresh/case.css?v=1119r">
+  <link rel="stylesheet" href="../../fresh/fresh.css?v=1120e">
+  <link rel="stylesheet" href="../../fresh/case.css?v=1120e">
   <script>
     document.documentElement.classList.add('js');
     /*
@@ -44,7 +44,7 @@
       <img src="../../fresh/logo-vertical.svg" alt="Petrovich Brothers" width="244" height="121">
     </a>
     <nav class="top__nav">
-      <a href="../../#works" data-back><span aria-hidden="true">←&nbsp;</span>Все проекты</a>
+      <a href="../../#projects"><span aria-hidden="true">←&nbsp;</span>Все проекты</a>
       <a href="../../#process">Студия</a>
     </nav>
     <a class="top__btn" href="#contact"><span class="roll"><span>Контакты</span><span aria-hidden="true">Написать нам</span></span></a>
@@ -60,7 +60,7 @@
     </section>
 
     <div class="case-grid">
-      <aside class="case-aside">
+      <aside class="case-aside" style="--rows: 6">
         <div class="case-aside__in">
           <h2 class="case-label case-aside__label">О&nbsp;проекте</h2>
           <p class="case-aside__meta"><span>«Янтарный комбинат»</span><span>AmberForum 2023, Светлогорск</span><span>Три экрана, путешествие длиной в&nbsp;минуту</span><span>2023</span></p>
@@ -112,7 +112,7 @@
     </section>
 
     <div class="case-fabs">
-    <a class="case-fab case-fab--back" href="../../#works" data-back><span aria-hidden="true">←</span>Все проекты</a>
+    <a class="case-fab case-fab--back" href="../../#projects"><span aria-hidden="true">←</span>Все проекты</a>
     <button class="case-fab" type="button" data-video="../../Video/archive/yantarny.mp4" data-title="Янтарный форум — видео">
       <i class="card__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i>
       <span>Видео&nbsp;· 0:50</span>
@@ -120,22 +120,37 @@
     </div>
 
     <section class="case-more">
-      <h2 class="case-label">Еще работы</h2>
+      <h2 class="case-label">Наши главные проекты</h2>
       <div class="case-more__body">
+        <p class="case-p reveal">Сейчас мы делаем интерактивные экспонаты для музеев и&nbsp;выставок: придумываем, рисуем, программируем и&nbsp;запускаем на&nbsp;площадке.</p>
         <ul class="case-more__list">
           <li class="reveal">
-            <a class="case-more__card" href="../premiarb/">
-              <span class="case-more__img"><img src="../../fresh/media/archive/premiarb.jpg" alt="" width="650" height="500" loading="lazy"></span>
-              <span class="case-more__title">Премия РБ</span>
-              <span class="case-more__desc">2023&nbsp;· Графика для нескольких экранов на&nbsp;мероприятии</span>
+            <a class="case-more__card" href="../khakasia/" data-cursor="Посмотреть проект">
+              <span class="case-more__img"><img src="../../fresh/media/khakasy-render.webp" alt="" width="1920" height="1080" loading="lazy"></span>
+              <span class="case-more__title">Достопримечательности Хакасии</span>
+              <span class="case-more__desc">Интерактивный стол: посетитель поворачивает столешницу и&nbsp;смотрит ролик о&nbsp;выбранном месте</span>
             </a>
           </li>
           <li class="reveal">
-            <a class="case-more__card" href="../hbo/">
-              <span class="case-more__img"><img src="../../fresh/media/archive/hbo.jpg" alt="" width="650" height="500" loading="lazy"></span>
-              <span class="case-more__title">«Игры Уолл-стрит», HBO&nbsp;Max</span>
-              <span class="case-more__desc">2022&nbsp;· Вступительная заставка к&nbsp;документальному сериалу</span>
-            </a>
+            <button class="case-more__card" type="button" data-cursor="Смотреть обзор" data-video="../../Video/02_Khakasia_Menhirs.mp4" data-title="Менгиры Хакасии — видеообзор">
+              <span class="case-more__img"><img src="../../fresh/media/mengiry-render.webp" alt="" width="1920" height="1080" loading="lazy"><span class="case-review__play case-more__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></span></span>
+              <span class="case-more__title">Менгиры Хакасии</span>
+              <span class="case-more__desc">Головоломка на&nbsp;сенсорном экране: собранное лицо менгира зажигает подсветку на&nbsp;статуе</span>
+            </button>
+          </li>
+          <li class="reveal">
+            <button class="case-more__card" type="button" data-cursor="Смотреть обзор" data-video="../../Video/03_Chersonesus_Wheel.mp4" data-title="Штурвал — видеообзор">
+              <span class="case-more__img"><img src="../../fresh/media/shturval-render.webp" alt="" width="1920" height="1080" loading="lazy"><span class="case-review__play case-more__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></span></span>
+              <span class="case-more__title">Штурвал</span>
+              <span class="case-more__desc">Корабельный симулятор в&nbsp;музее «Новый Херсонес»</span>
+            </button>
+          </li>
+          <li class="reveal">
+            <button class="case-more__card" type="button" data-cursor="Смотреть обзор" data-video="../../Video/04_Chersonesus_Scanners.mp4" data-title="Сканер «Парусный флот» — видеообзор">
+              <span class="case-more__img"><img src="../../fresh/media/scanner-render.webp" alt="" width="1920" height="1080" loading="lazy"><span class="case-review__play case-more__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></span></span>
+              <span class="case-more__title">Сканер «Парусный флот»</span>
+              <span class="case-more__desc">Подвижный экран над чертежами кораблей в&nbsp;музее «Новый Херсонес»</span>
+            </button>
           </li>
         </ul>
       </div>
