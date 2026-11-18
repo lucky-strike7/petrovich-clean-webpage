@@ -1,6 +1,6 @@
 // Страница кейса: возврат к проектам, плавающие кнопки на телефоне, круглое видео.
 (() => {
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || navigator.connection?.saveData === true;
 
   /*
     «← Все проекты»: если пришли с главной этого же сайта, возвращаемся по истории —
@@ -64,7 +64,7 @@
   /*
     Стол раскрывается по прокрутке: кадры рисуются на холсте по положению блока.
     Видео тут не годится — перемотка колесом у <video> дергается. Кадры начинают грузиться
-    за пару экранов до блока; если нужный кадр еще не пришел, показываем ближайший загруженный.
+    незадолго до появления блока; если нужный кадр еще не пришел, показываем ближайший загруженный.
     Раскрытие занимает первые 82% хода, затем линии и подписи, в конце — пауза на готовой картинке.
   */
   document.querySelectorAll('.case-scrub').forEach((scrub) => {
@@ -116,13 +116,13 @@
     const clamp = (v) => Math.min(1, Math.max(0, v));
     function upd() {
       const r = scrub.getBoundingClientRect();
-      if (!started && r.top < innerHeight * 3) {
+      if (!started && r.top < innerHeight * 1.25) {
         started = true;
-        // сначала первый кадр, потом остальные по порядку, по 6 одновременно
+        // сначала первый кадр, потом остальные по порядку, по 3 одновременно
         load(0).then(async () => {
           let next = 1;
           const worker = async () => { while (next < n) await load(next++); };
-          await Promise.all(Array.from({ length: 6 }, worker));
+          await Promise.all(Array.from({ length: 3 }, worker));
         });
       }
       let p;
@@ -157,6 +157,7 @@
         v.poster = copy.querySelector('img').currentSrc || copy.querySelector('img').src;
         v.controls = true; v.playsInline = true;
         copy.replaceWith(v);
+        document.dispatchEvent(new CustomEvent('pb:goal', { detail: { name: 'video_open' } }));
         v.play().catch(() => {});
       });
     });
@@ -168,6 +169,6 @@
   */
   document.querySelectorAll('.case-circle video').forEach((v) => {
     if (reduce) return;
-    new IntersectionObserver(([e]) => { if (e.isIntersecting) v.play().catch(() => {}); else v.pause(); }, { threshold: 0.2 }).observe(v);
+    new IntersectionObserver(([e]) => { if (e.isIntersecting && !document.hidden) v.play().catch(() => {}); else v.pause(); }, { threshold: 0.2 }).observe(v);
   });
 })();

@@ -1,43 +1,41 @@
-// Cookies и Яндекс Метрика: плашка при первом заходе и счетчик (только на боевом домене).
-// Подключается на всех страницах, в том числе служебных (политика, согласие), — поэтому отдельным файлом.
+// One production counter. Consent controls initialization; previews never send events.
 (() => {
-  const base = new URL('../', document.currentScript.src); // корень сайта — на уровень выше fresh/
-
-  /*
-    Яндекс Метрика — счетчик старого сайта (46078563), чтобы сохранилась история посещений.
-    Работает только на petrovichbrothers.ru: на GitHub Pages и локально статистику не засоряем.
-  */
-  const COUNTER = 46078563;
-  if (/(^|\.)petrovichbrothers\.ru$/.test(location.hostname)) {
-    (function (m, e, t, r, i, k, a) {
-      m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments); };
-      m[i].l = 1 * new Date();
-      k = e.createElement(t); a = e.getElementsByTagName(t)[0];
-      k.async = 1; k.src = r; a.parentNode.insertBefore(k, a);
-    })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
-    window.ym(COUNTER, 'init', { defer: false, webvisor: true, clickmap: true, trackLinks: true, accurateTrackBounce: true });
+  const base = new URL('../', document.currentScript.src);
+  const COUNTER = 46078563, KEY = 'pb-cookies';
+  const production = ['petrovichbrothers.ru','www.petrovichbrothers.ru'].includes(location.hostname);
+  const allowedGoals = new Set(['callback_success','contact_telegram','contact_phone','contact_email','video_open']);
+  let choice;
+  try { choice=localStorage.getItem(KEY); } catch {}
+  let initialized=false;
+  function initialize() {
+    if (!production || choice !== 'ok' || initialized) return;
+    initialized=true;
+    const ym=window.ym=window.ym||function(){(ym.a=ym.a||[]).push(arguments);};
+    ym.l=ym.l||Date.now();
+    const script=document.createElement('script');script.async=true;script.src='https://mc.yandex.ru/metrika/tag.js';document.head.append(script);
+    ym(COUNTER,'init',{defer:false,webvisor:true,clickmap:true,trackLinks:true,accurateTrackBounce:true});
   }
-
-  /* Плашка: показываем, пока человек не нажал «Хорошо». Запоминаем в браузере */
-  const KEY = 'pb-cookies';
-  let seen = false;
-  try { seen = localStorage.getItem(KEY) === 'ok'; } catch {}
-  if (seen) return;
-
-  const bar = document.createElement('div');
-  bar.className = 'cookies';
-  bar.setAttribute('role', 'region');
-  bar.setAttribute('aria-label', 'Файлы cookie');
-  bar.innerHTML =
-    '<p class="cookies__text">Мы используем cookies и&nbsp;Яндекс Метрику, чтобы понимать, как работает сайт. ' +
-    `<a href="${new URL('privacy/', base).href}">Подробнее</a></p>` +
-    '<button class="cookies__ok" type="button">Хорошо</button>';
-  bar.querySelector('.cookies__ok').addEventListener('click', () => {
-    try { localStorage.setItem(KEY, 'ok'); } catch {}
-    bar.classList.remove('is-shown');
-    setTimeout(() => bar.remove(), 400);
+  function goal(name) {
+    if (initialized && choice==='ok' && allowedGoals.has(name)) window.ym(COUNTER,'reachGoal',name);
+  }
+  // Only event names; never entered phone numbers or contact-link values.
+  document.addEventListener('pb:goal',event=>goal(event.detail?.name));
+  document.addEventListener('click',event=>{
+    const link=event.target.closest('a[href]');if(!link)return;
+    const href=link.getAttribute('href');
+    if(href.startsWith('tel:'))goal('contact_phone');
+    else if(href.startsWith('mailto:'))goal('contact_email');
+    else { try { if(new URL(link.href).hostname==='t.me')goal('contact_telegram'); } catch {} }
   });
-  const show = () => { document.body.append(bar); requestAnimationFrame(() => requestAnimationFrame(() => bar.classList.add('is-shown'))); };
-  if (document.readyState === 'loading') addEventListener('DOMContentLoaded', () => setTimeout(show, 1200));
-  else setTimeout(show, 1200);
+  initialize();
+  if (choice==='ok'||choice==='declined') return;
+  const bar=document.createElement('div');bar.className='cookies';bar.setAttribute('role','region');bar.setAttribute('aria-label','Файлы cookie');
+  const text=document.createElement('p');text.className='cookies__text';text.append('С вашего согласия используем Яндекс Метрику, чтобы понимать, как работает сайт. ');
+  const more=document.createElement('a');more.href=new URL('privacy/',base).href;more.textContent='Подробнее';text.append(more);bar.append(text);
+  for(const [label,value]of [['Хорошо','ok'],['Без аналитики','declined']]){
+    const button=document.createElement('button');button.type='button';button.className='cookies__ok';button.textContent=label;
+    button.addEventListener('click',()=>{choice=value;try{localStorage.setItem(KEY,value);}catch{}initialize();bar.remove();});bar.append(button);
+  }
+  const show=()=>{document.body.append(bar);requestAnimationFrame(()=>requestAnimationFrame(()=>bar.classList.add('is-shown')));};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',show,{once:true});else show();
 })();

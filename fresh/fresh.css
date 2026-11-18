@@ -1026,3 +1026,11 @@ h1, h2, h3, .sect__lead, .case-lead, .contact__title, .case-more__title { text-w
   .nf__links { flex-direction: column; align-items: stretch; }
   .nf__btn, .nf__links .sect__link { display: flex; align-items: center; justify-content: center; height: 56px; padding: 0 28px; font-size: 16px; }
 }
+
+/* Consent choices remain usable on small screens. */
+.cookies { flex-wrap: wrap; }
+.cookies__text { flex: 1 1 260px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}

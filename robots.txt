@@ -5,4 +5,4 @@ Disallow: /v1/
 Disallow: /fresh.html
 Disallow: /index-old.html
 
-Sitemap: https://lucky-strike7.github.io/petrovich-clean-webpage/sitemap.xml
+Sitemap: https://petrovichbrothers.ru/sitemap.xml
