@@ -28,8 +28,8 @@
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preload" as="image" href="media/interaktivnyj-stol-khakasiya.webp" imagesrcset="media/interaktivnyj-stol-khakasiya-960.webp 960w, media/interaktivnyj-stol-khakasiya.webp 1920w" imagesizes="100vw">
-  <link rel="stylesheet" href="../../fresh/fresh.css?v=1117h">
-  <link rel="stylesheet" href="../../fresh/case.css?v=1117h">
+  <link rel="stylesheet" href="../../fresh/fresh.css?v=1118v">
+  <link rel="stylesheet" href="../../fresh/case.css?v=1118x">
   <script>
     document.documentElement.classList.add('js');
     /*
@@ -85,14 +85,13 @@
       <a href="../../#projects">Проекты</a>
       <a href="../../#process">Студия</a>
     </nav>
-    <!-- «Обсудить проект» (на телефоне короче — «Написать») ведет к блоку контактов внизу, а не сразу в почтовую программу -->
-    <a class="top__btn" href="#contact"><span class="top__btn-full">Обсудить проект</span><span class="top__btn-short">Написать</span></a>
+    <!-- «Контакты»: при наведении слово уезжает вверх, снизу выезжает «Написать нам»; ведет к черному блоку контактов -->
+    <a class="top__btn" href="#contact"><span class="roll"><span>Контакты</span><span aria-hidden="true">Написать нам</span></span></a>
   </header>
 
   <main>
     <!-- 1. Первый экран: название над картинкой, чтобы не закрывать графику крышки -->
     <section class="case-hero">
-      <a class="case-back" href="../../#khakasia" data-back>← Все проекты</a>
       <p class="case-kicker">Интерактивный стол для выставки<br class="br-m"> «Россия» на&nbsp;ВДНХ</p>
       <h1 class="case-hero__title">Достопримеча&shy;тельности Хакасии</h1>
       <figure class="case-hero__media">
@@ -111,7 +110,6 @@
     <div class="case-grid">
       <aside class="case-aside">
         <div class="case-aside__in">
-          <a class="case-back case-aside__back" href="../../#khakasia" data-back>← Все проекты</a>
           <!-- Серым подпись, черным содержание — как в остальном тексте кейса -->
           <h2 class="case-label case-aside__label">О&nbsp;проекте</h2>
           <p class="case-aside__meta"><span>Стенд Хакасии, выставка «Россия»</span><span>Диаметр 1500&nbsp;мм, высота 850&nbsp;мм</span><span>10 мест на&nbsp;кольце, о&nbsp;каждом&nbsp;— видеосюжет около&nbsp;40&nbsp;секунд</span><span>Внутри&nbsp;— компьютер mini-ATX</span><span>Сделано за&nbsp;30&nbsp;дней</span></p>
@@ -253,8 +251,14 @@
     <!-- Предложение: похожий экспонат для своего музея. Ведет к контактам внизу страницы -->
     <section class="case-offer">
       <p class="case-lead reveal">Сделаем похожий интерактивный стол для вашего музея или выставки&nbsp;— со&nbsp;своими местами, картой и&nbsp;сюжетами</p>
-      <a class="sect__link reveal" href="#contact">Обсудить проект</a>
+      <a class="sect__link reveal" href="#contact" data-panel>Обсудить проект</a>
     </section>
+
+    <!-- На десктопе возврат к проектам — синий кружок слева внизу, зеркально плашке «Обсудить проект» -->
+    <a class="badge badge--back" href="../../#khakasia" data-back aria-label="Все проекты">
+      <span class="badge__arrow" aria-hidden="true">←</span>
+      <span class="badge__label">Все проекты</span>
+    </a>
 
     <!-- На телефоне возврат к проектам и обзор всегда внизу экрана -->
     <div class="case-fabs">
@@ -267,8 +271,8 @@
 
     <!--
       Весь стенд Хакасии: три экспоната (по субтитрам общего ролика MainCut.srt).
-      У Менгиров пока нет своей страницы — ссылка ведет к карточке на главной; когда кейс появится,
-      заменить на ../mengiry/. «Достижений Хакасии» на главной нет — карточка пока без ссылки.
+      У Менгиров пока нет своей страницы — карточка открывает видеообзор здесь же; когда кейс появится,
+      заменить на ссылку ../mengiry/. У «Достижений Хакасии» нет ни страницы, ни обзора — карточка без ссылки.
     -->
     <section class="case-more">
       <h2 class="case-label">Стенд Хакасии на&nbsp;выставке «Россия»</h2>
@@ -276,11 +280,11 @@
         <p class="case-p reveal">Для стенда Республики Хакасия мы сделали три интерактивных экспоната: этот стол, игру про менгиры и&nbsp;карту достижений республики. Для всех трех мы рисовали графику и&nbsp;писали код: он управляет поворотом круглого стола, подсветкой менгира и&nbsp;столом Displax, который распознает фишки.</p>
         <ul class="case-more__list">
           <li class="reveal">
-            <a class="case-more__card" href="../../#mengiry">
+            <button class="case-more__card" type="button" data-cursor="Смотреть обзор" data-video="../../Video/02_Khakasia_Menhirs.mp4" data-title="Менгиры Хакасии — видеообзор">
               <span class="case-more__img"><img src="../../fresh/media/mengiry-render.jpg" alt="Интерактивный экспонат «Менгиры Хакасии»: копии древних каменных статуй и сенсорный экран с игрой" width="1920" height="1080" loading="lazy"></span>
               <span class="case-more__title">Менгиры Хакасии</span>
               <span class="case-more__desc">Головоломка на&nbsp;сенсорном экране: когда лицо менгира собрано, на&nbsp;статуе загорается подсветка</span>
-            </a>
+            </button>
           </li>
           <li class="reveal">
             <div class="case-more__card">
@@ -303,18 +307,52 @@
         <div class="contact__ways">
           <a class="contact__mail" href="mailto:art@petrovichbrothers.ru">art@petrovichbrothers.ru</a>
           <a class="contact__mail" href="tel:+79151978652">+7&nbsp;915&nbsp;197-86-52</a>
+          <a class="contact__mail contact__tg" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Telegram&nbsp;↗</a>
           <!-- Канал с разборами проектов. Позже — отдельная страница «Медиа» -->
-          <a class="contact__mail" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener">YouTube&nbsp;↗</a>
+          <a class="contact__mail contact__yt-m" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener">YouTube&nbsp;↗</a>
         </div>
-        <a class="contact__btn" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Написать в Telegram ↗</a>
+        <a class="contact__btn contact__btn--m" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Написать в Telegram ↗</a>
+        <!-- Десктоп: обратный звонок справа, верх — по верху контактов. На телефоне вместо нее кнопка Telegram -->
+        <form class="callback contact__form" novalidate>
+          <div class="contact__row">
+            <input class="cpanel__input" type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="телефон" aria-label="Телефон">
+            <button class="cpanel__btn" type="submit">Перезвоните мне</button>
+          </div>
+          <label class="callback__agree"><input type="checkbox" name="agree"><span>Согласие на&nbsp;обработку персональных данных</span></label>
+          <p class="callback__msg" role="status" aria-live="polite"></p>
+        </form>
       </div>
-      <p class="contact__foot"><span>Москва, ул.&nbsp;Бауманская, 6, стр.&nbsp;2</span></p>
+      <p class="contact__foot"><span>Москва, ул.&nbsp;Бауманская, 6, стр.&nbsp;2</span><a class="yt" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener" aria-label="YouTube-канал студии"><svg viewBox="0 0 48 34" aria-hidden="true"><rect width="48" height="34" rx="9" fill="currentColor"/><path d="M19.5 10v14l12-7z" fill="#111110"/></svg></a></p>
     </section>
   </main>
 
-  <a class="badge" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener" aria-label="Обсудить проект в Telegram">
-    <span class="badge__label">Обсудить проект</span>
-    <span class="badge__arrow" aria-hidden="true">↗</span>
+  <!--
+    Плашка контактов (десктоп): выезжает справа поверх страницы по «Контактам» в шапке и кружку «Написать нам».
+    Страница под ней не темнеет; шапка сдвигается влево, кнопка становится «Закрыть».
+    Сверху — обратный звонок (отправляет {phone} на /api/contact — обработчик на сервере студии), снизу — контакты.
+    На телефоне не используется: «Контакты» ведут к черному блоку внизу.
+  -->
+  <aside class="cpanel" id="cpanel" aria-label="Контакты" inert>
+    <button class="cpanel__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
+    <div class="cpanel__top">
+      <p class="cpanel__title"><span class="nw">Давайте сделаем</span><br>экспонат</p>
+      <form class="callback cpanel__form" novalidate>
+        <input class="cpanel__input" type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="телефон" aria-label="Телефон">
+        <label class="callback__agree"><input type="checkbox" name="agree"><span>Согласие на&nbsp;обработку<br>персональных данных</span></label>
+        <button class="cpanel__btn" type="submit">Перезвоните мне</button>
+        <p class="callback__msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+    <div class="cpanel__ways">
+      <a href="mailto:art@petrovichbrothers.ru">art@petrovichbrothers.ru</a>
+      <a href="tel:+79151978652">+7&nbsp;915&nbsp;197-86-52</a>
+      <a href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Telegram&nbsp;↗</a>
+    </div>
+  </aside>
+
+  <a class="badge" href="#contact" aria-label="Написать нам">
+    <span class="badge__label">Написать нам</span>
+    <span class="badge__arrow" aria-hidden="true">→</span>
   </a>
 
   <div class="cursor" aria-hidden="true"><span></span></div>
@@ -325,7 +363,7 @@
   </dialog>
 
   <script src="../../fresh/vendor/lenis.min.js"></script>
-  <script src="../../fresh/fresh.js?v=1117h"></script>
-  <script src="../../fresh/case.js?v=1117h"></script>
+  <script src="../../fresh/fresh.js?v=1118w"></script>
+  <script src="../../fresh/case.js?v=1118x"></script>
 </body>
 </html>

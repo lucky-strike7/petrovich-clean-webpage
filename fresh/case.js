@@ -34,6 +34,18 @@
   }
 
   /*
+    Кружок «←» (десктоп) появляется вместе с правым «Написать нам» — когда шапка уехала вверх,
+    и остается до самого низа страницы. Шапка видна — в ней есть «Проекты».
+  */
+  const backBadge = document.querySelector('.badge--back');
+  const topBar = document.querySelector('.top');
+  if (backBadge && topBar) {
+    const updBack = () => backBadge.classList.toggle('is-shown', topBar.classList.contains('is-hidden'));
+    new MutationObserver(updBack).observe(topBar, { attributes: true, attributeFilter: ['class'] });
+    updBack();
+  }
+
+  /*
     Кнопка «Смотреть обзор» слева прячется, пока на экране обложка обзора,
     и появляется, когда обложка ушла: два входа в одно видео рядом не нужны.
   */

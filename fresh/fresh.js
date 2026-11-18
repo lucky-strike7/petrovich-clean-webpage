@@ -133,7 +133,7 @@
   /* Шоурил разворачивается на всю ширину, шапка прячется при прокрутке вниз */
   const reel = document.querySelector('.reel__frame');
   const top = document.querySelector('.top');
-  const badge = document.querySelector('.badge');
+  const badge = document.querySelector('.badge:not(.badge--back)');
   const contact = document.querySelector('.contact');
   const contactBtn = document.querySelector('.contact__btn');
   let lastY = scrollY, ticking = false;
@@ -161,12 +161,12 @@
 
     const c = contact.getBoundingClientRect();
     /*
-      «Обсудить проект» на экране всегда одна: шапка видна — кнопка в шапке, шапка уехала — синий шарик в углу,
-      у контактов — ни той ни другой (там своя большая кнопка).
+      Вход в контакты на экране всегда один: шапка видна — «Контакты» в шапке, шапка уехала — синий кружок в углу,
+      у черного блока кружок не нужен — там своя форма.
     */
     badge.classList.toggle('is-shown', top.classList.contains('is-hidden') && c.top > vh * 0.75);
-    // Большая «Написать в Telegram» целиком на экране — кнопку в шапке прячем (дублирует ее)
-    if (contactBtn) top.classList.toggle('is-at-contact', contactBtn.getBoundingClientRect().bottom < vh);
+    // Телефон: большая «Написать в Telegram» целиком на экране — кнопку в шапке прячем (дублирует ее)
+    top.classList.toggle('is-at-contact', !!(contactBtn && contactBtn.offsetParent && contactBtn.getBoundingClientRect().bottom < vh));
   };
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
   addEventListener('resize', onScroll);
@@ -301,4 +301,94 @@
   modal.querySelector('.modal__close').addEventListener('click', close);
   modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
   modal.addEventListener('cancel', (e) => { e.preventDefault(); close(); });
+
+  /*
+    Плашка контактов (десктоп, шире 900 px): «Контакты» в шапке и кружок «Написать нам» открывают ее
+    вместо прокрутки вниз. Закрывается крестиком на плашке, повторным нажатием «Контактов», Esc и кликом по странице.
+    Открыли из шапки — меню сдвигается влево (is-panel-top); кружком — шапка остается как была.
+    Пока открыта, страница не прокручивается.
+  */
+  const panel = document.querySelector('.cpanel');
+  const wide = matchMedia('(min-width: 901px)');
+  if (panel) {
+    const root = document.documentElement;
+    const isOpen = () => root.classList.contains('is-panel');
+    const setOpen = (open, fromTop = false) => {
+      root.classList.toggle('is-panel', open);
+      root.classList.toggle('is-panel-top', open && fromTop);
+      panel.inert = !open;
+      if (open) lenis?.stop(); else lenis?.start();
+    };
+    document.querySelectorAll('.top__btn, .badge[href="#contact"], [data-panel]').forEach((el) => el.addEventListener('click', (e) => {
+      if (!wide.matches) return; // телефон и планшет — обычная прокрутка к контактам
+      // Черный блок уже показался — плашка не нужна (форма и контакты в нем): докручиваем к нему
+      if (!isOpen() && contact.getBoundingClientRect().top < innerHeight) return;
+      e.preventDefault(); e.stopPropagation();
+      setOpen(!isOpen(), el.classList.contains('top__btn'));
+      if (isOpen()) setTimeout(() => panel.querySelector('.cpanel__input')?.focus({ preventScroll: true }), 650);
+    }));
+    panel.querySelector('.cpanel__close').addEventListener('click', () => setOpen(false));
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) setOpen(false); });
+    document.addEventListener('click', (e) => {
+      if (isOpen() && !panel.contains(e.target) && !e.target.closest('.top__btn')) setOpen(false);
+    });
+    wide.addEventListener('change', () => { if (!wide.matches && isOpen()) setOpen(false); });
+    panel.addEventListener('sent', () => setTimeout(() => setOpen(false), 2600));
+  }
+
+  /*
+    Обратный звонок: маска +7 XXX XXX-XX-XX, проверка номера и согласия, отправка {phone} на /api/contact
+    (тот же обработчик, что на старом сайте: бот в Telegram и письмо). Без сервера — понятная ошибка с запасным путем.
+  */
+  document.querySelectorAll('.callback').forEach((cb) => {
+    const input = cb.querySelector('input[type="tel"]');
+    const agree = cb.querySelector('input[name="agree"]');
+    const btn = cb.querySelector('button[type="submit"]');
+    const msg = cb.querySelector('.callback__msg');
+    const digitsOf = (v) => {
+      let d = v.replace(/\D/g, '');
+      if (d[0] === '8') d = '7' + d.slice(1);
+      if (d && d[0] !== '7') d = '7' + d;
+      return d.slice(0, 11);
+    };
+    const fmt = (d) => {
+      if (!d) return '';
+      const p = [d.slice(1, 4), d.slice(4, 7), d.slice(7, 9), d.slice(9, 11)];
+      let out = '+7';
+      if (p[0]) out += ' ' + p[0];
+      if (p[1]) out += ' ' + p[1];
+      if (p[2]) out += '-' + p[2];
+      if (p[3]) out += '-' + p[3];
+      return out;
+    };
+    const say = (text, err) => { msg.textContent = text; msg.classList.toggle('is-error', !!err); };
+    // Кнопка активна, только когда набраны все 11 цифр (+7 или 8 и еще 10) и отмечено согласие
+    const ready = () => digitsOf(input.value).length === 11 && agree.checked;
+    const sync = () => { btn.disabled = !ready(); };
+    input.addEventListener('input', () => { input.value = fmt(digitsOf(input.value)); say(''); sync(); });
+    agree.addEventListener('change', () => { say(''); sync(); });
+    cb.addEventListener('reset', () => setTimeout(sync));
+    sync();
+    cb.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const d = digitsOf(input.value);
+      if (d.length !== 11) { say('Проверьте номер: +7 и 10 цифр', true); input.focus(); return; }
+      if (!agree.checked) { say('Отметьте согласие на обработку данных', true); return; }
+      if (!ready()) return;
+      btn.classList.add('is-sending'); say('Отправляем…');
+      try {
+        const r = await fetch('/api/contact', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ phone: '+' + d }),
+        });
+        if (!r.ok) throw new Error(r.status);
+        cb.classList.add('is-sent');
+        say('Спасибо! Перезвоним в рабочее время');
+        cb.dispatchEvent(new Event('sent', { bubbles: true }));
+        // Когда плашка закроется — форма снова чистая
+        setTimeout(() => { cb.classList.remove('is-sent'); cb.reset(); say(''); }, 3200);
+      } catch {
+        say('Не получилось отправить. Позвоните нам или напишите в Telegram', true);
+      } finally { btn.classList.remove('is-sending'); sync(); }
+    });
+  });
 })();
