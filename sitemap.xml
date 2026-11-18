@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Основной домен сайта. Новый кейс — добавить строку url с адресом и датой. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://petrovichbrothers.ru/</loc>

@@ -14,6 +14,7 @@ async function check(value,from){
 }
 for(const file of files.filter(p=>extname(p)==='.html')){
  const html=await readFile(file,'utf8');assert(!/<<<<<<<|>>>>>>>/.test(html),'Merge markers');
+ assert(!html.includes('<!--'),'HTML comments must not be published: '+file);
  for(const m of html.matchAll(/\b(?:src|href|poster|data-poster|data-src|data-poster-m|data-video|data-peek|data-peek-video)="([^"]*)"/g))await check(m[1],file);
  for(const m of html.matchAll(/\b(?:srcset|imagesrcset)="([^"]*)"/g))for(const part of m[1].split(','))await check(part.trim().split(/\s+/)[0],file);
  for(const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g))JSON.parse(m[1]);

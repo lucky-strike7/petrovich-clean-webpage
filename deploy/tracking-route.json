@@ -1,0 +1,14 @@
+{
+  "http": {
+    "routers": {
+      "pb-website-tracking-www": {
+        "rule": "Host(`www.petrovichbrothers.ru`) && PathPrefix(`/pb-search/t/`)",
+        "entryPoints": ["websecure"],
+        "service": "pb-crm",
+        "middlewares": ["security", "crm-strip", "crm-headers"],
+        "priority": 200,
+        "tls": {"certResolver": "letsencrypt"}
+      }
+    }
+  }
+}

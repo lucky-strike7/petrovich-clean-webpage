@@ -124,3 +124,11 @@ Workflow `.github/workflows/site.yml`:
 Release-каталоги: `/srv/docker/sites/petrovich-clean-webpage/releases/<полный SHA>`. Текущая версия: ссылка `current`; состояние и параметры отката: `state/last-deployment.json`. В HTTP-заголовке `X-Site-Release` находится полный SHA.
 
 Для ручного отката администратор использует `previousImage` и `previousCompose` из файла состояния: `PB_RELEASE=<previousImage> docker compose -f <previousCompose> up -d --no-deps web`, затем проверяет сайт и актуализирует указатель current. Не менять глобальные маршруты и не запускать `docker compose down` для этой операции.
+
+## Собственная аналитика PB Search
+
+`fresh/cookies.js` подключает существующий `/pb-search/t/script.js` на основном домене и www. Скрипт считает время просмотра/активности, прокрутку, контакты и просмотр видео; поддерживает атрибуцию `pb_link`/`pb_click`. Коллектор остаётся `/pb-search/t/v1` в существующем PB Search. Содержимое форм не передаётся. Собственный счётчик не загружается на localhost, preview, old, GitHub Pages, в /pb-search и при Do Not Track. Метрика Яндекса подключается отдельно.
+
+Шаблон `deploy/tracking-route.json` устанавливается администратором как `/srv/docker/traefik-global/dynamic/pb-website-tracking.yml` (JSON совместим с YAML). На www в Traefik нужен только публичный маршрут `Host(www.petrovichbrothers.ru) && PathPrefix(/pb-search/t/)` к `pb-crm` с существующими middleware `crm-strip`, `crm-headers` и `security`. Остальная CRM на www не открывается. Маршрут основного домена уже существовал. Тесты счётчиков используют заглушки и не записывают искусственные посещения.
+
+Поясняющие HTML-комментарии удалены из исходных страниц; сборка также удаляет новые HTML-комментарии перед публикацией. Комментарии лицензий сторонних JS-библиотек сохраняются.

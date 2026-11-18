@@ -27,6 +27,7 @@ for(const file of files.filter(f=>extname(f)==='.css')){
 }
 for(const file of files.filter(f=>extname(f)==='.html')){
   let text=await readFile(file,'utf8');
+  text=text.replace(/(<script\b[^>]*>[\s\S]*?<\/script\s*>|<style\b[^>]*>[\s\S]*?<\/style\s*>)|<!--[\s\S]*?-->/gi,(_,raw)=>raw||'');
   text=text.replace(/\b(src|href|poster|data-poster|data-src|data-poster-m|data-video|data-peek|data-peek-video)="([^"]*)"/g,(_,name,value)=>`${name}="${version(value,file)}"`);
   text=text.replace(/\b(srcset|imagesrcset)="([^"]*)"/g,(_,name,value)=>`${name}="${value.split(',').map(part=>{const[url,...size]=part.trim().split(/\s+/);return[version(url,file),...size].join(' ');}).join(', ')}"`);
   text=text.replace(/data-frames="(\d+)" data-src="([^"]+)" data-v="[^"]*"/g,(_,n,src)=>{
