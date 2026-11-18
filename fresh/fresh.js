@@ -184,8 +184,8 @@
     */
     const dy = y - lastY;
     // На телефоне шапка не прячется: узкая полоска с «Написать» всегда наверху
-    if (phone || y <= 200) { top.classList.remove('is-hidden'); lastY = y; }
-    else if (Math.abs(dy) > 8) { top.classList.toggle('is-hidden', dy > 0); lastY = y; }
+    // Шапка больше не прячется (и на десктопе): «Контакты» и «Проекты» всегда под рукой, таблетки внизу не нужны
+    top.classList.remove('is-hidden'); lastY = y; void dy;
 
     const c = contact.getBoundingClientRect();
     /*
@@ -348,6 +348,10 @@
       }
       if (open) lenis?.stop(); else lenis?.start();
     };
+    // Касания и колесо мимо плашки не прокручивают страницу (без overflow: hidden — см. fresh.css)
+    const block = (e) => { if (isOpen() && !panel.contains(e.target)) e.preventDefault(); };
+    document.addEventListener('touchmove', block, { passive: false });
+    if (!lenis) document.addEventListener('wheel', block, { passive: false });
     /*
       Кнопка «Назад» (Android, смахивание от края в iPhone) сначала закрывает плашку, а не уходит со страницы:
       при открытии добавляем шаг в историю, при закрытии своими кнопками — снимаем его.

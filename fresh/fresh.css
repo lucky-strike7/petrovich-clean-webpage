@@ -54,11 +54,11 @@ video { width: 100%; height: 100%; object-fit: cover; }
 /*
   ---------- Шапка ----------
   Один логотип — в две строки. Наверху крупный, на прозрачном фоне. После прокрутки
-  (is-solid) плавно уменьшается, шапка ниже и на светлой подложке. Вниз уезжает (is-hidden).
+  (is-solid) плавно уменьшается, шапка ниже и на светлой подложке. Не прячется — всегда видна.
 */
 .top {
   --logo-full: 185px;
-  --logo-small: 116px;
+  --logo-small: 96px;
   position: fixed;
   inset: 0 0 auto;
   z-index: 20;
@@ -68,7 +68,7 @@ video { width: 100%; height: 100%; object-fit: cover; }
   padding: 24px var(--pad);
   transition: transform .5s var(--ease), background-color .3s, padding .5s var(--ease);
 }
-.top.is-solid { padding-block: 14px; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(12px); }
+.top.is-solid { padding-block: 10px; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(12px); }
 .top.is-hidden { transform: translateY(-100%); }
 .top__logo img { width: var(--logo-full); height: auto; transition: width .5s var(--ease); }
 .is-solid .top__logo img { width: var(--logo-small); }
@@ -94,8 +94,8 @@ video { width: 100%; height: 100%; object-fit: cover; }
 .roll > span { grid-area: 1 / 1; transition: transform .5s var(--ease); }
 .roll > span + span { transform: translateY(115%); }
 @media (hover: hover) {
-  .top__btn:hover .roll > span:first-child { transform: translateY(-115%); }
-  .top__btn:hover .roll > span:nth-child(2) { transform: none; }
+  .top__btn:hover .roll > span:first-child, .badge:hover .roll > span:first-child { transform: translateY(-115%); }
+  .top__btn:hover .roll > span:nth-child(2), .badge:hover .roll > span:nth-child(2) { transform: none; }
 }
 .top__btn:hover, .contact__btn:hover { background: color-mix(in srgb, var(--accent) 82%, #000); }
 
@@ -502,7 +502,7 @@ html:not(.js) .card__how ul { opacity: 1; }
 .is-panel-top .top { transform: none; }
 .is-panel-top .top__nav, .is-panel-top .top__btn { transform: translateX(calc(var(--cpw) * -1)); transition: transform .6s cubic-bezier(.65, 0, .25, 1), background-color .3s; }
 .is-panel-top .top.is-at-contact .top__btn { opacity: 1; visibility: visible; pointer-events: auto; }
-.is-panel .badge { transform: scale(0); }
+.is-panel .badge { opacity: 0; pointer-events: none; }
 
 /* Крестик — в правом верхнем углу плашки, одинаковый отступ сверху и справа (как поля плашки) */
 .cpanel__close {
@@ -537,29 +537,27 @@ html:not(.js) .card__how ul { opacity: 1; }
 .hero .reveal { transition-delay: .6s; }
 
 /*
-  ---------- Кнопка «Обсудить проект» в углу ----------
-  Синий кружок со стрелкой. При наведении раздвигается влево в таблетку с надписью —
-  тот же приём «кружок → таблетка», что у ролика в заголовке. Появляется после первого
-  экрана и прячется у блока контактов (script).
+  ---------- Таблетки в углах (десктоп) ----------
+  Справа — та же кнопка «Контакты», что в шапке (переехала вниз, когда шапка уехала), в кейсе слева «← Все проекты».
+  Обе размером с кнопку шапки.
+  Сразу словами, без стрелок-загадок: пара «←» и «→» читалась как «предыдущий / следующий проект».
+  Появляются, когда шапка уехала вверх (script).
 */
 .badge {
-  --d: 64px;
   position: fixed; right: var(--pad); bottom: var(--pad); z-index: 15;
-  display: flex; align-items: center; justify-content: flex-end;
-  width: var(--d); height: var(--d); border-radius: 999px; overflow: hidden;
+  display: flex; align-items: center; gap: 8px;
+  padding: 13px 24px; border-radius: 999px; line-height: 1;
+  font-family: var(--font-text); font-weight: 400; font-size: 17px; /* как у кнопки в шапке */
   background: var(--accent); color: var(--on-accent);
-  transform: scale(0);
-  transition: transform .6s cubic-bezier(.25, .6, .3, 1), width .7s cubic-bezier(.65, 0, .25, 1), background-color .3s;
+  opacity: 0; transform: translateY(12px) scale(.94); pointer-events: none;
+  transition: opacity .4s, transform .5s cubic-bezier(.25, .6, .3, 1), background-color .3s;
 }
-.badge.is-shown { transform: none; }
-.badge__label {
-  flex: none; padding-left: 26px; white-space: nowrap;
-  font-family: var(--font-text); font-weight: 400; font-size: 17px;
-  opacity: 0; transition: opacity .25s;
-}
-.badge__arrow { flex: none; display: grid; place-items: center; width: var(--d); height: var(--d); font-size: 24px; }
-.badge.is-shown:hover { width: 206px; background: color-mix(in srgb, var(--accent) 88%, #000); }
-.badge:hover .badge__label { opacity: 1; transition: opacity .35s .3s; }
+.badge.is-shown { opacity: 1; transform: none; pointer-events: auto; }
+.badge { display: none; } /* шапка теперь всегда видна — таблетки в углах не нужны (оставлены в коде на случай возврата) */
+.badge__label { white-space: nowrap; font-family: var(--font-text); font-weight: 400; font-size: 17px; }
+.badge .roll { display: inline-grid; } /* «Контакты» → «Написать нам» при наведении, как в шапке */
+.badge__arrow { display: none; }
+.badge:hover { background: color-mix(in srgb, var(--accent) 82%, #000); }
 
 /* ---------- Курсор «Смотреть» (только мышь) ---------- */
 .cursor { display: none; }
@@ -613,6 +611,7 @@ html:not(.js) .line > span, html:not(.js) .reveal, html:not(.js) .pill { transfo
 @media (max-width: 600px) {
   /* Наверху логотип крупнее, после прокрутки уменьшается до прежних 96 px */
   .top { --logo-full: 130px; --logo-small: 96px; padding-block: 14px; gap: 16px; }
+  .top.is-solid { padding-block: 14px; } /* на телефоне шапка после прокрутки прежней высоты */
   /* Поля по бокам 24 px: текст в рамке, ролики карточек во всю ширину */
   :root { --pad: 24px; }
   .top__nav { display: none; }
@@ -754,7 +753,9 @@ a.card__media { display: block; }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-stopped { overflow: hidden; }
+/* Без overflow: hidden — он ломал «прилипание» (sticky): стол в кейсе отъезжал вверх, когда открывали плашку.
+   Прокрутку под плашкой и окном видео держит сама Lenis (колесо) и script (касания) */
+.lenis.lenis-stopped { overscroll-behavior: none; }
 
 /*
   Переносы и ровные строки.
@@ -953,7 +954,8 @@ h1, h2, h3, .sect__lead, .case-lead, .contact__title, .case-more__title { text-w
 @media (max-width: 600px) {
   /* Как карточки проектов на телефоне: сверху сразу ролик, под ним название и одна серая строка (в ней подпись про ПФКИ) */
   .event { margin-bottom: 88px; padding: 0 var(--pad) 48px; }
-  .event .card__kind { cursor: pointer; }
+  .event .card__kind, .card__kind[data-video], a.card__kind { cursor: pointer; }
+  a.card__kind { text-decoration: none; }
   /* «Третье место» на телефоне уходит в серую строку; стрелка здесь белая, а не синяя */
   .event__place { display: none; }
   .event .card__arrow { color: var(--ink); }

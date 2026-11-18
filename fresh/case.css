@@ -159,9 +159,8 @@
   Назад к проектам (десктоп): синий кружок слева внизу, при наведении раскрывается в «← Все проекты».
   Зеркало плашки «Обсудить проект»; появляется после первого экрана и остается до конца страницы (script).
 */
-.badge--back { right: auto; left: var(--pad); justify-content: flex-start; }
-.badge--back .badge__label { padding: 0 26px 0 0; }
-.badge--back.is-shown:hover { width: 196px; }
+.badge--back { right: auto; left: var(--pad); }
+.badge--back .badge__arrow { display: block; font-size: 17px; line-height: 1; }
 /* Адрес внизу контактов не прячется под кружок */
 .case-page .contact { padding-bottom: calc(var(--pad) + 64px + 32px); }
 
@@ -226,7 +225,7 @@ button.case-more__card { width: 100%; padding: 0; border: 0; background: none; c
     border: 0; border-radius: 999px; background: var(--ink); color: var(--bg);
     font-family: var(--font-text); font-weight: 400; font-size: 16px;
   }
-  .case-fab--back { width: 52px; padding: 0; font-size: 22px; }
+  .case-fab--back { padding: 0 20px; }
 }
 /* Только для телефона: перенос в подписи над названием, фраза над столом, линии подписей под вертикальный кадр */
 .br-m, .case-scrub__lines--m { display: none; }
@@ -326,8 +325,9 @@ button.case-more__card { width: 100%; padding: 0; border: 0; background: none; c
     в Telegram низ окна и env(safe-area-inset-bottom) меняются, когда появляется его панель, и кнопка прыгала.
     58 px от низа — прежние 24 + 34 (полоска «домой»).
   */
-  .case-fabs { left: var(--pad); bottom: auto; top: calc(var(--vh, 1svh) * 100 - 78px - 32px); } /* 32 px от низа экрана */
-  .case-fab--back { width: 78px; height: 78px; font-size: 44px; line-height: 1; background: var(--accent); color: var(--on-accent); }
+  .case-fabs { left: var(--pad); bottom: auto; top: calc(var(--vh, 1svh) * 100 - 37px - 32px); } /* 32 px от низа экрана */
+  /* «← Все проекты» — как кнопка «Контакты» в шапке на телефоне: 15 px, поля 11 × 18 */
+  .case-fab--back { height: auto; gap: 8px; padding: 11px 18px; font-size: 15px; line-height: 1; background: var(--accent); color: var(--on-accent); }
   /* Запас у контактов: кнопка 78 + отступ 24 + воздух — «Написать в Telegram» в конце встает выше стрелки */
   .case-page .contact { padding-bottom: calc(48px + 120px + 100px); } /* постоянный запас: см. .contact в fresh.css */
 
