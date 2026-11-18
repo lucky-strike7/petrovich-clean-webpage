@@ -64,3 +64,25 @@ test('delivery concurrency stays bounded while requests are pending',async t=>{
   assert.equal((await post(base)).status,503);assert.equal(started,4);
  }finally{release();await Promise.all(pending);}
 });
+
+test('legacy URLs redirect permanently with attribution intact and no extra redirect hop',async t=>{
+ const base=await withServer(t);
+ const mappings=[
+  ['/video-content','/'],['/videocontent','/'],['/about-us','/#process'],['/testimonials','/'],
+  ['/contacts','/#contact'],['/contact','/#contact'],['/projects/khakasiya','/cases/khakasia/'],
+  ['/projects/hersones','/#shturval'],['/projects','/#projects'],['/projects/etalon','/#projects'],
+  ['/cyberbug','/'],['/blog-list','/'],['/blogs/article','/'],['/blogs','/'],['/p','/'],
+ ];
+ const query='?utm_source=yandex&utm_campaign=a%2Bb&yclid=123&tag=one&tag=two';
+ for(const [old,target] of mappings)for(const slash of ['', '/'])for(const method of ['GET','HEAD']){
+  const r=await fetch(base+old+slash+query,{method,redirect:'manual'});
+  assert.equal(r.status,301,old);const [path,hash]=target.split('#');
+  assert.equal(r.headers.get('location'),path+query+(hash?'#'+hash:''),old);assert.equal(await r.text(),'');
+ }
+ // Unrelated URLs and lookalike prefixes keep the real 404; POST is never rewritten.
+ for(const path of ['/video-content-old','/projects-old','/blogspot/post','/unknown','/projects/.env'])assert.equal((await fetch(base+path,{redirect:'manual'})).status,404,path);
+ assert.equal((await fetch(base+'/video-content',{method:'POST',redirect:'manual'})).status,405);
+ for(const path of ['/video-content','/about-us','/contact','/projects','/projects/hersones']){
+  const response=await fetch(base+path);assert.equal(response.status,200);assert.ok(response.url.startsWith(base+'/'));
+ }
+});
