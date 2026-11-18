@@ -3,7 +3,14 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = matchMedia('(pointer: fine)').matches;
   const saveData = navigator.connection?.saveData === true;
+  const hydratePoster = (video) => {
+    const poster = matchMedia('(max-width: 600px)').matches && video.dataset.posterM || video.dataset.poster;
+    if (poster && video.getAttribute('poster') !== poster) video.poster = poster;
+    const box=video.closest('.card__media');
+    if (poster && box) box.style.background = `var(--line) url("${poster}") center / cover no-repeat`;
+  };
   const hydrateVideo = (video) => {
+    hydratePoster(video);
     if (video.dataset.src) { video.src = video.dataset.src; delete video.dataset.src; }
     video.querySelectorAll('source[data-src]').forEach(source => { source.src = source.dataset.src; delete source.dataset.src; });
     if (!video.dataset.loaded && (video.getAttribute('src') || video.querySelector('source[src]'))) {
@@ -13,6 +20,7 @@
   // Sources, not just playback, are deferred until the media approaches the viewport.
   const nearMedia = new IntersectionObserver(entries => {
     for (const entry of entries) if (entry.isIntersecting) {
+      hydratePoster(entry.target);
       if (!reduce && !saveData) hydrateVideo(entry.target);
       nearMedia.unobserve(entry.target);
     }
@@ -94,16 +102,15 @@
   */
   // На телефоне — легкий вертикальный постер (сам ролик выбирается через <source media>)
   const phone = matchMedia('(max-width: 600px)').matches;
-  if (phone) {
-    document.querySelectorAll('video[data-poster-m]').forEach((v) => { v.poster = v.dataset.posterM; });
-  }
+  const firstCardVideo=document.querySelector('.card__media video');
+  if(firstCardVideo) hydratePoster(firstCardVideo);
   const cards = [...document.querySelectorAll('.card__media video')].map((v, i) => {
     const card = { v, box: v.closest('.card__media'), on: false, timer: 0, first: i === 0 };
     /*
       Под роликом — его же первый кадр фоном: пока ролик стартует или перематывается,
       iPhone на миг показывает пустой кадр, и сквозь него мелькал светлый фон страницы.
     */
-    if (v.poster) card.box.style.background = `var(--line) url("${v.poster}") center / cover no-repeat`;
+    // Posters for the remaining cards are loaded by nearMedia.
     // Загрузкой управляют близость к экрану и начало воспроизведения.
     v.preload = 'none';
     const pause = parseFloat(v.dataset.pause) || 0;
@@ -124,6 +131,7 @@
       for (const e of entries) {
         const v = e.target;
         if (e.isIntersecting && e.intersectionRatio >= 0.5 && !reduce && !saveData && !document.hidden) {
+          hydratePoster(v);
           if (!v.src) v.src = v.dataset.src;
           v.play().catch(() => {});
         } else v.pause();

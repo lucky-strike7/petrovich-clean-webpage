@@ -1,6 +1,6 @@
 # Petrovich Brothers
 
-Сайт на HTML, CSS и обычном JavaScript. Vue и Nuxt не нужны: сервер отдаёт готовые страницы, а JavaScript отвечает за видео, анимации и формы. Единственная npm-зависимость — Nodemailer на сервере. Дизайн и тексты редактируются в исходных HTML/CSS/JS; `dist/` генерируется автоматически.
+Сайт на HTML, CSS и обычном JavaScript. Vue и Nuxt не нужны: сервер отдаёт готовые страницы, а JavaScript отвечает за видео, анимации и формы. На сервере используется Nodemailer. esbuild нужен только при сборке, чтобы минифицировать CSS и JavaScript. Дизайн и тексты редактируются в исходных HTML/CSS/JS; `dist/` генерируется автоматически.
 
 ## Локально
 
@@ -20,6 +20,7 @@ npm run dev
 npm run check
 npm test
 npm run build
+npm run verify:build
 NODE_ENV=production npm start
 ```
 
@@ -75,3 +76,13 @@ git push -u origin codex/my-change
 Есть Dockerfile с Node 24 и отдельной production-стадией. Собрать `docker build -t petrovich-static:<commit> .`, передать секреты окружением или защищённым env-file и поставить за существующим HTTPS reverse proxy. Контейнер слушает 3000; наружу — только proxy. Историю счётчика и существующую почту не менять.
 
 До переключения проверить на отдельном адресе: главную, кейс, документы, медиа, мобильную шторку, работу клавиатуры, ошибку формы и согласованную контрольную доставку. Старые страницы по решению владельца не входят в новый сайт; неизвестные URL получают настоящий 404. Служебные приложения вроде `/pb-search`, если они размещены отдельно, не удалять вместе с каталогом старого сайта. Сохранить предыдущий image/release для отката. Автоматического деплоя из GitHub в этой настройке нет.
+
+## FirstVDS: основной и архивный сайты
+
+Сервер: `109.172.100.87`. Текущая схема маршрутизации — файловый provider Traefik, `/srv/docker/traefik-global/dynamic/routes.yml` (JSON). Docker labels здесь не управляют маршрутами.
+
+`deploy/compose.yml`: новый сайт `pb-website:3000` и архивный gateway `pb-archive-gateway:8080`. Образ задаётся переменной `PB_RELEASE`. Секреты остаются в существующем защищённом `.env` на сервере; в Git и образы они не входят. Старый контейнер `petrovichbrothers-web-1` сохраняется целиком.
+
+Архив `old.petrovichbrothers.ru` использует `deploy/archive.conf`: обязательный `X-Robots-Tag: noindex, nofollow, noarchive`, отключение внешних аналитических скриптов через CSP, без старого sitemap. robots.txt разрешает роботу открыть страницу и прочитать noindex. Это запрет индексации, а не защита доступа. Документация: https://developers.google.com/search/docs/crawling-indexing/block-indexing.
+
+При обновлении сначала собрать image с `--build-arg BUILD_COMMIT=<sha>`, проверить отдельный контейнер без публичного маршрута и только затем пересоздать `web` с `PB_RELEASE=<image> docker compose -f deploy/compose.yml up -d web`. Основной сервис Traefik `pb` направляется на `http://pb-website:3000`; маршруты `/pb-search`, почты и других сайтов сохраняются. До переключения сохранить образ, снимок маршрутов и текущую ссылку на release. Откат — вернуть прежний `pb` backend или предыдущий проверенный image.

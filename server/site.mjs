@@ -22,6 +22,7 @@ export function byteRange(header, size) {
 export function createApp({ root=resolve(project,process.env.NODE_ENV==='production'?'dist':'.'),contact=createContactHandler() }={}) {
   const canonicalRoot=realpath(root);
   return createServer(async (req,res)=>{
+    if(process.env.SITE_RELEASE)res.setHeader('X-Site-Release',process.env.SITE_RELEASE);
     res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Referrer-Policy','strict-origin-when-cross-origin');
     const send=(status,text)=>{res.writeHead(status,{'Content-Type':'text/plain; charset=utf-8','Cache-Control':'no-store'});res.end(text);};
     try {
