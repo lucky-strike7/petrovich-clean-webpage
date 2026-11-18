@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { once } from 'node:events';
-import { mkdtemp,writeFile,rm } from 'node:fs/promises';
+import { mkdtemp,writeFile,rm,mkdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { gzipSync } from 'node:zlib';
@@ -11,6 +11,8 @@ import { createContactHandler } from '../server/contact.mjs';
 async function withServer(t,contact){
   const root=await mkdtemp(join(tmpdir(),'pb-site-'));
   await writeFile(join(root,'index.html'),'<h1>New site</h1>');await writeFile(join(root,'index.html.gz'),gzipSync('<h1>New site</h1>'));await writeFile(join(root,'404.html'),'<h1>Missing</h1>');await writeFile(join(root,'favicon.svg'),'0123456789');await writeFile(join(root,'.env'),'SECRET');
+  await mkdir(join(root,'cases/hersones'),{recursive:true});
+  await writeFile(join(root,'cases/hersones/index.html'),'<h1>Новый Херсонес</h1>');
   const app=createApp({root,contact:contact||createContactHandler({limit:100,deliver:async()=>false})});
   app.listen(0,'127.0.0.1');await once(app,'listening');
   t.after(async()=>{await new Promise(resolve=>app.close(resolve));await rm(root,{recursive:true,force:true});});
@@ -70,7 +72,7 @@ test('legacy URLs redirect permanently with attribution intact and no extra redi
  const mappings=[
   ['/video-content','/'],['/videocontent','/'],['/about-us','/#process'],['/testimonials','/'],
   ['/contacts','/#contact'],['/contact','/#contact'],['/projects/khakasiya','/cases/khakasia/'],
-  ['/projects/hersones','/#shturval'],['/projects','/#projects'],['/projects/etalon','/cases/etalon/'],['/projects/gorodobrazovaniyya','/cases/gorodobrazovaniya/'],['/projects/amperka','/cases/cyberbug/'],['/projects/unknown-old','/#projects'],
+  ['/projects/hersones','/cases/hersones/'],['/projects','/#projects'],['/projects/etalon','/cases/etalon/'],['/projects/gorodobrazovaniyya','/cases/gorodobrazovaniya/'],['/projects/amperka','/cases/cyberbug/'],['/projects/unknown-old','/#projects'],
   ['/cyberbug','/cases/cyberbug/'],['/blog-list','/'],['/blogs/article','/'],['/blogs','/'],['/p','/'],
  ];
  const query='?utm_source=yandex&utm_campaign=a%2Bb&yclid=123&tag=one&tag=two';

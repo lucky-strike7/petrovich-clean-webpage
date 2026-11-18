@@ -5,6 +5,10 @@ import {resolve,relative,extname} from 'node:path';
 const root=resolve(new URL('../dist/',import.meta.url).pathname);
 async function list(dir){const out=[];for(const item of await readdir(dir,{withFileTypes:true})){const p=resolve(dir,item.name);if(item.isDirectory())out.push(...await list(p));else out.push(p);}return out;}
 const files=await list(root);let references=0,videos=0;
+const sitemap=await readFile(resolve(root,'sitemap.xml'),'utf8');
+const sitemapUrls=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1]);
+assert.equal(new Set(sitemapUrls).size,sitemapUrls.length,'Duplicate sitemap URL');
+for(const url of sitemapUrls){const path=new URL(url);assert.equal(path.origin,'https://petrovichbrothers.ru');await stat(resolve(root,'.'+path.pathname,'index.html'));}
 for(const name of ['.env','.git','server','node_modules','package.json','v1','index-old.html'])assert(!files.some(p=>relative(root,p).split('/')[0]===name),`Private or obsolete file: ${name}`);
 async function check(value,from){
  if(!value||value.startsWith('#')||/^(?:[a-z]+:|\/\/)/i.test(value))return;
@@ -20,6 +24,7 @@ for(const file of files.filter(p=>extname(p)==='.html')){
  for(const m of html.matchAll(/\b(?:srcset|imagesrcset)="([^"]*)"/g))for(const part of m[1].split(','))await check(part.trim().split(/\s+/)[0],file);
  for(const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g))JSON.parse(m[1]);
  if(!file.endsWith('/404.html')){
+  if(relative(root,file).startsWith('cases/')){const canonical=html.match(/<link rel="canonical" href="([^"]+)"/);assert(canonical && sitemapUrls.includes(canonical[1]),'Case missing from sitemap: '+file);}
   checkShareMetadata(html,relative(root,file),message=>console.warn(`::warning::${message}`));
   const image=html.match(/property="og:image" content="([^"]+)"/)[1],url=new URL(image);
   assert.equal(url.origin,'https://petrovichbrothers.ru');await stat(resolve(root,'.'+url.pathname));
