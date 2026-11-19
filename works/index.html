@@ -43,7 +43,7 @@
   }
   </script>
   <link rel="stylesheet" href="../fresh/fresh.css?v=1120e">
-  <link rel="stylesheet" href="../fresh/v2.css?v=78">
+  <link rel="stylesheet" href="../fresh/v2.css?v=80">
   <script>
     document.documentElement.classList.add('js');
     /*
@@ -94,14 +94,21 @@
       <ul class="tagbar__list tagbar__list--who" id="tagbar-who"><li><a href="./muzei/">Музеям</a></li><li><a href="./vystavki/">Организаторам выставок</a></li><li><a href="./zastr/">Застройщикам стендов</a></li><li><a href="./regiony/">Регионам и городам</a></li><li><a href="./meropr/">Организаторам мероприятий</a></li><li><a href="./developery/">Девелоперам</a></li><li><a href="./prom/">Промышленности</a></li><li><a href="./kino/">Киностудиям</a></li></ul>
     </nav>
 
-    <section class="works-all">
-      <h2 class="sr-only">Все работы</h2>
+    <section class="works-mix">
+      <h2 class="sr-only">Работы</h2>
+      <article class="card work-big" id="w-khakasia">
+        <a class="card__media" href="../works/khakasia/" data-cursor="Посмотреть"><video data-poster="../fresh/media/khakasy-render.webp" data-poster-m="../fresh/media/khakasy-render-m.webp" muted loop playsinline data-lazy preload="none"><source data-src="../fresh/media/khakasy-render-m.mp4" type="video/mp4" media="(max-width: 600px)"><source data-src="../fresh/media/khakasy-render.mp4" type="video/mp4"></video></a>
+        <div class="card__row">
+          <h3 class="card__title reveal">Достопримечательности Хакасии</h3>
+          <a class="card__kind" href="../works/khakasia/">Хакасия на ВДНХ&nbsp;· Подробнее&nbsp;<span class="card__arrow">→</span></a>
+          <div class="card__info">
+            <p class="card__desc reveal">Три&nbsp;интерактивных экспоната для&nbsp;стенда Республики Хакасия на&nbsp;выставке «Россия»</p>
+            <p class="card__meta reveal"><span>Стенд Республики Хакасия на&nbsp;выставке «Россия» на&nbsp;ВДНХ</span></p>
+            <div class="card__actions"><a class="card__review card__go reveal" href="../works/khakasia/"><i class="card__play" aria-hidden="true">→</i><span>Подробнее</span></a></div>
+          </div>
+        </div>
+      </article>
       <ul class="works works--all">
-          <li class="reveal"><a class="work" href="../works/khakasia/" data-cursor="Посмотреть" data-preview="../fresh/media/khakasy-card.mp4">
-            <span class="work__media"><img src="../fresh/media/khakasy-render.webp" alt="" width="650" height="500" loading="lazy"></span>
-            <span class="work__title">Достопримечательности Хакасии</span>
-            <span class="work__meta">2023&nbsp;· Стенд Республики Хакасия на выставке «Россия» на ВДНХ</span>
-          </a></li>
           <li class="reveal"><a class="work" href="../#shturval" data-cursor="Посмотреть" data-preview="../fresh/media/shturval-card.mp4">
             <span class="work__media"><img src="../fresh/media/shturval-render.webp" alt="" width="650" height="500" loading="lazy"></span>
             <span class="work__title">Зал Черноморского флота</span>
@@ -142,11 +149,20 @@
             <span class="work__title">«Игры Уолл-стрит», HBO Max</span>
             <span class="work__meta">2022&nbsp;· Вступительная заставка к документальному сериалу</span>
           </a></li>
-          <li class="reveal"><a class="work" href="../cases/rosnano/" data-cursor="Посмотреть" data-preview="../fresh/media/archive/rosnano-preview.mp4">
-            <span class="work__media"><img src="../fresh/media/archive/rosnano.jpg" alt="" width="650" height="500" loading="lazy"></span>
-            <span class="work__title">Роснано</span>
-            <span class="work__meta">2021&nbsp;· 3D-ролики и тачскрин для стенда</span>
-          </a></li>
+      </ul>
+      <article class="card work-big" id="w-rosnano">
+        <a class="card__media" href="../cases/rosnano/" data-cursor="Посмотреть"><video data-poster="../fresh/media/archive/rosnano.jpg" data-poster-m="../fresh/media/archive/rosnano.jpg" muted loop playsinline data-lazy preload="none"><source data-src="../fresh/media/archive/rosnano-big-m.mp4" type="video/mp4" media="(max-width: 600px)"><source data-src="../fresh/media/archive/rosnano-big.mp4" type="video/mp4"></video></a>
+        <div class="card__row">
+          <h3 class="card__title reveal">Роснано</h3>
+          <a class="card__kind" href="../cases/rosnano/">3D-ролики и тачскрин для стенда&nbsp;· Подробнее&nbsp;<span class="card__arrow">→</span></a>
+          <div class="card__info">
+            <p class="card__desc reveal"><span class="card__q">Как&nbsp;связать разные технологии в&nbsp;одну историю?</span> Стенд «Роснано» с&nbsp;большим круглым экраном: <span class="nowrap">3D-ролики</span>, анимация логотипов партнеров и&nbsp;программа для&nbsp;<span class="nowrap">тач-панели</span>.</p>
+            <p class="card__meta reveal"><span>2021</span></p>
+            <div class="card__actions"><a class="card__review card__go reveal" href="../cases/rosnano/"><i class="card__play" aria-hidden="true">→</i><span>Подробнее</span></a></div>
+          </div>
+        </div>
+      </article>
+      <ul class="works works--all">
           <li class="reveal"><a class="work" href="../cases/nanolek/" data-cursor="Посмотреть" data-preview="../fresh/media/archive/nanolek-preview.mp4">
             <span class="work__media"><img src="../fresh/media/archive/nanolek.jpg" alt="" width="650" height="500" loading="lazy"></span>
             <span class="work__title">Нанолек</span>
@@ -177,12 +193,19 @@
             <span class="work__title">Росатом</span>
             <span class="work__meta">2018&nbsp;· Анимационный ролик для конкурса «Миллион Росатома»</span>
           </a></li>
-          <li class="reveal"><a class="work" href="../cases/carrera/" data-cursor="Посмотреть" data-preview="../fresh/media/archive/carrera-preview.mp4">
-            <span class="work__media"><img src="../fresh/media/archive/carrera.jpg" alt="" width="650" height="500" loading="lazy"></span>
-            <span class="work__title">Carrera y Carrera</span>
-            <span class="work__meta">2017&nbsp;· Конкурсная концепция линии украшений</span>
-          </a></li>
       </ul>
+      <article class="card work-big" id="w-carrera">
+        <a class="card__media" href="../cases/carrera/" data-cursor="Посмотреть"><video data-poster="../fresh/media/archive/carrera.jpg" data-poster-m="../fresh/media/archive/carrera.jpg" muted loop playsinline data-lazy preload="none"><source data-src="../fresh/media/archive/carrera-big-m.mp4" type="video/mp4" media="(max-width: 600px)"><source data-src="../fresh/media/archive/carrera-big.mp4" type="video/mp4"></video></a>
+        <div class="card__row">
+          <h3 class="card__title reveal">Carrera y Carrera</h3>
+          <a class="card__kind" href="../cases/carrera/">Конкурсная концепция линии украшений&nbsp;· Подробнее&nbsp;<span class="card__arrow">→</span></a>
+          <div class="card__info">
+            <p class="card__desc reveal"><span class="card__q">Как&nbsp;перенести карту Испании в&nbsp;украшения?</span> Конкурсная концепция линии Aqua: украшения по&nbsp;очертаниям рек&nbsp;и&nbsp;озер Испании.</p>
+            <p class="card__meta reveal"><span>2017</span></p>
+            <div class="card__actions"><a class="card__review card__go reveal" href="../cases/carrera/"><i class="card__play" aria-hidden="true">→</i><span>Подробнее</span></a></div>
+          </div>
+        </div>
+      </article>
     </section>
 
     <section class="contact" id="contact">

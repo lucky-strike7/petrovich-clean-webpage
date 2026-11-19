@@ -481,3 +481,24 @@
 /* Одна работа на странице тега — крупно, на всю ширину */
 .works--single > li { grid-column: 1 / -1; }
 .works--single .work__media { aspect-ratio: 16 / 9; }
+
+/*
+  ---------- Работы вперемешку: крупные карточки «как экспонат» и плитка в две колонки ----------
+  Крупно: первая, одна в середине на длинных страницах и последняя, если ей не хватило пары.
+  Крупная карточка устроена как на главной; «Фон: черный» — как блок «Страны Света».
+*/
+.works-mix { margin-bottom: clamp(120px, 14vw, 220px); }
+.works-mix > .card { padding-inline: var(--pad); }
+.works-mix > .works--all { margin-inline: var(--pad); }
+.works-mix > * + * { margin-top: clamp(110px, 12vw, 200px); }
+.works-mix > .card + .card { padding-top: 0; }
+.works-mix > .event { margin-bottom: 0; }
+.works-mix + .plate--page { margin-top: 0; }
+a.card__media { display: block; }
+.card__go { text-decoration: none; color: inherit; }
+.card__go .card__play { font-style: normal; font-size: 15px; line-height: 1; color: var(--on-accent); }
+@media (max-width: 600px) {
+  .works-mix { margin-bottom: 88px; }
+  .works-mix > .works--all { margin-inline: 0; }
+  .works-mix > * + * { margin-top: 88px; }
+}
