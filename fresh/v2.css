@@ -465,13 +465,11 @@
 .card { scroll-margin-top: 140px; }
 @media (max-width: 600px) {
   .project-hero .crumbs { display: none; }
-  .project-hero .about__label { padding: 0; }
-  .project-meta { margin: 0 0 14px; }
   .pjump { grid-column: 1 / -1; flex-wrap: nowrap; overflow-x: auto; margin-inline: calc(var(--pad) * -1); padding-inline: var(--pad); scrollbar-width: none; }
   .pjump::-webkit-scrollbar { display: none; }
   .pjump a { white-space: nowrap; font-size: 15px; }
 }
 
-/* Проект: под путем — одна серая строка с выставкой и годом */
-.project-hero .about__label p { margin: 0; }
-.project-meta { margin-top: 6px !important; font-family: var(--font-text); font-weight: 400; font-size: 17px; color: var(--muted); }
+/* Проект: серая строка с выставкой и годом — слева, вровень с абзацем справа */
+.project-meta { grid-column: 1 / 4; grid-row: 2; margin: clamp(28px, 2.8vw, 48px) 0 0; padding-right: 16px; font-family: var(--font-text); font-weight: 400; font-size: clamp(16px, 1.2vw, 20px); line-height: 1.35; color: var(--muted); }
+@media (max-width: 900px) { .project-meta { grid-column: 1 / -1; grid-row: auto; margin-top: 18px; } }
