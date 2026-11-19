@@ -377,3 +377,9 @@
 @media (max-width: 600px) { .top__sub { display: none; } } /* телефон решим отдельно */
 /* Левая колонка кейса прилипает ниже второй строки шапки, чтобы та ее не закрывала */
 .page-v2 .case-aside__in { top: 160px; transition: top .4s var(--ease); }
+/* «Работы» на компьютере: теги чуть плотнее, чтобы обе группы вставали в две строки */
+@media (min-width: 601px) {
+  /* Две группы — каждая со своей строки; теги чуть плотнее */
+  .tagbar--works .tagbar__list { gap: 6px; }
+  .tagbar--works .tagbar__list a { padding: 8px 13px 9px; }
+}
