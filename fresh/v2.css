@@ -224,3 +224,21 @@
   background: var(--accent); transform: translate(-50%, -50%); transition: transform .45s var(--ease), opacity .3s;
 }
 .plate .case-review__play svg { width: 64%; height: 64%; fill: var(--on-accent); }
+
+/* ---------- Страница экспоната ---------- */
+/* Путь «Работы → Хакасия на ВДНХ → Интерактивный стол» на месте подписи над заголовком */
+.case-kicker.crumbs a:hover { color: var(--accent); }
+/* Теги под заголовком: тихая строка ссылок на подборки */
+.case-tags { display: flex; flex-wrap: wrap; gap: 4px 0; margin: 20px 0 0; padding: 0; list-style: none; font-family: var(--font-text); font-weight: 400; font-size: 17px; color: var(--muted); }
+.case-tags li:not(:last-child)::after { content: "·"; margin: 0 .55em; }
+.case-tags a { color: var(--muted); transition: color .25s; }
+.case-tags a:hover { color: var(--ink); }
+/* Вставка на странице кейса стоит прямо в main: поля по краям свои, без выхода за отступы */
+.plate--page { margin: clamp(110px, 19svh, 210px) 0; }
+@media (max-width: 600px) {
+  .case-tags { margin-top: 14px; font-size: 15px; }
+  .plate--page { margin: 88px 0; }
+}
+/* Полное название проекта под заголовком экспоната: обычной фразой, тихо */
+.case-sub { max-width: 40em; margin: 20px 0 0; font-family: var(--font-text); font-weight: 400; font-size: clamp(17px, 1.3vw, 22px); line-height: 1.35; color: var(--muted); }
+@media (max-width: 600px) { .case-sub { margin-top: 14px; font-size: 16px; } }
