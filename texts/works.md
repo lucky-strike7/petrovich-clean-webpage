@@ -182,6 +182,8 @@
 Описание: Как поддержать представление на сцене графикой? Видео для трех пятиметровых экранов: анимация символики премии, 3D-лица и ролики для всех номинаций.
 Где и когда: 
 Картинка: fresh/media/archive/premiarb.jpg
+Обложка крупной: fresh/media/archive/premiarb-big.webp
+Картинка, телефон: fresh/media/archive/premiarb-big-m.webp
 Превью: fresh/media/archive/premiarb-preview.mp4
 Крупное видео: fresh/media/archive/premiarb-big.mp4
 Крупное видео, телефон: fresh/media/archive/premiarb-big-m.mp4
