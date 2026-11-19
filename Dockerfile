@@ -10,6 +10,7 @@ COPY fresh ./fresh
 COPY fonts ./fonts
 COPY Video ./Video
 COPY cases ./cases
+COPY works ./works
 COPY privacy ./privacy
 COPY consent ./consent
 RUN npm run build && npm run verify:build
