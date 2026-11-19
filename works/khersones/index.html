@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../../favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <link rel="preload" as="font" href="../../fonts/Milligram-Medium.woff2" type="font/woff2" crossorigin>
+  <link rel="preload" as="font" href="../../fonts/MilligramText-Regular.woff2" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#F6F6F3">
+  <title>Интерактивные экспонаты для зала Черноморского флота в музее «Новый Херсонес» — студия братьев Петрович</title>
+  <meta name="description" content="Зал Черноморского флота в музее «Новый Херсонес», Севастополь: корабельный симулятор со штурвалом, сканеры кораблей, таймлайн истории флота и игра «Сборка кораблей». Концепция, дизайн, 3D, программирование.">
+
+  <link rel="canonical" href="https://petrovichbrothers.ru/works/khersones/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Студия братьев Пе́трович">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:title" content="Студия братьев Пе́трович — интерактивные экспонаты">
+  <meta property="og:description" content="Придумываем и создаем интерактивные экспонаты для музеев и выставок.">
+  <meta property="og:url" content="https://petrovichbrothers.ru/works/khersones/">
+  <meta property="og:image" content="https://petrovichbrothers.ru/fresh/media/og-home.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="Интерактивные экспонаты студии братьев Петрович">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Студия братьев Петрович",
+    "alternateName": ["Студия братьев Пе́трович", "Petrovich Brothers"],
+    "url": "https://petrovichbrothers.ru/works/khersones/",
+    "logo": "https://petrovichbrothers.ru/fresh/logo-vertical.svg",
+    "email": "art@petrovichbrothers.ru",
+    "telephone": "+7 915 197-86-52",
+    "address": { "@type": "PostalAddress", "streetAddress": "ул. Бауманская, 6, стр. 2", "addressLocality": "Москва", "addressCountry": "RU" },
+    "sameAs": ["https://www.youtube.com/@PetrovichBrothers-b7q", "https://t.me/artem_petrovich_1"]
+  }
+  </script>
+  <link rel="stylesheet" href="../../fresh/fresh.css?v=1120e">
+  <link rel="stylesheet" href="../../fresh/v2.css?v=85">
+  <script>
+    document.documentElement.classList.add('js');
+    /*
+      --vh — сотая доля высоты экрана, запомненная при загрузке. На телефоне высоты считаем от нее, а не от svh:
+      встроенный браузер Telegram меняет высоту окна, когда показывает свою панель, и страница прыгала.
+      Пересчитываем только при смене ширины (поворот телефона).
+    */
+    (() => {
+      const h = document.documentElement;
+      const set = () => h.style.setProperty('--vh', `${innerHeight / 100}px`);
+      let w = innerWidth; set();
+      addEventListener('resize', () => { if (innerWidth !== w) { w = innerWidth; set(); } });
+    })();
+  </script>
+</head>
+<body class="page-v2">
+
+  <header class="top top--v2">
+    <a class="top__logo" href="../../" aria-label="Студия братьев Пе́трович, на главную">
+      <img src="../../fresh/logo-vertical.svg" alt="Petrovich Brothers" width="244" height="121">
+    </a>
+    <nav class="top__nav" aria-label="Основное меню">
+      <div class="top__dd">
+        <a class="is-on" href="../">Работы <i aria-hidden="true"></i></a>
+        <div class="top__menu mega">
+          <div class="mega__what"><ul><li><a href="../eksponaty/" data-peek="../../fresh/media/archive/referus.jpg" data-peek-video="../../fresh/media/archive/referus-preview.mp4"><span>Интерактивные экспонаты</span></a></li><li><a href="../video/" data-peek="../../fresh/media/hbo-intro.webp" data-peek-video="../../fresh/media/hbo-intro.mp4"><span>Видео и 3D-анимация</span></a></li><li><a href="../mapping/" data-peek="../../fresh/media/strana-sveta.webp" data-peek-video="../../fresh/media/strana-sveta.mp4"><span>Мэппинг</span></a></li><li><a href="../scena/" data-peek="../../fresh/media/archive/premiarb.jpg" data-peek-video="../../fresh/media/archive/premiarb-preview.mp4"><span>Графика для мероприятия</span></a></li><li><a href="../sayty/" data-peek="../../fresh/media/archive/zebralog.jpg" data-peek-video="../../fresh/media/archive/zebralog-preview.mp4"><span>Сайты</span></a></li><li><a href="../dizayn/" data-peek="../../fresh/media/archive/cyberbug.jpg" data-peek-video="../../fresh/media/archive/cyberbug-preview.mp4"><span>Дизайн продукта</span></a></li></ul></div>
+          <div class="mega__who"><h4>Для кого</h4><ul><li><a href="../muzei/"><span>Музеи</span></a></li><li><a href="../vystavki/"><span>Выставки</span></a></li><li><a href="../zastr/"><span>Застройщики стендов</span></a></li><li><a href="../regiony/"><span>Регионы и города</span></a></li><li><a href="../meropr/"><span>Организаторы мероприятий</span></a></li><li><a href="../developery/"><span>Девелоперы</span></a></li><li><a href="../prom/"><span>Промышленность</span></a></li><li><a href="../kino/"><span>Кино</span></a></li></ul>
+            <a class="mega__all" href="../"><span>Все работы</span> →</a></div>
+        </div>
+      </div>
+      <a href="../../services/">Услуги</a>
+      <a href="../../prices/">Цены</a>
+      <a href="../../about/">О студии</a>
+      <a href="#contact" data-panel>Контакты</a>
+    </nav>
+    <button class="top__ctx" type="button" data-ctx-for=".pnav" aria-controls="psheet" aria-expanded="false">Новый Херсонес <i aria-hidden="true"></i></button>
+    <button class="top__burger" type="button" aria-expanded="false" aria-controls="msheet" aria-label="Меню"><i></i><i></i><i></i></button>
+    <div class="top__sub crumbs" data-sub-for=".project-hero .crumbs, .project-hero h1"><a href="../">Работы</a><span>→</span>Новый&nbsp;Херсонес</div>
+  </header>
+
+  <main>
+
+    <section class="about project-hero">
+      <p class="about__label crumbs reveal"><a href="../">Работы</a><span>→</span>Новый&nbsp;Херсонес</p>
+      <nav class="pnav" aria-label="Проект"><a class="lnav__up" href="../">Работы</a><span class="lnav__sep" aria-hidden="true">→</span><button class="lnav__btn" type="button" aria-controls="psheet" aria-expanded="false">Новый Херсонес <i aria-hidden="true"></i></button></nav>
+      <h1 class="about__text reveal">Зал Черноморского флота</h1>
+      <p class="project-meta reveal">Музей «Новый Херсонес», Севастополь, 2025</p>
+      <p class="about__desc reveal">Для&nbsp;зала о&nbsp;Черноморском флоте мы&nbsp;сделали все&nbsp;интерактивные экспонаты: придумали, нарисовали и&nbsp;написали код. Построили по&nbsp;чертежам <span class="nowrap">3D-модели</span> кораблей, собрали около 30 минут сложного видео и&nbsp;настроили с&nbsp;десяток датчиков.</p>
+      <ul class="pjump reveal" aria-label="Экспонаты проекта"><li><a href="#shturval">Штурвал</a></li><li><a href="#skanery">Сканеры кораблей</a></li><li><a href="#timeline">Таймлайн</a></li><li><a href="#sborka">Сборка кораблей</a></li></ul>
+    </section>
+
+    <section class="works-mix project-exhibits" id="exhibits">
+      <h2 class="sr-only">Экспонаты</h2>
+      <article class="card work-big" id="shturval">
+        <div class="card__media" data-video="../../Video/03_Chersonesus_Wheel.mp4" data-title="Штурвал — видеообзор" data-cursor="Смотреть обзор"><video data-poster="../../fresh/media/shturval-render.webp" data-poster-m="../../fresh/media/shturval-render-m.webp" muted loop playsinline data-lazy preload="none"><source data-src="../../fresh/media/shturval-render-m.mp4" type="video/mp4" media="(max-width: 600px)"><source data-src="../../fresh/media/shturval-render.mp4" type="video/mp4"></video></div>
+        <div class="card__row">
+          <h3 class="card__title reveal">Штурвал</h3>
+          <p class="card__kind" data-video="../../Video/03_Chersonesus_Wheel.mp4" data-title="Штурвал">Корабельный симулятор&nbsp;· Смотреть обзор&nbsp;<span class="card__arrow">→</span></p>
+          <div class="card__info">
+            <p class="card__desc reveal"><span class="card__q">Как&nbsp;почувствовать себя капитаном?</span> Посетитель ведет парусник к&nbsp;выбранному месту, вращая настоящий штурвал, а&nbsp;ветер и&nbsp;волны сбивают его&nbsp;с&nbsp;курса. В&nbsp;конце рассказ о&nbsp;месте и&nbsp;оценка точности.</p>
+            
+            <div class="card__actions"><button class="card__review reveal" type="button" data-video="../../Video/03_Chersonesus_Wheel.mp4" data-title="Штурвал"><i class="card__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i><span>Смотреть обзор&nbsp;· 1:21</span></button></div>
+          </div>
+        </div>
+      </article>
+      <article class="card work-big" id="skanery">
+        <div class="card__media" data-video="../../Video/04_Chersonesus_Scanners.mp4" data-title="Сканеры кораблей — видеообзор" data-cursor="Смотреть обзор"><video data-poster="../../fresh/media/scanner-render.webp" data-poster-m="../../fresh/media/scanner-render-m.webp" muted loop playsinline data-lazy preload="none"><source data-src="../../fresh/media/scanner-render-m.mp4" type="video/mp4" media="(max-width: 600px)"><source data-src="../../fresh/media/scanner-render.mp4" type="video/mp4"></video></div>
+        <div class="card__row">
+          <h3 class="card__title reveal">Сканеры кораблей</h3>
+          <p class="card__kind" data-video="../../Video/04_Chersonesus_Scanners.mp4" data-title="Сканеры кораблей">Три подвижных экрана над чертежами&nbsp;· Смотреть обзор&nbsp;<span class="card__arrow">→</span></p>
+          <div class="card__info">
+            <p class="card__desc reveal"><span class="card__q">Как&nbsp;заглянуть внутрь корабля на&nbsp;чертеже?</span> Посетитель двигает экран по&nbsp;направляющим к&nbsp;чертежу, и&nbsp;на&nbsp;нем&nbsp;оживает <span class="nowrap">3D-модель</span> корабля с&nbsp;его&nbsp;данными. Три&nbsp;экспоната в&nbsp;одной стилистике: парусный флот, броненосный и&nbsp;разнородный, подводный.</p>
+            
+            <div class="card__actions"><button class="card__review reveal" type="button" data-video="../../Video/04_Chersonesus_Scanners.mp4" data-title="Сканеры кораблей"><i class="card__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i><span>Смотреть обзор&nbsp;· 0:55</span></button></div>
+          </div>
+        </div>
+      </article>
+
+      <section class="plate" aria-labelledby="plate-title">
+        <div class="plate__text">
+          <h2 class="plate__title reveal" id="plate-title">Из&nbsp;опыта на&nbsp;площадках</h2>
+          <p class="plate__body reveal">В&nbsp;видео разбираем типичные ошибки мультимедиа-экспозиций. Например, к&nbsp;каждому экспонату нужен проводной интернет: с&nbsp;удаленным доступом обновить его можно за&nbsp;минуту, а&nbsp;без провода на&nbsp;это уходят дни</p>
+        </div>
+        <figure class="plate__video reveal">
+          <button class="plate__btn" type="button" data-full="../../Video/errors/oshibka-05.mp4" aria-label="Смотреть разбор: нет проводного интернета, 0:18">
+            <img src="../../fresh/media/oshibka-05.webp" alt="Артем Петрович рассказывает, почему экспонатам нужен проводной интернет, а не Wi-Fi" width="1280" height="720" loading="lazy">
+            <span class="case-review__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></span>
+          </button>
+        </figure>
+      </section>
+      <article class="card work-big" id="timeline">
+        <div class="card__media" data-video="../../Video/06_Chersonesus_Timeline.mp4" data-title="Таймлайн — видеообзор" data-cursor="Смотреть обзор"><video data-poster="../../fresh/media/timeline-big.webp" data-poster-m="../../fresh/media/timeline-big-m.webp" muted loop playsinline data-lazy preload="none"><source data-src="../../fresh/media/timeline-big-m.mp4" type="video/mp4" media="(max-width: 600px)"><source data-src="../../fresh/media/timeline-big.mp4" type="video/mp4"></video></div>
+        <div class="card__row">
+          <h3 class="card__title reveal">Таймлайн</h3>
+          <p class="card__kind" data-video="../../Video/06_Chersonesus_Timeline.mp4" data-title="Таймлайн">История флота на сенсорном экране&nbsp;· Смотреть обзор&nbsp;<span class="card__arrow">→</span></p>
+          <div class="card__info">
+            <p class="card__desc reveal"><span class="card__q">Как&nbsp;уместить историю флота от&nbsp;Петра I до&nbsp;наших дней на&nbsp;одном экране?</span> Важные даты завязаны узелками на&nbsp;канате: посетитель прокручивает канат, нажимает на&nbsp;узел, и&nbsp;раскрывается свиток с&nbsp;рассказом о&nbsp;событии.</p>
+            
+            <div class="card__actions"><button class="card__review reveal" type="button" data-video="../../Video/06_Chersonesus_Timeline.mp4" data-title="Таймлайн"><i class="card__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i><span>Смотреть обзор&nbsp;· 0:47</span></button></div>
+          </div>
+        </div>
+      </article>
+      <article class="card work-big" id="sborka">
+        <div class="card__media" data-video="../../Video/07_Chersonesus_Shipbuilding.mp4" data-title="Сборка кораблей — видеообзор" data-cursor="Смотреть обзор"><video data-poster="../../fresh/media/shipbuild-big.webp" data-poster-m="../../fresh/media/shipbuild-big-m.webp" muted loop playsinline data-lazy preload="none"><source data-src="../../fresh/media/shipbuild-big-m.mp4" type="video/mp4" media="(max-width: 600px)"><source data-src="../../fresh/media/shipbuild-big.mp4" type="video/mp4"></video></div>
+        <div class="card__row">
+          <h3 class="card__title reveal">Сборка кораблей</h3>
+          <p class="card__kind" data-video="../../Video/07_Chersonesus_Shipbuilding.mp4" data-title="Сборка кораблей">Игра на сенсорном экране&nbsp;· Смотреть обзор&nbsp;<span class="card__arrow">→</span></p>
+          <div class="card__info">
+            <p class="card__desc reveal"><span class="card__q">Как&nbsp;узнать корабль по&nbsp;чертежу?</span> Посетитель выбирает один из&nbsp;пяти кораблей и&nbsp;расставляет на&nbsp;чертеже недостающие детали. Когда все&nbsp;на&nbsp;месте, появляется <span class="nowrap">3D-модель</span> корабля и&nbsp;рассказ о&nbsp;нем.</p>
+            
+            <div class="card__actions"><button class="card__review reveal" type="button" data-video="../../Video/07_Chersonesus_Shipbuilding.mp4" data-title="Сборка кораблей"><i class="card__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i><span>Смотреть обзор&nbsp;· 1:02</span></button></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="sect next-work">
+      <h2 class="sect__label reveal">Следующая работа</h2>
+      <a class="sect__body next-work__link reveal" href="../">
+        <span class="next-work__img"><img src="../../fresh/media/strana-ustye.webp" alt="" width="650" height="500" loading="lazy"></span>
+        <span class="next-work__text"><span class="next-work__title">Страна Света-2025&nbsp;<i aria-hidden="true">→</i></span><span class="next-work__meta">2025&nbsp;· Мэппинг на фасаде, третье место</span></span>
+      </a>
+    </section>
+
+    <section class="sect seealso">
+      <h2 class="sect__label reveal">Смотрите также</h2>
+      <ul class="sect__body seealso__list reveal"><li><a href="../muzei/">Музеи</a></li><li><a href="../eksponaty/">Интерактивные экспонаты</a></li><li><a href="../video/">Видео и 3D-анимация</a></li><li><a href="../vystavki/">Выставки</a></li><li><a href="../regiony/">Регионы и города</a></li></ul>
+    </section>
+
+
+    <section class="contact" id="contact">
+      <p class="contact__lead reveal">Есть проект экспозиции или&nbsp;задача по&nbsp;отдельному экспонату?<br>Пришлите материалы и&nbsp;сроки&nbsp;— обсудим. Даем скидку за&nbsp;срочность</p>
+      <h2 class="contact__title">
+        <span class="line"><span>Давайте <span class="acc">сделаем</span></span></span>
+        <span class="line"><span><span class="acc">экспонат</span> <i class="pill"><video data-src="../../fresh/media/mengiry.mp4" data-poster="../../fresh/media/mengiry.webp" muted loop playsinline data-lazy preload="none"></video></i></span></span>
+      </h2>
+      <div class="contact__links">
+        <div class="contact__ways">
+          <a class="contact__mail" href="mailto:art@petrovichbrothers.ru">art@petrovichbrothers.ru</a>
+          <a class="contact__mail" href="tel:+79151978652">+7&nbsp;915&nbsp;197-86-52</a>
+          <a class="contact__mail contact__tg" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Telegram&nbsp;↗</a>
+          <a class="yt yt--m" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener" aria-label="YouTube-канал студии"><svg viewBox="0 0 48 34" aria-hidden="true"><rect width="48" height="34" rx="9" fill="currentColor"/><path d="M19.5 10v14l12-7z" fill="#111110"/></svg></a>
+        </div>
+        <a class="contact__btn contact__btn--m" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Написать в Telegram ↗</a>
+
+        <form class="callback contact__form" novalidate>
+          <div class="contact__row">
+            <input class="cpanel__input" type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="телефон" aria-label="Телефон">
+            <button class="cpanel__btn" type="submit">Перезвоните мне</button>
+          </div>
+          <label class="callback__agree"><input type="checkbox" name="agree"><span><a class="callback__doc" href="../../consent/" target="_blank">Согласие на&nbsp;обработку персональных данных</a></span></label>
+          <p class="callback__msg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <p class="contact__foot"><span>Москва, ул.&nbsp;Бауманская, 6, стр.&nbsp;2&nbsp;&nbsp;·&nbsp;&nbsp;<a class="contact__doc" href="../../privacy/">Политика конфиденциальности</a></span><a class="yt" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener" aria-label="YouTube-канал студии"><svg viewBox="0 0 48 34" aria-hidden="true"><rect width="48" height="34" rx="9" fill="currentColor"/><path d="M19.5 10v14l12-7z" fill="#111110"/></svg></a></p>
+    </section>
+  </main>
+
+  <aside class="cpanel" id="cpanel" aria-label="Контакты" inert>
+    <span class="cpanel__grip" aria-hidden="true"></span>
+    <button class="cpanel__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
+    <div class="cpanel__top">
+      <p class="cpanel__title"><span class="nw">Давайте сделаем</span><br>экспонат</p>
+      <form class="callback cpanel__form" novalidate>
+        <input class="cpanel__input" type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="телефон" aria-label="Телефон">
+        <label class="callback__agree"><input type="checkbox" name="agree"><span><a class="callback__doc" href="../../consent/" target="_blank">Согласие на&nbsp;обработку<br>персональных данных</a></span></label>
+        <button class="cpanel__btn" type="submit">Перезвоните мне</button>
+        <p class="callback__msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+    <div class="cpanel__ways">
+      <a href="mailto:art@petrovichbrothers.ru">art@petrovichbrothers.ru</a>
+      <a href="tel:+79151978652">+7&nbsp;915&nbsp;197-86-52</a>
+      <a href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Telegram&nbsp;↗</a>
+    </div>
+  </aside>
+
+  <a class="badge" href="#contact" aria-label="Контакты">
+    <span class="badge__label roll"><span>Контакты</span><span aria-hidden="true">Написать нам</span></span>
+    <span class="badge__arrow" aria-hidden="true">→</span>
+  </a>
+
+
+  <div class="msheet" id="msheet" role="dialog" aria-label="Меню">
+    <span class="msheet__grip" aria-hidden="true"></span>
+    <button class="msheet__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
+    <div class="msheet__main">
+      <a href="../" aria-current="page">Работы</a><a href="../../services/">Услуги</a><a href="../../prices/">Цены</a><a href="../../about/">О студии</a><a href="#contact">Контакты</a>
+    </div>
+  </div>
+  <div class="msheet__shade"></div>
+
+  <div class="msheet tsheet" id="psheet" role="dialog" aria-label="Экспонаты проекта">
+    <span class="msheet__grip" aria-hidden="true"></span>
+    <button class="msheet__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
+    <a class="tsheet__all" href="./" aria-current="page">Новый Херсонес</a>
+    <ul><li><a href="#shturval">Штурвал</a></li><li><a href="#skanery">Сканеры кораблей</a></li><li><a href="#timeline">Таймлайн</a></li><li><a href="#sborka">Сборка кораблей</a></li></ul><ul><li><a href="../">Все работы</a></li></ul>
+  </div>
+  <div class="msheet__shade"></div>
+
+  <a class="orb" href="#contact" data-panel aria-label="Контакты">
+    <svg viewBox="0 0 100 100" aria-hidden="true"><defs><path id="orb-c" d="M50 50m-37 0a37 37 0 1 1 74 0a37 37 0 1 1-74 0"/></defs>
+      <text><textPath href="#orb-c" textLength="230" lengthAdjust="spacing">КОНТАКТЫ · НАПИСАТЬ НАМ · </textPath></text></svg>
+    <span class="orb__arrow" aria-hidden="true">→</span>
+  </a>
+
+  <div class="cursor" aria-hidden="true"><span></span></div>
+
+  <div class="peek" aria-hidden="true"><div class="peek__c"><img alt=""></div></div>
+
+  <dialog class="modal" aria-label="Видео">
+    <button class="modal__close" type="button" aria-label="Закрыть">✕</button>
+    <video class="modal__video" controls playsinline></video>
+  </dialog>
+
+  <script src="../../fresh/fresh.js?v=1119x"></script>
+  <script src="../../fresh/v2.js?v=25"></script>
+  <script src="../../fresh/cookies.js?v=1119i"></script>
+</body>
+</html>

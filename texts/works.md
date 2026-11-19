@@ -73,45 +73,61 @@
 Картинка, телефон: fresh/media/shturval-render-m.webp
 Крупное видео: fresh/media/shturval-render.mp4
 Крупное видео, телефон: fresh/media/shturval-render-m.mp4
-Ссылка: #shturval
+Ссылка: works/khersones/#shturval
+Обзор: Video/03_Chersonesus_Wheel.mp4
 
-## skaner-parus
-Название: Сканер «Парусный флот»
+## skanery
+Название: Сканеры кораблей
 Проект: khersones
-Что это: Подвижный экран над чертежами
+Что это: Три подвижных экрана над чертежами
 Год: 2025
 Что делаем: eksponaty, video
 Для кого: muzei, vystavki, developery
-Описание: Как заглянуть внутрь корабля на чертеже? Посетитель двигает экран по направляющим к чертежу, и на нем оживает 3D-модель корабля с его данными.
+Описание: Как заглянуть внутрь корабля на чертеже? Посетитель двигает экран по направляющим к чертежу, и на нем оживает 3D-модель корабля с его данными. Три экспоната в одной стилистике: парусный флот, броненосный и разнородный, подводный.
 Где и когда: Зал Черноморского флота, музей «Новый Херсонес», 2025
 Картинка: fresh/media/scanner-render.webp
 Превью: fresh/media/scanner-render.mp4
 Картинка, телефон: fresh/media/scanner-render-m.webp
 Крупное видео: fresh/media/scanner-render.mp4
 Крупное видео, телефон: fresh/media/scanner-render-m.mp4
-Ссылка: #scanner
+Ссылка: works/khersones/#skanery
+Обзор: Video/04_Chersonesus_Scanners.mp4
 
-## skaner-bron
-Название: Сканер «Броненосный и разнородный флот»
+## timeline
+Название: Таймлайн
 Проект: khersones
-Что это: Подвижный экран над чертежами
+Что это: История флота на сенсорном экране
+Год: 2025
+Что делаем: eksponaty
+Для кого: muzei
+Описание: Как уместить историю флота от Петра I до наших дней на одном экране? Важные даты завязаны узелками на канате: посетитель прокручивает канат, нажимает на узел, и раскрывается свиток с рассказом о событии.
+Где и когда: Зал Черноморского флота, музей «Новый Херсонес», 2025
+Картинка: fresh/media/timeline.webp
+Превью: fresh/media/timeline-card.mp4
+Обложка крупной: fresh/media/timeline-big.webp
+Картинка, телефон: fresh/media/timeline-big-m.webp
+Крупное видео: fresh/media/timeline-big.mp4
+Крупное видео, телефон: fresh/media/timeline-big-m.mp4
+Ссылка: works/khersones/#timeline
+Обзор: Video/06_Chersonesus_Timeline.mp4
+
+## sborka
+Название: Сборка кораблей
+Проект: khersones
+Что это: Игра на сенсорном экране
 Год: 2025
 Что делаем: eksponaty, video
 Для кого: muzei
-Описание: 
-Где и когда: 
-Скрыть: да
-
-## skaner-podv
-Название: Сканер «Подводный флот»
-Проект: khersones
-Что это: Подвижный экран над чертежами
-Год: 2025
-Что делаем: eksponaty, video
-Для кого: muzei
-Описание: 
-Где и когда: 
-Скрыть: да
+Описание: Как узнать корабль по чертежу? Посетитель выбирает один из пяти кораблей и расставляет на чертеже недостающие детали. Когда все на месте, появляется 3D-модель корабля и рассказ о нем.
+Где и когда: Зал Черноморского флота, музей «Новый Херсонес», 2025
+Картинка: fresh/media/shipbuild.webp
+Превью: fresh/media/shipbuild-card.mp4
+Обложка крупной: fresh/media/shipbuild-big.webp
+Картинка, телефон: fresh/media/shipbuild-big-m.webp
+Крупное видео: fresh/media/shipbuild-big.mp4
+Крупное видео, телефон: fresh/media/shipbuild-big-m.mp4
+Ссылка: works/khersones/#sborka
+Обзор: Video/07_Chersonesus_Shipbuilding.mp4
 
 ## strana-sveta
 Название: Страна Света-2025
