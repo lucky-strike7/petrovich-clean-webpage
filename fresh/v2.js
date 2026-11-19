@@ -185,5 +185,14 @@
   addEventListener('keydown', (e) => { if (e.key === 'Tab') root.classList.add('kbd'); });
   addEventListener('pointerdown', () => root.classList.remove('kbd'), { passive: true });
 
+  // Строка тегов на телефоне: убираем затухание справа, когда долистали до конца
+  const tb = document.querySelector('.tagbar--works');
+  if (tb) {
+    const updEnd = () => tb.classList.toggle('is-end', tb.scrollLeft + tb.clientWidth >= tb.scrollWidth - 4);
+    tb.addEventListener('scroll', updEnd, { passive: true });
+    addEventListener('resize', updEnd);
+    updEnd();
+  }
+
   onScroll();
 })();
