@@ -299,7 +299,7 @@
   .works--all { display: grid; grid-template-columns: 1fr; gap: 40px; overflow: visible; margin: 0; padding: 0; }
   .works--all > li { flex: none; }
   .works-all { margin-inline: 0; }
-  .works--all .work__title, .works--all .work__meta { padding-inline: var(--pad); }
+  .works--all .work__title, .works--all .work__meta, .works-count { padding-inline: var(--pad); }
 }
 
 /* ---------- Навигация наверху страницы тега (сравниваем два варианта: ?nav=switch, ?nav=tags) ---------- */
@@ -473,3 +473,11 @@
 /* Проект: серая строка с выставкой и годом — слева, вровень с абзацем справа */
 .project-meta { grid-column: 1 / 4; grid-row: 2; margin: clamp(28px, 2.8vw, 48px) 0 0; padding-right: 16px; font-family: var(--font-text); font-weight: 400; font-size: clamp(16px, 1.2vw, 20px); line-height: 1.35; color: var(--muted); }
 @media (max-width: 900px) { .project-meta { grid-column: 1 / -1; grid-row: auto; margin-top: 18px; } }
+
+/* ---------- Страницы тегов ---------- */
+.works-count { margin: 0 0 24px; font-family: var(--font-text); font-weight: 400; font-size: 16px; color: var(--muted); }
+.works-all + .plate--page { margin-top: 0; }
+.nowrap { white-space: nowrap; }
+/* Одна работа на странице тега — крупно, на всю ширину */
+.works--single > li { grid-column: 1 / -1; }
+.works--single .work__media { aspect-ratio: 16 / 9; }
