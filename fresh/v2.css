@@ -125,16 +125,22 @@
 /* ---------- Меню на телефоне: шторка снизу, как панель контактов ---------- */
 .msheet {
   position: fixed; inset: auto 0 0; z-index: 40; max-height: 88svh; overflow: auto;
-  padding: 18px var(--pad) calc(28px + env(safe-area-inset-bottom));
+  padding: 64px var(--pad) calc(28px + env(safe-area-inset-bottom));
   border-radius: 22px 22px 0 0; background: var(--bg);
   transform: translateY(102%); transition: transform .45s var(--ease); visibility: hidden;
 }
-.msheet.is-open { transform: none; visibility: visible; }
+.msheet.is-open { transform: translateY(var(--drag, 0px)); visibility: visible; }
+.msheet.is-dragging { transition: none; }
+/* Фон шторки уходит ниже края экрана: когда браузер прячет или показывает свою панель, внизу не остается белой полосы */
+.msheet { box-shadow: 0 60vh 0 0 var(--bg); } /* тень того же цвета прямо под шторкой: прокрутка внутри шторки при этом работает */
+.msheet__grip { position: absolute; top: 8px; left: 50%; width: 40px; height: 4px; margin-left: -20px; border-radius: 2px; background: var(--line); }
+.msheet__shade { inset: -20vh 0; }
 .msheet__shade { position: fixed; inset: 0; z-index: 39; background: rgba(0, 0, 0, .35); opacity: 0; pointer-events: none; transition: opacity .3s; }
 .msheet.is-open + .msheet__shade { opacity: 1; pointer-events: auto; }
-.msheet__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.msheet__close { width: 44px; height: 44px; margin-right: -10px; border: 0; background: none; font-size: 26px; color: inherit; cursor: pointer; }
-.msheet__main a { display: block; padding: 6px 0; font-size: 34px; line-height: 1.1; letter-spacing: -.015em; }
+/* Крестик как у шторки контактов: тот же значок и размер */
+.msheet__close { position: absolute; top: 12px; right: 8px; display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; }
+.msheet__close svg { display: block; width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.msheet__main a { display: block; padding: 12px 0; font-size: 38px; line-height: 1.05; letter-spacing: -.02em; } /* один столбик, побольше воздуха: пальцем попасть легко */
 .msheet__main a[aria-current] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .14em; }
 .msheet__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 22px 0 6px; padding-top: 18px; border-top: 1px solid var(--line); }
 .msheet__cols a { display: block; padding: 5px 0; font-family: var(--font-text); font-weight: 400; font-size: 16px; }
@@ -148,7 +154,9 @@
 }
 @media (max-width: 900px) {
   .top--v2 .top__nav { display: none; }
-  .top__burger { display: inline-block; margin-left: auto; padding: 11px 20px; border: 1px solid var(--ink); border-radius: 999px; background: none; color: inherit; font-family: var(--font-text); font-size: 15px; line-height: 1; cursor: pointer; }
+  /* Обычный бургер: три полоски */
+  .top__burger { display: inline-flex; flex-direction: column; justify-content: center; gap: 7px; width: 52px; height: 52px; margin: 0 -11px 0 auto; padding: 0 11px; border: 0; background: none; color: inherit; cursor: pointer; }
+  .top__burger i { display: block; height: 2px; border-radius: 1px; background: currentColor; }
 }
 @media (max-width: 600px) {
   .top--v2 .top__logo { gap: 12px; }
@@ -242,3 +250,17 @@
 /* Полное название проекта под заголовком экспоната: обычной фразой, тихо */
 .case-sub { max-width: 40em; margin: 20px 0 0; font-family: var(--font-text); font-weight: 400; font-size: clamp(17px, 1.3vw, 22px); line-height: 1.35; color: var(--muted); }
 @media (max-width: 600px) { .case-sub { margin-top: 14px; font-size: 16px; } }
+
+@media (max-width: 600px) {
+  .case-kicker.crumbs, .case-sub { display: none; }
+  /* Без пути над заголовком заголовок прилипал к логотипу */
+  .page-v2 .case-hero { padding-top: 168px; }
+}
+
+/* Синяя рамка фокуса у кнопок от касания пальцем не нужна; с клавиатуры (focus-visible) она остается */
+.top__burger:focus:not(:focus-visible), .msheet__close:focus:not(:focus-visible), .orb:focus:not(:focus-visible), .plate__btn:focus:not(:focus-visible) { outline: none; }
+@media (hover: none) { .top__burger:focus, .msheet__close:focus { outline: none; } }
+
+/* Подпись «Для кого» над правым столбиком меню: тихая, текстовым шрифтом */
+.mega__who h4 { margin: 0 0 10px; }
+.msheet__cols h4 { margin: 0 0 6px; }

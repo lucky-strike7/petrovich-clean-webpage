@@ -20,22 +20,45 @@
   };
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
 
-  // Меню на телефоне
+  // Меню на телефоне: шторка снизу. Закрывается крестиком, по фону, смахиванием вниз и кнопкой «Назад»
   const sheet = document.querySelector('.msheet');
   const burger = document.querySelector('.top__burger');
   if (sheet && burger) {
-    const set = (open) => {
+    const isOpen = () => sheet.classList.contains('is-open');
+    const set = (open, byKeyboard = false) => {
       sheet.classList.toggle('is-open', open);
       sheet.inert = !open;
       burger.setAttribute('aria-expanded', open);
-      if (open) sheet.querySelector('.msheet__close').focus({ preventScroll: true });
+      // Фокус на крестик — только если открыли с клавиатуры; от пальца Safari рисует вокруг него синюю рамку
+      if (open && byKeyboard) sheet.querySelector('.msheet__close').focus({ preventScroll: true });
     };
+    const close = () => { if (!isOpen()) return; if (history.state?.msheet) history.back(); else set(false); };
     set(false);
-    burger.addEventListener('click', () => set(true));
-    sheet.querySelector('.msheet__close').addEventListener('click', () => set(false));
-    document.querySelector('.msheet__shade').addEventListener('click', () => set(false));
+    burger.addEventListener('click', (e) => { set(true, e.detail === 0); history.pushState({ msheet: 1 }, ''); });
+    addEventListener('popstate', () => { if (isOpen()) set(false); });
+    sheet.querySelector('.msheet__close').addEventListener('click', close);
+    document.querySelector('.msheet__shade').addEventListener('click', close);
+    // Пункты меню: сначала закрываем шторку без возврата по истории, иначе переход по ссылке сорвется
     sheet.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)));
-    addEventListener('keydown', (e) => { if (e.key === 'Escape' && sheet.classList.contains('is-open')) set(false); });
+    addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+    // Страница под открытой шторкой не прокручивается
+    document.addEventListener('touchmove', (e) => { if (isOpen() && !sheet.contains(e.target)) e.preventDefault(); }, { passive: false });
+    // Смахнуть вниз — закрыть (тянем, пока шторка не прокручена)
+    let y0 = null, dy = 0;
+    sheet.addEventListener('touchstart', (e) => {
+      if (sheet.scrollTop > 0) return;
+      y0 = e.touches[0].clientY; dy = 0; sheet.classList.add('is-dragging');
+    }, { passive: true });
+    sheet.addEventListener('touchmove', (e) => {
+      if (y0 === null) return;
+      dy = Math.max(0, e.touches[0].clientY - y0);
+      sheet.style.setProperty('--drag', `${dy}px`);
+    }, { passive: true });
+    sheet.addEventListener('touchend', () => {
+      if (y0 === null) return;
+      y0 = null; sheet.classList.remove('is-dragging'); sheet.style.removeProperty('--drag');
+      if (dy > 80) close();
+    });
   }
 
   // Меню «Работы»: открывается при наведении, закрывается не сразу, а через 350 мс после ухода курсора.
