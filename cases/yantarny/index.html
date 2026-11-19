@@ -22,6 +22,7 @@
   <meta property="og:image" content="https://petrovichbrothers.ru/cases/yantarny/media/yantarny-1.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="../../fresh/fresh.css?v=1120e">
+  <link rel="stylesheet" href="../../fresh/v2.css?v=80">
   <link rel="stylesheet" href="../../fresh/case.css?v=1120e">
   <script>
     document.documentElement.classList.add('js');
@@ -38,16 +39,26 @@
     })();
   </script>
 </head>
-<body class="case-page">
-  <header class="top">
-    <a class="top__logo" href="../../" aria-label="Студия братьев Пе́трович — на главную">
+<body class="case-page page-v2">
+  <header class="top top--v2">
+    <a class="top__logo" href="../../" aria-label="Студия братьев Пе́трович, на главную">
       <img src="../../fresh/logo-vertical.svg" alt="Petrovich Brothers" width="244" height="121">
     </a>
-    <nav class="top__nav">
-      <a href="../../#projects"><span aria-hidden="true">←&nbsp;</span>Все проекты</a>
-      <a href="../../#process">Студия</a>
+    <nav class="top__nav" aria-label="Основное меню">
+      <div class="top__dd">
+        <a class="is-on" href="../../works/">Работы <i aria-hidden="true"></i></a>
+        <div class="top__menu mega">
+          <div class="mega__what"><ul><li><a href="../../works/eksponaty/" data-peek="../../fresh/media/archive/referus.jpg" data-peek-video="../../fresh/media/archive/referus-preview.mp4"><span>Интерактивные экспонаты</span></a></li><li><a href="../../works/video/" data-peek="../../fresh/media/hbo-intro.webp" data-peek-video="../../fresh/media/hbo-intro.mp4"><span>Видео и 3D-анимация</span></a></li><li><a href="../../works/mapping/" data-peek="../../fresh/media/strana-sveta.webp" data-peek-video="../../fresh/media/strana-sveta.mp4"><span>Мэппинг</span></a></li><li><a href="../../works/scena/" data-peek="../../fresh/media/archive/premiarb.jpg" data-peek-video="../../fresh/media/archive/premiarb-preview.mp4"><span>Графика для мероприятия</span></a></li><li><a href="../../works/sayty/" data-peek="../../fresh/media/archive/zebralog.jpg" data-peek-video="../../fresh/media/archive/zebralog-preview.mp4"><span>Сайты</span></a></li><li><a href="../../works/dizayn/" data-peek="../../fresh/media/archive/cyberbug.jpg" data-peek-video="../../fresh/media/archive/cyberbug-preview.mp4"><span>Дизайн продукта</span></a></li></ul></div>
+          <div class="mega__who"><h4>Для кого</h4><ul><li><a href="../../works/muzei/"><span>Музеи</span></a></li><li><a href="../../works/vystavki/"><span>Выставки</span></a></li><li><a href="../../works/zastr/"><span>Застройщики стендов</span></a></li><li><a href="../../works/regiony/"><span>Регионы и города</span></a></li><li><a href="../../works/meropr/"><span>Организаторы мероприятий</span></a></li><li><a href="../../works/developery/"><span>Девелоперы</span></a></li><li><a href="../../works/prom/"><span>Промышленность</span></a></li><li><a href="../../works/kino/"><span>Кино</span></a></li></ul>
+            <a class="mega__all" href="../../works/"><span>Все работы</span> →</a></div>
+        </div>
+      </div>
+      <a href="../../services/">Услуги</a>
+      <a href="../../prices/">Цены</a>
+      <a href="../../about/">О студии</a>
+      <a href="#contact" data-panel>Контакты</a>
     </nav>
-    <a class="top__btn" href="#contact"><span class="roll"><span>Контакты</span><span aria-hidden="true">Написать нам</span></span></a>
+    <button class="top__burger" type="button" aria-expanded="false" aria-controls="msheet" aria-label="Меню"><i></i><i></i><i></i></button>
   </header>
 
   <main>
@@ -112,7 +123,7 @@
     </section>
 
     <div class="case-fabs">
-    <a class="case-fab case-fab--back" href="../../#projects"><span aria-hidden="true">←</span>Все проекты</a>
+    <a class="case-fab case-fab--back" href="../../works/"><span aria-hidden="true">←</span>Все работы</a>
     <button class="case-fab" type="button" data-video="../../Video/archive/yantarny.mp4" data-title="Янтарный форум — видео">
       <i class="card__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i>
       <span>Видео&nbsp;· 0:50</span>
@@ -207,6 +218,24 @@
     <span class="badge__arrow" aria-hidden="true">→</span>
   </a>
 
+
+  <div class="msheet" id="msheet" role="dialog" aria-label="Меню">
+    <span class="msheet__grip" aria-hidden="true"></span>
+    <button class="msheet__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
+    <div class="msheet__main">
+      <a href="../../works/" aria-current="page">Работы</a><a href="../../services/">Услуги</a><a href="../../prices/">Цены</a><a href="../../about/">О студии</a><a href="#contact">Контакты</a>
+    </div>
+  </div>
+  <div class="msheet__shade"></div>
+
+  <a class="orb" href="#contact" data-panel aria-label="Контакты">
+    <svg viewBox="0 0 100 100" aria-hidden="true"><defs><path id="orb-c" d="M50 50m-37 0a37 37 0 1 1 74 0a37 37 0 1 1-74 0"/></defs>
+      <text><textPath href="#orb-c" textLength="230" lengthAdjust="spacing">КОНТАКТЫ · НАПИСАТЬ НАМ · </textPath></text></svg>
+    <span class="orb__arrow" aria-hidden="true">→</span>
+  </a>
+
+  <div class="peek" aria-hidden="true"><div class="peek__c"><img alt=""></div></div>
+
   <div class="cursor" aria-hidden="true"><span></span></div>
 
   <dialog class="modal" aria-label="Видео">
@@ -215,6 +244,7 @@
   </dialog>
 
   <script src="../../fresh/fresh.js?v=1119x"></script>
+  <script src="../../fresh/v2.js?v=25"></script>
   <script src="../../fresh/case.js?v=1119f"></script>
   <script src="../../fresh/cookies.js?v=1119i"></script>
 </body>
