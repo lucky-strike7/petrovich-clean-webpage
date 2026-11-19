@@ -252,7 +252,8 @@
   .plate--page { margin: 88px 0; }
 }
 /* Полное название проекта под заголовком экспоната: обычной фразой, тихо */
-.case-sub { max-width: 40em; margin: 20px 0 0; font-family: var(--font-text); font-weight: 400; font-size: clamp(17px, 1.3vw, 22px); line-height: 1.35; color: var(--muted); }
+/* Строка под заголовком: шире, чтобы на компьютере не оставался одинокий «2023» на второй строке */
+.case-sub { max-width: 60em; text-wrap: balance; margin: 20px 0 0; font-family: var(--font-text); font-weight: 400; font-size: clamp(17px, 1.3vw, 22px); line-height: 1.35; color: var(--muted); }
 @media (max-width: 600px) { .case-sub { margin-top: 14px; font-size: 16px; } }
 
 @media (max-width: 600px) {
