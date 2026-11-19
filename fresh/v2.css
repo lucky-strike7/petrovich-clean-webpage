@@ -427,3 +427,6 @@
   .pnav { display: flex; align-items: center; gap: 10px; margin: 0 0 20px; font-family: var(--font-text); font-weight: 400; font-size: 16px; }
   .page-v2 .case-hero { padding-top: 132px; }
 }
+/* Шторки списков на телефоне: без подписей групп, все пункты одного размера, группы разделены отступом */
+.tsheet__all { font-size: 22px; letter-spacing: -.01em; padding: 9px 0; }
+.tsheet ul { margin-top: 22px; }
