@@ -430,3 +430,5 @@
 /* Шторки списков на телефоне: без подписей групп, все пункты одного размера, группы разделены отступом */
 .tsheet__all { font-size: 22px; letter-spacing: -.01em; padding: 9px 0; }
 .tsheet ul { margin-top: 22px; }
+/* Крестик шторки прилипает к верху и не уезжает, когда список в шторке прокручивают */
+.msheet__close { position: sticky; top: -52px; float: right; z-index: 2; margin: -52px -16px 0 0; border-radius: 50%; background: var(--bg); }
