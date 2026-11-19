@@ -8,6 +8,16 @@ const root=fileURLToPath(new URL('../',import.meta.url)),out=resolve(root,'dist'
 await rm(out,{recursive:true,force:true});await mkdir(out,{recursive:true});
 const entries=['index.html','404.html','robots.txt','sitemap.xml','site.webmanifest','favicon.svg','favicon.ico','favicon-32.png','apple-touch-icon.png','icon-192.png','icon-512.png','fresh','fonts','Video','cases','works','privacy','consent'];
 for(const name of entries)await cp(resolve(root,name),resolve(out,name),{recursive:true});
+const casePages=[];
+for(const entry of await readdir(resolve(out,'cases'),{withFileTypes:true})){
+  if(!entry.isDirectory())continue;
+  const html=await readFile(resolve(out,'cases',entry.name,'index.html'),'utf8');
+  const canonical=html.match(/<link rel="canonical" href="([^"]+)"/);
+  if(!canonical)throw Error(`Missing case canonical: ${entry.name}`);
+  casePages.push(canonical[1]);
+}
+const sitemapUrls=['https://petrovichbrothers.ru/',...casePages.sort()];
+await writeFile(resolve(out,'sitemap.xml'),'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+sitemapUrls.map(url=>`  <url><loc>${url}</loc></url>`).join('\n')+'\n</urlset>\n');
 async function list(dir){const result=[];for(const item of await readdir(dir,{withFileTypes:true})){const p=resolve(dir,item.name);if(item.isSymbolicLink())throw Error('Symlink not allowed');if(item.isDirectory())result.push(...await list(p));else result.push(p);}return result;}
 const files=await list(out),hashes=new Map(),digest=bytes=>createHash('sha256').update(bytes).digest('hex').slice(0,12);
 for(const file of files){

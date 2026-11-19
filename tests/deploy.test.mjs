@@ -38,7 +38,7 @@ test('candidate failure and superseded main never replace production',async t=>{
  for(const flags of [{TEST_CANDIDATE_FAIL:'1'},{TEST_STALE:'1'}]){const f=await run(t,flags);assert.equal(f.result.status,flags.TEST_STALE?0:1,f.result.stderr);assert.deepEqual(await calls(f.base),[]);assert.equal(await readlink(join(f.base,'current')),'releases/old');}
 });
 test('successful deployment records the previous release after public verification',async t=>{
- const f=await run(t);assert.equal(f.result.status,0,f.result.stderr);assert.equal(await readlink(join(f.base,'current')),'releases/'+commit);const state=JSON.parse(await readFile(join(f.base,'state/last-deployment.json'),'utf8'));assert.equal(state.commit,commit);assert.equal(state.previousImage,'old-image:stable');assert.equal((await calls(f.base)).length,1);
+ const f=await run(t);assert.equal(f.result.status,0,f.result.stderr);assert.equal(await readlink(join(f.base,'current')),'releases/'+commit);const state=JSON.parse(await readFile(join(f.base,'state/last-deployment.json'),'utf8'));assert.equal(state.commit,commit);assert.equal(state.url,'https://new.petrovichbrothers.ru/');assert.equal(state.previousImage,'old-image:stable');assert.equal((await calls(f.base)).length,1);
 });
 test('restricted SSH entry accepts only one full deploy SHA, never shell commands',async t=>{
  const f=await fixture(t),script=new URL('../deploy/ssh-command.sh',import.meta.url).pathname;

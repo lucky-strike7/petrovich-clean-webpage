@@ -7,7 +7,7 @@ const exact = new Map([
   ['/contacts', '/#contact'],
   ['/contact', '/#contact'],
   ['/projects/khakasiya', '/cases/khakasia/'],
-  ['/projects/hersones', '/#shturval'],
+  ['/projects/hersones', '/cases/hersones/'],
   ['/projects/referus', '/cases/referus/'],
   ['/projects/etalon', '/cases/etalon/'],
   ['/projects/yantarny', '/cases/yantarny/'],
