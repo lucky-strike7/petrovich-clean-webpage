@@ -4,7 +4,7 @@ const expected = process.argv[2];
 assert.match(expected, /^[0-9a-f]{40}$/);
 const base = process.env.RELEASE_BASE_URL || 'http://127.0.0.1:3000';
 const resources = new Set();
-for (const path of ['/', '/cases/khakasia/', '/cases/hersones/', '/privacy/', '/consent/', '/robots.txt', '/sitemap.xml']) {
+for (const path of ['/', '/cases/khakasia/', '/works/khersones/', '/privacy/', '/consent/', '/robots.txt', '/sitemap.xml']) {
   const r = await fetch(new URL(path, base), {signal: AbortSignal.timeout(5000)});
   assert.equal(r.status, 200, path);
   assert.equal(r.headers.get('x-site-release'), expected, 'Wrong deployed version');
@@ -25,7 +25,8 @@ for (const path of ['/not-a-real-page/', '/.env', '/.git/config', '/server/conta
 for (const [path, location] of [
   ['/video-content?utm_source=check&yclid=123', '/?utm_source=check&yclid=123'],
   ['/projects/khakasiya', '/cases/khakasia/'],
-  ['/projects/hersones?x=a%2Bb', '/cases/hersones/?x=a%2Bb'],
+  ['/projects/hersones?x=a%2Bb', '/works/khersones/?x=a%2Bb'],
+  ['/cases/hersones/', '/works/khersones/'],
 ]) {
   const r=await fetch(new URL(path,base),{redirect:'manual'});
   assert.equal(r.status,301,path);assert.equal(r.headers.get('location'),location,path);

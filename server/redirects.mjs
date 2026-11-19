@@ -7,7 +7,9 @@ const exact = new Map([
   ['/contacts', '/#contact'],
   ['/contact', '/#contact'],
   ['/projects/khakasiya', '/cases/khakasia/'],
-  ['/projects/hersones', '/cases/hersones/'],
+  ['/projects/hersones', '/works/khersones/'],
+  // Кейс Херсонеса сведен со страницей проекта в новой структуре
+  ['/cases/hersones', '/works/khersones/'],
   ['/projects/referus', '/cases/referus/'],
   ['/projects/etalon', '/cases/etalon/'],
   ['/projects/yantarny', '/cases/yantarny/'],
