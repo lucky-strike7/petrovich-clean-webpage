@@ -384,3 +384,8 @@
   .tagbar--works .tagbar__list { gap: 6px; }
   .tagbar--works .tagbar__list a { padding: 8px 13px 9px; }
 }
+
+/* Рамка фокуса у кнопок шторки и бургера — только при работе с клавиатуры (класс kbd ставит скрипт по Tab).
+   Safari на телефоне иногда считал нажатие пальцем «клавиатурным» и рисовал синюю рамку */
+.top__burger, .msheet__close, .msheet a, .orb, .lnav__btn { outline: none; }
+.kbd .top__burger:focus-visible, .kbd .msheet__close:focus-visible, .kbd .msheet a:focus-visible, .kbd .orb:focus-visible, .kbd .lnav__btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

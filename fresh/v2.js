@@ -34,7 +34,7 @@
     };
     const close = () => { if (!isOpen()) return; if (history.state?.msheet) history.back(); else set(false); };
     set(false);
-    burger.addEventListener('click', (e) => { set(true, e.detail === 0); history.pushState({ msheet: 1 }, ''); });
+    burger.addEventListener('click', () => { set(true, root.classList.contains('kbd')); history.pushState({ msheet: 1 }, ''); });
     addEventListener('popstate', () => { if (isOpen()) set(false); });
     sheet.querySelector('.msheet__close').addEventListener('click', close);
     document.querySelector('.msheet__shade').addEventListener('click', close);
@@ -148,6 +148,10 @@
     addEventListener('resize', updSub);
     updSub();
   }
+
+  // Работа с клавиатуры: по Tab включаем рамки фокуса, по нажатию мышью или пальцем — выключаем
+  addEventListener('keydown', (e) => { if (e.key === 'Tab') root.classList.add('kbd'); });
+  addEventListener('pointerdown', () => root.classList.remove('kbd'), { passive: true });
 
   onScroll();
 })();
