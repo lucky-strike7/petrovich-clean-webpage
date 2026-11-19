@@ -14,7 +14,7 @@
     if (orb && contact) orb.classList.toggle('is-off', contact.getBoundingClientRect().top < innerHeight * 0.75);
     const y = scrollY, dy = y - lastY;
     if (Math.abs(dy) < 8) return;
-    const busy = root.classList.contains('is-panel') || top.querySelector('.top__dd.is-open, .top__dd:focus-within');
+    const busy = root.classList.contains('is-panel') || top.querySelector('.top__dd.is-open, .top__dd:focus-within, .lnav__dd.is-open');
     top.classList.toggle('is-up', dy > 0 && y > 160 && !busy);
     lastY = y;
   };
@@ -102,7 +102,7 @@
     видит чистую продающую страницу. После перезагрузки страница помнит, что человек пришел с сайта.
     Для проверки: ?nav=1 — показать всегда, ?nav=0 — скрыть.
   */
-  const lnav = document.querySelector('.lnav--switch');
+  const lnav = document.querySelector('nav.lnav--switch');
   if (lnav) {
     const key = 'pb-nav:' + location.pathname;
     const param = new URLSearchParams(location.search).get('nav');
@@ -113,8 +113,7 @@
     const show = param === '0' ? false : param === '1' || param === 'switch' || fromSite || remembered;
     if (show) lnav.hidden = false;
   }
-  const ldd = document.querySelector('.lnav__dd');
-  if (ldd) {
+  document.querySelectorAll('.lnav__dd').forEach((ldd) => {
     const btn = ldd.querySelector('.lnav__btn');
     const toggle = (open) => { ldd.classList.toggle('is-open', open); btn.setAttribute('aria-expanded', open); };
     btn.addEventListener('click', () => toggle(!ldd.classList.contains('is-open')));
@@ -125,13 +124,30 @@
     ldd.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'mouse') return; clearTimeout(lt); lt = setTimeout(() => toggle(false), 350); });
     document.addEventListener('click', (e) => { if (!ldd.contains(e.target)) toggle(false); });
     addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
-  }
+  });
+
 
   // Превью на карточках работ всегда начинается с начала, а не с места, где остановилось в прошлый раз
   document.querySelectorAll('.work[data-preview]').forEach((card) => card.addEventListener('mouseenter', () => {
     const v = card.querySelector('.work__media video');
     if (v) v.currentTime = 0;
   }));
+
+  /*
+    Вторая строка шапки: путь или переключатель. Появляется, когда свой путь на странице уехал под шапку,
+    и дальше ездит вместе с шапкой: листаешь вниз — уходит, вверх — возвращается.
+  */
+  const sub = document.querySelector('.top__sub');
+  const subSrc = sub && document.querySelector(sub.dataset.subFor);
+  if (sub && subSrc) {
+    const updSub = () => {
+      const shown = !subSrc.hidden && subSrc.offsetParent !== null && subSrc.getBoundingClientRect().bottom < top.offsetHeight;
+      top.classList.toggle('has-sub', shown);
+    };
+    addEventListener('scroll', updSub, { passive: true });
+    addEventListener('resize', updSub);
+    updSub();
+  }
 
   onScroll();
 })();

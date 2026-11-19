@@ -356,3 +356,24 @@
 @media (max-width: 600px) {
   .tagbar--works { grid-template-columns: max-content; }
 }
+
+/* ---------- Вторая строка шапки: путь или переключатель ----------
+   Появляется, когда свой путь на странице уехал под шапку (has-sub), и ездит вместе с шапкой. */
+.top__sub {
+  position: absolute; left: 0; right: 0; top: 100%; z-index: 1;
+  display: flex; align-items: center; gap: 10px; margin: 0; padding: 10px var(--pad) 12px;
+  background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(12px);
+  font-family: var(--font-text); font-weight: 400; font-size: 17px; color: var(--muted);
+  opacity: 0; visibility: hidden; transform: translateY(-10px);
+  transition: opacity .25s, transform .4s var(--ease), visibility 0s .4s;
+}
+.top--v2.has-sub .top__sub { opacity: 1; visibility: visible; transform: none; transition: opacity .25s, transform .4s var(--ease); }
+/* Шапка уехала вверх — вторая строка уезжает вместе с ней целиком */
+.top--v2.is-up .top__sub { transform: translateY(-100%); }
+.top__sub.crumbs span { margin: 0 .35em; }
+.top__sub .lnav__btn { padding: 5px 14px 6px; font-size: 16px; }
+.top__sub .lnav__menu { top: calc(100% + 8px); }
+.top--v2 .top__menu { z-index: 2; }
+@media (max-width: 600px) { .top__sub { display: none; } } /* телефон решим отдельно */
+/* Левая колонка кейса прилипает ниже второй строки шапки, чтобы та ее не закрывала */
+.page-v2 .case-aside__in { top: 160px; transition: top .4s var(--ease); }
