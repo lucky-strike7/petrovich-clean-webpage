@@ -43,7 +43,8 @@
   }
   </script>
   <link rel="stylesheet" href="../../fresh/fresh.css?v=1120e">
-  <link rel="stylesheet" href="../../fresh/v2.css?v=71">
+  <link rel="stylesheet" href="../../fresh/v2.css?v=73">
+  <link rel="stylesheet" href="../../fresh/case.css?v=1120e">
   <script>
     document.documentElement.classList.add('js');
     /*
@@ -86,13 +87,32 @@
 
   <main>
 
-    <section class="about project-hero">
-      <p class="about__label crumbs reveal"><a href="../">Работы</a><span>→</span>Хакасия&nbsp;на&nbsp;ВДНХ</p>
+    <section class="case-hero project-hero">
+      <p class="case-kicker crumbs"><a href="../">Работы</a><span>→</span>Хакасия&nbsp;на&nbsp;ВДНХ</p>
       <nav class="pnav" aria-label="Проект"><a class="lnav__up" href="../">Работы</a><span class="lnav__sep" aria-hidden="true">→</span><button class="lnav__btn" type="button" aria-controls="psheet" aria-expanded="false">Хакасия на ВДНХ <i aria-hidden="true"></i></button></nav>
-      <h1 class="about__text reveal">Стенд Республики Хакасия</h1>
-      <p class="about__desc reveal">Выставка «Россия» на&nbsp;ВДНХ, 2023. Для стенда республики мы&nbsp;сделали три интерактивных экспоната и&nbsp;для всех трех рисовали графику и&nbsp;писали код: он управляет поворотом круглого стола, подсветкой менгира и&nbsp;столом Displax, который распознает фишки.</p>
-      <ul class="pjump reveal" aria-label="Экспонаты проекта"><li><a href="#stol">Интерактивный стол</a></li><li><a href="#mengiry">Менгиры Хакасии</a></li><li><a href="#dostizheniya">Достижения Хакасии</a></li></ul>
+      <h1 class="case-hero__title">Стенд Республики Хакасия</h1>
+      <p class="case-sub">Интерактивные экспонаты для&nbsp;стенда Республики Хакасия, выставка «Россия» на&nbsp;ВДНХ, 2023</p>
     </section>
+
+    <div class="case-grid project-grid">
+      <aside class="case-aside" style="--rows: 2">
+        <div class="case-aside__in">
+          <h2 class="case-label case-aside__label">О&nbsp;проекте</h2>
+          <p class="case-aside__meta"><span>Стенд Республики Хакасия, выставка «Россия» на&nbsp;ВДНХ</span><span>2023</span><span>Три интерактивных экспоната</span></p>
+          <h2 class="case-label case-aside__label">Что сделали</h2>
+          <ul class="case-aside__done">
+            <li>Графика и&nbsp;интерфейсы</li>
+            <li>Видеоконтент и&nbsp;<span class="nw">3D-сцены</span></li>
+            <li>Программирование</li>
+            <li>Подсветка и&nbsp;распознавание фишек</li>
+            <li>Монтаж на&nbsp;выставке</li>
+            <li>Поддержка</li>
+          </ul>
+        </div>
+      </aside>
+      <p class="case-main case-lead reveal">Для стенда республики мы&nbsp;сделали три интерактивных экспоната и&nbsp;для всех трех рисовали графику и&nbsp;писали код: он управляет поворотом круглого стола, подсветкой менгира и&nbsp;столом Displax, который распознает фишки.</p>
+      <ul class="case-main pjump reveal" aria-label="Экспонаты проекта"><li><a href="#stol">Интерактивный стол</a></li><li><a href="#mengiry">Менгиры Хакасии</a></li><li><a href="#dostizheniya">Достижения Хакасии</a></li></ul>
+    </div>
 
     <section class="projects" id="exhibits">
       <h2 class="sr-only">Экспонаты</h2>
