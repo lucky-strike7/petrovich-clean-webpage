@@ -509,8 +509,8 @@ a.card__media { display: block; }
 .works-hero + .tagbar--works { padding-top: 0; }
 @media (max-width: 600px) { .works-hero { padding-bottom: 32px; } }
 /* Вставка «Из опыта» между крупными карточками: отступы как между карточками */
-.works-mix > .plate { margin-block: clamp(110px, 12vw, 200px) 0; }
-@media (max-width: 600px) { .works-mix > .plate { margin-top: 88px; } }
+.works-mix > .plate { margin: clamp(110px, 12vw, 200px) 0 0; }
+@media (max-width: 600px) { .works-mix > .plate { margin: 88px 0 0; } }
 .works-mix > .plate + * { margin-top: clamp(110px, 12vw, 200px); }
 @media (max-width: 600px) { .works-mix > .plate + * { margin-top: 88px; } }
 .works-mix > .plate + .card { padding-top: 0; }

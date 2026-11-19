@@ -139,10 +139,10 @@
 Где и когда: Конкурс современного медиаискусства «Страна Света-2025» при поддержке ПФКИ
 Награда: Третье место
 Фон: черный
-Картинка: fresh/media/strana-ustye.webp
+Картинка: fresh/media/strana-storm-tile.webp
 Обложка крупной: fresh/media/strana-storm.webp
 Картинка, телефон: fresh/media/strana-storm-m.webp
-Превью: fresh/media/strana-sveta.mp4
+Превью: fresh/media/strana-tile.mp4
 Крупное видео: fresh/media/strana-loop.mp4
 Крупное видео, телефон: fresh/media/strana-loop-m.mp4
 Обзор: Video/strana-sveta-2025.mp4
