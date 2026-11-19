@@ -20,30 +20,30 @@
   };
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
 
-  // Меню на телефоне: шторка снизу. Закрывается крестиком, по фону, смахиванием вниз и кнопкой «Назад»
-  const sheet = document.querySelector('.msheet');
-  const burger = document.querySelector('.top__burger');
-  if (sheet && burger) {
+  /*
+    Шторки снизу (телефон): меню (бургер) и список тегов (подсказка в шапке). Закрываются крестиком,
+    по фону, смахиванием вниз и кнопкой «Назад». Страница под открытой шторкой не прокручивается.
+  */
+  const makeSheet = (sheet, opener) => {
+    const shade = sheet.nextElementSibling;
     const isOpen = () => sheet.classList.contains('is-open');
     const set = (open, byKeyboard = false) => {
       sheet.classList.toggle('is-open', open);
       sheet.inert = !open;
-      burger.setAttribute('aria-expanded', open);
-      // Фокус на крестик — только если открыли с клавиатуры; от пальца Safari рисует вокруг него синюю рамку
+      opener.setAttribute('aria-expanded', open);
+      // Фокус на крестик — только при работе с клавиатуры; от пальца Safari рисует вокруг него синюю рамку
       if (open && byKeyboard) sheet.querySelector('.msheet__close').focus({ preventScroll: true });
     };
-    const close = () => { if (!isOpen()) return; if (history.state?.msheet) history.back(); else set(false); };
+    const close = () => { if (!isOpen()) return; if (history.state?.sheet === sheet.id) history.back(); else set(false); };
     set(false);
-    burger.addEventListener('click', () => { set(true, root.classList.contains('kbd')); history.pushState({ msheet: 1 }, ''); });
+    opener.addEventListener('click', () => { set(true, root.classList.contains('kbd')); history.pushState({ sheet: sheet.id }, ''); });
     addEventListener('popstate', () => { if (isOpen()) set(false); });
     sheet.querySelector('.msheet__close').addEventListener('click', close);
-    document.querySelector('.msheet__shade').addEventListener('click', close);
-    // Пункты меню: сначала закрываем шторку без возврата по истории, иначе переход по ссылке сорвется
+    shade?.addEventListener('click', close);
+    // Ссылки: закрываем шторку без возврата по истории, иначе переход сорвется
     sheet.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)));
     addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-    // Страница под открытой шторкой не прокручивается
     document.addEventListener('touchmove', (e) => { if (isOpen() && !sheet.contains(e.target)) e.preventDefault(); }, { passive: false });
-    // Смахнуть вниз — закрыть (тянем, пока шторка не прокручена)
     let y0 = null, dy = 0;
     sheet.addEventListener('touchstart', (e) => {
       if (sheet.scrollTop > 0) return;
@@ -59,6 +59,27 @@
       y0 = null; sheet.classList.remove('is-dragging'); sheet.style.removeProperty('--drag');
       if (dy > 80) close();
     });
+  };
+  const burger = document.querySelector('.top__burger');
+  const msheet = document.querySelector('#msheet');
+  if (burger && msheet) makeSheet(msheet, burger);
+  const ctx = document.querySelector('.top__ctx');
+  const tsheet = document.querySelector('#tsheet');
+  if (ctx && tsheet) makeSheet(tsheet, ctx);
+
+  /*
+    Подсказка «где ты» в шапке на телефоне: появляется вместо логотипа, когда свой путь или заголовок
+    на странице уехал под шапку. Шапка ездит как обычно: вниз — уходит, вверх — возвращается вместе с подсказкой.
+  */
+  const ctxSrc = ctx && document.querySelector(ctx.dataset.ctxFor);
+  if (ctx && ctxSrc) {
+    const updCtx = () => {
+      const shown = !ctxSrc.hidden && ctxSrc.offsetParent !== null && ctxSrc.getBoundingClientRect().bottom < top.offsetHeight;
+      top.classList.toggle('has-ctx', shown);
+    };
+    addEventListener('scroll', updCtx, { passive: true });
+    addEventListener('resize', updCtx);
+    updCtx();
   }
 
   // Меню «Работы»: открывается при наведении, закрывается не сразу, а через 350 мс после ухода курсора.

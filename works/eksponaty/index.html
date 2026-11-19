@@ -45,7 +45,7 @@
   }
   </script>
   <link rel="stylesheet" href="../../fresh/fresh.css?v=1120e">
-  <link rel="stylesheet" href="../../fresh/v2.css?v=60">
+  <link rel="stylesheet" href="../../fresh/v2.css?v=61">
   <script>
     document.documentElement.classList.add('js');
     /*
@@ -81,6 +81,7 @@
       <a href="../../about/">О студии</a>
       <a href="#contact" data-panel>Контакты</a>
     </nav>
+    <button class="top__ctx" type="button" data-ctx-for="nav.lnav--switch" aria-controls="tsheet" aria-expanded="false">Интерактивные экспонаты <i aria-hidden="true"></i></button>
     <button class="top__burger" type="button" aria-expanded="false" aria-controls="msheet" aria-label="Меню"><i></i><i></i><i></i></button>
     <div class="top__sub lnav--switch" data-sub-for=".lnav--switch:not(.top__sub)"><a class="lnav__up" href="../">Работы</a><span class="lnav__sep" aria-hidden="true">→</span>
       <div class="lnav__dd">
@@ -351,6 +352,15 @@
   </div>
   <div class="msheet__shade"></div>
 
+  <div class="msheet tsheet" id="tsheet" role="dialog" aria-label="Работы по направлениям">
+    <span class="msheet__grip" aria-hidden="true"></span>
+    <button class="msheet__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
+    <a class="tsheet__all" href="../">Все работы</a>
+    <h4>Что делаем</h4><ul><li><a href="./" aria-current="page">Интерактивные экспонаты</a></li><li><a href="../video/">Видео и 3D-анимация</a></li><li><a href="../mapping/">Мэппинг</a></li><li><a href="../scena/">Графика для сцены</a></li><li><a href="../sayty/">Сайты</a></li><li><a href="../dizayn/">Дизайн продукта</a></li></ul>
+    <h4>Для кого</h4><ul><li><a href="../muzei/">Музеи</a></li><li><a href="../vystavki/">Выставки</a></li><li><a href="../zastr/">Застройщики стендов</a></li><li><a href="../regiony/">Регионы и города</a></li><li><a href="../meropr/">Организаторы мероприятий</a></li><li><a href="../developery/">Девелоперы</a></li><li><a href="../prom/">Промышленность</a></li><li><a href="../kino/">Кино</a></li></ul>
+  </div>
+  <div class="msheet__shade"></div>
+
   <a class="orb" href="#contact" data-panel aria-label="Контакты">
     <svg viewBox="0 0 100 100" aria-hidden="true"><defs><path id="orb-c" d="M50 50m-37 0a37 37 0 1 1 74 0a37 37 0 1 1-74 0"/></defs>
       <text><textPath href="#orb-c" textLength="230" lengthAdjust="spacing">КОНТАКТЫ · НАПИСАТЬ НАМ · </textPath></text></svg>
@@ -367,7 +377,7 @@
   </dialog>
 
   <script src="../../fresh/fresh.js?v=1119x"></script>
-  <script src="../../fresh/v2.js?v=20"></script>
+  <script src="../../fresh/v2.js?v=21"></script>
   <script src="../../fresh/cookies.js?v=1119i"></script>
 </body>
 </html>
