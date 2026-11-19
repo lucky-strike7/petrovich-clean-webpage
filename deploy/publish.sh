@@ -78,7 +78,7 @@ done
 [[ "$healthy" == true ]] || exit 1
 headers=$(mktemp "$base/state/public-headers.XXXXXX")
 if ! curl --fail --silent --show-error --retry 3 --retry-delay 1 --connect-timeout 10 --max-time 20 \
-    -D "$headers" -o /dev/null https://old.petrovichbrothers.ru/; then rm -f "$headers"; exit 1; fi
+    -D "$headers" -o /dev/null https://new.petrovichbrothers.ru/; then rm -f "$headers"; exit 1; fi
 public_commit=$(tr -d '\r' < "$headers" | awk 'tolower($1)=="x-site-release:" {print $2}')
 rm -f "$headers"
 [[ "$public_commit" == "$commit" ]] || exit 1
@@ -88,7 +88,7 @@ from pathlib import Path
 base,commit,image,previous,compose=sys.argv[1:]
 p=Path(base)/'state/last-deployment.json'
 tmp=p.with_suffix('.tmp')
-tmp.write_text(json.dumps({'deployedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'commit':commit,'image':image,'previousImage':previous,'previousCompose':compose,'url':'https://old.petrovichbrothers.ru/'},indent=2)+'\n')
+tmp.write_text(json.dumps({'deployedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'commit':commit,'image':image,'previousImage':previous,'previousCompose':compose,'url':'https://new.petrovichbrothers.ru/'},indent=2)+'\n')
 os.replace(tmp,p)
 link=Path(base)/'.current-next'
 link.unlink(missing_ok=True)
@@ -96,4 +96,4 @@ link.symlink_to('releases/'+commit)
 os.replace(link,Path(base)/'current')
 PY
 switch_started=false
-printf 'Published %s: https://old.petrovichbrothers.ru/\n' "$commit"
+printf 'Published %s: https://new.petrovichbrothers.ru/\n' "$commit"
