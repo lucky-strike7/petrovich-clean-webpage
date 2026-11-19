@@ -164,6 +164,35 @@
   }));
 
   /*
+    Телефон и планшет: мыши нет, наведения тоже. Ролик плитки играет, пока плитка видна на экране
+    (больше чем на 60%), и останавливается, когда уехала. Файл грузится, только когда плитка впервые показалась.
+  */
+  if (!matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches && !navigator.connection?.saveData) {
+    const tileIO = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        const card = e.target;
+        let v = card.querySelector('.work__media video');
+        if (e.isIntersecting && !document.hidden) {
+          if (!v) {
+            v = document.createElement('video');
+            Object.assign(v, { muted: true, loop: true, playsInline: true, preload: 'auto' });
+            v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('aria-hidden', 'true');
+            v.src = card.dataset.preview;
+            card.querySelector('.work__media').append(v);
+          }
+          card.classList.add('is-previewing');
+          v.play().catch(() => {});
+        } else if (v) { v.pause(); card.classList.remove('is-previewing'); }
+      }
+    }, { threshold: 0.6 });
+    document.querySelectorAll('.work[data-preview]').forEach((card) => tileIO.observe(card));
+    // Вернулись на вкладку — снова запускаем то, что на экране (при уходе все ролики ставятся на паузу)
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) document.querySelectorAll('.work.is-previewing video').forEach((v) => v.play().catch(() => {}));
+    });
+  }
+
+  /*
     Вторая строка шапки: путь или переключатель. Появляется, когда свой путь на странице уехал под шапку,
     и дальше ездит вместе с шапкой: листаешь вниз — уходит, вверх — возвращается.
   */

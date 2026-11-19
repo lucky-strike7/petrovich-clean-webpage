@@ -6,7 +6,9 @@ const exact = new Map([
   ['/testimonials', '/'],
   ['/contacts', '/#contact'],
   ['/contact', '/#contact'],
-  ['/projects/khakasiya', '/cases/khakasia/'],
+  ['/projects/khakasiya', '/works/khakasia/'],
+  // Старый кейс стола сведен со страницей экспоната в новой структуре
+  ['/cases/khakasia', '/works/khakasia/stol/'],
   ['/projects/hersones', '/works/khersones/'],
   // Кейс Херсонеса сведен со страницей проекта в новой структуре
   ['/cases/hersones', '/works/khersones/'],

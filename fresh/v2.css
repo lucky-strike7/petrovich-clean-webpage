@@ -515,3 +515,18 @@ a.card__media { display: block; }
 .works-mix > .plate + * { margin-top: clamp(110px, 12vw, 200px); }
 @media (max-width: 600px) { .works-mix > .plate + * { margin-top: 88px; } }
 .works-mix > .plate + .card { padding-top: 0; }
+
+/*
+  Телефон, «Работы» и страницы тегов: крупные карточки выглядят так же, как плитки —
+  горизонтальный кадр 13:10, заголовок того же размера, серая строка «год · что это», те же отступы.
+  «Страна Света» здесь тоже обычной карточкой, без черного фона.
+*/
+@media (max-width: 600px) {
+  .works-mix--tiles > * + * { margin-top: 40px; }
+  .works-mix--tiles .work-big .card__media { aspect-ratio: 13 / 10; }
+  .works-mix--tiles .work-big .card__row { padding-top: 14px; row-gap: 6px; }
+  .works-mix--tiles .work-big .card__title { font-size: 22px; line-height: 1.15; letter-spacing: -.01em; }
+  .works-mix--tiles .work-big .card__kind { margin-top: 0; font-size: 16px; line-height: 1.45; color: var(--muted); }
+  .works-mix--tiles > .work-dark { --ink: #111110; --muted: #6f6f6a; --line: #dcdcd6; padding: 0; background: none; color: var(--ink); }
+  .works-mix--tiles > .work-dark > .card { padding-inline: var(--pad); }
+}

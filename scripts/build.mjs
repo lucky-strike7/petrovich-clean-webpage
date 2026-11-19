@@ -11,7 +11,9 @@ for(const name of entries)await cp(resolve(root,name),resolve(out,name),{recursi
 const casePages=[];
 for(const entry of await readdir(resolve(out,'cases'),{withFileTypes:true})){
   if(!entry.isDirectory())continue;
-  const html=await readFile(resolve(out,'cases',entry.name,'index.html'),'utf8');
+  // Папка может остаться только с медиа (cases/khakasia: страница стола переехала в works/, картинки нужны ей)
+  const html=await readFile(resolve(out,'cases',entry.name,'index.html'),'utf8').catch(()=>null);
+  if(html===null)continue;
   const canonical=html.match(/<link rel="canonical" href="([^"]+)"/);
   if(!canonical)throw Error(`Missing case canonical: ${entry.name}`);
   casePages.push(canonical[1]);
