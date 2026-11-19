@@ -88,5 +88,50 @@
     });
   }
 
+  // «Для кого» на странице «Работы» (телефон): раскрывается кнопкой
+  const more = document.querySelector('.tagbar__more');
+  if (more) more.addEventListener('click', () => {
+    const open = more.getAttribute('aria-expanded') !== 'true';
+    more.setAttribute('aria-expanded', open);
+    more.closest('.tagbar').classList.toggle('is-who', open);
+  });
+
+  /*
+    Переключатель «Работы → тег ▾» наверху страницы тега. Показываем тем, кто пришел с нашего же сайта
+    (из «Работ», меню, страницы экспоната): им нужна навигация. Кто пришел из рекламы, поиска или по ссылке —
+    видит чистую продающую страницу. После перезагрузки страница помнит, что человек пришел с сайта.
+    Для проверки: ?nav=1 — показать всегда, ?nav=0 — скрыть.
+  */
+  const lnav = document.querySelector('.lnav--switch');
+  if (lnav) {
+    const key = 'pb-nav:' + location.pathname;
+    const param = new URLSearchParams(location.search).get('nav');
+    let fromSite = false;
+    try { fromSite = new URL(document.referrer).origin === location.origin; } catch {}
+    let remembered = false;
+    try { if (fromSite) sessionStorage.setItem(key, '1'); remembered = sessionStorage.getItem(key) === '1'; } catch {}
+    const show = param === '0' ? false : param === '1' || param === 'switch' || fromSite || remembered;
+    if (show) lnav.hidden = false;
+  }
+  const ldd = document.querySelector('.lnav__dd');
+  if (ldd) {
+    const btn = ldd.querySelector('.lnav__btn');
+    const toggle = (open) => { ldd.classList.toggle('is-open', open); btn.setAttribute('aria-expanded', open); };
+    btn.addEventListener('click', () => toggle(!ldd.classList.contains('is-open')));
+    // На компьютере открывается при наведении, как меню «Работы»: с небольшой задержкой на открытие
+    // (чтобы не выскакивал, когда курсор просто проходит к шапке) и на закрытие (чтобы не пропадал от рывка мыши)
+    let lt;
+    ldd.addEventListener('pointerenter', (e) => { if (e.pointerType !== 'mouse') return; clearTimeout(lt); lt = setTimeout(() => toggle(true), 120); });
+    ldd.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'mouse') return; clearTimeout(lt); lt = setTimeout(() => toggle(false), 350); });
+    document.addEventListener('click', (e) => { if (!ldd.contains(e.target)) toggle(false); });
+    addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+  }
+
+  // Превью на карточках работ всегда начинается с начала, а не с места, где остановилось в прошлый раз
+  document.querySelectorAll('.work[data-preview]').forEach((card) => card.addEventListener('mouseenter', () => {
+    const v = card.querySelector('.work__media video');
+    if (v) v.currentTime = 0;
+  }));
+
   onScroll();
 })();
