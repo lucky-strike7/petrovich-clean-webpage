@@ -6,7 +6,7 @@ import { resolve, relative, dirname, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 const root=fileURLToPath(new URL('../',import.meta.url)),out=resolve(root,'dist');
 await rm(out,{recursive:true,force:true});await mkdir(out,{recursive:true});
-const entries=['index.html','404.html','robots.txt','sitemap.xml','site.webmanifest','favicon.svg','favicon.ico','favicon-32.png','apple-touch-icon.png','icon-192.png','icon-512.png','fresh','fonts','Video','cases','privacy','consent'];
+const entries=['index.html','404.html','robots.txt','sitemap.xml','site.webmanifest','favicon.svg','favicon.ico','favicon-32.png','apple-touch-icon.png','icon-192.png','icon-512.png','fresh','fonts','Video','cases','works','privacy','consent'];
 for(const name of entries)await cp(resolve(root,name),resolve(out,name),{recursive:true});
 async function list(dir){const result=[];for(const item of await readdir(dir,{withFileTypes:true})){const p=resolve(dir,item.name);if(item.isSymbolicLink())throw Error('Symlink not allowed');if(item.isDirectory())result.push(...await list(p));else result.push(p);}return result;}
 const files=await list(out),hashes=new Map(),digest=bytes=>createHash('sha256').update(bytes).digest('hex').slice(0,12);

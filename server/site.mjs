@@ -8,7 +8,7 @@ import { legacyRedirect } from './redirects.mjs';
 
 const project = fileURLToPath(new URL('../', import.meta.url));
 const files = new Set(['index.html','404.html','robots.txt','sitemap.xml','site.webmanifest','favicon.svg','favicon.ico','favicon-32.png','apple-touch-icon.png','icon-192.png','icon-512.png']);
-const directories = new Set(['fresh','fonts','Video','cases','privacy','consent']);
+const directories = new Set(['fresh','fonts','Video','cases','works','privacy','consent']);
 const types = { '.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.avif':'image/avif','.mp4':'video/mp4','.webm':'video/webm','.xml':'application/xml; charset=utf-8','.txt':'text/plain; charset=utf-8','.woff2':'font/woff2','.ttf':'font/ttf','.ico':'image/x-icon','.webmanifest':'application/manifest+json' };
 
 export function byteRange(header, size) {
