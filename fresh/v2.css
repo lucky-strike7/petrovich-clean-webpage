@@ -492,6 +492,7 @@
 .works-mix > .works--all { margin-inline: var(--pad); }
 .works-mix > * + * { margin-top: clamp(110px, 12vw, 200px); }
 .works-mix > .card + .card { padding-top: 0; }
+.works-mix > h2:first-child + * { margin-top: 0; } /* до первой карточки — как на «Экспонатах»: только отступ под текстом */
 .works-mix > .event { margin-bottom: 0; }
 .works-mix + .plate--page { margin-top: 0; }
 a.card__media { display: block; }
