@@ -419,3 +419,11 @@
 @media (max-width: 600px) {
   .top--v2 { transition: transform .6s cubic-bezier(.33, 0, .2, 1), background-color .3s, padding .5s var(--ease); }
 }
+
+/* ---------- Кейс на телефоне: «Работы → Хакасия на ВДНХ ⌄» над заголовком ----------
+   Кнопка открывает шторку с экспонатами проекта; при прокрутке то же появляется в шапке */
+.pnav { display: none; }
+@media (max-width: 600px) {
+  .pnav { display: flex; align-items: center; gap: 10px; margin: 0 0 20px; font-family: var(--font-text); font-weight: 400; font-size: 16px; }
+  .page-v2 .case-hero { padding-top: 132px; }
+}

@@ -28,19 +28,24 @@
     Шторки снизу (телефон): меню (бургер) и список тегов (подсказка в шапке). Закрываются крестиком,
     по фону, смахиванием вниз и кнопкой «Назад». Страница под открытой шторкой не прокручивается.
   */
-  const makeSheet = (sheet, opener) => {
+  const makeSheet = (sheet, openers) => {
     const shade = sheet.nextElementSibling;
     const isOpen = () => sheet.classList.contains('is-open');
     const set = (open, byKeyboard = false) => {
       sheet.classList.toggle('is-open', open);
       sheet.inert = !open;
-      opener.setAttribute('aria-expanded', open);
+      openers.forEach((o) => o.setAttribute('aria-expanded', open));
       // Фокус на крестик — только при работе с клавиатуры; от пальца Safari рисует вокруг него синюю рамку
       if (open && byKeyboard) sheet.querySelector('.msheet__close').focus({ preventScroll: true });
     };
     const close = () => { if (!isOpen()) return; if (history.state?.sheet === sheet.id) history.back(); else set(false); };
     set(false);
-    opener.addEventListener('click', () => { set(true, root.classList.contains('kbd')); history.pushState({ sheet: sheet.id }, ''); });
+    // На компьютере переключатель вверху страницы раскрывает свой список (data-phone-only) — шторку открываем только на телефоне
+    openers.forEach((o) => o.addEventListener('click', (e) => {
+      if (o.hasAttribute('data-phone-only') && !phone.matches) return;
+      e.stopImmediatePropagation();
+      set(true, root.classList.contains('kbd')); history.pushState({ sheet: sheet.id }, '');
+    }, true));
     addEventListener('popstate', () => { if (isOpen()) set(false); });
     sheet.querySelector('.msheet__close').addEventListener('click', close);
     shade?.addEventListener('click', close);
@@ -64,12 +69,12 @@
       if (dy > 80) close();
     });
   };
-  const burger = document.querySelector('.top__burger');
-  const msheet = document.querySelector('#msheet');
-  if (burger && msheet) makeSheet(msheet, burger);
+  // Каждая шторка открывается всеми кнопками, которые на нее указывают (aria-controls)
+  document.querySelectorAll('.msheet[id]').forEach((sheet) => {
+    const openers = [...document.querySelectorAll(`[aria-controls="${sheet.id}"]`)];
+    if (openers.length) makeSheet(sheet, openers);
+  });
   const ctx = document.querySelector('.top__ctx');
-  const tsheet = document.querySelector('#tsheet');
-  if (ctx && tsheet) makeSheet(tsheet, ctx);
 
   /*
     Подсказка «где ты» в шапке на телефоне: появляется вместо логотипа, когда свой путь или заголовок

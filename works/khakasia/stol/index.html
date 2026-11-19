@@ -30,7 +30,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preload" as="image" href="../../../cases/khakasia/media/interaktivnyj-stol-khakasiya.webp" imagesrcset="../../../cases/khakasia/media/interaktivnyj-stol-khakasiya-960.webp 960w, ../../../cases/khakasia/media/interaktivnyj-stol-khakasiya.webp 1920w" imagesizes="100vw">
   <link rel="stylesheet" href="../../../fresh/fresh.css?v=1120e">
-  <link rel="stylesheet" href="../../../fresh/v2.css?v=65">
+  <link rel="stylesheet" href="../../../fresh/v2.css?v=66">
   <link rel="stylesheet" href="../../../fresh/case.css?v=1120e">
   <script>
     document.documentElement.classList.add('js');
@@ -93,7 +93,7 @@
       <a href="../../../about/">О студии</a>
       <a href="#contact" data-panel>Контакты</a>
     </nav>
-    <a class="top__ctx top__ctx--back" href="../../" data-ctx-for=".case-hero__title"><span aria-hidden="true">‹</span> Работы</a>
+    <button class="top__ctx" type="button" data-ctx-for=".pnav" aria-controls="psheet" aria-expanded="false">Хакасия на ВДНХ <i aria-hidden="true"></i></button>
     <button class="top__burger" type="button" aria-expanded="false" aria-controls="msheet" aria-label="Меню"><i></i><i></i><i></i></button>
     <div class="top__sub crumbs" data-sub-for=".case-kicker.crumbs, .case-hero__title"><a href="../../">Работы</a><span>→</span><a href="../../khakasia/">Хакасия&nbsp;на&nbsp;ВДНХ</a><span>→</span>Интерактивный стол</div>
   </header>
@@ -102,6 +102,7 @@
 
     <section class="case-hero">
       <p class="case-kicker crumbs"><a href="../../">Работы</a><span>→</span><a href="../../khakasia/">Хакасия&nbsp;на&nbsp;ВДНХ</a><span>→</span>Интерактивный стол</p>
+      <nav class="pnav" aria-label="Проект"><a class="lnav__up" href="../../">Работы</a><span class="lnav__sep" aria-hidden="true">→</span><button class="lnav__btn" type="button" aria-controls="psheet" aria-expanded="false">Хакасия на ВДНХ <i aria-hidden="true"></i></button></nav>
       <h1 class="case-hero__title">Достопримеча&shy;тельности Хакасии</h1>
       <p class="case-sub">Интерактивный стол, стенд Республики Хакасия, выставка «Россия» на&nbsp;ВДНХ, 2023</p>
       <figure class="case-hero__media">
@@ -346,6 +347,14 @@
   </div>
   <div class="msheet__shade"></div>
 
+  <div class="msheet tsheet" id="psheet" role="dialog" aria-label="Экспонаты проекта">
+    <span class="msheet__grip" aria-hidden="true"></span>
+    <button class="msheet__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
+    <a class="tsheet__all" href="../../../works/khakasia/">Хакасия на ВДНХ</a>
+    <h4>Экспонаты</h4><ul><li><a href="./" aria-current="page">Интерактивный стол</a></li><li><a href="../../../works/khakasia/#mengiry">Менгиры Хакасии</a></li><li><a href="../../../works/khakasia/#dostizheniya">Достижения Хакасии</a></li></ul><ul><li><a href="../../">Все работы</a></li></ul>
+  </div>
+  <div class="msheet__shade"></div>
+
   <a class="orb" href="#contact" data-panel aria-label="Контакты">
     <svg viewBox="0 0 100 100" aria-hidden="true"><defs><path id="orb-c" d="M50 50m-37 0a37 37 0 1 1 74 0a37 37 0 1 1-74 0"/></defs>
       <text><textPath href="#orb-c" textLength="230" lengthAdjust="spacing">КОНТАКТЫ · НАПИСАТЬ НАМ · </textPath></text></svg>
@@ -362,7 +371,7 @@
   </dialog>
 
   <script src="../../../fresh/fresh.js?v=1119x"></script>
-  <script src="../../../fresh/v2.js?v=23"></script>
+  <script src="../../../fresh/v2.js?v=24"></script>
   <script src="../../../fresh/case.js?v=1119f"></script>
   <script src="../../../fresh/cookies.js?v=1119i"></script>
 </body>
