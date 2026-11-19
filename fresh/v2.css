@@ -453,3 +453,19 @@
   .next-work__link { grid-template-columns: 1fr; }
   .next-work__img { margin-inline: calc(var(--pad) * -1); border-radius: 0; }
 }
+
+/* ---------- Страница проекта ---------- */
+.project-hero .crumbs { font-size: 17px; }
+.project-hero .crumbs span { margin: 0 .35em; }
+/* Экспонаты проекта — тихой строкой под описанием, ссылками на блоки ниже */
+.pjump { grid-column: 4 / 13; display: flex; flex-wrap: wrap; gap: 8px; margin: clamp(24px, 2.6vw, 40px) 0 0; padding: 0; list-style: none; }
+.pjump a { display: block; padding: 8px 16px 9px; border: 1px solid var(--line); border-radius: 999px; font-family: var(--font-text); font-weight: 400; font-size: 16px; line-height: 1.1; transition: border-color .25s; }
+.pjump a:hover { border-color: var(--ink); }
+.project-hero .pnav { grid-column: 1 / -1; }
+.card { scroll-margin-top: 140px; }
+@media (max-width: 600px) {
+  .project-hero .crumbs { display: none; }
+  .pjump { grid-column: 1 / -1; flex-wrap: nowrap; overflow-x: auto; margin-inline: calc(var(--pad) * -1); padding-inline: var(--pad); scrollbar-width: none; }
+  .pjump::-webkit-scrollbar { display: none; }
+  .pjump a { white-space: nowrap; font-size: 15px; }
+}
