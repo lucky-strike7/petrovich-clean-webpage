@@ -441,11 +441,12 @@
 }
 
 /* ---------- «Следующая работа →» внизу кейса ---------- */
-.next-work__link { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 4fr); gap: 20px 32px; align-items: center; }
+/* Картинка поменьше, название с годом прижаты к ее верху — на одной линии с подписью «Следующая работа» */
+.next-work__link { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 4fr); gap: 20px clamp(24px, 2.4vw, 40px); align-items: start; }
 .next-work__img { display: block; aspect-ratio: 13 / 10; border-radius: var(--radius); overflow: hidden; background: var(--line); }
 .next-work__img img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
 .next-work__link:hover .next-work__img img { transform: scale(1.03); }
-.next-work__title { display: block; font-size: var(--fs-card); line-height: 1.02; letter-spacing: -.02em; }
+.next-work__title { display: block; margin-top: -.12em; font-size: var(--fs-card); line-height: 1.02; letter-spacing: -.02em; }
 .next-work__title i { font-style: normal; display: inline-block; transition: transform .45s var(--ease); }
 .next-work__link:hover .next-work__title i { transform: translateX(8px); }
 .next-work__meta { display: block; margin-top: 12px; font-family: var(--font-text); font-weight: 400; font-size: 16px; line-height: 1.45; color: var(--muted); }
