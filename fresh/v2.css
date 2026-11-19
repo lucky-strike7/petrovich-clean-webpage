@@ -419,21 +419,3 @@
 @media (max-width: 600px) {
   .top--v2 { transition: transform .6s cubic-bezier(.33, 0, .2, 1), background-color .3s, padding .5s var(--ease); }
 }
-
-/* ---------- Телефон, вариант А (?m=a): вторая строка под шапкой, как на компьютере ----------
-   Список тегов раскрывается вниз под строкой, на всю ширину, а не шторкой снизу */
-@media (max-width: 600px) {
-  .m-a .top__ctx { display: none; }
-  .m-a .top--v2.has-ctx .top__logo { opacity: 1; pointer-events: auto; }
-  .m-a .top__sub { display: flex; flex-wrap: nowrap; padding: 8px var(--pad) 10px; font-size: 15px; white-space: nowrap; }
-  .m-a .top__sub.crumbs { overflow: hidden; text-overflow: ellipsis; display: block; }
-  .m-a .top__sub .lnav__dd { position: static; }
-  .m-a .top__sub .lnav__btn { font-size: 15px; }
-  .m-a .top__sub .lnav__menu {
-    position: absolute; left: 0; right: 0; top: 100%; margin: 0; padding: 18px var(--pad) 22px;
-    grid-template-columns: 1fr 1fr; gap: 16px; max-height: 70vh; overflow: auto;
-    border-radius: 0 0 18px 18px; box-shadow: 0 30px 50px -20px rgba(0, 0, 0, .3);
-  }
-  .m-a .top__sub .lnav__menu::before { display: none; }
-  .m-a .top__sub .lnav__menu a { font-size: 17px; padding: 7px 0; white-space: normal; }
-}

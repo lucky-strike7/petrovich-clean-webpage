@@ -1,13 +1,6 @@
 // Новая структура (ветка structure-v2): шапка прячется при прокрутке вниз, меню на телефоне, круглая кнопка «Контакты».
 (() => {
   const root = document.documentElement;
-  // Сравниваем два варианта навигации на телефоне: ?m=a — вторая строка под шапкой, ?m=b — подсказка в шапке.
-  // Выбор запоминается на время сессии, чтобы при переходах между страницами вариант не сбрасывался
-  try {
-    const m = new URLSearchParams(location.search).get('m');
-    if (m === 'a' || m === 'b') sessionStorage.setItem('pb-m', m);
-    if (sessionStorage.getItem('pb-m') === 'a') root.classList.add('m-a');
-  } catch {}
   const top = document.querySelector('.top--v2');
 
   // Шапка: вниз больше чем на 8 px — уезжает, вверх — возвращается. У самого верха видна всегда.
