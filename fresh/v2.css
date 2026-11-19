@@ -363,7 +363,7 @@
 .top__sub {
   position: absolute; left: 0; right: 0; top: 100%; z-index: 1;
   display: flex; align-items: center; gap: 10px; margin: 0; padding: 10px var(--pad) 12px;
-  background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(12px);
+  background: color-mix(in srgb, var(--bg) 96%, transparent); backdrop-filter: blur(12px);
   font-family: var(--font-text); font-weight: 400; font-size: 17px; color: var(--muted);
   opacity: 0; visibility: hidden; transform: translateY(-10px);
   transition: opacity .25s, transform .4s var(--ease), visibility 0s .4s;
@@ -414,3 +414,26 @@
 .tsheet a[aria-current] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .16em; }
 .tsheet__all { display: inline-block; padding: 4px 0; font-size: 28px; letter-spacing: -.015em; }
 @media (min-width: 601px) { .tsheet, .tsheet + .msheet__shade { display: none; } }
+
+/* Телефон: шапка уезжает и возвращается мягче и чуть медленнее */
+@media (max-width: 600px) {
+  .top--v2 { transition: transform .6s cubic-bezier(.33, 0, .2, 1), background-color .3s, padding .5s var(--ease); }
+}
+
+/* ---------- Телефон, вариант А (?m=a): вторая строка под шапкой, как на компьютере ----------
+   Список тегов раскрывается вниз под строкой, на всю ширину, а не шторкой снизу */
+@media (max-width: 600px) {
+  .m-a .top__ctx { display: none; }
+  .m-a .top--v2.has-ctx .top__logo { opacity: 1; pointer-events: auto; }
+  .m-a .top__sub { display: flex; flex-wrap: nowrap; padding: 8px var(--pad) 10px; font-size: 15px; white-space: nowrap; }
+  .m-a .top__sub.crumbs { overflow: hidden; text-overflow: ellipsis; display: block; }
+  .m-a .top__sub .lnav__dd { position: static; }
+  .m-a .top__sub .lnav__btn { font-size: 15px; }
+  .m-a .top__sub .lnav__menu {
+    position: absolute; left: 0; right: 0; top: 100%; margin: 0; padding: 18px var(--pad) 22px;
+    grid-template-columns: 1fr 1fr; gap: 16px; max-height: 70vh; overflow: auto;
+    border-radius: 0 0 18px 18px; box-shadow: 0 30px 50px -20px rgba(0, 0, 0, .3);
+  }
+  .m-a .top__sub .lnav__menu::before { display: none; }
+  .m-a .top__sub .lnav__menu a { font-size: 17px; padding: 7px 0; white-space: normal; }
+}

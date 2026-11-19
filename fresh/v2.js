@@ -1,6 +1,13 @@
 // Новая структура (ветка structure-v2): шапка прячется при прокрутке вниз, меню на телефоне, круглая кнопка «Контакты».
 (() => {
   const root = document.documentElement;
+  // Сравниваем два варианта навигации на телефоне: ?m=a — вторая строка под шапкой, ?m=b — подсказка в шапке.
+  // Выбор запоминается на время сессии, чтобы при переходах между страницами вариант не сбрасывался
+  try {
+    const m = new URLSearchParams(location.search).get('m');
+    if (m === 'a' || m === 'b') sessionStorage.setItem('pb-m', m);
+    if (sessionStorage.getItem('pb-m') === 'a') root.classList.add('m-a');
+  } catch {}
   const top = document.querySelector('.top--v2');
 
   // Шапка: вниз больше чем на 8 px — уезжает, вверх — возвращается. У самого верха видна всегда.
@@ -8,15 +15,19 @@
   // Кружок «Контакты» прячется, когда на экране черный блок контактов: там своя форма
   const orb = document.querySelector('.orb');
   const contact = document.querySelector('.contact');
-  let lastY = scrollY, ticking = false;
+  // На телефоне шапка уезжает не от первого движения пальца, а когда пролистал вниз заметно (60 px подряд)
+  const phone = matchMedia('(max-width: 600px)');
+  let lastY = scrollY, ticking = false, downRun = 0;
   const onScroll = () => {
     ticking = false;
     if (orb && contact) orb.classList.toggle('is-off', contact.getBoundingClientRect().top < innerHeight * 0.75);
     const y = scrollY, dy = y - lastY;
     if (Math.abs(dy) < 8) return;
-    const busy = root.classList.contains('is-panel') || top.querySelector('.top__dd.is-open, .top__dd:focus-within, .lnav__dd.is-open');
-    top.classList.toggle('is-up', dy > 0 && y > 160 && !busy);
     lastY = y;
+    const busy = root.classList.contains('is-panel') || top.querySelector('.top__dd.is-open, .top__dd:focus-within, .lnav__dd.is-open');
+    if (dy < 0 || busy || y <= 160) { downRun = 0; top.classList.remove('is-up'); return; }
+    downRun += dy;
+    if (downRun > (phone.matches ? 60 : 8)) top.classList.add('is-up');
   };
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
 
@@ -159,10 +170,12 @@
     и дальше ездит вместе с шапкой: листаешь вниз — уходит, вверх — возвращается.
   */
   const sub = document.querySelector('.top__sub');
-  const subSrc = sub && document.querySelector(sub.dataset.subFor);
-  if (sub && subSrc) {
+  // Источник — первый видимый из перечисленных (на телефоне путь на странице стола скрыт, тогда — заголовок)
+  const subSrcs = sub ? [...document.querySelectorAll(sub.dataset.subFor)] : [];
+  if (sub && subSrcs.length) {
     const updSub = () => {
-      const shown = !subSrc.hidden && subSrc.offsetParent !== null && subSrc.getBoundingClientRect().bottom < top.offsetHeight;
+      const src = subSrcs.find((el) => !el.hidden && el.offsetParent !== null);
+      const shown = !!src && src.getBoundingClientRect().bottom < top.offsetHeight;
       top.classList.toggle('has-sub', shown);
     };
     addEventListener('scroll', updSub, { passive: true });
