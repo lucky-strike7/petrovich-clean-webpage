@@ -620,3 +620,7 @@ a.card__media { display: block; }
   .case-grid .case-pair-block { padding: 14px; }
   .case-buttons { flex-direction: column; gap: 14px; }
 }
+
+/* Кейс: мелкая ссылка-подтверждение под фактом в «О проекте» (победители конкурса); при наведении только подчеркивание */
+.case-aside__src { display: block; width: fit-content; margin-top: 4px; font-size: 14px; color: var(--muted); text-decoration: none; text-underline-offset: 3px; }
+.case-aside__src:hover { color: var(--muted); text-decoration: underline; }

@@ -42,7 +42,7 @@ HERO = f'''    <section class="case-hero">
 ASIDE = f'''      <aside class="case-aside" style="--rows: 9">
         <div class="case-aside__in">
           <h2 class="case-label case-aside__label">О&nbsp;проекте</h2>
-          <p class="case-aside__meta"><span>Конкурс современного медиаискусства «Страна Света» при&nbsp;поддержке ПФКИ проходил на&nbsp;Дворцовой площади в&nbsp;Санкт-Петербурге в&nbsp;декабре 2025&nbsp;года</span><span>Мы&nbsp;заняли третье место</span></p>
+          <p class="case-aside__meta"><span>Конкурс современного медиаискусства «Страна Света» при&nbsp;поддержке ПФКИ проходил на&nbsp;Дворцовой площади в&nbsp;Санкт-Петербурге в&nbsp;декабре 2025&nbsp;года</span><span>Мы&nbsp;заняли третье место<a class="case-aside__src" href="https://stranasveta.com/news/pobediteli-2025" target="_blank" rel="noopener">Все победители на&nbsp;сайте конкурса&nbsp;↗</a></span></p>
           <h2 class="case-label case-aside__label">Что сделали</h2>
           <ul class="case-aside__done">
             <li>Сценарий</li>
@@ -88,7 +88,6 @@ PAIR = '''      <figure class="case-pair-block reveal">
         <figcaption class="case-pair__cap">Ролик об&nbsp;Устье. По&nbsp;правилам конкурса нужно было снять ролик о&nbsp;месте, про&nbsp;которое мы&nbsp;делаем мэппинг</figcaption>
       </figure>
 '''
-RESULT = '      <p class="case-main case-p case-source reveal"><a class="text-link" href="https://stranasveta.com/news/pobediteli-2025" target="_blank" rel="noopener">Победители конкурса на&nbsp;сайте «Страны Света»&nbsp;↗</a></p>\n'
 
 GRID = ('    <div class="case-grid">\n' + ASIDE + '\n' + BRIEF + '\n'
   + lead('Почему Устье')
@@ -113,7 +112,6 @@ GRID = ('    <div class="case-grid">\n' + ASIDE + '\n' + BRIEF + '\n'
   + QUOTE
   + lead('Третье место на конкурсе «Страна Света-2025»')
   + para('После показа на Дворцовой площади у нас взял интервью Первый канал.')
-  + RESULT
   + fig('mk-tv.webp', 'Артем и Арсений Пе́тровичи в сюжете Первого канала на Дворцовой площади')
   + '    </div>\n')
 
