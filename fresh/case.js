@@ -159,6 +159,9 @@
         v.src = copy.dataset.video;
         v.poster = copy.querySelector('img').currentSrc || copy.querySelector('img').src;
         v.controls = true; v.playsInline = true;
+        // ровно в размер обложки: подпись под роликом не сдвигается
+        const box = copy.getBoundingClientRect();
+        v.style.width = `${box.width}px`; v.style.height = `${box.height}px`; v.style.aspectRatio = 'auto';
         copy.replaceWith(v);
         document.dispatchEvent(new CustomEvent('pb:goal', { detail: { name: 'video_open' } }));
         v.play().catch(() => {});
