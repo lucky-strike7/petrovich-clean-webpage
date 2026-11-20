@@ -19,6 +19,10 @@ WHO = [tuple(x[:2]) for x in DATA['tags']['who']]
 DAT = {x[0]: x[2] for x in DATA['tags']['who']}
 NAME = dict(WHAT + WHO)
 
+# Название карточки без разметки (для data-title и aria): перенос строки — запятая
+def plain(t):
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>|&nbsp;", " ", re.sub(r"<br\s*/?>", ", ", t))).strip()
+
 def typo(text):
     """Неразрывный пробел после коротких слов, слова через дефис не разрываются по строкам."""
     text = html.escape(text, quote=False)
@@ -289,9 +293,9 @@ class Page:
         if w.get('href'):
             href = self.B + w['href']
             # Ссылка-обложка без текста внутри: имя для экранного диктора и поиска — название работы
-            return 'a', f'href="{href}" data-cursor="Посмотреть" aria-label="{html.escape(re.sub("<[^>]+>|&nbsp;", " ", w["title"]))}"', href
+            return 'a', f'href="{href}" data-cursor="Посмотреть" aria-label="{html.escape(plain(w["title"]))}"', href
         if w.get('video'):
-            return 'div', f'data-video="{self.B}{w["video"]}" data-title="{html.escape(w["title"])}" data-cursor="Смотреть видео" role="button" tabindex="0" aria-label="Смотреть видео: {html.escape(w["title"])}"', None
+            return 'div', f'data-video="{self.B}{w["video"]}" data-title="{html.escape(plain(w["title"]))}" data-cursor="Смотреть видео" role="button" tabindex="0" aria-label="Смотреть видео: {html.escape(plain(w["title"]))}"', None
         return 'div', '', None
 
     def tile(self, w):
@@ -300,7 +304,7 @@ class Page:
         inner = (f'\n            <span class="work__media"><img src="{B}{w["img"]}" alt="" width="650" height="500" loading="lazy"></span>'
                  f'\n            <span class="work__title">{w["title"]}</span>\n            <span class="work__meta">{w["meta"]}</span>\n          ')
         if w.get('video') and not w.get('href'):
-            return f'          <li class="reveal"><button class="work" type="button" data-video="{B}{w["video"]}" data-title="{html.escape(w["title"])}" data-cursor="Смотреть видео"{prev}>{inner}</button></li>\n'
+            return f'          <li class="reveal"><button class="work" type="button" data-video="{B}{w["video"]}" data-title="{html.escape(plain(w["title"]))}" data-cursor="Смотреть видео"{prev}>{inner}</button></li>\n'
         return f'          <li class="reveal"><a class="work" href="{B}{w["href"]}" data-cursor="Посмотреть"{prev}>{inner}</a></li>\n'
 
     def big_card(self, w, review=False, anchor=None, meta=True, tile_phone=False):
@@ -310,7 +314,7 @@ class Page:
         tag, attrs, href = self._media_attrs(w)
         if review:  # на странице проекта: ролик открывает обзор экспоната, ссылки на себя не нужно
             w = dict(w, href=None); href = None
-            tag, attrs = 'div', f'data-video="{B}{w["video"]}" data-title="{html.escape(w["title"])} — видеообзор" data-cursor="Смотреть обзор"'
+            tag, attrs = 'div', f'data-video="{B}{w["video"]}" data-title="{html.escape(plain(w["title"]))} — видеообзор" data-cursor="Смотреть обзор"'
         big, big_m = w.get('big') or w.get('preview'), w.get('big_m') or w.get('big') or w.get('preview')
         # tile_phone: на телефоне крупная карточка такая же, как плитка — горизонтальный ролик плитки и маленькая обложка
         poster_m = w.get('img_m') or w.get('big_img') or w['img']
@@ -333,7 +337,7 @@ class Page:
             if tile_phone: kind = f'<a class="card__kind" href="{href}">{w.get("meta") or w["kind"]}</a>'
             act = ''  # карточка и так ведет на страницу работы; «Подробнее» внизу лишнее
         elif w.get('video'):
-            va = f'data-video="{B}{w["video"]}" data-title="{html.escape(w["title"])}"'
+            va = f'data-video="{B}{w["video"]}" data-title="{html.escape(plain(w["title"]))}"'
             kind = f'<p class="card__kind" {va}>{w["kind"]}&nbsp;· {go}&nbsp;<span class="card__arrow">→</span></p>'
             if tile_phone: kind = f'<p class="card__kind" {va}>{w.get("meta") or w["kind"]}</p>'
             act = (f'<button class="card__review reveal" type="button" {va}><i class="card__play" aria-hidden="true">'
