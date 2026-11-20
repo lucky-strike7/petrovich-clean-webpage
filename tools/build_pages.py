@@ -11,6 +11,7 @@ STEPS = [
     ('make_landing.py', '/works/eksponaty/ — посадочная «Интерактивные экспонаты»'),
     ('make_project_khakasia.py', '/works/khakasia/ — проект «Стенд Республики Хакасия»'),
     ('make_stol.py', '/works/khakasia/stol/ — экспонат «Интерактивный стол»'),
+    ('make_case_strana.py', '/works/strana-sveta/ — кейс «Устьянские легенды»'),
     ('make_project_khersones.py', '/works/khersones/ — проект «Зал Черноморского флота»'),
 ]
 env = dict(os.environ, PYTHONIOENCODING='utf-8')

@@ -147,6 +147,7 @@
 Превью: fresh/media/strana-tile.mp4
 Крупное видео: fresh/media/strana-loop.mp4
 Крупное видео, телефон: fresh/media/strana-loop-m.mp4
+Ссылка: works/strana-sveta/
 Обзор: Video/strana-sveta-2025.mp4
 
 ## referus
