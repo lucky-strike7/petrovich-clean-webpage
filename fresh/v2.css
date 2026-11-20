@@ -563,5 +563,5 @@ a.card__media { display: block; }
 /* Кейс: длинная картинка во всю ширину экрана, листается вбок (пальцем, колесом с Shift, перетаскиванием мышью) */
 .case-grid .case-strip { grid-column: 1 / -1; margin: 0 calc(var(--pad) * -1); padding: 0 var(--pad); overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; cursor: grab; overscroll-behavior-x: contain; }
 .case-grid .case-strip.is-drag { cursor: grabbing; }
-.case-strip img { display: block; width: auto; max-width: none; height: clamp(280px, 30vw, 440px); border-radius: var(--radius); user-select: none; }
-@media (max-width: 600px) { .case-strip img { height: 300px; border-radius: 0; } .case-grid .case-strip { padding: 0; } }
+.case-strip img { display: block; width: auto; max-width: none; height: clamp(240px, 24vw, 340px); border-radius: var(--radius); user-select: none; }
+@media (max-width: 600px) { .case-strip img { height: 260px; border-radius: 0; } .case-grid .case-strip { padding: 0; } }
