@@ -569,3 +569,13 @@ a.card__media { display: block; }
   .case-grid .case-full::-webkit-scrollbar { display: none; }
   .case-full img { width: auto; max-width: none; height: 220px; }
 }
+
+/* Кейс: команда — студия и заказчик рядом, в каждой строке должность серым и имя */
+.case-grid .case-team { grid-column: 4 / 13; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; row-gap: 14px; }
+.case-team > .case-label { grid-column: 1 / -1; margin: 0; }
+.case-team__group { margin: 0; font-family: var(--font-text); font-weight: 400; font-size: clamp(16px, 1.2vw, 20px); line-height: 1.45; }
+.case-team__org { margin-bottom: 6px; color: var(--muted); font-size: 16px; }
+.case-team__group dd { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: 16px; margin: 0; padding: 8px 0; border-top: 1px solid var(--line); }
+.case-team__group dd span { color: var(--muted); }
+@media (max-width: 900px) { .case-grid .case-team { grid-column: 1 / -1; } }
+@media (max-width: 600px) { .case-grid .case-team { grid-template-columns: 1fr; row-gap: 28px; } .case-team > .case-label { margin-bottom: -14px; } }
