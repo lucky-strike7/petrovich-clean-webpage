@@ -6,6 +6,7 @@ from v2parts import SITE, Page, DATA, WHAT, WHO, TAG_PROJECTS, NAME, VISIBLE, ty
 os.chdir(SITE)
 home = open('_src/index.html', encoding='utf-8').read()
 PROJECTS = {p['id']: p for p in DATA['projects']}
+TAG_FIRST = {'video': ['rosatom']}
 
 # Тексты. full=True — продающая посадочная со своим текстом, ценами и вопросами, открыта для поиска.
 # Остальные — простые: заголовок, одна фраза, работы; закрыты от поиска (noindex), пока не наполним.
@@ -48,6 +49,10 @@ def build(slug):
 
     # Подпись плитки: год · что это · проект
     entries = [dict(w, meta=f"{w['year']}&nbsp;· {w['kind']}" + (f"&nbsp;· {PROJECTS[w['project']]['short']}" if w.get('project') else '')) for w in items]
+    # Первой на странице тега — самая известная работа направления (на «Видео» — ролик Росатома, а не экспонаты Хакасии)
+    if slug in TAG_FIRST:
+        first = [e for e in entries if e['id'] in TAG_FIRST[slug]]
+        entries = first + [e for e in entries if e['id'] not in TAG_FIRST[slug]]
     # Музеи и выставки: первыми обложки крупных проектов, их экспонаты — внутри проекта, здесь не повторяем
     if slug in TAG_PROJECTS:
         pids = TAG_PROJECTS[slug]
