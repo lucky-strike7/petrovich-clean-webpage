@@ -530,3 +530,13 @@ a.card__media { display: block; }
   .works-mix--tiles > .work-dark { --ink: #111110; --muted: #6f6f6a; --line: #dcdcd6; padding: 0; background: none; color: var(--ink); }
   .works-mix--tiles > .work-dark > .card { padding-inline: var(--pad); }
 }
+
+/* Общий кадр проекта (стенд, зал) под заголовком: как ролик карточки, на всю ширину в полях страницы */
+.project-photo { margin: 0 var(--pad) clamp(110px, 12vw, 200px); }
+.project-photo img { display: block; width: 100%; aspect-ratio: 2 / 1; object-fit: cover; border-radius: var(--radius); background: var(--line); }
+.project-photo__cap { margin-top: 14px; font-family: var(--font-text); font-weight: 400; font-size: 16px; color: var(--muted); }
+@media (max-width: 600px) {
+  .project-photo { margin: 0 0 88px; }
+  .project-photo img { aspect-ratio: 4 / 3; border-radius: 0; }
+  .project-photo__cap { padding-inline: var(--pad); }
+}

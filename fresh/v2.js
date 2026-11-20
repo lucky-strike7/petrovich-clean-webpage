@@ -13,7 +13,8 @@
   let lastY = scrollY, ticking = false, downRun = 0;
   const onScroll = () => {
     ticking = false;
-    if (orb && contact) orb.classList.toggle('is-off', contact.getBoundingClientRect().top < innerHeight * 0.75);
+    // На телефоне кружок появляется после первого экрана: наверху он закрывал строку тегов и переключатель
+    if (orb && contact) orb.classList.toggle('is-off', contact.getBoundingClientRect().top < innerHeight * 0.75 || (phone.matches && scrollY < innerHeight * 0.6));
     const y = scrollY, dy = y - lastY;
     if (Math.abs(dy) < 8) return;
     lastY = y;
@@ -209,6 +210,12 @@
     addEventListener('resize', updSub);
     updSub();
   }
+
+  // Обложки, которые открывают видео (role="button"): с клавиатуры — Enter или пробел, как у кнопки
+  document.addEventListener('keydown', (e) => {
+    const el = e.target.closest?.('[role="button"][data-video]');
+    if (el && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); el.click(); }
+  });
 
   // Работа с клавиатуры: по Tab включаем рамки фокуса, по нажатию мышью или пальцем — выключаем
   addEventListener('keydown', (e) => { if (e.key === 'Tab') root.classList.add('kbd'); });
