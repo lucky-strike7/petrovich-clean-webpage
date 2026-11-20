@@ -24,7 +24,7 @@ for(const file of files.filter(p=>extname(p)==='.html')){
  for(const m of html.matchAll(/\b(?:srcset|imagesrcset)="([^"]*)"/g))for(const part of m[1].split(','))await check(part.trim().split(/\s+/)[0],file);
  for(const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g))JSON.parse(m[1]);
  if(!file.endsWith('/404.html')){
-  if(relative(root,file).startsWith('cases/')){const canonical=html.match(/<link rel="canonical" href="([^"]+)"/);assert(canonical && sitemapUrls.includes(canonical[1]),'Case missing from sitemap: '+file);}
+  if(relative(root,file).replace(/\\/g,'/').startsWith('works/')&&!/<meta name="robots" content="noindex/.test(html)){const canonical=html.match(/<link rel="canonical" href="([^"]+)"/);assert(canonical && sitemapUrls.includes(canonical[1]),'Page missing from sitemap: '+file);}
   checkShareMetadata(html,relative(root,file),message=>console.warn(`::warning::${message}`));
   const image=html.match(/property="og:image" content="([^"]+)"/)[1],url=new URL(image);
   assert.equal(url.origin,'https://petrovichbrothers.ru');await stat(resolve(root,'.'+url.pathname));

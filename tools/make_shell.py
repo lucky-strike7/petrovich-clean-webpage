@@ -1,4 +1,5 @@
-# Новая шапка на страницах старого дизайна: главная и 15 кейсов /cases/<slug>/.
+# Новая шапка на страницах старого дизайна: главная и кейсы. Кейсы живут по адресам /works/<slug>/,
+# их картинки и видео остаются в cases/<slug>/media/ (старые адреса /cases/<slug>/ перенаправляет сервер).
 # Содержание не меняем. Исходники в старом виде лежат в site/_src/ (сервер эту папку не отдает):
 # из них же собираются страницы /works/ (главная — шаблон), поэтому живые страницы можно пересобирать сколько угодно.
 import os, re, sys, glob, shutil
@@ -7,6 +8,10 @@ from v2parts import SITE, Page, V2CSS, V2JS
 
 os.chdir(SITE)
 pages = ['index.html'] + sorted(glob.glob('cases/*/index.html'))
+# Кейсы, у которых уже своя страница в новой структуре (собираются отдельными скриптами)
+OWN_PAGE = {'hbo', 'khakasia'}
+CASES = [os.path.basename(os.path.dirname(f)) for f in sorted(glob.glob('_src/cases/*/index.html'))]
+CASES = [s for s in CASES if s not in OWN_PAGE]
 
 # Первый запуск: сохраняем старые страницы как исходники
 for f in pages:
@@ -37,13 +42,24 @@ def build(f):
         # Кнопка «← Все проекты» на телефоне ведет к «Работам» (у кнопки бывают и другие атрибуты, например data-back)
         t = re.sub(r'(<a class="case-fab case-fab--back" href=")[^"]*("[^>]*>.*?)Все проекты', rf'\g<1>{p.W}\g<2>Все работы', t, count=1, flags=re.S)
         t = re.sub(r'(<a class="badge badge--back" href=")[^"]*(".*?)Все проекты', rf'\g<1>{p.W}\g<2>Все работы', t, count=1, flags=re.S)
+    if home:  # кейсы переехали в «Работы»
+        t = t.replace('href="cases/hbo/"', 'href="works/hbo/"')
+        t = re.sub(r'href="cases/([a-z]+)/"', r'href="works/\1/"', t)
+    else:
+        # Страница лежит в works/<slug>/, а картинки и видео — в cases/<slug>/media/
+        med = f'../../cases/{slug}/media/'
+        t = re.sub(r'\b((?:src|href|poster|data-src|data-poster|data-video)=")media/', lambda m: m.group(1) + med, t)
+        t = re.sub(r'\b(srcset=")([^"]*)"', lambda m: m.group(1) + re.sub(r'(^|,\s*)media/', lambda k: k.group(1) + med, m.group(2)) + '"', t)
+        t = t.replace(f'https://petrovichbrothers.ru/cases/{slug}/"', f'https://petrovichbrothers.ru/works/{slug}/"')  # только адрес страницы, картинки для соцсетей остаются в cases/
     t = p.finish(t)
     if home:
         t = t.replace('<a href="works/" aria-current="page">Работы</a>', '<a href="works/">Работы</a>', 1)
-    open(f, 'w', encoding='utf-8', newline='').write(t)
+    return t
 
-for f in pages:
-    build(f)
+open('index.html', 'w', encoding='utf-8', newline='').write(build('index.html'))
+for slug in CASES:
+    os.makedirs(f'works/{slug}', exist_ok=True)
+    open(f'works/{slug}/index.html', 'w', encoding='utf-8', newline='').write(build(f'cases/{slug}/index.html'))
 
 # 404: своя страница без общих скриптов (адреса от корня через <base href="/">).
 # Шапка как везде; «Контакты» ведут к контактам на главной; меню на телефоне — шторкой.
@@ -63,4 +79,4 @@ def build_404():
     open('404.html', 'w', encoding='utf-8', newline='').write(t)
 
 build_404()
-print('ok', len(pages) + 1)
+print('ok', len(CASES) + 2)

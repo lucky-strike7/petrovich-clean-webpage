@@ -29,6 +29,8 @@ for (const [path, location] of [
   ['/projects/hersones?x=a%2Bb', '/works/khersones/?x=a%2Bb'],
   ['/cases/hersones/', '/works/khersones/'],
   ['/cases/hbo/', '/works/hbo/'],
+  ['/cases/cyberbug/', '/works/cyberbug/'],
+  ['/projects/etalon', '/works/etalon/'],
 ]) {
   const r=await fetch(new URL(path,base),{redirect:'manual'});
   assert.equal(r.status,301,path);assert.equal(r.headers.get('location'),location,path);

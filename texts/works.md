@@ -162,7 +162,7 @@
 Превью: fresh/media/archive/referus-preview.mp4
 Крупное видео: fresh/media/archive/referus-big.mp4
 Крупное видео, телефон: fresh/media/archive/referus-big-m.mp4
-Ссылка: cases/referus/
+Ссылка: works/referus/
 
 ## etalon
 Название: Эталон
@@ -176,7 +176,7 @@
 Превью: fresh/media/archive/etalon-preview.mp4
 Крупное видео: fresh/media/archive/etalon-big.mp4
 Крупное видео, телефон: fresh/media/archive/etalon-big-m.mp4
-Ссылка: cases/etalon/
+Ссылка: works/etalon/
 
 ## yantarny
 Название: Янтарный форум
@@ -190,7 +190,7 @@
 Превью: fresh/media/archive/yantarny-preview.mp4
 Крупное видео: fresh/media/archive/yantarny-big.mp4
 Крупное видео, телефон: fresh/media/archive/yantarny-big-m.mp4
-Ссылка: cases/yantarny/
+Ссылка: works/yantarny/
 
 ## premiarb
 Название: Премия РБ
@@ -206,7 +206,7 @@
 Превью: fresh/media/archive/premiarb-preview.mp4
 Крупное видео: fresh/media/archive/premiarb-big.mp4
 Крупное видео, телефон: fresh/media/archive/premiarb-big-m.mp4
-Ссылка: cases/premiarb/
+Ссылка: works/premiarb/
 
 ## hbo
 Название: Игры Уолл-стрит<br>HBO Max
@@ -234,7 +234,7 @@
 Превью: fresh/media/archive/rosnano-preview.mp4
 Крупное видео: fresh/media/archive/rosnano-big.mp4
 Крупное видео, телефон: fresh/media/archive/rosnano-big-m.mp4
-Ссылка: cases/rosnano/
+Ссылка: works/rosnano/
 
 ## nanolek
 Название: Нанолек
@@ -248,7 +248,7 @@
 Превью: fresh/media/archive/nanolek-preview.mp4
 Крупное видео: fresh/media/archive/nanolek-big.mp4
 Крупное видео, телефон: fresh/media/archive/nanolek-big-m.mp4
-Ссылка: cases/nanolek/
+Ссылка: works/nanolek/
 
 ## zebralog
 Название: Зебра логистикс
@@ -262,7 +262,7 @@
 Превью: fresh/media/archive/zebralog-preview.mp4
 Крупное видео: fresh/media/archive/zebralog-big.mp4
 Крупное видео, телефон: fresh/media/archive/zebralog-big-m.mp4
-Ссылка: cases/zebralog/
+Ссылка: works/zebralog/
 
 ## donstroy
 Название: Донстрой
@@ -276,7 +276,7 @@
 Превью: fresh/media/archive/donstroy-preview.mp4
 Крупное видео: fresh/media/archive/donstroy-big.mp4
 Крупное видео, телефон: fresh/media/archive/donstroy-big-m.mp4
-Ссылка: cases/donstroy/
+Ссылка: works/donstroy/
 
 ## gorodobrazovaniya
 Название: Город образования
@@ -290,7 +290,7 @@
 Превью: fresh/media/archive/gorodobrazovaniya-preview.mp4
 Крупное видео: fresh/media/archive/gorodobrazovaniya-big.mp4
 Крупное видео, телефон: fresh/media/archive/gorodobrazovaniya-big-m.mp4
-Ссылка: cases/gorodobrazovaniya/
+Ссылка: works/gorodobrazovaniya/
 
 ## cyberbug
 Название: CyberBug
@@ -303,7 +303,7 @@
 Превью: fresh/media/archive/cyberbug-preview.mp4
 Крупное видео: fresh/media/archive/cyberbug-big.mp4
 Крупное видео, телефон: fresh/media/archive/cyberbug-big-m.mp4
-Ссылка: cases/cyberbug/
+Ссылка: works/cyberbug/
 
 ## rosatom
 Название: Росатом
@@ -317,7 +317,7 @@
 Превью: fresh/media/archive/rosatom-preview.mp4
 Крупное видео: fresh/media/archive/rosatom-big.mp4
 Крупное видео, телефон: fresh/media/archive/rosatom-big-m.mp4
-Ссылка: cases/rosatom/
+Ссылка: works/rosatom/
 
 ## carrera
 Название: Carrera y Carrera
@@ -330,7 +330,7 @@
 Превью: fresh/media/archive/carrera-preview.mp4
 Крупное видео: fresh/media/archive/carrera-big.mp4
 Крупное видео, телефон: fresh/media/archive/carrera-big-m.mp4
-Ссылка: cases/carrera/
+Ссылка: works/carrera/
 
 ## artmonta
 Название: Артмонта
@@ -344,4 +344,4 @@
 Превью: fresh/media/archive/artmonta-preview.mp4
 Крупное видео: fresh/media/archive/artmonta-big.mp4
 Крупное видео, телефон: fresh/media/archive/artmonta-big-m.mp4
-Ссылка: cases/artmonta/
+Ссылка: works/artmonta/

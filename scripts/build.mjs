@@ -8,17 +8,25 @@ const root=fileURLToPath(new URL('../',import.meta.url)),out=resolve(root,'dist'
 await rm(out,{recursive:true,force:true});await mkdir(out,{recursive:true});
 const entries=['index.html','404.html','robots.txt','sitemap.xml','site.webmanifest','favicon.svg','favicon.ico','favicon-32.png','apple-touch-icon.png','icon-192.png','icon-512.png','fresh','fonts','Video','cases','works','privacy','consent'];
 for(const name of entries)await cp(resolve(root,name),resolve(out,name),{recursive:true});
-const casePages=[];
-for(const entry of await readdir(resolve(out,'cases'),{withFileTypes:true})){
-  if(!entry.isDirectory())continue;
-  // Папка может остаться только с медиа (cases/khakasia: страница стола переехала в works/, картинки нужны ей)
-  const html=await readFile(resolve(out,'cases',entry.name,'index.html'),'utf8').catch(()=>null);
-  if(html===null)continue;
-  const canonical=html.match(/<link rel="canonical" href="([^"]+)"/);
-  if(!canonical)throw Error(`Missing case canonical: ${entry.name}`);
-  casePages.push(canonical[1]);
+// Карта сайта: главная и все страницы «Работ» (теги, проекты, экспонаты, кейсы), кроме закрытых от поиска.
+// Старые /cases/ теперь только папки с картинками — страницы кейсов переехали в /works/.
+const workPages=[];
+async function collect(dir){
+  for(const entry of await readdir(dir,{withFileTypes:true})){
+    if(!entry.isDirectory())continue;
+    const sub=resolve(dir,entry.name),html=await readFile(resolve(sub,'index.html'),'utf8').catch(()=>null);
+    if(html!==null&&!/<meta name="robots" content="noindex/.test(html)){
+      const canonical=html.match(/<link rel="canonical" href="([^"]+)"/);
+      if(!canonical)throw Error(`Missing canonical: ${relative(out,sub)}`);
+      workPages.push(canonical[1]);
+    }
+    await collect(sub);
+  }
 }
-const sitemapUrls=['https://petrovichbrothers.ru/',...casePages.sort()];
+const worksIndex=await readFile(resolve(out,'works','index.html'),'utf8');
+workPages.push(worksIndex.match(/<link rel="canonical" href="([^"]+)"/)[1]);
+await collect(resolve(out,'works'));
+const sitemapUrls=['https://petrovichbrothers.ru/',...[...new Set(workPages)].sort()];
 await writeFile(resolve(out,'sitemap.xml'),'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+sitemapUrls.map(url=>`  <url><loc>${url}</loc></url>`).join('\n')+'\n</urlset>\n');
 async function list(dir){const result=[];for(const item of await readdir(dir,{withFileTypes:true})){const p=resolve(dir,item.name);if(item.isSymbolicLink())throw Error('Symlink not allowed');if(item.isDirectory())result.push(...await list(p));else result.push(p);}return result;}
 const files=await list(out),hashes=new Map(),digest=bytes=>createHash('sha256').update(bytes).digest('hex').slice(0,12);
