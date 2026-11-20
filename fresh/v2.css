@@ -621,6 +621,8 @@ a.card__media { display: block; }
   .case-buttons { flex-direction: column; gap: 14px; }
 }
 
-/* Кейс: мелкая ссылка-подтверждение под фактом в «О проекте» (победители конкурса); при наведении только подчеркивание */
-.case-aside__src { display: block; width: fit-content; margin-top: 4px; font-size: 14px; color: var(--muted); text-decoration: none; text-underline-offset: 3px; }
-.case-aside__src:hover { color: var(--muted); text-decoration: underline; }
+/* Кейс: ссылка-подтверждение в строке «О проекте» через точку (победители конкурса): черный текст, синяя стрелка, при наведении только подчеркивание */
+.case-aside__dot { font-style: normal; color: var(--muted); }
+.case-aside__src { color: inherit; white-space: nowrap; text-decoration: none; text-underline-offset: 3px; }
+.case-aside__src:hover { color: inherit; text-decoration: underline; }
+.case-aside__src i { font-style: normal; color: var(--accent); }
