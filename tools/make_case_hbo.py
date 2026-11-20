@@ -42,6 +42,16 @@ HERO = f'''    <section class="case-hero">
     </section>
 '''
 
+WATCH_LINKS = [('https://www.kinopoisk.ru/series/4893538/', 'Кинопоиск'),
+               ('https://www.youtube.com/watch?v=ViEKPjkjEWI', 'Трейлер на&nbsp;YouTube'),
+               ('https://www.imdb.com/title/tt18332840/', 'Gaming Wall Street на&nbsp;IMDb')]
+WATCH = '<i class="case-aside__dot"> · </i>'.join(
+    f'<a class="case-aside__src" href="{u}" target="_blank" rel="noopener">{t}&nbsp;<i>↗</i></a>' for u, t in WATCH_LINKS)
+SIDE = ('      <figure class="case-side reveal">\n'
+        '        <img src="media/call.webp" alt="Общий созвон команды сериала: 30 человек в семи часовых поясах" width="960" height="600" loading="lazy">\n'
+        '        <figcaption class="case-review__cap">Общий созвон команды сериала</figcaption>\n'
+        '      </figure>\n')
+
 ASIDE = f'''      <aside class="case-aside" style="--rows: 9">
         <div class="case-aside__in">
           <h2 class="case-label case-aside__label">О&nbsp;проекте</h2>
@@ -55,6 +65,8 @@ ASIDE = f'''      <aside class="case-aside" style="--rows: 9">
             <li>Рендер в&nbsp;4K</li>
           </ul>
           {btn(INTRO, 'Смотреть заставку', 'card__review case-aside__review')}
+          <h2 class="case-label case-aside__label case-aside__watch-label">Смотреть сериал</h2>
+          <p class="case-aside__meta case-aside__watch">{WATCH}</p>
         </div>
       </aside>
 '''
@@ -65,7 +77,7 @@ BRIEF = f'''      <div class="case-main case-brief reveal">
         <p>{typo("3D-заставка в стиле фильма «Трон»: светящиеся линии на темном фоне. В четырех сценах графика наложена на настоящую съемку Нью-Йорка.")}</p>
       </div>
 
-      <div class="case-review case-reviews reveal">
+      <div class="case-review case-reviews case-reviews--short reveal">
         <figure class="case-reviews__item">
           <button class="case-review__btn" type="button" data-video="{B}{INTRO[0]}" data-title="{html.escape(INTRO[1])}" aria-label="Смотреть заставку, {video_len(INTRO[0])}">
             <img src="media/cover-intro.webp" alt="" width="1280" height="720" loading="lazy">
@@ -84,6 +96,7 @@ SOURCE = ('      <p class="case-main case-p case-source reveal">Подробно
 
 GRID = ('    <div class="case-grid">\n' + ASIDE + '\n' + BRIEF + '\n'
   + lead('Команда в семи часовых поясах')
+  + SIDE
   + para('Над сериалом работали 30 человек в разных странах. Общий созвон несколько раз переносили: кто-то подключался в пять утра, кто-то поздно вечером. На старте была только раскадровка и просьба сделать «как в «Троне»».')
   + fig('gears.webp', 'Кадр заставки: светящийся завод с шестеренками')
   + fig('storyboard.webp', 'Раскадровка заставки: у каждой сцены описание и два-три эскиза')

@@ -626,3 +626,13 @@ a.card__media { display: block; }
 .case-aside__src { color: inherit; white-space: nowrap; text-decoration: none; text-underline-offset: 3px; }
 .case-aside__src:hover { color: inherit; text-decoration: underline; }
 .case-aside__src i { font-style: normal; color: var(--accent); }
+
+/* Кейс: ссылки «Смотреть сериал» в «О проекте» (через точку, как подтверждение третьего места) */
+.case-aside__watch-label { margin-top: 36px; }
+.case-aside .case-aside__watch { display: block; } /* ссылки в строку через точку, а не столбиком, как факты */
+@media (max-width: 600px) { .case-aside__watch-label { margin-top: 32px; } }
+/* Кейс: маленькая картинка справа от раздела (созвон команды); на планшете и телефоне — под заголовком, уже текста */
+.case-grid .case-side { grid-column: 10 / 13; grid-row: span 2; align-self: start; margin: 0; }
+.case-side img { display: block; width: 100%; height: auto; border-radius: var(--radius); }
+@media (min-width: 901px) { .case-grid .case-reviews--short { grid-row: 1; } } /* обложка короче задачи: рядом с ней ничего не ставим */
+@media (max-width: 900px) { .case-grid .case-side { grid-column: 1 / -1; grid-row: auto; max-width: 420px; } }
