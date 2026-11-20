@@ -211,6 +211,15 @@
     updSub();
   }
 
+  // Длинная картинка в кейсе (инструкция): мышью тянем вбок, как пальцем на телефоне
+  document.querySelectorAll('.case-strip').forEach((s) => {
+    let x0 = null, left = 0;
+    s.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') return; x0 = e.clientX; left = s.scrollLeft; s.classList.add('is-drag'); s.setPointerCapture(e.pointerId); });
+    s.addEventListener('pointermove', (e) => { if (x0 !== null) s.scrollLeft = left - (e.clientX - x0); });
+    const stop = () => { x0 = null; s.classList.remove('is-drag'); };
+    s.addEventListener('pointerup', stop); s.addEventListener('pointercancel', stop);
+  });
+
   // Обложки, которые открывают видео (role="button"): с клавиатуры — Enter или пробел, как у кнопки
   document.addEventListener('keydown', (e) => {
     const el = e.target.closest?.('[role="button"][data-video]');
