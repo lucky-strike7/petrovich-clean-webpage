@@ -145,9 +145,12 @@
     Обзор на телефоне играет прямо на месте обложки, с обычными кнопками плеера, —
     без черного окна поверх страницы: на телефоне оно не крупнее самой обложки.
     Кнопку-обложку заменяем копией (так снимается обработчик окна из fresh.js).
+    Маленькие обложки в паре (интервью под «Как делали») открываются в обычном окне на весь экран:
+    на месте они бы раздулись до ширины экрана и наехали на подписи.
   */
   if (matchMedia('(max-width: 600px)').matches) {
     document.querySelectorAll('.case-review__btn').forEach((btn) => {
+      if (btn.closest('.case-reviews__item:not(:first-child)')) return;
       const copy = btn.cloneNode(true);
       btn.replaceWith(copy);
       copy.addEventListener('click', () => {
