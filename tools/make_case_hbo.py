@@ -27,10 +27,13 @@ def fig(name, alt):
     w, h = size(f'works/hbo/media/{name}')
     return (f'      <figure class="case-wide reveal">\n        <img src="media/{name}" alt="{alt}" width="{w}" height="{h}" loading="lazy">\n      </figure>\n')
 def quote(photo, who, role, text):
-    return (f'      <figure class="case-main case-quote reveal">\n'
-            f'        <img class="case-quote__photo" src="media/{photo}" alt="{who}" width="240" height="240" loading="lazy">\n'
-            f'        <blockquote class="case-quote__text">{typo(text)}</blockquote>\n'
-            f'        <figcaption class="case-quote__who">{who}<span>{role}</span></figcaption>\n'
+    """Отзыв клиента целиком — серой плашкой мелким кеглем (как комментарий Арсения у стола Хакасии); кавычки ставит CSS."""
+    return (f'      <figure class="case-main case-dev reveal">\n'
+            f'        <blockquote class="case-dev__quote">{typo(text)}</blockquote>\n'
+            f'        <figcaption class="case-dev__author">\n'
+            f'          <span class="case-dev__photo"><img src="media/{photo}" alt="" width="240" height="240" loading="lazy"></span>\n'
+            f'          <span><b>{who}</b><span>{role}</span></span>\n'
+            f'        </figcaption>\n'
             f'      </figure>\n')
 
 HERO = f'''    <section class="case-hero">
@@ -88,9 +91,9 @@ BRIEF = f'''      <div class="case-main case-brief reveal">
       </div>
 '''
 TOBIAS = quote('tobias.webp', 'Тобиас Демл', 'Режиссер сериала',
-               '«Артем, Арсений и их команда сделали вступление к нашему документальному сериалу: сложную смесь компьютерной графики. Они выполнили проект с высочайшим профессионализмом, разница в часовых поясах не помешала работе»')
+               'Артем, Арсений и их команда сделали вступление к нашему документальному сериалу: сложную смесь компьютерной графики. Они выполнили проект с высочайшим профессионализмом, разница в часовых поясах не помешала работе')
 TESSA = quote('tessa.webp', 'Тесса Буфорд', 'Продюсер сериала',
-              '«Работа была выполнена на высоком уровне за три месяца. Коммуникация была отличной, несмотря на то что процесс был очень напряженным»')
+              'Работа была выполнена на высоком уровне за три месяца. Коммуникация была отличной, несмотря на то что процесс был очень напряженным')
 SOURCE = ('      <p class="case-main case-p case-source reveal">Подробно о&nbsp;работе мы&nbsp;рассказали в&nbsp;'
           f'<a class="text-link" href="{NFS}" target="_blank" rel="noopener">статье на&nbsp;No&nbsp;Film School&nbsp;↗</a></p>\n')
 
