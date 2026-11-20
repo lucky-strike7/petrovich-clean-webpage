@@ -533,10 +533,16 @@ a.card__media { display: block; }
 
 /* Общий кадр проекта (стенд, зал) под заголовком: как ролик карточки, на всю ширину в полях страницы */
 .project-photo { margin: 0 var(--pad) clamp(110px, 12vw, 200px); }
-.project-photo img { display: block; width: 100%; aspect-ratio: 2 / 1; object-fit: cover; border-radius: var(--radius); background: var(--line); }
+.project-photo img { display: block; width: 100%; height: auto; border-radius: var(--radius); background: var(--line); } /* картинка целиком, в своих пропорциях */
 .project-photo__cap { margin-top: 14px; font-family: var(--font-text); font-weight: 400; font-size: 16px; color: var(--muted); }
 @media (max-width: 600px) {
   .project-photo { margin: 0 0 88px; }
-  .project-photo img { aspect-ratio: 4 / 3; border-radius: 0; }
+  .project-photo img { border-radius: 0; }
   .project-photo__cap { padding-inline: var(--pad); }
+}
+
+/* «Работы», компьютер: «Что делаем» и «Для кого» — одна лента тегов, без переноса между группами */
+@media (min-width: 601px) {
+  .tagbar--works { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tagbar--works .tagbar__list { display: contents; }
 }

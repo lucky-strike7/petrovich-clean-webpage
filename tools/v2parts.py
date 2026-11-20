@@ -5,7 +5,7 @@ NL = chr(10)
 
 # Корень сайта — папка над tools/ (сборщики лежат в репозитории рядом со страницами)
 SITE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V2CSS = 'v2.css?v=89'
+V2CSS = 'v2.css?v=91'
 V2JS = 'v2.js?v=27'
 # Страницы «Услуги», «Цены», «О студии» еще не сделаны: пока False, их нет в меню и на них нет ссылок.
 # Когда страницы появятся — True и пересобрать все.
@@ -102,9 +102,12 @@ class Page:
         положить картинку по адресу path (от корня сайта, ширина 2400 px, webp) и пересобрать."""
         if not os.path.exists(os.path.join(SITE, path)): return ''
         cap = f'\n        <figcaption class="project-photo__cap">{caption}</figcaption>' if caption else ''
+        import subprocess  # размеры картинки — чтобы страница не прыгала, пока она грузится
+        wh = subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'stream=width,height', '-of', 'csv=p=0', os.path.join(SITE, path)], capture_output=True, text=True).stdout.strip().split(',')
+        size = f' width="{wh[0]}" height="{wh[1]}"' if len(wh) == 2 else ''
         return f'''
     <figure class="project-photo reveal">
-        <img src="{self.B}{path}" alt="{html.escape(alt)}" loading="lazy">{cap}
+        <img src="{self.B}{path}" alt="{html.escape(alt)}"{size} loading="lazy">{cap}
     </figure>
 '''
 
