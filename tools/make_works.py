@@ -1,7 +1,7 @@
 # Страница «Работы» (/works/): строка тегов и все работы карточками. Собирается из works.json.
 import os, re, sys, html
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from v2parts import SITE, Page, DATA, WHAT, WHO, COUNT, DAT
+from v2parts import SITE, Page, DATA, BIG, SMALL, COUNT
 
 os.chdir(SITE)
 home = open('_src/index.html', encoding='utf-8').read()
@@ -41,11 +41,11 @@ MAIN = f'''<main>
     </section>
 
     <nav class="tagbar tagbar--works" aria-label="Работы по направлениям">
-      <span class="tagbar__label">Что делаем</span>
-      <ul class="tagbar__list"><li><a href="./" aria-current="page">Все</a></li>{chips(WHAT, True)}</ul>
-      <button class="tagbar__more" type="button" aria-expanded="false" aria-controls="tagbar-who">Для кого <i aria-hidden="true"></i></button>
-      <span class="tagbar__label tagbar__label--who">Для кого</span>
-      <ul class="tagbar__list tagbar__list--who" id="tagbar-who">{chips([(k, DAT[k]) for k, _ in WHO], True)}</ul>
+      <span class="tagbar__label">Направления</span>
+      <ul class="tagbar__list"><li><a href="./" aria-current="page">Все</a></li>{chips(BIG, True)}</ul>
+      <button class="tagbar__more" type="button" aria-expanded="false" aria-controls="tagbar-who">Еще <i aria-hidden="true"></i></button>
+      <span class="tagbar__label tagbar__label--who">Еще</span>
+      <ul class="tagbar__list tagbar__list--who" id="tagbar-who">{chips(SMALL, True)}</ul>
     </nav>
 
 {p.works_mix(entries)}'''

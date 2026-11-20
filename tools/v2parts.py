@@ -18,6 +18,12 @@ WHO = [tuple(x[:2]) for x in DATA['tags']['who']]
 # «Кому» — дательный падеж для мест, где нет подписи «Для кого» (строка тегов на «Работах»)
 DAT = {x[0]: x[2] for x in DATA['tags']['who']}
 NAME = dict(WHAT + WHO)
+# Как теги показаны в меню и на «Работах»: крупные — главные направления (экспонаты, музеи, выставки…), мелкие — остальное.
+# Это только раскладка: какие работы попадают на страницу тега, по-прежнему решают поля «Что делаем» и «Для кого».
+BIG = [(k, NAME[k]) for k in ('eksponaty', 'muzei', 'vystavki', 'mapping', 'scena', 'dizayn')]
+SMALL = [(k, NAME[k]) for k in ('sayty', 'video', 'zastr', 'regiony', 'meropr', 'developery', 'prom', 'kino')]
+# Теги, где вместо отдельных экспонатов крупных проектов стоят обложки самих проектов (тег → проект → экспонат)
+TAG_PROJECTS = {'muzei': ['khersones', 'khakasia'], 'vystavki': ['khakasia', 'khersones']}
 
 # Название карточки без разметки (для data-title и aria): перенос строки — запятая
 def plain(t):
@@ -67,7 +73,9 @@ PEEK = {'eksponaty': ('fresh/media/archive/referus.jpg', 'fresh/media/archive/re
         'mapping': ('fresh/media/strana-sveta.webp', 'fresh/media/strana-sveta.mp4'),
         'scena': ('fresh/media/archive/premiarb.jpg', 'fresh/media/archive/premiarb-preview.mp4'),
         'sayty': ('fresh/media/archive/zebralog.jpg', 'fresh/media/archive/zebralog-preview.mp4'),
-        'dizayn': ('fresh/media/archive/cyberbug.jpg', 'fresh/media/archive/cyberbug-preview.mp4')}
+        'dizayn': ('fresh/media/archive/cyberbug.jpg', 'fresh/media/archive/cyberbug-preview.mp4'),
+        'muzei': ('fresh/media/shturval-peek.webp', 'fresh/media/shturval-peek.mp4'),
+        'vystavki': ('fresh/media/khakasy-peek.webp', 'fresh/media/khakasy-peek.mp4')}
 
 FAQ = [
   ('Сколько стоит экспонат?', 'Ориентир такой: программа для тачскрина от&nbsp;500&nbsp;тыс.&nbsp;₽, интерактивный экспонат с&nbsp;датчиками от&nbsp;900&nbsp;тыс.&nbsp;₽, видеоролик от&nbsp;700&nbsp;тыс.&nbsp;₽. Точная цена зависит от&nbsp;задачи: расскажите, что задумали, и&nbsp;мы посчитаем.'),
@@ -165,8 +173,8 @@ class Page:
       <div class="top__dd">
         <a class="is-on" href="{W}">Работы <i aria-hidden="true"></i></a>
         <div class="top__menu mega">
-          <div class="mega__what"><ul>{self.mega(WHAT)}</ul></div>
-          <div class="mega__who"><h4>Для кого</h4><ul>{self.mega(WHO, count=False)}</ul>
+          <div class="mega__what"><ul>{self.mega(BIG)}</ul></div>
+          <div class="mega__who"><h4>Еще</h4><ul>{self.mega(SMALL, count=False)}</ul>
             <a class="mega__all" href="{W}"><span>Все работы</span> →</a></div>
         </div>
       </div>
@@ -194,8 +202,8 @@ class Page:
       <div class="lnav__dd">
         <button class="lnav__btn" type="button" aria-expanded="false" aria-controls="tsheet" data-phone-only>{NAME.get(self.cur, '')} <i aria-hidden="true"></i></button>
         <div class="lnav__menu">
-          <div><h4>Что делаем</h4><ul>{self.links(WHAT)}</ul></div>
-          <div><h4>Для кого</h4><ul>{self.links(WHO)}</ul></div>
+          <div><h4>Направления</h4><ul>{self.links(BIG)}</ul></div>
+          <div><h4>Еще</h4><ul>{self.links(SMALL)}</ul></div>
         </div>
       </div>'''
 
@@ -238,10 +246,9 @@ class Page:
     def tsheet(self):
         """Шторка со всеми тегами — из переключателя на телефоне."""
         tags = lambda tt: [(self.tag_href(k), n, k == self.cur) for k, n in tt]
-        # Без подписей «Что делаем» и «Для кого»: группы разделены отступом, «для кого» — в дательном падеже
-        who = [(self.tag_href(k), DAT[k], k == self.cur) for k, _ in WHO]
+        # Без подписей: крупные направления и остальное разделены отступом
         return self.sheet('tsheet', 'Работы по направлениям', f'<a class="tsheet__all" href="{self.W}">Все работы</a>',
-                          [('', tags(WHAT)), ('', who)])
+                          [('', tags(BIG)), ('', tags(SMALL))])
 
     def landing_nav(self):
         """Переключатель наверху страницы тега. Виден тем, кто пришел с нашего сайта."""

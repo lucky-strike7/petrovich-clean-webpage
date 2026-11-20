@@ -1,7 +1,7 @@
 # Страницы тегов (/works/<тег>/) из works.json. «Интерактивные экспонаты» собирается отдельно (make_landing.py).
 import os, re, sys, html
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from v2parts import SITE, Page, DATA, WHAT, WHO, NAME, VISIBLE, typo
+from v2parts import SITE, Page, DATA, BIG, SMALL, TAG_PROJECTS, NAME, VISIBLE, typo
 
 os.chdir(SITE)
 home = open('_src/index.html', encoding='utf-8').read()
@@ -40,7 +40,7 @@ def build(slug):
     tx = TEXT[slug]
     p = Page(B='../../', W='../', cur=slug, cta='museum' if slug == 'muzei' else 'media' if slug in MEDIA else None)
     B, W = p.B, p.W
-    group_what = slug in dict(WHAT)
+    group_big = slug in dict(BIG)
     items = [w for w in VISIBLE if slug in w['what'] + w['who']]
     # Сначала экспонаты крупных проектов (по порядку проектов), потом отдельные работы — новые выше
     order = {pid: k for k, pid in enumerate(PROJECTS)}
@@ -48,6 +48,11 @@ def build(slug):
 
     # Подпись плитки: год · что это · проект
     entries = [dict(w, meta=f"{w['year']}&nbsp;· {w['kind']}" + (f"&nbsp;· {PROJECTS[w['project']]['short']}" if w.get('project') else '')) for w in items]
+    # Музеи и выставки: первыми обложки крупных проектов, их экспонаты — внутри проекта, здесь не повторяем
+    if slug in TAG_PROJECTS:
+        pids = TAG_PROJECTS[slug]
+        entries = ([dict(PROJECTS[pid], kind=PROJECTS[pid]['short'], desc=PROJECTS[pid]['meta'], meta=PROJECTS[pid]['where']) for pid in pids]
+                   + [e for e in entries if e.get('project') not in pids])
 
     n = len(items)
     plate = ''
@@ -59,7 +64,7 @@ def build(slug):
         m = re.search(r'    <section class="sect prices" id="prices">.*?</ul>\n', home, flags=re.S).group(0)
         prices = m + p.prices_link() + '      </div>\n    </section>\n'
     faq = p.faq() if tx.get('full') and slug not in ('mapping', 'video', 'kino') else ''
-    siblings = [k for k, _ in (WHAT if group_what else WHO) if k != slug] + [k for k, _ in (WHO if group_what else WHAT)][:3]
+    siblings = [k for k, _ in (BIG if group_big else SMALL) if k != slug] + [k for k, _ in (SMALL if group_big else BIG)][:3]
 
     main = f'''<main>
 {p.landing_nav()}
@@ -93,5 +98,5 @@ def build(slug):
     open(f'works/{slug}/index.html', 'w', encoding='utf-8', newline='').write(t)
     return n
 
-for slug in [k for k, _ in WHAT + WHO if k != 'eksponaty']:
+for slug in [k for k, _ in BIG + SMALL if k != 'eksponaty']:
     print(slug, build(slug), 'полная' if TEXT[slug].get('full') else 'простая')
