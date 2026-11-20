@@ -68,11 +68,11 @@ BRIEF = f'''
       <ul class="sect__body seealso__list project-brief__done reveal">{''.join(f'<li>{typo(x)}</li>' for x in DONE_ITEMS)}</ul>
     </section>
 '''
-# Стенд вокруг стола: три кадра из презентации после первого экспоната (один крупно, два рядом)
+# Стенд вокруг стола: три кадра из презентации после первого экспоната, маленькими в ряд
 HALL = [('khakasia-stand-05.webp', 'Стена с менгирами и экранами под степной панорамой'),
         ('khakasia-stand-04.webp', 'Менгир и карта Хакасии у стены с наскальными рисунками'),
         ('khakasia-stand-06.webp', 'Стенд сверху: два купола, менгиры и полукруглая стена')]
-GALLERY = ('    <div class="project-gallery reveal">\n'
+GALLERY = ('    <div class="project-gallery project-gallery--small reveal">\n'
            + ''.join(f'      <img src="fresh/media/{f}" alt="{a}" width="1600" height="1200" loading="lazy">\n' for f, a in HALL)
            + '    </div>\n')
 

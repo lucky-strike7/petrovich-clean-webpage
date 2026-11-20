@@ -655,3 +655,7 @@ a.card__media { display: block; }
   .projects > .project-gallery { margin: 88px calc(var(--pad) * -1) 0; }
   .projects > .project-gallery + .card { padding-top: 88px; }
 }
+/* Кадры стенда маленькими: три в ряд и на компьютере, и на телефоне */
+.project-gallery--small { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.project-gallery--small img:first-child { grid-column: auto; }
+@media (max-width: 600px) { .project-gallery.project-gallery--small { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-inline: 0; } .project-gallery--small img { border-radius: 6px; } }
