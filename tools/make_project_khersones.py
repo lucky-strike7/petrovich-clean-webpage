@@ -12,7 +12,7 @@ PR = next(x for x in DATA['projects'] if x['id'] == 'khersones')
 EXH = [w for w in DATA['items'] if w.get('project') == 'khersones' and not w.get('hidden')]
 ANCHOR = lambda w: w['href'].split('#', 1)[1]
 
-# Вставка после второго экспоната: в музее экспонаты работают годами, обновляем их удаленно
+# Вставка в конце экспонатов: в музее экспонаты работают годами, обновляем их удаленно
 PLATE = p.plate('Из&nbsp;опыта на&nbsp;площадках',
                 'В&nbsp;видео разбираем типичные ошибки мультимедиа-экспозиций. Например, к&nbsp;каждому экспонату нужен проводной интернет: с&nbsp;удаленным доступом обновить его можно за&nbsp;минуту, а&nbsp;без провода на&nbsp;это уходят дни',
                 'Video/errors/oshibka-05.mp4', 'fresh/media/oshibka-05.webp',
@@ -29,7 +29,6 @@ CTX = f'<button class="top__ctx" type="button" data-ctx-for=".pnav" aria-control
 
 # Правило: карточка на странице своего проекта не повторяет «где и когда» — это сказано вверху один раз
 cards = [p.big_card(w, review=True, anchor=ANCHOR(w), meta=False) for w in EXH]
-cards.insert(2, PLATE)
 # Зал вокруг штурвала: три кадра из ТЗ музея после первого экспоната (один крупно, два рядом)
 HALL = [('khersones-hall-02.webp', 'Штурвал на палубе корабля в зале'),
         ('khersones-hall-04.webp', 'Нос корабля и стена с чертежами и экраном'),
@@ -38,6 +37,7 @@ GALLERY = ('    <div class="project-gallery reveal">\n'
            + ''.join(f'      <img src="fresh/media/{f}" alt="{a}" width="2048" height="1152" loading="lazy">\n' for f, a in HALL)
            + '    </div>\n')
 cards.insert(1, GALLERY)
+cards.append(PLATE)  # «Из опыта на площадках» — после всех экспонатов, чтобы не разбивать их ряд
 
 # Сразу под общим кадром зала: задача, решение и «Что сделали» (строкой через точку). Монтаж и поддержка в этом списке всегда.
 DONE_ITEMS = ['Концепция экспонатов', 'Дизайн интерфейсов', '3D-модели кораблей', 'Видео', 'Программирование',
