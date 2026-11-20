@@ -673,3 +673,16 @@ a.card__media { display: block; }
 @media (min-width: 1100px) {
   .mega__who .mega__small { display: grid; grid-template-columns: auto auto; grid-template-rows: repeat(3, auto); grid-auto-flow: column; column-gap: 40px; align-items: start; justify-content: start; }
 }
+/* «Все работы» в меню — мелкой ссылкой в строке подписи «Для кого», справа */
+.mega__who h4 { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; }
+.top--v2 .top__menu .mega__all { margin: 0; padding: 0; font-family: var(--font-text); font-weight: 400; font-size: 15px; letter-spacing: 0; color: var(--ink); }
+/* Телефон: теги в бургер-меню и в шторке тегов — две группы, крупные и мелкие, как на компьютере */
+.mtags { margin: 18px 0 6px; padding-top: 6px; border-top: 1px solid var(--line); }
+.mtags h4 { margin: 18px 0 6px; font-family: var(--font-text); font-weight: 400; font-size: 14px; color: var(--muted); }
+.mtags ul { margin: 0; padding: 0; list-style: none; }
+.mtags__big a { display: block; padding: 7px 0; font-size: 24px; line-height: 1.15; letter-spacing: -.015em; }
+.mtags__small { display: flex; flex-wrap: wrap; gap: 0 18px; margin-top: 4px !important; }
+.mtags__small a { display: block; padding: 7px 0; font-family: var(--font-text); font-weight: 400; font-size: 16px; }
+.mtags a[aria-current] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .16em; }
+.msheet__main--after { margin-top: 10px; }
+.msheet__main--after a { font-size: 30px; }

@@ -5,7 +5,7 @@ NL = chr(10)
 
 # Корень сайта — папка над tools/ (сборщики лежат в репозитории рядом со страницами)
 SITE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V2CSS = 'v2.css?v=114'
+V2CSS = 'v2.css?v=115'
 V2JS = 'v2.js?v=29'
 # Страницы «Услуги», «Цены», «О студии» еще не сделаны: пока False, их нет в меню и на них нет ссылок.
 # Когда страницы появятся — True и пересобрать все.
@@ -177,8 +177,7 @@ class Page:
         <a class="is-on" href="{W}">Работы <i aria-hidden="true"></i></a>
         <div class="top__menu mega">
           <div class="mega__what"><h4>Что делаем</h4><ul class="mega__big">{self.mega(WHAT_BIG)}</ul><ul class="mega__small">{self.mega(WHAT_SMALL, count=False)}</ul></div>
-          <div class="mega__who"><h4>Для кого</h4><ul class="mega__big">{self.mega(WHO_BIG)}</ul><ul class="mega__small">{self.mega(WHO_SMALL, count=False)}</ul>
-            <a class="mega__all" href="{W}"><span>Все работы</span> →</a></div>
+          <div class="mega__who"><h4>Для кого <a class="mega__all" href="{W}"><span>Все работы</span>&nbsp;→</a></h4><ul class="mega__big">{self.mega(WHO_BIG)}</ul><ul class="mega__small">{self.mega(WHO_SMALL, count=False)}</ul></div>
         </div>
       </div>
 {self.more_links()}      <a href="#contact" data-panel>Контакты</a>
@@ -193,11 +192,24 @@ class Page:
     <span class="msheet__grip" aria-hidden="true"></span>
     <button class="msheet__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
     <div class="msheet__main">
-      <a href="{W}" aria-current="page">Работы</a>{self.more_links(sheet=True)}<a href="#contact">Контакты</a>
+      <a href="{W}" aria-current="page">Работы</a>
+    </div>
+{self.tag_groups()}
+    <div class="msheet__main msheet__main--after">{self.more_links(sheet=True)}<a href="#contact">Контакты</a>
     </div>
   </div>
   <div class="msheet__shade"></div>
 '''
+
+    def tag_groups(self, dative=False):
+        """Телефон: теги двумя группами, как в меню на компьютере — «Что делаем» и «Для кого», в каждой крупные и мелкие."""
+        def ul(tags, cls, who=False):
+            lis = ''.join(f'<li><a href="{self.tag_href(k)}"{self._cur(k)}>{DAT[k] if (who and dative) else n}</a></li>' for k, n in tags)
+            return f'<ul class="mtags__{cls}">{lis}</ul>'
+        return (f'    <div class="mtags">\n'
+                f'      <h4>Что делаем</h4>{ul(WHAT_BIG, "big")}{ul(WHAT_SMALL, "small")}\n'
+                f'      <h4>Для кого</h4>{ul(WHO_BIG, "big", True)}{ul(WHO_SMALL, "small", True)}\n'
+                f'    </div>')
 
     def switcher(self):
         """«Работы → тег ▾» со списком всех тегов."""
@@ -251,8 +263,15 @@ class Page:
         tags = lambda tt: [(self.tag_href(k), n, k == self.cur) for k, n in tt]
         # Без подписей «Что делаем» и «Для кого»: группы разделены отступом, «для кого» — в дательном падеже
         who = [(self.tag_href(k), DAT[k], k == self.cur) for k, _ in WHO]
-        return self.sheet('tsheet', 'Работы по направлениям', f'<a class="tsheet__all" href="{self.W}">Все работы</a>',
-                          [('', tags(WHAT)), ('', who)])
+        return f'''
+  <div class="msheet tsheet" id="tsheet" role="dialog" aria-label="Работы по направлениям">
+    <span class="msheet__grip" aria-hidden="true"></span>
+    <button class="msheet__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
+    <a class="tsheet__all" href="{self.W}">Все работы</a>
+{self.tag_groups()}
+  </div>
+  <div class="msheet__shade"></div>
+'''
 
     def landing_nav(self):
         """Переключатель наверху страницы тега. Виден тем, кто пришел с нашего сайта."""
