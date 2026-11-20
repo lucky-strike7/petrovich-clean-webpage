@@ -648,3 +648,10 @@ a.card__media { display: block; }
 .project-gallery img { display: block; width: 100%; height: auto; border-radius: var(--radius); background: var(--line); }
 .project-gallery img:first-child { grid-column: 1 / -1; }
 @media (max-width: 600px) { .project-gallery { grid-template-columns: 1fr; gap: 8px; margin-inline: 0; } .project-gallery img { border-radius: 0; } }
+/* Кадры стенда в разделе экспонатов (страница Хакасии): тот же воздух, что между карточками */
+.projects > .project-gallery { margin: clamp(140px, 26svh, 300px) 0 0; }
+.projects > .project-gallery + .card { padding-top: clamp(140px, 26svh, 300px); }
+@media (max-width: 600px) {
+  .projects > .project-gallery { margin: 88px calc(var(--pad) * -1) 0; }
+  .projects > .project-gallery + .card { padding-top: 88px; }
+}
