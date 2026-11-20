@@ -636,3 +636,15 @@ a.card__media { display: block; }
 .case-side img { display: block; width: 100%; height: auto; border-radius: var(--radius); }
 @media (min-width: 901px) { .case-grid .case-reviews--short { grid-row: 1; } } /* обложка короче задачи: рядом с ней ничего не ставим */
 @media (max-width: 900px) { .case-grid .case-side { grid-column: 1 / -1; grid-row: auto; max-width: 420px; } }
+
+/* Страница проекта: задача, решение и «Что сделали» сразу под общим кадром — подпись слева, текст справа, как «Смотрите также» */
+.project-brief { row-gap: 40px; }
+.project-brief .sect__label { padding-top: .2em; }
+.project-brief__text { max-width: 34em; font-family: var(--font-text); font-weight: 400; font-size: clamp(18px, 1.4vw, 22px); line-height: 1.45; }
+.project-brief__done { font-size: clamp(18px, 1.4vw, 22px); }
+@media (max-width: 900px) { .project-brief { row-gap: 0; } .project-brief .sect__body + .sect__label { margin-top: 36px; } }
+/* Страница проекта: кадры зала между экспонатами — один во всю ширину, два рядом; на телефоне столбиком */
+.project-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-inline: var(--pad); }
+.project-gallery img { display: block; width: 100%; height: auto; border-radius: var(--radius); background: var(--line); }
+.project-gallery img:first-child { grid-column: 1 / -1; }
+@media (max-width: 600px) { .project-gallery { grid-template-columns: 1fr; gap: 8px; margin-inline: 0; } .project-gallery img { border-radius: 0; } }

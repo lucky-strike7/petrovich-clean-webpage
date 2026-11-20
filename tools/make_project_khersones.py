@@ -30,14 +30,29 @@ CTX = f'<button class="top__ctx" type="button" data-ctx-for=".pnav" aria-control
 # Правило: карточка на странице своего проекта не повторяет «где и когда» — это сказано вверху один раз
 cards = [p.big_card(w, review=True, anchor=ANCHOR(w), meta=False) for w in EXH]
 cards.insert(2, PLATE)
+# Зал вокруг штурвала: три кадра из ТЗ музея после первого экспоната (один крупно, два рядом)
+HALL = [('khersones-hall-02.webp', 'Штурвал на палубе корабля в зале'),
+        ('khersones-hall-04.webp', 'Нос корабля и стена с чертежами и экраном'),
+        ('khersones-hall-05.webp', 'Стена «История Черноморского флота»: штурвалы, фонари, такелаж')]
+GALLERY = ('    <div class="project-gallery reveal">\n'
+           + ''.join(f'      <img src="fresh/media/{f}" alt="{a}" width="2048" height="1152" loading="lazy">\n' for f, a in HALL)
+           + '    </div>\n')
+cards.insert(1, GALLERY)
 
-# «Что сделали» — строкой через точку, как «Смотрите также». Монтаж и поддержка в этом списке всегда.
+# Сразу под общим кадром зала: задача, решение и «Что сделали» (строкой через точку). Монтаж и поддержка в этом списке всегда.
 DONE_ITEMS = ['Концепция экспонатов', 'Дизайн интерфейсов', '3D-модели кораблей', 'Видео', 'Программирование',
               'Датчики и контроллеры', 'Монтаж на площадке', 'Поддержка после открытия']
-DONE = f'''
-    <section class="sect seealso done">
+TASK = 'Сделать интерактивные экспонаты для зала о Черноморском флоте в музее «Новый Херсонес».'
+SOLUTION = ('Зал построен вокруг двух деревянных кораблей. Мы сделали для него четыре экспоната: штурвал-симулятор, '
+            'сканеры кораблей над чертежами, таймлайн истории флота и игру «Сборка кораблей».')
+BRIEF = f'''
+    <section class="sect project-brief">
+      <h2 class="sect__label reveal">Задача</h2>
+      <p class="sect__body project-brief__text reveal">{typo(TASK)}</p>
+      <h2 class="sect__label reveal">Решение</h2>
+      <p class="sect__body project-brief__text reveal">{typo(SOLUTION)}</p>
       <h2 class="sect__label reveal">Что сделали</h2>
-      <ul class="sect__body seealso__list reveal">{''.join(f'<li>{typo(x)}</li>' for x in DONE_ITEMS)}</ul>
+      <ul class="sect__body seealso__list project-brief__done reveal">{''.join(f'<li>{typo(x)}</li>' for x in DONE_ITEMS)}</ul>
     </section>
 '''
 
@@ -52,11 +67,11 @@ MAIN = f'''<main>
       <ul class="pjump reveal" aria-label="Экспонаты проекта">{JUMP}</ul>
     </section>
 
-{p.project_photo('fresh/media/khersones-hall.webp', 'Зал Черноморского флота в музее «Новый Херсонес»: общий вид')}
+{p.project_photo('fresh/media/khersones-hall.webp', 'Зал Черноморского флота в музее «Новый Херсонес»: общий вид')}{BRIEF}
     <section class="works-mix project-exhibits" id="exhibits">
       <h2 class="sr-only">Экспонаты</h2>
 {''.join(cards)}    </section>
-{DONE}{p.next_work(project_id='khersones')}{p.seealso(['muzei', 'eksponaty', 'video', 'vystavki', 'regiony'])}
+{p.next_work(project_id='khersones')}{p.seealso(['muzei', 'eksponaty', 'video', 'vystavki', 'regiony'])}
 '''
 
 t = home
