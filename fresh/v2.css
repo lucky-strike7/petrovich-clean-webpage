@@ -593,10 +593,24 @@ a.card__media { display: block; }
 .case-pair video, .case-pair img { display: block; width: 100%; height: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: var(--radius); background: var(--line); }
 .case-pair img { aspect-ratio: auto; }
 /* Кейс: отдельный блок с подписью (ролик для конкурса): рамка, заголовок, пара, подпись */
-.case-grid .case-pair-block { grid-column: 4 / 13; margin: 0; padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); }
+.case-grid .case-pair-block { grid-column: 4 / 13; margin: 0; padding: 24px; border-radius: var(--radius); background: rgba(127, 127, 127, .1); }
 .case-pair-block .case-label { margin: 0 0 16px; }
 .case-pair-block .case-pair { grid-column: auto; }
 .case-pair__cap { margin: 16px 0 0; max-width: 46em; font-size: 15px; line-height: 1.45; opacity: .75; }
+/* Кейс: несколько роликов столбиком справа от задачи (как делали, интервью); на телефоне интервью парой */
+.case-reviews { display: flex; flex-direction: column; gap: 24px; }
+.case-grid .case-reviews { grid-row: 1 / span 3; } /* столбик длиннее задачи: рядом встают и «Почему Устье» с абзацем */
+@media (max-width: 900px) { .case-grid .case-reviews { grid-row: auto; } }
+.case-reviews__item { margin: 0; }
+.case-reviews .case-review__play { width: 52px; height: 52px; top: auto; left: auto; right: 12px; bottom: 12px; transform: none; } /* кнопка в углу, лицо видно */
+.case-reviews .case-review__btn:hover .case-review__play { transform: scale(1.12); }
+@media (max-width: 600px) {
+  .case-reviews { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 12px; }
+  .case-reviews__item:first-child { grid-column: 1 / -1; }
+  .case-reviews__item:not(:first-child) .case-review__btn { width: 100%; margin-inline: 0; border-radius: var(--radius); }
+  .case-reviews__item:not(:first-child) .case-review__cap { font-size: 14px; }
+}
+
 /* Кейс: ряд кнопок с видео (как делали, интервью) */
 .case-grid .case-buttons { grid-column: 4 / 13; display: flex; flex-wrap: wrap; gap: 14px 40px; }
 .case-buttons .card__review { margin-top: 0; }

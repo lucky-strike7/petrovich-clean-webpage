@@ -42,7 +42,7 @@ HERO = f'''    <section class="case-hero">
 ASIDE = f'''      <aside class="case-aside" style="--rows: 9">
         <div class="case-aside__in">
           <h2 class="case-label case-aside__label">О&nbsp;проекте</h2>
-          <p class="case-aside__meta"><span>Мы&nbsp;заняли третье место</span><span>Конкурс современного медиаискусства «Страна Света» при&nbsp;поддержке ПФКИ проходил на&nbsp;Дворцовой площади в&nbsp;Санкт-Петербурге в&nbsp;декабре 2025&nbsp;года</span><span>Дом шириной больше ста метров</span></p>
+          <p class="case-aside__meta"><span>Конкурс современного медиаискусства «Страна Света» при&nbsp;поддержке ПФКИ проходил на&nbsp;Дворцовой площади в&nbsp;Санкт-Петербурге в&nbsp;декабре 2025&nbsp;года</span><span>Мы&nbsp;заняли третье место</span></p>
           <h2 class="case-label case-aside__label">Что сделали</h2>
           <ul class="case-aside__done">
             <li>Сценарий</li>
@@ -56,6 +56,14 @@ ASIDE = f'''      <aside class="case-aside" style="--rows: 9">
         </div>
       </aside>
 '''
+def REVIEW(v, name, label):
+    return (f'        <figure class="case-reviews__item">\n'
+            f'          <button class="case-review__btn" type="button" data-video="{B}{v[0]}" data-title="{html.escape(v[1])}" aria-label="{label}, {video_len(v[0])}">\n'
+            f'            <img src="media/cover-{name}.webp" alt="" width="1280" height="720" loading="lazy">\n'
+            f'            <span class="case-review__play" aria-hidden="true">{PLAY}</span>\n'
+            f'          </button>\n'
+            f'          <figcaption class="case-review__cap">{label}&nbsp;· {video_len(v[0])}</figcaption>\n'
+            f'        </figure>\n')
 BRIEF = f'''      <div class="case-main case-brief reveal">
         <h2 class="case-label">Задача</h2>
         <p>{typo("По правилам конкурса нужно рассказать сказки, легенды и мифы своего места силы. Мы выбрали Устье, село под Вологдой на берегу Кубенского озера.")}</p>
@@ -63,13 +71,8 @@ BRIEF = f'''      <div class="case-main case-brief reveal">
         <p>{typo("Рассказ из пяти частей о легендах Устья, стилизованный под вологодскую глиняную игрушку. Кадры и анимацию делали с нейросетями, а собирали и доводили вручную.")}</p>
       </div>
 
-      <figure class="case-review reveal">
-        <button class="case-review__btn" type="button" data-video="{B}{MAKING[0]}" data-title="{html.escape(MAKING[1])}" aria-label="Смотреть, как делали, {video_len(MAKING[0])}">
-          <img src="media/making-cover.webp" alt="" width="1080" height="360" loading="lazy">
-          <span class="case-review__play" aria-hidden="true">{PLAY}</span>
-        </button>
-        <figcaption class="case-review__cap">Как делали&nbsp;· {video_len(MAKING[0])}</figcaption>
-      </figure>
+      <div class="case-review case-reviews reveal">
+{REVIEW(MAKING, 'making', 'Как делали')}{REVIEW(ARTYOM, 'artyom', 'Артем о проекте')}{REVIEW(ARSENY, 'arseny', 'Арсений о проекте')}      </div>
 '''
 QUOTE = '''      <figure class="case-main case-quote reveal">
         <img class="case-quote__photo" src="media/artyom.webp" alt="Артем Петрович" width="480" height="480" loading="lazy">
@@ -78,20 +81,18 @@ QUOTE = '''      <figure class="case-main case-quote reveal">
       </figure>
 '''
 PAIR = '''      <figure class="case-pair-block reveal">
-        <h2 class="case-label">Ролик для&nbsp;конкурса</h2>
         <div class="case-pair">
           <video src="media/ustye-vertical.mp4" poster="media/ustye-vertical.webp" autoplay muted loop playsinline preload="none" aria-label="Ролик про Устье: стела, дом Никуличева, набережная Кубенского озера"></video>
           <img src="media/mk-bike.webp" alt="Кадр из ролика: улица в Устье, велосипедист на пенни-фартинге" width="1920" height="1080" loading="lazy">
         </div>
-        <figcaption class="case-pair__cap">По&nbsp;правилам конкурса к&nbsp;мэппингу нужен ролик о&nbsp;месте или о&nbsp;том, как&nbsp;мы&nbsp;работаем. Мы&nbsp;сняли ролик об&nbsp;Устье: слева он целиком, справа кадр из&nbsp;него.</figcaption>
+        <figcaption class="case-pair__cap">Ролик об&nbsp;Устье. По&nbsp;правилам конкурса нужно было снять ролик о&nbsp;месте, про&nbsp;которое мы&nbsp;делаем мэппинг</figcaption>
       </figure>
 '''
 RESULT = '      <p class="case-main case-p case-source reveal"><a class="text-link" href="https://stranasveta.com/news/pobediteli-2025" target="_blank" rel="noopener">Победители конкурса на&nbsp;сайте «Страны Света»&nbsp;↗</a></p>\n'
-VIDEOS = f'      <div class="case-main case-buttons reveal">{btn(MAKING, "Как делали")}{btn(ARTYOM, "Артем о проекте")}{btn(ARSENY, "Арсений о проекте")}</div>\n'
 
 GRID = ('    <div class="case-grid">\n' + ASIDE + '\n' + BRIEF + '\n'
   + lead('Почему Устье')
-  + para('Летом Артем почти месяц жил в Устье у друга: ходили под парусом по Кубенскому озеру, ездили по заброшенным деревням. Прямо оттуда написал организаторам и попросил поменять тему мэппинга с Белого моря на Устье. Перед отъездом зашел в местную библиотеку, там посоветовали книги про село. Из них и собрали сценарий.')
+  + para('Сначала мы заявили на конкурс мэппинг про Белое море. Но летом Артем почти месяц жил в Устье у друга: ходили под парусом по Кубенскому озеру, ездили по заброшенным деревням. Прямо оттуда написал организаторам и попросил поменять тему на Устье. Перед отъездом зашел в местную библиотеку, там посоветовали книги про село. Из них и собрали сценарий.')
   + fig('mk-air.webp', 'Устье с высоты: храм на берегу Кубенского озера')
   + lead('Пять частей и пять фасадов')
   + para('Начало, легенда об острове Спас-Камень, легенда о монахе, легенда о колоколе и эпилог. Дома Устья похожи на книги с резными обложками, за каждым своя история. Поэтому у каждой легенды свой фасад: он рушится, плавится и уходит под воду, а из-под него проступает следующий.')
@@ -114,7 +115,6 @@ GRID = ('    <div class="case-grid">\n' + ASIDE + '\n' + BRIEF + '\n'
   + para('После показа на Дворцовой площади у нас взял интервью Первый канал.')
   + RESULT
   + fig('mk-tv.webp', 'Артем и Арсений Пе́тровичи в сюжете Первого канала на Дворцовой площади')
-  + VIDEOS
   + '    </div>\n')
 
 t, n = re.subn(r'    <section class="case-hero">.*?</section>\n', lambda m: HERO, t, count=1, flags=re.S); assert n
