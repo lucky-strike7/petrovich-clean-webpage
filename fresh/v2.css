@@ -659,3 +659,17 @@ a.card__media { display: block; }
 .project-gallery--small { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .project-gallery--small img:first-child { grid-column: auto; }
 @media (max-width: 600px) { .project-gallery.project-gallery--small { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-inline: 0; } .project-gallery--small img { border-radius: 6px; } }
+/* Меню «Работы»: две колонки «Что делаем» и «Для кого», в каждой крупные теги и под ними мелкие */
+.mega__what { grid-column: 1 / 7; }
+.mega__who { grid-column: 7 / 13; }
+.mega__what h4, .mega__who h4 { margin: 0 0 10px; }
+.mega__big li + li { margin-top: clamp(6px, .7vw, 12px); }
+.top--v2 .top__menu .mega__big a { display: inline-flex; align-items: center; gap: .32em; padding: 2px 0; font-family: var(--font); font-weight: 500; font-size: clamp(24px, 2.6vw, 46px); line-height: 1.12; letter-spacing: -.02em; }
+.mega__big a > span { white-space: nowrap; }
+.mega__big a > span::after { bottom: .02em; height: .06em; }
+.mega__small { margin-top: clamp(16px, 1.6vw, 26px) !important; }
+.top--v2 .top__menu .mega__small a { display: inline-block; padding: 6px 0; font-family: var(--font-text); font-weight: 400; font-size: clamp(17px, 1.25vw, 21px); line-height: 1.2; letter-spacing: -.01em; }
+.mega__who .mega__big { display: block; }
+@media (min-width: 1100px) {
+  .mega__who .mega__small { display: grid; grid-template-columns: auto auto; grid-template-rows: repeat(3, auto); grid-auto-flow: column; column-gap: 40px; align-items: start; justify-content: start; }
+}

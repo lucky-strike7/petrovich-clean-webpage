@@ -5,7 +5,7 @@ NL = chr(10)
 
 # Корень сайта — папка над tools/ (сборщики лежат в репозитории рядом со страницами)
 SITE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V2CSS = 'v2.css?v=113'
+V2CSS = 'v2.css?v=114'
 V2JS = 'v2.js?v=29'
 # Страницы «Услуги», «Цены», «О студии» еще не сделаны: пока False, их нет в меню и на них нет ссылок.
 # Когда страницы появятся — True и пересобрать все.
@@ -18,10 +18,13 @@ WHO = [tuple(x[:2]) for x in DATA['tags']['who']]
 # «Кому» — дательный падеж для мест, где нет подписи «Для кого» (строка тегов на «Работах»)
 DAT = {x[0]: x[2] for x in DATA['tags']['who']}
 NAME = dict(WHAT + WHO)
-# Как теги показаны в меню и на «Работах»: крупные — главные направления (экспонаты, музеи, выставки…), мелкие — остальное.
-# Это только раскладка: какие работы попадают на страницу тега, по-прежнему решают поля «Что делаем» и «Для кого».
-BIG = [(k, NAME[k]) for k in ('eksponaty', 'muzei', 'vystavki', 'mapping', 'scena', 'dizayn')]
-SMALL = [(k, NAME[k]) for k in ('sayty', 'video', 'zastr', 'regiony', 'meropr', 'developery', 'prom', 'kino')]
+# Две оси, как раньше: «Что делаем» и «Для кого». В каждой — крупные теги (главное) и мелкие (остальное).
+# Музеи и выставки крупные: с них начинаются проекты Херсонеса и Хакасии. Порядок здесь — порядок в меню и на «Работах».
+WHAT_BIG = [(k, NAME[k]) for k in ('eksponaty', 'mapping', 'scena', 'dizayn')]
+WHAT_SMALL = [(k, NAME[k]) for k in ('video', 'sayty')]
+WHO_BIG = [(k, NAME[k]) for k in ('muzei', 'vystavki')]
+WHO_SMALL = [(k, NAME[k]) for k in ('zastr', 'kino', 'regiony', 'meropr', 'developery', 'prom')]
+WHAT, WHO = WHAT_BIG + WHAT_SMALL, WHO_BIG + WHO_SMALL
 # Теги, где вместо отдельных экспонатов крупных проектов стоят обложки самих проектов (тег → проект → экспонат)
 TAG_PROJECTS = {'muzei': ['khersones', 'khakasia'], 'vystavki': ['khakasia', 'khersones']}
 
@@ -173,8 +176,8 @@ class Page:
       <div class="top__dd">
         <a class="is-on" href="{W}">Работы <i aria-hidden="true"></i></a>
         <div class="top__menu mega">
-          <div class="mega__what"><ul>{self.mega(BIG)}</ul></div>
-          <div class="mega__who"><h4>Еще</h4><ul>{self.mega(SMALL, count=False)}</ul>
+          <div class="mega__what"><h4>Что делаем</h4><ul class="mega__big">{self.mega(WHAT_BIG)}</ul><ul class="mega__small">{self.mega(WHAT_SMALL, count=False)}</ul></div>
+          <div class="mega__who"><h4>Для кого</h4><ul class="mega__big">{self.mega(WHO_BIG)}</ul><ul class="mega__small">{self.mega(WHO_SMALL, count=False)}</ul>
             <a class="mega__all" href="{W}"><span>Все работы</span> →</a></div>
         </div>
       </div>
@@ -202,8 +205,8 @@ class Page:
       <div class="lnav__dd">
         <button class="lnav__btn" type="button" aria-expanded="false" aria-controls="tsheet" data-phone-only>{NAME.get(self.cur, '')} <i aria-hidden="true"></i></button>
         <div class="lnav__menu">
-          <div><h4>Направления</h4><ul>{self.links(BIG)}</ul></div>
-          <div><h4>Еще</h4><ul>{self.links(SMALL)}</ul></div>
+          <div><h4>Что делаем</h4><ul>{self.links(WHAT)}</ul></div>
+          <div><h4>Для кого</h4><ul>{self.links(WHO)}</ul></div>
         </div>
       </div>'''
 
@@ -246,9 +249,10 @@ class Page:
     def tsheet(self):
         """Шторка со всеми тегами — из переключателя на телефоне."""
         tags = lambda tt: [(self.tag_href(k), n, k == self.cur) for k, n in tt]
-        # Без подписей: крупные направления и остальное разделены отступом
+        # Без подписей «Что делаем» и «Для кого»: группы разделены отступом, «для кого» — в дательном падеже
+        who = [(self.tag_href(k), DAT[k], k == self.cur) for k, _ in WHO]
         return self.sheet('tsheet', 'Работы по направлениям', f'<a class="tsheet__all" href="{self.W}">Все работы</a>',
-                          [('', tags(BIG)), ('', tags(SMALL))])
+                          [('', tags(WHAT)), ('', who)])
 
     def landing_nav(self):
         """Переключатель наверху страницы тега. Виден тем, кто пришел с нашего сайта."""
