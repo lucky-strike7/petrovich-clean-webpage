@@ -72,7 +72,7 @@ test('legacy URLs redirect permanently with attribution intact and no extra redi
  const mappings=[
   ['/video-content','/'],['/videocontent','/'],['/about-us','/#process'],['/testimonials','/'],
   ['/contacts','/#contact'],['/contact','/#contact'],['/projects/khakasiya','/works/khakasia/'],['/cases/khakasia','/works/khakasia/stol/'],
-  ['/projects/hersones','/works/khersones/'],['/cases/hersones','/works/khersones/'],['/projects','/#projects'],['/projects/etalon','/cases/etalon/'],['/projects/gorodobrazovaniyya','/cases/gorodobrazovaniya/'],['/projects/amperka','/cases/cyberbug/'],['/projects/unknown-old','/#projects'],
+  ['/projects/hersones','/works/khersones/'],['/cases/hersones','/works/khersones/'],['/projects/hbo','/works/hbo/'],['/cases/hbo','/works/hbo/'],['/projects','/#projects'],['/projects/etalon','/cases/etalon/'],['/projects/gorodobrazovaniyya','/cases/gorodobrazovaniya/'],['/projects/amperka','/cases/cyberbug/'],['/projects/unknown-old','/#projects'],
   ['/cyberbug','/cases/cyberbug/'],['/blog-list','/'],['/blogs/article','/'],['/blogs','/'],['/p','/'],
  ];
  const query='?utm_source=yandex&utm_campaign=a%2Bb&yclid=123&tag=one&tag=two';

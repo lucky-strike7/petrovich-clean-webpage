@@ -16,7 +16,9 @@ const exact = new Map([
   ['/projects/etalon', '/cases/etalon/'],
   ['/projects/yantarny', '/cases/yantarny/'],
   ['/projects/premiarb', '/cases/premiarb/'],
-  ['/projects/hbo', '/cases/hbo/'],
+  ['/projects/hbo', '/works/hbo/'],
+  // Кейс HBO пересобран в новой структуре
+  ['/cases/hbo', '/works/hbo/'],
   ['/projects/rosnano', '/cases/rosnano/'],
   ['/projects/nanolek', '/cases/nanolek/'],
   ['/projects/donstroy', '/cases/donstroy/'],

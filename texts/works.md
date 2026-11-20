@@ -220,7 +220,7 @@
 Превью: fresh/media/archive/hbo-preview.mp4
 Крупное видео: fresh/media/archive/hbo-big.mp4
 Крупное видео, телефон: fresh/media/archive/hbo-big-m.mp4
-Ссылка: cases/hbo/
+Ссылка: works/hbo/
 
 ## rosnano
 Название: Роснано
