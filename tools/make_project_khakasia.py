@@ -45,7 +45,7 @@ DOST = '''      <article class="card" id="dostizheniya">
       </article>
 '''
 
-# Вставка после Менгиров — про сложные игры: ровно об этой игре и рассказ
+# Вставка после всех экспонатов — про сложные игры (в том числе про «пятнашки» на менгирах)
 PLATE = p.plate('Из&nbsp;опыта на&nbsp;площадках',
                 'В&nbsp;видео разбираем типичные ошибки мультимедиа-экспозиций. Например, сложную игру никто не&nbsp;проходит до&nbsp;конца: «пятнашки» на&nbsp;менгирах мы&nbsp;упрощали после тестов на&nbsp;выставке, пока не&nbsp;оставили поле 2&nbsp;×&nbsp;3',
                 'Video/errors/oshibka-03.mp4', 'fresh/media/oshibka-03.webp',
@@ -101,8 +101,9 @@ MAIN = f'''<main>
       <h2 class="sr-only">Экспонаты</h2>
 {cards['khakasia']}
 {GALLERY}
-{cards['mengiry']}{PLATE}
-{DOST}    </section>
+{cards['mengiry']}
+{DOST}{PLATE}
+    </section>
 {p.next_work(project_id='khakasia')}{p.seealso(['muzei', 'vystavki', 'regiony', 'developery', 'eksponaty', 'video'])}
 '''
 
