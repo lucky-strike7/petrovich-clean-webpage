@@ -579,3 +579,11 @@ a.card__media { display: block; }
 .case-team__group dd span { color: var(--muted); }
 @media (max-width: 900px) { .case-grid .case-team { grid-column: 1 / -1; } }
 @media (max-width: 600px) { .case-grid .case-team { grid-template-columns: 1fr; row-gap: 28px; } .case-team > .case-label { margin-bottom: -14px; } }
+
+/* Старые кейсы с новой шапкой: синяя кнопка «← Все работы» снизу больше не нужна — путь назад есть в шапке */
+.page-v2 .case-fabs { display: none !important; }
+/* Телефон: шапка кейса с роликом — в пропорциях самого ролика, без серого поля под ним (картинки остаются квадратом) */
+@media (max-width: 600px) {
+  .case-hero .case-hero__media--video { aspect-ratio: auto; background: none; }
+}
+.case-source .text-link:hover { color: inherit; } /* текст при наведении не синеет */
