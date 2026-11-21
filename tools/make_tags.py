@@ -191,7 +191,7 @@ def build(slug):
         shared = slug not in ('museums', 'exhibitions')
         page_class = f'page-v2 page-{slug}' + (' page-landing' if shared else '')
         sheet = 'landings' if shared else slug
-        sheet_version = {'video': 4, 'museums': 5}.get(slug, 3 if shared else 1)
+        sheet_version = {'video': 4, 'museums': 8}.get(slug, 3 if shared else 1)
         t = t.replace('class="page-v2"', f'class="{page_class}"', 1)
         t = t.replace('</head>', f'  <link rel="stylesheet" href="{B}fresh/{sheet}.css?v={sheet_version}">\n</head>', 1)
         page_title = title + ' | студия братьев Пе́трович'

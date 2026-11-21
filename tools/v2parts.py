@@ -6,7 +6,7 @@ NL = chr(10)
 # Корень сайта — папка над tools/ (сборщики лежат в репозитории рядом со страницами)
 SITE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 V2CSS = 'v2.css?v=122'
-V2JS = 'v2.js?v=32'
+V2JS = 'v2.js?v=33'
 # Включаем только готовые самостоятельные страницы.
 READY_PAGES = {'prices', 'services', 'about'}
 

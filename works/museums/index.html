@@ -19,14 +19,14 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Студия братьев Пе́трович">
   <meta property="og:locale" content="ru_RU">
-  <meta property="og:title" content="Видео и интерактивные экспонаты для музеев | студия братьев Пе́трович">
+  <meta property="og:title" content="Видео и интерактивные экспонаты для музеев">
   <meta property="og:description" content="Придумываем концепцию мультимедийной части музея и доводим ее до работающих экспонатов. Пишем сценарии, создаем видео, 3D-анимацию, интерфейсы и программы. Если концепция уже есть, работаем по ней вместе с музеем и командой проекта.">
   <meta property="og:url" content="https://petrovichbrothers.ru/works/museums/">
-  <meta property="og:image" content="https://petrovichbrothers.ru/fresh/media/og-home.jpg">
+  <meta property="og:image" content="https://petrovichbrothers.ru/fresh/media/og/museums.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:alt" content="Интерактивные экспонаты студии братьев Петрович">
+  <meta property="og:image:alt" content="Видео и интерактивные экспонаты для музеев">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">
 {
@@ -71,7 +71,7 @@
     })();
   </script>
   <link rel="preload" as="image" href="../../fresh/media/shturval-render.webp" fetchpriority="high">
-  <link rel="stylesheet" href="../../fresh/museums.css?v=5">
+  <link rel="stylesheet" href="../../fresh/museums.css?v=8">
 </head>
 <body class="page-v2 page-museums">
 
@@ -142,13 +142,23 @@
         <div class="museum-film__copy">
           <h2 id="museum-film-title">Видео для&nbsp;музейной экспозиции</h2>
           <p>Можно заказать один ролик или серию для&nbsp;целого зала. Придумаем сценарий, сделаем графику и&nbsp;соберем видео под&nbsp;ваши экраны. Если сценарий уже готов, начнем с&nbsp;него.</p>
-          <p>Для&nbsp;зала Черноморского флота мы построили 3D-модели кораблей по&nbsp;чертежам и&nbsp;сделали около&nbsp;30 минут видео. Один из&nbsp;этих роликов — о&nbsp;бриге «Меркурий».</p>
+          <p>Для&nbsp;зала Черноморского флота мы построили 3D-модели кораблей по&nbsp;чертежам и&nbsp;сделали около&nbsp;30 минут видео. Вот несколько из&nbsp;них.</p>
           <a class="text-link" href="../../works/khersones/" data-peek="../../fresh/media/mercury-tile.webp" data-peek-video="../../fresh/media/mercury-preview.mp4">Посмотреть весь проект →</a>
         </div>
-        <figure>
-          <video controls playsinline preload="none" width="720" height="1280" poster="../../fresh/media/mercury.webp" src="../../Video/mercury.mp4" aria-label="Бриг «Меркурий», ролик из экспозиции"></video>
-          <figcaption>Бриг «Меркурий» · 0:40</figcaption>
-        </figure>
+        <div class="museum-film__clips">
+          <figure class="museum-film__clip">
+            <div class="museum-film__frame"><video playsinline preload="none" width="720" height="1280" poster="../../fresh/media/mercury.webp" src="../../Video/mercury.mp4" aria-label="бриг «Меркурий», ролик из экспозиции"></video><button class="museum-film__btn" type="button" aria-label="Смотреть: бриг «Меркурий»"><span class="case-review__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></span></button></div>
+            <figcaption>«Меркурий»<span class="museum-film__dur"> · 0:40</span></figcaption>
+          </figure>
+          <figure class="museum-film__clip museum-film__clip--more">
+            <div class="museum-film__frame"><video playsinline preload="none" width="720" height="1280" poster="../../fresh/media/pavel.webp" src="../../Video/pavel.mp4" aria-label="линейный корабль «Святой Павел», ролик из экспозиции"></video><button class="museum-film__btn" type="button" aria-label="Смотреть: линейный корабль «Святой Павел»"><span class="case-review__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></span></button></div>
+            <figcaption>«Святой Павел»<span class="museum-film__dur"> · 0:40</span></figcaption>
+          </figure>
+          <figure class="museum-film__clip museum-film__clip--more">
+            <div class="museum-film__frame"><video playsinline preload="none" width="720" height="1280" poster="../../fresh/media/nikolay.webp" src="../../Video/nikolay.mp4" aria-label="фрегат «Святой Николай», ролик из экспозиции"></video><button class="museum-film__btn" type="button" aria-label="Смотреть: фрегат «Святой Николай»"><span class="case-review__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></span></button></div>
+            <figcaption>«Святой Николай»<span class="museum-film__dur"> · 0:40</span></figcaption>
+          </figure>
+        </div>
       </section>
       <ul class="works works--all">
           <li class="reveal"><a class="work" href="../../works/khakasia/" data-cursor="Посмотреть" data-preview="../../fresh/media/khakasy-card.mp4">
@@ -302,7 +312,7 @@
   </dialog>
 
   <script src="../../fresh/fresh.js?v=1121c"></script>
-  <script src="../../fresh/v2.js?v=32"></script>
+  <script src="../../fresh/v2.js?v=33"></script>
   <script src="../../fresh/cookies.js?v=1119i"></script>
 </body>
 </html>

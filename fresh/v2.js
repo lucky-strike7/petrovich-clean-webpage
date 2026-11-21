@@ -195,6 +195,22 @@
     });
   }
 
+  // Ролики «Видео для музейной экспозиции»: без панели управления, синяя ▶ по центру.
+  // Нажатие запускает ролик со звуком и ставит на паузу остальные, повторное — пауза.
+  const clips = [...document.querySelectorAll('.museum-film__frame')];
+  clips.forEach((frame) => {
+    const v = frame.querySelector('video');
+    const sync = () => frame.classList.toggle('is-playing', !v.paused && !v.ended);
+    ['play', 'pause', 'ended'].forEach((e) => v.addEventListener(e, sync));
+    frame.querySelector('.museum-film__btn').addEventListener('click', () => {
+      if (v.paused || v.ended) {
+        clips.forEach((f) => { const o = f.querySelector('video'); if (o !== v) o.pause(); });
+        v.play().catch(() => {});
+        document.dispatchEvent(new CustomEvent('pb:goal', { detail: { name: 'video_open' } }));
+      } else v.pause();
+    });
+  });
+
   // «Для кого» на странице «Работы» (телефон): раскрывается кнопкой
   const more = document.querySelector('.tagbar__more');
   if (more) more.addEventListener('click', () => {

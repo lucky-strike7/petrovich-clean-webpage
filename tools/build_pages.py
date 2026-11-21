@@ -17,6 +17,7 @@ STEPS = [
     ('make_case_strana.py', '/works/strana-sveta/ — кейс «Устьянские легенды»'),
     ('make_case_hbo.py', '/works/hbo/ — кейс «Игры Уолл-стрит»'),
     ('make_project_khersones.py', '/works/khersones/ — проект «Зал Черноморского флота»'),
+    ('make_share.py', 'превью ссылок: картинка, заголовок, описание (последним)'),
 ]
 env = dict(os.environ, PYTHONIOENCODING='utf-8')
 failed = False

@@ -2,8 +2,8 @@
 .page-museums .landing-scope .about__desc { margin-top: 0; }
 .page-museums .contact__lead { max-width: 48em; }
 .works-mix > .museum-film {
-  display: grid; grid-template-columns: minmax(0, 32em) minmax(140px, 250px);
-  align-items: center; justify-content: start; gap: clamp(24px, 4vw, 64px);
+  display: grid; grid-template-columns: minmax(0, 1fr);
+  align-items: center; gap: clamp(24px, 4vw, 64px);
   /* Серая плашка, как у ролика про Устье в «Стране Света», в полях страницы */
   --film-in: clamp(20px, 2.4vw, 40px);
   margin: clamp(72px, 8vw, 136px) var(--pad);
@@ -14,12 +14,20 @@
 .museum-film p, .museum-film a, .museum-film figcaption { font: 400 18px/1.45 var(--font-text); }
 .museum-film p { margin: 16px 0; }
 .museum-film figure { margin: 0; }
-.museum-film video { display: block; width: 100%; height: auto; object-fit: contain; border-radius: var(--radius); }
-.museum-film figcaption { margin-top: 9px; font-size: 15px; color: var(--muted); }
-@media (min-width: 601px) {
-  .museum-film figure { width: min(100%, 40.5vh); }
-  .museum-film video:fullscreen { width: 100%; height: 100%; background: black; border-radius: 0; }
+.museum-film figcaption { margin-top: 9px; font-size: 15px; color: var(--muted); text-wrap: balance; }
+/* Ролики без панели управления: синяя кнопка ▶ по центру, как в кейсах; нажатие по ролику — пауза */
+.museum-film__frame { position: relative; border-radius: var(--radius); overflow: hidden; background: #111; }
+.museum-film__frame video { display: block; width: 100%; height: auto; aspect-ratio: 9 / 16; object-fit: cover; }
+.museum-film__btn { position: absolute; inset: 0; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
+.museum-film .case-review__play {
+  position: absolute; left: 50%; top: 50%; display: grid; place-items: center;
+  width: clamp(56px, 4.4vw, 76px); aspect-ratio: 1; margin: 0; border-radius: 50%;
+  background: var(--accent); transform: translate(-50%, -50%); transition: transform .45s var(--ease), opacity .3s;
 }
+.museum-film .case-review__play svg { width: 64%; height: 64%; fill: var(--on-accent); }
+.museum-film__btn:hover .case-review__play { transform: translate(-50%, -50%) scale(1.12); }
+.museum-film__frame.is-playing .case-review__play { opacity: 0; transform: translate(-50%, -50%) scale(.8); }
+.museum-film__clips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: start; }
 
 @media (min-width: 901px) {
   .works-mix > .museum-film {
@@ -27,11 +35,8 @@
     column-gap: 20px;
     padding-block: clamp(32px, 3vw, 48px);
   }
-  .museum-film__copy { grid-column: 1 / 8; max-width: 32em; }
-  .museum-film figure {
-    grid-column: 8 / -1;
-    width: min(100%, 250px, 40.5vh);
-  }
+  .museum-film__copy { grid-column: 1 / 6; max-width: 32em; }
+  .museum-film__clips { grid-column: 6 / -1; }
 }
 
 @media (hover: none) {
@@ -41,7 +46,18 @@
 @media (max-width: 600px) {
   .works-mix > .museum-film { grid-template-columns: 1fr; --film-in: 16px; margin: 56px var(--pad); }
   .museum-film p, .museum-film a { font-size: 16px; }
-  .museum-film figure { width: min(75%, 230px); }
+  /* На телефоне ролики — лента, листается пальцем: видно два и край третьего.
+     Лента доходит до краев плашки, чтобы третий ролик выглядывал из-за края */
+  .museum-film__clips {
+    display: flex; gap: 10px; overflow-x: auto; overflow-y: hidden;
+    scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none;
+    margin-inline: calc(-1 * var(--film-in)); padding-inline: var(--film-in); scroll-padding-inline: var(--film-in);
+  }
+  .museum-film__clips::-webkit-scrollbar { display: none; }
+  .museum-film__clip { flex: 0 0 42%; min-width: 0; scroll-snap-align: start; }
+  .museum-film figcaption { font-size: 14px; white-space: nowrap; }
+  .museum-film__dur { display: none; }
+  .museum-film .case-review__play { width: 52px; }
   .page-museums .landing-scope .about__desc { margin-top: 20px; }
   .page-museums #w-khersones .card__info { display: block; padding-top: 12px; }
   .page-museums #w-khersones .card__meta { display: none; }
