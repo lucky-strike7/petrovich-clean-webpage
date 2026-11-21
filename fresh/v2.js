@@ -10,6 +10,19 @@
   const contact = document.querySelector('.contact');
   // На телефоне шапка уезжает не от первого движения пальца, а когда пролистал вниз заметно (60 px подряд)
   const phone = matchMedia('(max-width: 600px)');
+  document.querySelectorAll('.project-gallery__track').forEach((track) => {
+    const gallery = track.parentElement;
+    const updateEdges = () => {
+      const end = track.scrollWidth - track.clientWidth;
+      gallery.classList.toggle('can-scroll-left', phone.matches && track.scrollLeft > 2);
+      gallery.classList.toggle('can-scroll-right', phone.matches && track.scrollLeft < end - 2);
+      track.tabIndex = phone.matches && end > 2 ? 0 : -1;
+    };
+    track.addEventListener('scroll', updateEdges, { passive: true });
+    phone.addEventListener('change', updateEdges);
+    new ResizeObserver(updateEdges).observe(track);
+    updateEdges();
+  });
   let lastY = scrollY, ticking = false, downRun = 0;
   const onScroll = () => {
     ticking = false;
@@ -32,12 +45,27 @@
   const makeSheet = (sheet, openers) => {
     const shade = sheet.nextElementSibling;
     const isOpen = () => sheet.classList.contains('is-open');
-    const set = (open, byKeyboard = false) => {
+    let opener = null;
+    const background = new Map();
+    sheet.setAttribute('aria-modal', 'true');
+    const set = (open, trigger = null) => {
       sheet.classList.toggle('is-open', open);
       sheet.inert = !open;
       openers.forEach((o) => o.setAttribute('aria-expanded', open));
-      // Фокус на крестик — только при работе с клавиатуры; от пальца Safari рисует вокруг него синюю рамку
-      if (open && byKeyboard) sheet.querySelector('.msheet__close').focus({ preventScroll: true });
+      if (open) {
+        opener = trigger;
+        sheet.querySelector('.msheet__close').focus({ preventScroll: true });
+        for (const node of document.body.children) {
+          if (node === sheet || node === shade || node.tagName === 'SCRIPT') continue;
+          background.set(node, node.inert);
+          node.inert = true;
+        }
+      } else if (opener) {
+        for (const [node, inert] of background) node.inert = inert;
+        background.clear();
+        opener.focus({ preventScroll: true });
+        opener = null;
+      }
     };
     const close = () => { if (!isOpen()) return; if (history.state?.sheet === sheet.id) history.back(); else set(false); };
     set(false);
@@ -45,10 +73,18 @@
     openers.forEach((o) => o.addEventListener('click', (e) => {
       if (o.hasAttribute('data-phone-only') && !phone.matches) return;
       e.stopImmediatePropagation();
-      set(true, root.classList.contains('kbd')); history.pushState({ sheet: sheet.id }, '');
+      set(true, o); history.pushState({ sheet: sheet.id }, '');
     }, true));
     addEventListener('popstate', () => { if (isOpen()) set(false); });
     sheet.querySelector('.msheet__close').addEventListener('click', close);
+    sheet.addEventListener('keydown', e => {
+      if (e.key !== 'Tab') return;
+      const links = [...sheet.querySelectorAll('button, a[href]')].filter(el => el.getClientRects().length);
+      const first = links[0], last = links.at(-1);
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+    addEventListener('resize', () => { if (isOpen() && !sheet.getClientRects().length) close(); });
     shade?.addEventListener('click', close);
     // Ссылки: закрываем шторку без возврата по истории, иначе переход сорвется
     sheet.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)));
@@ -97,11 +133,26 @@
   const dd = document.querySelector('.top__dd');
   if (dd) {
     let timer;
-    const open = () => { clearTimeout(timer); dd.classList.add('is-open'); top.classList.remove('is-up'); };
+    const open = () => { clearTimeout(timer); dd.classList.remove('is-dismissed'); dd.classList.add('is-open'); top.classList.remove('is-up'); };
     const close = () => { clearTimeout(timer); timer = setTimeout(() => dd.classList.remove('is-open'), 350); };
     dd.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') open(); });
     dd.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') close(); });
-    addEventListener('keydown', (e) => { if (e.key === 'Escape') { clearTimeout(timer); dd.classList.remove('is-open'); } });
+    for (const link of dd.parentElement.querySelectorAll(':scope > a')) {
+      link.addEventListener('pointerenter', e => {
+        if (e.pointerType !== 'mouse') return;
+        clearTimeout(timer);
+        dd.classList.remove('is-open');
+        dd.classList.add('is-dismissed');
+      });
+    }
+    dd.addEventListener('focusin', e => { if (!dd.contains(e.relatedTarget)) dd.classList.remove('is-dismissed'); });
+    addEventListener('keydown', e => {
+      if (e.key !== 'Escape' || (!dd.contains(document.activeElement) && !dd.classList.contains('is-open'))) return;
+      clearTimeout(timer);
+      dd.classList.remove('is-open');
+      dd.classList.add('is-dismissed');
+      if (dd.contains(document.activeElement)) dd.querySelector(':scope > a').focus();
+    });
   }
 
   // Вставка с разбором: по нажатию здесь же играет кусок со звуком (при наведении только кнопка ▶ чуть растет — в CSS)
@@ -169,28 +220,50 @@
     (больше чем на 60%), и останавливается, когда уехала. Файл грузится, только когда плитка впервые показалась.
   */
   if (!matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches && !navigator.connection?.saveData) {
-    const tileIO = new IntersectionObserver((entries) => {
-      for (const e of entries) {
-        const card = e.target;
-        let v = card.querySelector('.work__media video');
-        if (e.isIntersecting && !document.hidden) {
-          if (!v) {
-            v = document.createElement('video');
-            Object.assign(v, { muted: true, loop: true, playsInline: true, preload: 'auto' });
-            v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('aria-hidden', 'true');
-            v.src = card.dataset.preview;
-            card.querySelector('.work__media').append(v);
-          }
-          card.classList.add('is-previewing');
-          v.play().catch(() => {});
-        } else if (v) { v.pause(); card.classList.remove('is-previewing'); }
+    const visible = new Map(), active = new Map(), pending = new Map();
+    const sync = () => {
+      const blocked = document.hidden || document.querySelector('.modal[open]');
+      const target = blocked ? [] : [...visible.keys()].sort((a, b) => visible.get(b) - visible.get(a)).slice(0, 2);
+      for (const [card, timer] of pending) if (!target.includes(card)) {
+        clearTimeout(timer);
+        pending.delete(card);
       }
-    }, { threshold: 0.6 });
+      for (const [card, video] of active) if (!target.includes(card)) {
+        active.delete(card);
+        card.classList.remove('is-previewing');
+        video.pause();
+        video.removeAttribute('src');
+        video.load();
+        video.remove();
+      }
+      for (const card of target) {
+        if (pending.has(card) || active.has(card)) continue;
+        pending.set(card, setTimeout(() => {
+          pending.delete(card);
+          if (document.hidden || document.querySelector('.modal[open]')) return;
+          const video = document.createElement('video');
+          Object.assign(video, { muted: true, loop: true, playsInline: true, src: card.dataset.preview });
+          video.setAttribute('aria-hidden', 'true');
+          active.set(card, video);
+          video.addEventListener('playing', () => {
+            if (active.get(card) === video) card.classList.add('is-previewing');
+          }, { once: true });
+          card.querySelector('.work__media').append(video);
+          video.play().catch(() => {});
+        }, 225));
+      }
+    };
+    const tileIO = new IntersectionObserver(entries => {
+      for (const e of entries) {
+        if (e.isIntersecting && e.intersectionRatio >= .6) visible.set(e.target, e.intersectionRatio);
+        else visible.delete(e.target);
+      }
+      sync();
+    }, { threshold: [0, .6, .9, 1] });
     document.querySelectorAll('.work[data-preview]').forEach((card) => tileIO.observe(card));
     // Вернулись на вкладку — снова запускаем то, что на экране (при уходе все ролики ставятся на паузу)
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) document.querySelectorAll('.work.is-previewing video').forEach((v) => v.play().catch(() => {}));
-    });
+    document.addEventListener('visibilitychange', sync);
+    document.addEventListener('pb:review', sync);
   }
 
   /*

@@ -95,15 +95,17 @@ git push -u origin codex/my-change
 
 | Старый путь (также с завершающим /) | Новый путь |
 | --- | --- |
-| /video-content, /videocontent, /testimonials, /cyberbug, /blog-list, /p | / |
-| /about-us | /#process |
+| /video-content, /videocontent | /works/exhibitions/ |
+| /testimonials, /blog-list, /blogs, /p | / |
+| /cyberbug | /works/cyberbug/ |
+| /about-us | /about/ |
 | /contacts, /contact | /#contact |
-| /projects/khakasiya | /cases/khakasia/ |
-| /projects/hersones | /#shturval |
-| /projects и остальные /projects/… | /#projects |
-| /blogs и /blogs/… | / |
+| /projects/khakasiya | /works/khakasia/ |
+| /projects/hersones | /works/khersones/ |
+| /projects | /works/ |
+| Остальные известные кейсы /projects/… | Соответствующие страницы /works/… из server/redirects.mjs |
 
-Пример: `/contacts?utm_source=yandex&yclid=123` → `/?utm_source=yandex&yclid=123#contact`. У конкретных кейсов приоритет перед общим правилом /projects. POST-запросы не перенаправляются. Остальные неизвестные пути сохраняют настоящий 404.
+Например, `/contacts?utm_source=yandex&yclid=123` → `/?utm_source=yandex&yclid=123#contact`. Неизвестные адреса проектов и статей возвращают 404. Для опубликованных страниц адрес с `index.html` ведет на чистый URL.
 
 Общие перенаправления сохраняют удобство перехода, но не гарантируют сохранение поисковой видимости удалённых страниц: релевантность назначения важна. При появлении самостоятельной страницы `/video-content` убрать её из карты. Проверка: `curl -I 'https://petrovichbrothers.ru/video-content?utm_source=test&yclid=123'`.
 

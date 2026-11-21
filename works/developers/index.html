@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../../favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <link rel="preload" as="font" href="../../fonts/Milligram-Medium.woff2" type="font/woff2" crossorigin>
+  <link rel="preload" as="font" href="../../fonts/MilligramText-Regular.woff2" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#F6F6F3">
+  <title>Видео и интерактив для девелоперов | студия братьев Пе́трович</title>
+  <meta name="description" content="Делаем видео, 3D-анимацию и приложения для тачскринов, которые помогают представить жилой комплекс или компанию на выставке. Придумываем концепцию с нуля или работаем по готовой. Связываем контент с дизайном стенда и готовим его под конкретные экраны.">
+
+  <link rel="canonical" href="https://petrovichbrothers.ru/works/developers/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Студия братьев Пе́трович">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:title" content="Видео и интерактив для девелоперов | студия братьев Пе́трович">
+  <meta property="og:description" content="Делаем видео, 3D-анимацию и приложения для тачскринов, которые помогают представить жилой комплекс или компанию на выставке. Придумываем концепцию с нуля или работаем по готовой. Связываем контент с дизайном стенда и готовим его под конкретные экраны.">
+  <meta property="og:url" content="https://petrovichbrothers.ru/works/developers/">
+  <meta property="og:image" content="https://petrovichbrothers.ru/fresh/media/og-home.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="Интерактивные экспонаты студии братьев Петрович">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Студия братьев Петрович",
+  "alternateName": [
+    "Студия братьев Пе́трович",
+    "Petrovich Brothers"
+  ],
+  "url": "https://petrovichbrothers.ru/",
+  "logo": "https://petrovichbrothers.ru/fresh/logo-vertical.svg",
+  "email": "art@petrovichbrothers.ru",
+  "telephone": "+7 915 197-86-52",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "ул. Бауманская, 6, стр. 2",
+    "addressLocality": "Москва",
+    "addressCountry": "RU"
+  },
+  "sameAs": [
+    "https://www.youtube.com/@PetrovichBrothers-b7q",
+    "https://t.me/artem_petrovich_1"
+  ],
+  "@id": "https://petrovichbrothers.ru/#organization"
+}
+  </script>
+  <link rel="stylesheet" href="../../fresh/fresh.css?v=1120j">
+  <link rel="stylesheet" href="../../fresh/v2.css?v=122">
+  <script>
+    document.documentElement.classList.add('js');
+    /*
+      --vh — сотая доля высоты экрана, запомненная при загрузке. На телефоне высоты считаем от нее, а не от svh:
+      встроенный браузер Telegram меняет высоту окна, когда показывает свою панель, и страница прыгала.
+      Пересчитываем только при смене ширины (поворот телефона).
+    */
+    (() => {
+      const h = document.documentElement;
+      const set = () => h.style.setProperty('--vh', `${innerHeight / 100}px`);
+      let w = innerWidth; set();
+      addEventListener('resize', () => { if (innerWidth !== w) { w = innerWidth; set(); } });
+    })();
+  </script>
+  <link rel="preload" as="image" href="../../fresh/media/archive/etalon.jpg" fetchpriority="high">
+  <link rel="stylesheet" href="../../fresh/landings.css?v=3">
+</head>
+<body class="page-v2 page-developers page-landing">
+
+  <header class="top top--v2">
+    <script src="../../fresh/header-state.js?v=1"></script>
+    <a class="top__logo" href="../../" aria-label="Студия братьев Пе́трович, на главную">
+      <img src="../../fresh/logo-vertical.svg" alt="Petrovich Brothers" width="244" height="121">
+    </a>
+    <nav class="top__nav" aria-label="Основное меню">
+      <div class="top__dd">
+        <a class="is-on" href="../">Работы <i aria-hidden="true"></i></a>
+        <div class="top__menu mega">
+          <div class="mega__what"><h4>Что делаем</h4><ul class="mega__big"><li><a href="../interactive/" data-peek="../../fresh/media/archive/referus.jpg" data-peek-video="../../fresh/media/archive/referus-preview.mp4"><span>Интерактивные экспонаты</span></a></li><li><a href="../mapping/" data-peek="../../fresh/media/strana-sveta.webp" data-peek-video="../../fresh/media/strana-sveta.mp4"><span>Мэппинг</span></a></li><li><a href="../event-graphics/" data-peek="../../fresh/media/archive/premiarb.jpg" data-peek-video="../../fresh/media/archive/premiarb-preview.mp4"><span>Графика для&nbsp;мероприятия</span></a></li><li><a href="../product-design/" data-peek="../../cases/cyberbug/media/cb-hero.webp"><span>Дизайн продукта</span></a></li></ul><ul class="mega__small"><li><a href="../video/"><span>Видео и&nbsp;3D-анимация</span></a></li><li><a href="../websites/"><span>Сайты</span></a></li></ul></div>
+          <div class="mega__who"><h4>Для&nbsp;кого <a class="mega__all" href="../"><span>Все работы</span>&nbsp;→</a></h4><ul class="mega__big"><li><a href="../museums/" data-peek="../../fresh/media/shturval-peek.webp" data-peek-video="../../fresh/media/shturval-peek.mp4"><span>Музеи</span></a></li><li><a href="../exhibitions/" data-peek="../../fresh/media/khakasy-peek.webp" data-peek-video="../../fresh/media/khakasy-peek.mp4"><span>Выставки</span></a></li></ul><ul class="mega__small"><li><a href="../stand-builders/"><span>Застройщики стендов</span></a></li><li><a href="../film/"><span>Кино</span></a></li><li><a href="../regions/"><span>Регионы и&nbsp;города</span></a></li><li><a href="../events/"><span>Организаторы мероприятий</span></a></li><li><a href="./" aria-current="page"><span>Девелоперы</span></a></li><li><a href="../industry/"><span>Промышленность</span></a></li></ul></div>
+        </div>
+      </div>
+      <a href="../../services/">Услуги</a>
+      <a href="../../prices/">Цены</a>
+      <a href="../../about/">О&nbsp;студии</a>
+      <a href="#contact" data-panel>Контакты</a>
+    </nav>
+    <button class="top__ctx" type="button" data-ctx-for="nav.lnav--switch" aria-controls="tsheet" aria-expanded="false">Девелоперы <i aria-hidden="true"></i></button>
+    <button class="top__burger" type="button" aria-expanded="false" aria-controls="msheet" aria-label="Меню"><i></i><i></i><i></i></button>
+    <div class="top__sub lnav--switch" data-sub-for=".lnav--switch:not(.top__sub)"><a class="lnav__up" href="../">Работы</a><span class="lnav__sep" aria-hidden="true">→</span>
+      <div class="lnav__dd">
+        <button class="lnav__btn" type="button" aria-expanded="false" aria-controls="tsheet" data-phone-only>Девелоперы <i aria-hidden="true"></i></button>
+        <div class="lnav__menu">
+          <div><h4>Что делаем</h4><ul><li><a href="../interactive/">Интерактивные экспонаты</a></li><li><a href="../mapping/">Мэппинг</a></li><li><a href="../event-graphics/">Графика для&nbsp;мероприятия</a></li><li><a href="../product-design/">Дизайн продукта</a></li><li><a href="../video/">Видео и&nbsp;3D-анимация</a></li><li><a href="../websites/">Сайты</a></li></ul></div>
+          <div><h4>Для&nbsp;кого</h4><ul><li><a href="../museums/">Музеи</a></li><li><a href="../exhibitions/">Выставки</a></li><li><a href="../stand-builders/">Застройщики стендов</a></li><li><a href="../film/">Кино</a></li><li><a href="../regions/">Регионы и&nbsp;города</a></li><li><a href="../events/">Организаторы мероприятий</a></li><li><a href="./" aria-current="page">Девелоперы</a></li><li><a href="../industry/">Промышленность</a></li></ul></div>
+        </div>
+      </div></div>
+  </header>
+
+  <main>
+
+    <nav class="lnav lnav--switch" aria-label="Работы по направлениям" hidden>
+      <a class="lnav__up" href="../">Работы</a><span class="lnav__sep" aria-hidden="true">→</span>
+      <div class="lnav__dd">
+        <button class="lnav__btn" type="button" aria-expanded="false" aria-controls="tsheet" data-phone-only>Девелоперы <i aria-hidden="true"></i></button>
+        <div class="lnav__menu">
+          <div><h4>Что делаем</h4><ul><li><a href="../interactive/">Интерактивные экспонаты</a></li><li><a href="../mapping/">Мэппинг</a></li><li><a href="../event-graphics/">Графика для&nbsp;мероприятия</a></li><li><a href="../product-design/">Дизайн продукта</a></li><li><a href="../video/">Видео и&nbsp;3D-анимация</a></li><li><a href="../websites/">Сайты</a></li></ul></div>
+          <div><h4>Для&nbsp;кого</h4><ul><li><a href="../museums/">Музеи</a></li><li><a href="../exhibitions/">Выставки</a></li><li><a href="../stand-builders/">Застройщики стендов</a></li><li><a href="../film/">Кино</a></li><li><a href="../regions/">Регионы и&nbsp;города</a></li><li><a href="../events/">Организаторы мероприятий</a></li><li><a href="./" aria-current="page">Девелоперы</a></li><li><a href="../industry/">Промышленность</a></li></ul></div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="about">
+      <p class="about__label reveal">Студия братьев<br class="about__br"> Пе́трович</p>
+      <h1 class="about__text reveal">Видео и&nbsp;интерактив для&nbsp;девелоперов</h1>
+      <p class="about__desc reveal">Делаем видео, <span class="nowrap">3D-анимацию</span> и&nbsp;приложения для&nbsp;тачскринов, которые помогают представить жилой комплекс или&nbsp;компанию на&nbsp;выставке. Придумываем концепцию с&nbsp;нуля или&nbsp;работаем по&nbsp;готовой. Связываем контент с&nbsp;дизайном стенда и&nbsp;готовим его&nbsp;под&nbsp;конкретные экраны.</p>
+    </section>
+
+    <section class="works-mix works-mix--tiles">
+      <h2 class="sr-only">Работы</h2>
+      <article class="card work-big" id="w-etalon">
+        <a class="card__media" href="../../works/etalon/" data-cursor="Посмотреть" aria-label="Эталон"><video data-poster="../../fresh/media/archive/etalon.jpg" data-poster-m="../../fresh/media/archive/etalon.jpg" muted loop playsinline data-lazy preload="none"><source data-src="../../fresh/media/archive/etalon-preview.mp4" type="video/mp4" media="(max-width: 600px)"><source data-src="../../fresh/media/archive/etalon-big.mp4" type="video/mp4"></video></a>
+        <div class="card__row">
+          <h3 class="card__title reveal">Эталон</h3>
+          <a class="card__kind" href="../../works/etalon/">Видео и&nbsp;интерактив для&nbsp;стенда «Эталона» · 100+ TechnoBuild, 2023</a>
+          <div class="card__info">
+            <p class="card__desc reveal"><span class="card__q">Как&nbsp;представить жилые комплексы на&nbsp;выставке?</span> Для&nbsp;стенда «Эталона» сделали ролики для&nbsp;<span class="nowrap">окон-экранов</span>, интерактивный тест с&nbsp;отправкой результата на&nbsp;почту и&nbsp;съемки комплексов для&nbsp;большого экрана.</p>
+            <p class="card__meta reveal"><span>Стенд «Эталона», форум 100+ TechnoBuild, 2023</span></p>
+            <div class="card__actions"></div>
+          </div>
+        </div>
+      </article>
+      <article class="card work-big" id="w-donstroy">
+        <a class="card__media" href="../../works/donstroy/" data-cursor="Посмотреть" aria-label="Донстрой"><video data-poster="../../fresh/media/archive/donstroy.jpg" data-poster-m="../../fresh/media/archive/donstroy.jpg" muted loop playsinline data-lazy preload="none"><source data-src="../../fresh/media/archive/donstroy-preview.mp4" type="video/mp4" media="(max-width: 600px)"><source data-src="../../fresh/media/archive/donstroy-big.mp4" type="video/mp4"></video></a>
+        <div class="card__row">
+          <h3 class="card__title reveal">Донстрой</h3>
+          <a class="card__kind" href="../../works/donstroy/">Дизайн интерфейса и&nbsp;программа для&nbsp;<span class="nowrap">тач-панели</span> · 2019</a>
+          <div class="card__info">
+            <p class="card__desc reveal"><span class="card__q">Как&nbsp;связать приложение с&nbsp;архитектурой стенда?</span> Для&nbsp;«Донстроя» сделали интерфейс <span class="nowrap">тач-панели</span> в&nbsp;стиле Мондриана и&nbsp;программную оболочку с&nbsp;анимацией.</p>
+            <p class="card__meta reveal"><span>2019</span></p>
+            <div class="card__actions"></div>
+          </div>
+        </div>
+      </article>
+    </section>
+    <section class="sect landing-scope">
+      <h2 class="sect__label reveal">Что берем на&nbsp;себя</h2>
+      <p class="sect__body about__desc reveal">Начинаем с&nbsp;задачи: что&nbsp;нужно рассказать о&nbsp;проекте и&nbsp;что&nbsp;посетитель должен увидеть или&nbsp;попробовать на&nbsp;стенде. Придумываем концепцию видео и&nbsp;интерактива, согласуем ее&nbsp;с&nbsp;вашей командой. Это&nbsp;отдельный этап со&nbsp;своим объемом, сроками и&nbsp;стоимостью. Если концепция готова, работаем по&nbsp;ней. Дальше пишем сценарии, делаем графику, анимацию, интерфейсы и&nbsp;программы. Проектируем мультимедиа и&nbsp;объясняем застройщику, где&nbsp;разместить экраны и&nbsp;<span class="nowrap">тач-панели</span> и&nbsp;что&nbsp;нужно для&nbsp;подключения. Берем на&nbsp;себя инженерные работы, монтаж и&nbsp;запуск нашей части стенда.</p>
+    </section>
+
+      <section class="plate plate--page" aria-labelledby="plate-title">
+        <div class="plate__text">
+          <h2 class="plate__title reveal" id="plate-title">Из&nbsp;опыта на&nbsp;площадках</h2>
+          <p class="plate__body reveal">Один понятный сценарий помогает посетителю быстрее разобраться в&nbsp;проекте. В&nbsp;коротком видео объясняем, почему большой каталог на&nbsp;тачскрине часто уступает простому интерфейсу с&nbsp;понятным выбором.</p>
+        </div>
+        <figure class="plate__video reveal">
+          <button class="plate__btn" type="button" data-full="../../Video/errors/oshibka-04.mp4" aria-label="Смотреть разбор: один понятный сценарий, 0:14">
+            <img src="../../fresh/media/oshibka-04.webp" alt="Артем Петрович объясняет, почему один понятный сценарий лучше большого каталога на тачскрине" width="1280" height="720" loading="lazy">
+            <span class="case-review__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></span>
+          </button>
+        </figure>
+      </section>
+    <section class="sect landing-scope landing-cost" id="cost">
+      <h2 class="sect__label reveal">Стоимость проекта</h2>
+      <div class="sect__body">
+        <p class="about__desc reveal">Пришлите задачу, дату выставки и&nbsp;материалы о&nbsp;проекте. Если уже&nbsp;есть концепция, брендбук, визуализации, модели или&nbsp;проект стенда, добавьте их. Посмотрим, что&nbsp;можно использовать, какие видео и&nbsp;программы нужны. Отдельно оценим концепцию, создание контента, программирование и&nbsp;запуск. Если нужен весь стенд, застройку и&nbsp;оборудование посчитаем с&nbsp;партнерами.</p>
+        <a class="sect__link reveal" href="../../prices/">Цены и&nbsp;примеры</a>
+      </div>
+    </section>
+
+    <section class="sect faq" id="faq">
+      <h2 class="sect__label reveal">Частые вопросы</h2>
+      <div class="sect__body">
+        <details class="faq__item reveal"><summary>Вы&nbsp;придумаете концепцию видео и&nbsp;интерактива для&nbsp;стенда?</summary><p>Да. Разберемся, что&nbsp;важно рассказать о&nbsp;проекте, предложим общую идею, визуальный стиль и&nbsp;действия посетителя. Свяжем их&nbsp;с&nbsp;архитектурой стенда. Концепцию выделяем в&nbsp;отдельный этап и&nbsp;заранее договариваемся о&nbsp;результате, сроках и&nbsp;стоимости.</p></details>
+        <details class="faq__item reveal"><summary>У&nbsp;нас&nbsp;уже&nbsp;есть агентство, брендбук и&nbsp;дизайн стенда. Сможете работать с&nbsp;ними?</summary><p>Да. Подключимся к&nbsp;вашей команде, изучим готовую концепцию и&nbsp;материалы. Сделаем видео и&nbsp;приложения в&nbsp;согласованном стиле. Если <span class="nowrap">каких-то</span> решений еще&nbsp;нет, сначала обсудим их&nbsp;с&nbsp;вами и&nbsp;агентством.</p></details>
+        <details class="faq__item reveal"><summary>Можно использовать наши рендеры и&nbsp;архитектурные модели?</summary><p>Да, сначала посмотрим примеры и&nbsp;форматы файлов. Определим, что&nbsp;подходит для&nbsp;ролика или&nbsp;приложения, какие материалы нужно адаптировать и&nbsp;что&nbsp;создать заново. Это&nbsp;позволит оценить объем работы до&nbsp;начала производства контента.</p></details>
+        <details class="faq__item reveal"><summary>У&nbsp;нас&nbsp;несколько экранов необычной формы. Это&nbsp;подойдет?</summary><p>Да. В&nbsp;проекте «Эталона» мы&nbsp;делали ролики для&nbsp;<span class="nowrap">окон-экранов</span> в&nbsp;фасаде стенда. Для&nbsp;вашей площадки уточним расположение, размеры и&nbsp;разрешение экранов, способ воспроизведения. Затем подготовим композицию и&nbsp;файлы под&nbsp;эти&nbsp;условия.</p></details>
+        <details class="faq__item reveal"><summary>Можно заказать только ролик или&nbsp;приложение для&nbsp;тачскрина?</summary><p>Конечно. Можно поручить нам&nbsp;отдельную часть: видео, <span class="nowrap">3D-анимацию</span>, интерфейс или&nbsp;программу. Обсудим, какие материалы и&nbsp;функции нужны, кто&nbsp;отвечает за&nbsp;оборудование и&nbsp;как&nbsp;проверим готовую работу перед&nbsp;показом.</p></details>
+        <details class="faq__item reveal"><summary>А&nbsp;весь стенд можно сделать через&nbsp;вас?</summary><p>Да. У&nbsp;нас&nbsp;есть проверенные застройщики, поэтому весь проект можно вести через&nbsp;студию. Мы&nbsp;придумываем концепцию мультимедийной части, делаем контент и&nbsp;программы, а&nbsp;партнеры берут на&nbsp;себя конструкции, оборудование и&nbsp;застройку. Можем работать и&nbsp;с&nbsp;вашим подрядчиком.</p></details>
+      </div>
+    </section>
+
+    <section class="sect seealso">
+      <h2 class="sect__label reveal">Смотрите также</h2>
+      <ul class="sect__body seealso__list reveal"><li><a href="../exhibitions/">Выставки</a></li><li><a href="../stand-builders/">Застройщики стендов</a></li><li><a href="../video/">Видео и&nbsp;3D-анимация</a></li><li><a href="../interactive/">Интерактивные экспонаты</a></li></ul>
+    </section>
+
+
+    <section class="contact" id="contact">
+      <p class="contact__lead reveal">Расскажите, какой проект вы&nbsp;будете представлять и&nbsp;где. Можно прийти с&nbsp;готовой концепцией или&nbsp;поручить ее&nbsp;нам. Посмотрим материалы, обсудим экраны, интерактив и&nbsp;сроки.</p>
+      <h2 class="contact__title">
+        <span class="line"><span>Покажем ваш&nbsp;проект</span></span>
+        <span class="line"><span>на&nbsp;выставке <i class="pill"><video data-src="../../fresh/media/footer/developers.mp4" data-poster="../../fresh/media/footer/developers.webp" muted loop playsinline data-lazy preload="none"></video></i></span></span>
+      </h2>
+      <div class="contact__links">
+        <div class="contact__ways">
+          <a class="contact__mail" href="mailto:art@petrovichbrothers.ru">art@petrovichbrothers.ru</a>
+          <a class="contact__mail" href="tel:+79151978652">+7&nbsp;915&nbsp;197-86-52</a>
+          <a class="contact__mail contact__tg" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Telegram&nbsp;↗</a>
+          <a class="yt yt--m" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener" aria-label="YouTube-канал студии"><svg viewBox="0 0 48 34" aria-hidden="true"><rect width="48" height="34" rx="9" fill="currentColor"/><path d="M19.5 10v14l12-7z" fill="#111110"/></svg></a>
+        </div>
+        <a class="contact__btn contact__btn--m" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Написать в&nbsp;Telegram ↗</a>
+
+        <form class="callback contact__form" novalidate>
+          <div class="contact__row">
+            <input class="cpanel__input" type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="телефон" aria-label="Телефон">
+            <button class="cpanel__btn" type="submit">Перезвоните мне</button>
+          </div>
+          <label class="callback__agree"><input type="checkbox" name="agree"><span><a class="callback__doc" href="../../consent/" target="_blank">Согласие на&nbsp;обработку персональных данных</a></span></label>
+          <p class="callback__msg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <p class="contact__foot"><span>Москва, ул.&nbsp;Бауманская, 6, стр.&nbsp;2&nbsp;&nbsp;·&nbsp;&nbsp;<a class="contact__doc" href="../../privacy/">Политика конфиденциальности</a></span><a class="yt" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener" aria-label="YouTube-канал студии"><svg viewBox="0 0 48 34" aria-hidden="true"><rect width="48" height="34" rx="9" fill="currentColor"/><path d="M19.5 10v14l12-7z" fill="#111110"/></svg></a></p>
+    </section>
+  </main>
+
+  <aside class="cpanel" id="cpanel" aria-label="Контакты" inert>
+    <span class="cpanel__grip" aria-hidden="true"></span>
+    <button class="cpanel__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
+    <div class="cpanel__top">
+      <p class="cpanel__title">Покажем ваш проект<br>на&nbsp;выставке</p>
+      <form class="callback cpanel__form" novalidate>
+        <input class="cpanel__input" type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="телефон" aria-label="Телефон">
+        <label class="callback__agree"><input type="checkbox" name="agree"><span><a class="callback__doc" href="../../consent/" target="_blank">Согласие на&nbsp;обработку<br>персональных данных</a></span></label>
+        <button class="cpanel__btn" type="submit">Перезвоните мне</button>
+        <p class="callback__msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+    <div class="cpanel__ways">
+      <a href="mailto:art@petrovichbrothers.ru">art@petrovichbrothers.ru</a>
+      <a href="tel:+79151978652">+7&nbsp;915&nbsp;197-86-52</a>
+      <a href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Telegram&nbsp;↗</a>
+    </div>
+  </aside>
+
+  <a class="badge" href="#contact" aria-label="Контакты">
+    <span class="badge__label roll"><span>Контакты</span><span aria-hidden="true">Написать нам</span></span>
+    <span class="badge__arrow" aria-hidden="true">→</span>
+  </a>
+
+
+  <div class="msheet" id="msheet" role="dialog" aria-label="Меню">
+    <span class="msheet__grip" aria-hidden="true"></span>
+    <button class="msheet__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
+    <div class="msheet__main">
+      <a href="../" aria-current="page">Все работы</a>
+    </div>
+    <div class="mtags">
+      <div class="mtags__group" role="group" aria-label="Что делаем"><ul class="mtags__big"><li><a href="../interactive/">Интерактивные экспонаты</a></li><li><a href="../mapping/">Мэппинг</a></li><li><a href="../event-graphics/">Графика для&nbsp;мероприятия</a></li><li><a href="../product-design/">Дизайн продукта</a></li></ul><ul class="mtags__small"><li><a href="../video/">Видео и&nbsp;3D-анимация</a></li><li><a href="../websites/">Сайты</a></li></ul></div>
+      <div class="mtags__group" role="group" aria-label="Для кого"><ul class="mtags__big"><li><a href="../museums/">Музеи</a></li><li><a href="../exhibitions/">Выставки</a></li></ul><ul class="mtags__small"><li><a href="../stand-builders/">Застройщики стендов</a></li><li><a href="../film/">Кино</a></li><li><a href="../regions/">Регионы и&nbsp;города</a></li><li><a href="../events/">Организаторы мероприятий</a></li><li><a href="./" aria-current="page">Девелоперы</a></li><li><a href="../industry/">Промышленность</a></li></ul></div>
+    </div>
+    <div class="msheet__main msheet__main--after"><a href="../../services/">Услуги</a><a href="../../prices/">Цены</a><a href="../../about/">О студии</a><a href="#contact">Контакты</a>
+    </div>
+  </div>
+  <div class="msheet__shade"></div>
+
+  <div class="msheet msheet--tags" id="tsheet" role="dialog" aria-label="Работы по направлениям">
+    <span class="msheet__grip" aria-hidden="true"></span>
+    <button class="msheet__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
+    <div class="msheet__main">
+      <a href="../">Все работы</a>
+    </div>
+    <div class="mtags">
+      <div class="mtags__group" role="group" aria-label="Что делаем"><ul class="mtags__big"><li><a href="../interactive/">Интерактивные экспонаты</a></li><li><a href="../mapping/">Мэппинг</a></li><li><a href="../event-graphics/">Графика для&nbsp;мероприятия</a></li><li><a href="../product-design/">Дизайн продукта</a></li></ul><ul class="mtags__small"><li><a href="../video/">Видео и&nbsp;3D-анимация</a></li><li><a href="../websites/">Сайты</a></li></ul></div>
+      <div class="mtags__group" role="group" aria-label="Для кого"><ul class="mtags__big"><li><a href="../museums/">Музеи</a></li><li><a href="../exhibitions/">Выставки</a></li></ul><ul class="mtags__small"><li><a href="../stand-builders/">Застройщики стендов</a></li><li><a href="../film/">Кино</a></li><li><a href="../regions/">Регионы и&nbsp;города</a></li><li><a href="../events/">Организаторы мероприятий</a></li><li><a href="./" aria-current="page">Девелоперы</a></li><li><a href="../industry/">Промышленность</a></li></ul></div>
+    </div>
+  </div>
+  <div class="msheet__shade"></div>
+
+  <a class="orb" href="#contact" data-panel aria-label="Контакты">
+    <svg viewBox="0 0 100 100" aria-hidden="true"><defs><path id="orb-c" d="M50 50m-37 0a37 37 0 1 1 74 0a37 37 0 1 1-74 0"/></defs>
+      <text><textPath href="#orb-c" textLength="230" lengthAdjust="spacing">КОНТАКТЫ · НАПИСАТЬ НАМ · </textPath></text></svg>
+    <span class="orb__arrow" aria-hidden="true">→</span>
+  </a>
+
+  <div class="cursor" aria-hidden="true"><span></span></div>
+
+  <div class="peek" aria-hidden="true"><div class="peek__c"><img alt=""></div></div>
+
+  <dialog class="modal" aria-label="Видео">
+    <button class="modal__close" type="button" aria-label="Закрыть">✕</button>
+    <video class="modal__video" controls playsinline></video>
+  </dialog>
+
+  <script src="../../fresh/fresh.js?v=1121c"></script>
+  <script src="../../fresh/v2.js?v=32"></script>
+  <script src="../../fresh/cookies.js?v=1119i"></script>
+</body>
+</html>

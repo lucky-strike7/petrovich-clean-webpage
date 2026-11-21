@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { once } from 'node:events';
+import { get } from 'node:http';
 import { mkdtemp,writeFile,rm,mkdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -13,6 +14,10 @@ async function withServer(t,contact){
   await writeFile(join(root,'index.html'),'<h1>New site</h1>');await writeFile(join(root,'index.html.gz'),gzipSync('<h1>New site</h1>'));await writeFile(join(root,'404.html'),'<h1>Missing</h1>');await writeFile(join(root,'favicon.svg'),'0123456789');await writeFile(join(root,'.env'),'SECRET');
   await mkdir(join(root,'works/khersones'),{recursive:true});
   await writeFile(join(root,'works/khersones/index.html'),'<h1>Новый Херсонес</h1>');
+  for (const slug of ['about','works','works/exhibitions']) {
+    await mkdir(join(root,slug),{recursive:true});
+    await writeFile(join(root,slug,'index.html'),'<h1>Page</h1>');
+  }
   const app=createApp({root,contact:contact||createContactHandler({limit:100,deliver:async()=>false})});
   app.listen(0,'127.0.0.1');await once(app,'listening');
   t.after(async()=>{await new Promise(resolve=>app.close(resolve));await rm(root,{recursive:true,force:true});});
@@ -70,10 +75,10 @@ test('delivery concurrency stays bounded while requests are pending',async t=>{
 test('legacy URLs redirect permanently with attribution intact and no extra redirect hop',async t=>{
  const base=await withServer(t);
  const mappings=[
-  ['/video-content','/'],['/videocontent','/'],['/about-us','/#process'],['/testimonials','/'],
+  ['/video-content','/works/exhibitions/'],['/videocontent','/works/exhibitions/'],['/about-us','/about/'],['/testimonials','/'],
   ['/contacts','/#contact'],['/contact','/#contact'],['/projects/khakasiya','/works/khakasia/'],['/cases/khakasia','/works/khakasia/stol/'],
-  ['/projects/hersones','/works/khersones/'],['/cases/hersones','/works/khersones/'],['/projects/hbo','/works/hbo/'],['/cases/hbo','/works/hbo/'],['/projects','/#projects'],['/projects/etalon','/works/etalon/'],['/projects/gorodobrazovaniyya','/works/gorodobrazovaniya/'],['/projects/amperka','/works/cyberbug/'],['/cases/cyberbug','/works/cyberbug/'],['/cases/rosatom/','/works/rosatom/'],['/projects/unknown-old','/#projects'],
-  ['/cyberbug','/works/cyberbug/'],['/blog-list','/'],['/blogs/article','/'],['/blogs','/'],['/p','/'],
+  ['/projects/hersones','/works/khersones/'],['/cases/hersones','/works/khersones/'],['/projects/hbo','/works/hbo/'],['/cases/hbo','/works/hbo/'],['/projects','/works/'],['/projects/etalon','/works/etalon/'],['/projects/gorodobrazovaniyya','/works/gorodobrazovaniya/'],['/projects/amperka','/works/cyberbug/'],['/cases/cyberbug','/works/cyberbug/'],['/cases/rosatom/','/works/rosatom/'],
+  ['/cyberbug','/works/cyberbug/'],['/blog-list','/'],['/blogs','/'],['/p','/'],
  ];
  const query='?utm_source=yandex&utm_campaign=a%2Bb&yclid=123&tag=one&tag=two';
  for(const [old,target] of mappings)for(const slash of ['', '/'])for(const method of ['GET','HEAD']){
@@ -82,7 +87,16 @@ test('legacy URLs redirect permanently with attribution intact and no extra redi
   assert.equal(r.headers.get('location'),path+query+(hash?'#'+hash:''),old);assert.equal(await r.text(),'');
  }
  // Unrelated URLs and lookalike prefixes keep the real 404; POST is never rewritten.
- for(const path of ['/video-content-old','/projects-old','/blogspot/post','/unknown','/projects/.env'])assert.equal((await fetch(base+path,{redirect:'manual'})).status,404,path);
+ for(const path of ['/video-content-old','/projects-old','/projects/unknown-old','/blogs/article','/blogspot/post','/unknown','/projects/.env'])assert.equal((await fetch(base+path,{redirect:'manual'})).status,404,path);
+ for(const path of ['/','/works/khersones/']) {
+   const r=await fetch(base+path+'index.html'+query,{redirect:'manual'});
+   assert.equal(r.status,301);assert.equal(r.headers.get('location'),path+query);
+ }
+ for(const [old,target] of [['/about/','/about/'],['/index.html','/'],['/video-content','/works/exhibitions/']]) {
+   const [r]=await once(get(base+old+query,{headers:{Host:'www.petrovichbrothers.ru'}}),'response');
+   r.resume();
+   assert.equal(r.statusCode,301);assert.equal(r.headers.location,'https://petrovichbrothers.ru'+target+query);
+ }
  assert.equal((await fetch(base+'/video-content',{method:'POST',redirect:'manual'})).status,405);
  for(const path of ['/video-content','/about-us','/contact','/projects','/projects/hersones']){
   const response=await fetch(base+path);assert.equal(response.status,200);assert.ok(response.url.startsWith(base+'/'));

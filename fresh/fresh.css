@@ -336,6 +336,10 @@ html:not(.js) .card__how ul { opacity: 1; }
 }
 .sect__label { grid-column: 1 / 4; padding-top: .35em; font-family: var(--font-text); font-weight: 400; font-size: 20px; }
 .sect__body { grid-column: 4 / 13; }
+@media (min-width: 901px) {
+  .landing-scope { align-items: baseline; }
+  .landing-scope > .sect__label { padding-top: 0; }
+}
 .sect__lead { max-width: 22em; font-size: clamp(26px, 2.6vw, 44px); line-height: 1.1; letter-spacing: -.015em; }
 .sect__note { margin-top: 28px; font-family: var(--font-text); font-weight: 400; font-size: 16px; color: var(--muted); }
 .sect h3 { font-size: clamp(20px, 1.5vw, 26px); line-height: 1.15; letter-spacing: -.01em; }
@@ -721,8 +725,7 @@ html:not(.js) .line > span, html:not(.js) .reveal, html:not(.js) .pill { transfo
 @media (pointer: fine) {
   .peek { display: block; position: fixed; left: 0; top: 0; z-index: 30; pointer-events: none; }
   .peek__c {
-    position: relative; width: 200px; height: 200px; margin: 24px 0 0 24px; border-radius: 50%; overflow: hidden;
-    background: #111; box-shadow: 0 12px 40px rgba(17, 17, 16, .18);
+    position: relative; width: 200px; height: 200px; margin: 24px 0 0 24px; clip-path: circle(50%);
     transform: scale(0); transition: transform .45s var(--ease);
   }
   .peek.is-on .peek__c { transform: none; }
@@ -784,8 +787,27 @@ section[id] { scroll-margin-top: 80px; }
 .contact { scroll-margin-top: 0; }
 
 /* Ссылка внутри обычного текста (например, на кейс из «Сколько стоит») */
-.text-link { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; transition: color .3s; }
-.text-link:hover { color: var(--accent); }
+.text-link {
+  color: inherit;
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) right bottom / 0 1px no-repeat;
+  transition: background-size .45s var(--ease);
+}
+.text-link:hover, .text-link:focus-visible {
+  color: inherit;
+  background-position: left bottom;
+  background-size: 100% 1px;
+}
+@media (hover: none) {
+  .text-link { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  :is(.page-services, .page-prices) .text-link {
+    text-decoration: none;
+    background-size: 0 1px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .text-link { transition: none; }
+}
 
 /*
   ---------- Плавная прокрутка (Lenis, fresh/vendor/lenis.min.js) ----------

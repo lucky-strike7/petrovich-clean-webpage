@@ -1,0 +1,38 @@
+.page-prices .prices-intro { padding-bottom: clamp(64px, 9vw, 130px); }
+.page-prices main section[id] { scroll-margin-top: 96px; }
+
+.prices-format + .prices-format { margin-top: clamp(40px, 6vw, 86px); }
+.prices-format__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+.prices-format .prices-format__head h3,
+.prices-format__amount {
+  font: 500 clamp(25px, 2.7vw, 42px)/1.1 var(--font);
+  letter-spacing: -.02em;
+}
+.prices-format__amount { white-space: nowrap; }
+.prices-format > p {
+  max-width: 58ch;
+  margin-top: 14px;
+  font: 400 clamp(16px, 1.4vw, 22px)/1.4 var(--font-text);
+}
+.prices-format .prices-format__examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 22px;
+  margin: 14px 0 0;
+  font: 400 16px/1.5 var(--font-text);
+}
+.page-prices .prices-exhibits .works { margin: 0; padding: 0; }
+.page-prices .prices-copy .about__desc { margin-top: 0; }
+.page-prices .prices-copy .about__desc + .about__desc { margin-top: 1em; }
+
+@media (max-width: 600px) {
+  .prices-format__head { align-items: flex-start; flex-direction: column; }
+  .prices-format .prices-format__examples { display: grid; }
+  .page-prices .prices-exhibits :is(.work__title, .work__meta) { padding-inline: 0; }
+}

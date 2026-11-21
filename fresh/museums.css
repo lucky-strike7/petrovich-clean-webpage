@@ -1,0 +1,27 @@
+/* Только музейная посадочная; общие карточки и контакты не меняются. */
+.page-museums .landing-scope .about__desc { margin-top: 0; }
+.page-museums .contact__lead { max-width: 48em; }
+.works-mix > .museum-film {
+  display: grid; grid-template-columns: minmax(0, 32em) minmax(140px, 250px);
+  align-items: center; justify-content: space-between; gap: clamp(24px, 6vw, 100px);
+  margin: clamp(44px, 6vw, 96px) var(--pad) 0;
+}
+.museum-film h2 { font-size: clamp(28px, 3vw, 48px); line-height: 1.06; }
+.museum-film p, .museum-film a, .museum-film figcaption { font: 400 18px/1.45 var(--font-text); }
+.museum-film p { margin: 16px 0; }
+.museum-film figure { margin: 0; }
+.museum-film video { display: block; width: 100%; height: auto; border-radius: var(--radius); }
+.museum-film figcaption { margin-top: 9px; font-size: 15px; color: var(--muted); }
+@media (hover: none) {
+  .museum-film .text-link { text-decoration: none; background-size: 0 1px; }
+}
+
+@media (max-width: 600px) {
+  .works-mix > .museum-film { grid-template-columns: 1fr; }
+  .museum-film p, .museum-film a { font-size: 16px; }
+  .museum-film figure { width: min(75%, 230px); }
+  .page-museums .landing-scope .about__desc { margin-top: 20px; }
+  .page-museums #w-khersones .card__info { display: block; padding-top: 12px; }
+  .page-museums #w-khersones .card__meta { display: none; }
+  .page-museums .contact__lead { display: block; }
+}

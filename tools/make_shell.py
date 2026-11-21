@@ -6,6 +6,8 @@ import os, re, sys, glob, shutil
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from v2parts import SITE, Page, V2CSS, V2JS
 
+from homepage import CTA as HOME_CTA, render_home
+
 os.chdir(SITE)
 pages = ['index.html'] + sorted(glob.glob('cases/*/index.html'))
 # Кейсы, у которых уже своя страница в новой структуре (собираются отдельными скриптами)
@@ -29,15 +31,14 @@ def build(f):
     t = open(os.path.join('_src', f), encoding='utf-8').read()
     home = f == 'index.html'
     slug = f.replace(os.sep, '/').split('/')[1] if not home else ''
-    p = Page(B='' if home else '../../', W='works/' if home else '../../works/', cta='media' if slug in MEDIA_CASES else None)
+    p = Page(B='' if home else '../../', W='works/' if home else '../../works/', cta='media' if slug in MEDIA_CASES else None,
+             cta_text=HOME_CTA if home else None)
     header = p.header()
     if home:  # на главной «Работы» не текущий раздел
         header = header.replace('<a class="is-on" href=', '<a href=', 1).replace('class="top__logo" href=""', 'class="top__logo" href="./"', 1)
     t, n = re.subn(r'<header class="top">.*?</header>', lambda m: header, t, count=1, flags=re.S); assert n, f
-    if home:  # все работы теперь на странице «Работы»
-        t, n = re.subn(r'    <section class="sect works-sect".*?</section>\n', '', t, count=1, flags=re.S); assert n
-        # Старого кейса стола больше нет: стол — на своей странице в разделе «Работы»
-        t = t.replace('href="cases/khakasia/"', 'href="works/khakasia/stol/"')
+    if home:
+        t = render_home(t, p)
     if not home:
         # Кнопка «← Все проекты» на телефоне ведет к «Работам» (у кнопки бывают и другие атрибуты, например data-back)
         t = re.sub(r'(<a class="case-fab case-fab--back" href=")[^"]*("[^>]*>.*?)Все проекты', rf'\g<1>{p.W}\g<2>Все работы', t, count=1, flags=re.S)
@@ -53,7 +54,7 @@ def build(f):
         t = t.replace(f'https://petrovichbrothers.ru/cases/{slug}/"', f'https://petrovichbrothers.ru/works/{slug}/"')  # только адрес страницы, картинки для соцсетей остаются в cases/
     t = p.finish(t)
     if home:
-        t = t.replace('<a href="works/" aria-current="page">Работы</a>', '<a href="works/">Работы</a>', 1)
+        t = t.replace('<a href="works/" aria-current="page">Все работы</a>', '<a href="works/">Все работы</a>', 1)
     return t
 
 open('index.html', 'w', encoding='utf-8', newline='').write(build('index.html'))
@@ -74,7 +75,7 @@ def build_404():
     t, n = re.subn(r'(<link rel="stylesheet" href="fresh/fresh\.css\?v=\w+">)', lambda m: m.group(1) + f'\n  <link rel="stylesheet" href="fresh/{V2CSS}">', t, count=1); assert n
     t = re.sub(r'<p class="nf__text">.*?</p>', '<p class="nf__text">Возможно, ссылка устарела: мы&nbsp;обновили сайт. Все работы собраны в&nbsp;разделе «Работы».</p>', t, count=1, flags=re.S)
     t = re.sub(r'<div class="nf__links">.*?</div>', '<div class="nf__links">\n      <a class="nf__btn" href="works/">Все работы</a>\n      <a class="sect__link" href="./">На&nbsp;главную</a>\n    </div>', t, count=1, flags=re.S)
-    sheet = p.msheet().replace('<a href="works/" aria-current="page">Работы</a>', '<a href="works/">Работы</a>').replace('href="#contact"', 'href="./#contact"')
+    sheet = p.msheet().replace('<a href="works/" aria-current="page">Все работы</a>', '<a href="works/">Все работы</a>').replace('href="#contact"', 'href="./#contact"')
     t = t.replace('</body>', sheet + f'  <script src="fresh/{V2JS}"></script>\n</body>', 1)
     open('404.html', 'w', encoding='utf-8', newline='').write(t)
 

@@ -5,11 +5,10 @@ NL = chr(10)
 
 # Корень сайта — папка над tools/ (сборщики лежат в репозитории рядом со страницами)
 SITE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V2CSS = 'v2.css?v=115'
-V2JS = 'v2.js?v=29'
-# Страницы «Услуги», «Цены», «О студии» еще не сделаны: пока False, их нет в меню и на них нет ссылок.
-# Когда страницы появятся — True и пересобрать все.
-PAGES_READY = False
+V2CSS = 'v2.css?v=122'
+V2JS = 'v2.js?v=32'
+# Включаем только готовые самостоятельные страницы.
+READY_PAGES = {'prices', 'services', 'about'}
 
 import json, os, html
 DATA = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'works.json'), encoding='utf-8'))
@@ -20,13 +19,13 @@ DAT = {x[0]: x[2] for x in DATA['tags']['who']}
 NAME = dict(WHAT + WHO)
 # Две оси, как раньше: «Что делаем» и «Для кого». В каждой — крупные теги (главное) и мелкие (остальное).
 # Музеи и выставки крупные: с них начинаются проекты Херсонеса и Хакасии. Порядок здесь — порядок в меню и на «Работах».
-WHAT_BIG = [(k, NAME[k]) for k in ('eksponaty', 'mapping', 'scena', 'dizayn')]
-WHAT_SMALL = [(k, NAME[k]) for k in ('video', 'sayty')]
-WHO_BIG = [(k, NAME[k]) for k in ('muzei', 'vystavki')]
-WHO_SMALL = [(k, NAME[k]) for k in ('zastr', 'kino', 'regiony', 'meropr', 'developery', 'prom')]
+WHAT_BIG = [(k, NAME[k]) for k in ('interactive', 'mapping', 'event-graphics', 'product-design')]
+WHAT_SMALL = [(k, NAME[k]) for k in ('video', 'websites')]
+WHO_BIG = [(k, NAME[k]) for k in ('museums', 'exhibitions')]
+WHO_SMALL = [(k, NAME[k]) for k in ('stand-builders', 'film', 'regions', 'events', 'developers', 'industry')]
 WHAT, WHO = WHAT_BIG + WHAT_SMALL, WHO_BIG + WHO_SMALL
 # Теги, где вместо отдельных экспонатов крупных проектов стоят обложки самих проектов (тег → проект → экспонат)
-TAG_PROJECTS = {'muzei': ['khersones', 'khakasia'], 'vystavki': ['khakasia', 'khersones']}
+TAG_PROJECTS = {'museums': ['khersones', 'khakasia'], 'exhibitions': ['khakasia', 'khersones'], 'regions': ['khakasia', 'khersones']}
 
 # Название карточки без разметки (для data-title и aria): перенос строки — запятая
 def plain(t):
@@ -49,7 +48,7 @@ WORKS_MD = os.path.join(SITE, 'texts', 'works.md')
 _FIELDS = {'Название': 'title', 'Проект': 'project', 'Что это': 'kind', 'Год': 'year', 'Что делаем': 'what', 'Для кого': 'who',
            'Описание': 'desc', 'Где и когда': 'where', 'Картинка': 'img', 'Превью': 'preview', 'Крупное видео': 'big',
            'Крупное видео, телефон': 'big_m', 'Ссылка': 'href', 'Обзор': 'video', 'Скрыть': 'hidden',
-           'Награда': 'award', 'Фон': 'dark', 'Картинка, телефон': 'img_m', 'Обложка крупной': 'big_img'}
+           'Награда': 'award', 'Фон': 'dark', 'Картинка, телефон': 'img_m', 'Обложка крупной': 'big_img', 'Превью только в плитке': 'tile_preview_only'}
 def _load_works():
     items = []
     for block in re.split(r'^## ', open(WORKS_MD, encoding='utf-8').read(), flags=re.M)[1:]:
@@ -61,7 +60,7 @@ def _load_works():
             k, v = _FIELDS[m.group(1)], m.group(2)
             if k in ('what', 'who'): v = [x.strip() for x in v.split(',') if x.strip()]
             elif k == 'year': v = int(v)
-            elif k == 'hidden': v = v.lower() in ('да', 'yes', '1')
+            elif k in ('hidden', 'tile_preview_only'): v = v.lower() in ('да', 'yes', '1')
             elif k == 'dark': v = v.lower().startswith('черн')
             w[k] = v
         items.append(w)
@@ -71,19 +70,19 @@ DATA['items'] = _load_works()
 VISIBLE = [w for w in DATA['items'] if not w.get('hidden')]
 COUNT = {slug: sum(1 for w in VISIBLE if slug in w['what'] + w['who']) for slug, _ in WHAT + WHO}
 # Кружок у курсора в меню: кадр и короткий ролик направления
-PEEK = {'eksponaty': ('fresh/media/archive/referus.jpg', 'fresh/media/archive/referus-preview.mp4'),
+PEEK = {'interactive': ('fresh/media/archive/referus.jpg', 'fresh/media/archive/referus-preview.mp4'),
         'video': ('fresh/media/hbo-intro.webp', 'fresh/media/hbo-intro.mp4'),
         'mapping': ('fresh/media/strana-sveta.webp', 'fresh/media/strana-sveta.mp4'),
-        'scena': ('fresh/media/archive/premiarb.jpg', 'fresh/media/archive/premiarb-preview.mp4'),
-        'sayty': ('fresh/media/archive/zebralog.jpg', 'fresh/media/archive/zebralog-preview.mp4'),
-        'dizayn': ('fresh/media/archive/cyberbug.jpg', 'fresh/media/archive/cyberbug-preview.mp4'),
-        'muzei': ('fresh/media/shturval-peek.webp', 'fresh/media/shturval-peek.mp4'),
-        'vystavki': ('fresh/media/khakasy-peek.webp', 'fresh/media/khakasy-peek.mp4')}
+        'event-graphics': ('fresh/media/archive/premiarb.jpg', 'fresh/media/archive/premiarb-preview.mp4'),
+        'websites': ('fresh/media/archive/zebralog.jpg', 'fresh/media/archive/zebralog-preview.mp4'),
+        'product-design': ('cases/cyberbug/media/cb-hero.webp', None),
+        'museums': ('fresh/media/shturval-peek.webp', 'fresh/media/shturval-peek.mp4'),
+        'exhibitions': ('fresh/media/khakasy-peek.webp', 'fresh/media/khakasy-peek.mp4')}
 
 FAQ = [
   ('Сколько стоит экспонат?', 'Ориентир такой: программа для тачскрина от&nbsp;500&nbsp;тыс.&nbsp;₽, интерактивный экспонат с&nbsp;датчиками от&nbsp;900&nbsp;тыс.&nbsp;₽, видеоролик от&nbsp;700&nbsp;тыс.&nbsp;₽. Точная цена зависит от&nbsp;задачи: расскажите, что задумали, и&nbsp;мы посчитаем.'),
   ('Сколько длится работа?', 'Обычно около месяца. Большие проекты, например целый зал, занимают 3–5 месяцев. Если совсем срочно, можем уложиться в&nbsp;две недели.'),
-  ('Вы делаете железо или только программу и&nbsp;контент?', 'Железо тоже. Вместе с&nbsp;проверенными подрядчиками делаем корпуса, механику, экраны, датчики и&nbsp;контроллеры. Мы придумываем, как все устроено, подрядчики изготавливают, а&nbsp;на&nbsp;площадке собираем и&nbsp;запускаем сами.'),
+  ('Можно заказать через вас весь стенд или&nbsp;экспозицию?', 'Да. У&nbsp;нас есть проверенные застройщики, поэтому весь проект можно вести через нас. Мы придумываем концепцию мультимедийной части, делаем контент и&nbsp;программы. Партнеры берут на&nbsp;себя застройку, конструкции и&nbsp;оборудование. Вместе обсуждаем, как все будет работать, и&nbsp;готовим запуск. Если у&nbsp;вас уже есть свой подрядчик, можем работать с&nbsp;ним.'),
   ('Можно по&nbsp;нашей концепции или с&nbsp;нашим архитектором?', 'Да, на&nbsp;больших проектах так чаще всего и&nbsp;бывает. У&nbsp;музея уже есть архитектор и&nbsp;концепция, а&nbsp;мы развиваем ее в&nbsp;экспонатах, сценариях и&nbsp;интерфейсах.'),
   ('А&nbsp;концепцию экспозиции придумаете сами?', 'Конечно. Придумываем и&nbsp;отдельный экспонат, и&nbsp;всю экспозицию: сценарий, маршрут посетителя, что он трогает и&nbsp;что видит.'),
   ('Работаете в&nbsp;регионах?', 'Да, по&nbsp;всей России: от&nbsp;Севастополя до&nbsp;Екатеринбурга. Сами приезжаем на&nbsp;монтаж, запускаем и&nbsp;сопровождаем.'),
@@ -98,9 +97,11 @@ PLAY = '<span class="case-review__play" aria-hidden="true"><svg viewBox="0 0 16 
 class Page:
     """B — путь от страницы до корня сайта, W — до /works/, cur — тег этой страницы (если это страница тега)."""
 
-    def __init__(self, B, W, cur=None, cta=None):
+    def __init__(self, B, W, cur=None, cta=None, cta_text=None, nav_page=None):
         # cta — тема призыва внизу страницы: 'museum', 'media' или None (как на главной, про экспонат)
         self.B, self.W, self.cur, self.cta = B, W, cur, cta
+        self.cta_text = cta_text
+        self.nav_page = nav_page
 
     # Призыв в черном блоке контактов: под тему страницы. Заголовок — две строки, во второй кружок с роликом.
     CTA = {
@@ -112,7 +113,7 @@ class Page:
                   'Давайте <span class="acc">обсудим</span>', '<span class="acc">задачу</span>'),
     }
 
-    def project_photo(self, path, alt, caption=''):
+    def project_photo(self, path, alt, caption='', mobile=None):
         """Общий кадр проекта (стенд, зал) под заголовком страницы проекта. Появляется, только когда файл лежит на месте:
         положить картинку по адресу path (от корня сайта, ширина 2400 px, webp) и пересобрать."""
         if not os.path.exists(os.path.join(SITE, path)): return ''
@@ -120,17 +121,38 @@ class Page:
         import subprocess  # размеры картинки — чтобы страница не прыгала, пока она грузится
         wh = subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'stream=width,height', '-of', 'csv=p=0', os.path.join(SITE, path)], capture_output=True, text=True).stdout.strip().split(',')
         size = f' width="{wh[0]}" height="{wh[1]}"' if len(wh) == 2 else ''
+        image = f'<img src="{self.B}{path}" alt="{html.escape(alt)}"{size} loading="lazy">'
+        if mobile:
+            image = f'<picture><source media="(max-width: 600px)" srcset="{self.B}{mobile}">{image}</picture>'
         return f'''
     <figure class="project-photo reveal">
-        <img src="{self.B}{path}" alt="{html.escape(alt)}"{size} loading="lazy">{cap}
+        {image}{cap}
     </figure>
 '''
 
+    FOOTER_CLIPS = {
+        'museums', 'exhibitions', 'stand-builders', 'interactive', 'video',
+        'industry', 'regions', 'developers', 'events', 'event-graphics',
+        'mapping', 'film', 'websites', 'product-design',
+    }
+
     def contact(self, t):
-        lead, l1, l2 = self.CTA[self.cta]
+        if self.cur in self.FOOTER_CLIPS:
+            default = f'{self.B}fresh/media/mengiry'
+            clip = f'{self.B}fresh/media/footer/{self.cur}'
+            old = f'<i class="pill"><video data-src="{default}.mp4" data-poster="{default}.webp"'
+            new = f'<i class="pill"><video data-src="{clip}.mp4" data-poster="{clip}.webp"'
+            if old not in t:
+                raise ValueError(f'{self.cur}: footer video markup is missing')
+            t = t.replace(old, new, 1)
+        lead, l1, l2 = self.cta_text if self.cta_text is not None else self.CTA[self.cta]
         t = re.sub(r'(<p class="contact__lead reveal">).*?(</p>)', lambda m: m.group(1) + lead + m.group(2), t, count=1, flags=re.S)
         t = re.sub(r'(<h2 class="contact__title">\s*<span class="line"><span>).*?(</span></span>\s*<span class="line"><span>).*?( <i class="pill">)',
                    lambda m: m.group(1) + l1 + m.group(2) + l2 + m.group(3), t, count=1, flags=re.S)
+        # Один слоган для нижнего блока и шторки. В узкой шторке слова могут переноситься.
+        panel_title = '<br>'.join(html.escape(html.unescape(plain(line))) for line in (l1, l2))
+        t = re.sub(r'(<p class="cpanel__title">).*?(</p>)',
+                   lambda m: m.group(1) + panel_title + m.group(2), t, count=1, flags=re.S)
         return t
 
     def tag_href(self, slug):
@@ -149,32 +171,36 @@ class Page:
             pk = ''
             if count and s in PEEK:
                 img, vid = PEEK[s]
-                pk = f' data-peek="{self.B}{img}" data-peek-video="{self.B}{vid}"'
+                pk = f' data-peek="{self.B}{img}"'
+                if vid:
+                    pk += f' data-peek-video="{self.B}{vid}"'
             out += f'<li><a href="{self.tag_href(s)}"{self._cur(s)}{pk}><span>{n}</span>{sup}</a></li>'
         return out
 
     def more_links(self, sheet=False):
-        """Услуги, Цены, О студии — только когда страницы готовы (PAGES_READY)."""
-        if not PAGES_READY: return ''
-        B = self.B
-        items = [(f'{B}services/', 'Услуги'), (f'{B}prices/', 'Цены'), (f'{B}about/', 'О студии')]
-        if sheet: return ''.join(f'<a href="{h}">{n}</a>' for h, n in items)
-        return ''.join(f'      <a href="{h}">{n}</a>\n' for h, n in items)
-
-    def prices_link(self):
-        return f'        <a class="sect__link reveal" href="{self.B}prices/">Все цены и&nbsp;что входит&nbsp;→</a>\n' if PAGES_READY else ''
+        items = [('services', 'Услуги'), ('prices', 'Цены'), ('about', 'О студии')]
+        links = []
+        for slug, label in items:
+            if slug not in READY_PAGES:
+                continue
+            current = ' aria-current="page"' if slug == self.nav_page else ''
+            active = ' class="is-on"' if current and not sheet else ''
+            links.append(f'<a href="{self.B}{slug}/"{active}{current}>{label}</a>')
+        return ''.join(links) if sheet else ''.join(f'      {link}\n' for link in links)
 
     def header(self, sub='', ctx=''):
         """sub — вторая строка шапки на компьютере (путь или переключатель), ctx — подсказка «где ты» в шапке на телефоне.
         Обе появляются, когда свой путь или заголовок на странице уехал вверх."""
         B, W = self.B, self.W
+        works_active = ' class="is-on"' if not self.nav_page else ''
         return f'''<header class="top top--v2">
+    <script src="{B}fresh/header-state.js?v=1"></script>
     <a class="top__logo" href="{B}" aria-label="Студия братьев Пе́трович, на главную">
       <img src="{B}fresh/logo-vertical.svg" alt="Petrovich Brothers" width="244" height="121">
     </a>
     <nav class="top__nav" aria-label="Основное меню">
       <div class="top__dd">
-        <a class="is-on" href="{W}">Работы <i aria-hidden="true"></i></a>
+        <a{works_active} href="{W}">Работы <i aria-hidden="true"></i></a>
         <div class="top__menu mega">
           <div class="mega__what"><h4>Что делаем</h4><ul class="mega__big">{self.mega(WHAT_BIG)}</ul><ul class="mega__small">{self.mega(WHAT_SMALL, count=False)}</ul></div>
           <div class="mega__who"><h4>Для кого <a class="mega__all" href="{W}"><span>Все работы</span>&nbsp;→</a></h4><ul class="mega__big">{self.mega(WHO_BIG)}</ul><ul class="mega__small">{self.mega(WHO_SMALL, count=False)}</ul></div>
@@ -187,12 +213,13 @@ class Page:
 
     def msheet(self):
         B, W = self.B, self.W
+        works_current = ' aria-current="page"' if not self.nav_page else ''
         return f'''
   <div class="msheet" id="msheet" role="dialog" aria-label="Меню">
     <span class="msheet__grip" aria-hidden="true"></span>
     <button class="msheet__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
     <div class="msheet__main">
-      <a href="{W}" aria-current="page">Работы</a>
+      <a href="{W}"{works_current}>Все работы</a>
     </div>
 {self.tag_groups()}
     <div class="msheet__main msheet__main--after">{self.more_links(sheet=True)}<a href="#contact">Контакты</a>
@@ -207,8 +234,8 @@ class Page:
             lis = ''.join(f'<li><a href="{self.tag_href(k)}"{self._cur(k)}>{DAT[k] if (who and dative) else n}</a></li>' for k, n in tags)
             return f'<ul class="mtags__{cls}">{lis}</ul>'
         return (f'    <div class="mtags">\n'
-                f'      <h4>Что делаем</h4>{ul(WHAT_BIG, "big")}{ul(WHAT_SMALL, "small")}\n'
-                f'      <h4>Для кого</h4>{ul(WHO_BIG, "big", True)}{ul(WHO_SMALL, "small", True)}\n'
+                f'      <div class="mtags__group" role="group" aria-label="Что делаем">{ul(WHAT_BIG, "big")}{ul(WHAT_SMALL, "small")}</div>\n'
+                f'      <div class="mtags__group" role="group" aria-label="Для кого">{ul(WHO_BIG, "big", True)}{ul(WHO_SMALL, "small", True)}</div>\n'
                 f'    </div>')
 
     def switcher(self):
@@ -260,14 +287,13 @@ class Page:
 
     def tsheet(self):
         """Шторка со всеми тегами — из переключателя на телефоне."""
-        tags = lambda tt: [(self.tag_href(k), n, k == self.cur) for k, n in tt]
-        # Без подписей «Что делаем» и «Для кого»: группы разделены отступом, «для кого» — в дательном падеже
-        who = [(self.tag_href(k), DAT[k], k == self.cur) for k, _ in WHO]
         return f'''
-  <div class="msheet tsheet" id="tsheet" role="dialog" aria-label="Работы по направлениям">
+  <div class="msheet msheet--tags" id="tsheet" role="dialog" aria-label="Работы по направлениям">
     <span class="msheet__grip" aria-hidden="true"></span>
     <button class="msheet__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
-    <a class="tsheet__all" href="{self.W}">Все работы</a>
+    <div class="msheet__main">
+      <a href="{self.W}">Все работы</a>
+    </div>
 {self.tag_groups()}
   </div>
   <div class="msheet__shade"></div>
@@ -337,7 +363,7 @@ class Page:
             return f'          <li class="reveal"><button class="work" type="button" data-video="{B}{w["video"]}" data-title="{html.escape(plain(w["title"]))}" data-cursor="Смотреть видео"{prev}>{inner}</button></li>\n'
         return f'          <li class="reveal"><a class="work" href="{B}{w["href"]}" data-cursor="Посмотреть"{prev}>{inner}</a></li>\n'
 
-    def big_card(self, w, review=False, anchor=None, meta=True, tile_phone=False):
+    def big_card(self, w, review=False, anchor=None, meta=True, tile_phone=False, link_title=False):
         """Крупная карточка как у экспоната на главной: ролик 2:1 (на телефоне 4:5), слева название,
         справа описание с вопросом, «где и когда» и ссылка. Фон: черный — как блок «Страны Света» на главной."""
         B = self.B
@@ -345,11 +371,13 @@ class Page:
         if review:  # на странице проекта: ролик открывает обзор экспоната, ссылки на себя не нужно
             w = dict(w, href=None); href = None
             tag, attrs = 'div', f'data-video="{B}{w["video"]}" data-title="{html.escape(plain(w["title"]))} — видеообзор" data-cursor="Смотреть обзор"'
-        big, big_m = w.get('big') or w.get('preview'), w.get('big_m') or w.get('big') or w.get('preview')
+        preview = None if w.get('tile_preview_only') else w.get('preview')
+        big = w.get('big') or preview
+        big_m = w.get('big_m') or big
         # tile_phone: на телефоне крупная карточка такая же, как плитка — горизонтальный ролик плитки и маленькая обложка
         poster_m = w.get('img_m') or w.get('big_img') or w['img']
         if tile_phone:
-            big_m, poster_m = w.get('preview') or big, w['img']
+            big_m, poster_m = preview or big, w['img']
         if big:
             media = (f'<video data-poster="{B}{w.get("big_img") or w["img"]}" data-poster-m="{B}{poster_m}" muted loop playsinline data-lazy preload="none">'
                      f'<source data-src="{B}{big_m}" type="video/mp4" media="(max-width: 600px)"><source data-src="{B}{big}" type="video/mp4"></video>')
@@ -374,14 +402,17 @@ class Page:
                    f'<svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></i><span>{go}{dur}</span></button>')
         else:
             kind, act = f'<p class="card__kind">{w["kind"]}</p>', ''
+        title = w['title']
+        if link_title and href:
+            title = f'<a class="card__link" href="{href}">{title}</a>'
         card = f'''      <article class="card work-big" id="{anchor or "w-" + w["id"]}">
         <{tag} class="card__media" {attrs}>{media}</{tag}>
         <div class="card__row">
-          <h3 class="card__title reveal">{w["title"]}{award}</h3>
+          <h3 class="card__title reveal">{title}{award}</h3>
           {kind}
           <div class="card__info">
             <p class="card__desc reveal">{desc}</p>
-            {f'<p class="card__meta reveal"><span>{typo(w.get("where") or str(w["year"]))}</span></p>' if meta else ""}
+{f'            <p class="card__meta reveal"><span>{typo(w.get("where") or str(w["year"]))}</span></p>' if meta else ""}
             <div class="card__actions">{act}</div>
           </div>
         </div>
@@ -391,7 +422,7 @@ class Page:
             return f'    <section class="event work-dark">\n{card}    </section>\n'
         return card
 
-    def works_mix(self, entries):
+    def works_mix(self, entries, after_first=''):
         """Работы по порядку: крупные по правилу big_positions, между ними — плитка в две колонки."""
         big = self.big_positions(len(entries))
         out, tiles = '', ''
@@ -401,6 +432,8 @@ class Page:
             if i in big:
                 out += flush(); tiles = ''
                 out += self.big_card(w, tile_phone=True)
+                if i == 0:
+                    out += after_first
             else:
                 tiles += self.tile(w)
         out += flush()
@@ -451,6 +484,32 @@ class Page:
     def finish(self, t, sheets=''):
         """Меню на телефоне, кружок, класс страницы, свои стили и скрипт поверх общих."""
         t = self.contact(t)
+        menhirs = f'{self.B}Video/02_Khakasia_Menhirs'
+        t = t.replace(f'data-video="{menhirs}.mp4"',
+                      f'data-video="{menhirs}.mp4" data-video-mobile="{menhirs}-mobile.mp4"')
+        t = re.sub(r'<p class="card__kind" (data-video=[^>]+)>(.*?)</p>',
+                   r'<button type="button" class="card__kind" \1>\2</button>', t, flags=re.S)
+        def organization(match):
+            entity = json.loads(match[1])
+            if entity.get('@type') != 'Organization':
+                return match[0]
+            entity.update({'@id': 'https://petrovichbrothers.ru/#organization', 'url': 'https://petrovichbrothers.ru/'})
+            return '<script type="application/ld+json">\n' + json.dumps(entity, ensure_ascii=False, indent=2) + '\n  </script>'
+        t = re.sub(r'<script type="application/ld\+json">(.*?)</script>', organization, t, flags=re.S)
+        # Browser can request the first portfolio cover while parsing the head.
+        if (self.cur or self.W == './') and 'class="works-mix' in t:
+            first = re.search(r'class="card__media"[^>]*>\s*(<video[^>]*>|<img[^>]*>)', t)
+            if first and first[1].startswith('<video'):
+                poster = re.search(r'data-poster="([^"]+)"', first[1])[1]
+                mobile = re.search(r'data-poster-m="([^"]+)"', first[1])
+                candidates = [(poster, '')] if not mobile or mobile[1] == poster else [
+                    (mobile[1], ' media="(max-width: 600px)"'), (poster, ' media="(min-width: 601px)"')]
+                preloads = ''.join(f'  <link rel="preload" as="image" href="{url}"{media} fetchpriority="high">\n' for url, media in candidates)
+                t = t.replace('</head>', preloads + '</head>', 1)
+            elif first:
+                tag = first[1].replace('loading="lazy"', 'loading="eager" fetchpriority="high"')
+                t = t[:first.start(1)] + tag + t[first.end(1):]
+        t = re.sub(r'(fresh/fresh\.js\?v=)\w+', r'\g<1>1121c', t)
         extra = (self.tsheet() if 'aria-controls="tsheet"' in t else '') + sheets
         t = t.replace('  <div class="cursor"', self.msheet() + extra + self.ORB + '\n  <div class="cursor"', 1)
         # Кружок у курсора для меню «Работы»: на страницах кейсов его не было

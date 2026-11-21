@@ -1,0 +1,25 @@
+.home-intro .about__text, .home-intro .about__desc { grid-column: 1 / -1; }
+.home-intro .about__text { max-width: 17em; text-wrap: balance; }
+.home-works > .home-works__more { margin: 2rem var(--pad) 0; }
+.home-works__more .sect__link { margin: 0; }
+.home-tasks { display: grid; gap: .55em; font-size: clamp(24px, 3vw, 46px); line-height: 1.15; }
+.home-tasks + .sect__link { margin-top: clamp(40px, 4vw, 60px); }
+.process__head .home-team-copy { margin: 0; }
+@media (min-width: 901px) {
+  #process .process__head { align-items: flex-start; }
+  .process__head .home-team-copy {
+    max-width: 22em;
+    font: 500 clamp(26px, 2.6vw, 44px)/1.1 var(--font);
+    letter-spacing: -.015em;
+    text-wrap: balance;
+  }
+}
+.home-tasks .text-link { color: inherit; border: 0; text-decoration: none; }
+@media (hover: hover) {
+  .home-tasks .text-link:hover { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .14em; }
+}
+@media (max-width: 600px) {
+  .home-intro .about__text { font-size: clamp(33px, 9vw, 46px); }
+  .home-works .card__info { display: block; }
+  .home-works .card__title { overflow-wrap: anywhere; hyphens: auto; }
+}

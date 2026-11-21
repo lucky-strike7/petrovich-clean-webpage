@@ -14,6 +14,12 @@
 .top--v2 .top__nav { align-items: center; }
 .top--v2 .top__nav a.is-on::after { transform: scaleX(1); }
 
+.callback .cpanel__btn.needs-input {
+  background: transparent;
+  border-color: var(--bg);
+  color: var(--bg);
+}
+
 /* «Работы ▾»: главное меню сайта. При наведении под шапкой открывается панель на всю ширину:
    слева «Что делаем» крупно, справа «Для кого» помельче, у каждого тега число работ */
 .top--v2 .top__nav, .top__dd { position: static; }
@@ -28,9 +34,11 @@
   opacity: 0; visibility: hidden; transform: translateY(-12px);
   transition: opacity .25s, transform .4s var(--ease), visibility 0s .4s;
 }
-.top__menu::before { content: ""; position: absolute; inset: -40px 0 auto; height: 40px; } /* мостик от «Работ» к панели */
-.top__dd.is-open .top__menu, .top__dd:focus-within .top__menu { opacity: 1; visibility: visible; transform: none; transition: opacity .25s, transform .4s var(--ease); }
-.top__dd.is-open > a i, .top__dd:focus-within > a i { transform: rotate(225deg); margin-top: 3px; }
+.top__menu { pointer-events: none; }
+.top__dd.is-open .top__menu, .top__dd:not(.is-dismissed):focus-within .top__menu { pointer-events: auto; }
+.top--v2 .top__nav > a, .top--v2 .top__dd > a { z-index: 3; }
+.top__dd.is-open .top__menu, .top__dd:not(.is-dismissed):focus-within .top__menu { opacity: 1; visibility: visible; transform: none; transition: opacity .25s, transform .4s var(--ease); }
+.top__dd.is-open > a i, .top__dd:not(.is-dismissed):focus-within > a i { transform: rotate(225deg); margin-top: 3px; }
 .top__menu h4, .msheet h4 { margin: 0 0 14px; font-family: var(--font-text); font-weight: 400; font-size: 15px; color: var(--muted); }
 .top__menu ul, .msheet ul { margin: 0; padding: 0; list-style: none; }
 .top--v2 .top__menu a { font-family: var(--font); font-weight: 500; }
@@ -144,7 +152,7 @@
 /* Крестик как у шторки контактов: тот же значок и размер */
 .msheet__close { position: absolute; top: 12px; right: 8px; display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; }
 .msheet__close svg { display: block; width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 1.6; }
-.msheet__main a { display: block; padding: 12px 0; font-size: 38px; line-height: 1.05; letter-spacing: -.02em; } /* один столбик, побольше воздуха: пальцем попасть легко */
+.msheet__main a { display: block; padding: 12px 0; font-size: 30px; line-height: 1.05; letter-spacing: -.02em; } /* один столбик, побольше воздуха: пальцем попасть легко */
 .msheet__main a[aria-current] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .14em; }
 .msheet__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 22px 0 6px; padding-top: 18px; border-top: 1px solid var(--line); }
 .msheet__cols a { display: block; padding: 5px 0; font-family: var(--font-text); font-weight: 400; font-size: 16px; }
@@ -413,7 +421,7 @@
 .tsheet ul a { display: block; padding: 9px 0; font-size: 22px; line-height: 1.15; letter-spacing: -.01em; }
 .tsheet a[aria-current] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .16em; }
 .tsheet__all { display: inline-block; padding: 4px 0; font-size: 28px; letter-spacing: -.015em; }
-@media (min-width: 601px) { .tsheet, .tsheet + .msheet__shade { display: none; } }
+@media (min-width: 601px) { .tsheet, .tsheet + .msheet__shade, .msheet--tags, .msheet--tags + .msheet__shade { display: none; } }
 
 /* Телефон: шапка уезжает и возвращается мягче и чуть медленнее */
 @media (max-width: 600px) {
@@ -655,10 +663,48 @@ a.card__media { display: block; }
   .projects > .project-gallery { margin: 88px calc(var(--pad) * -1) 0; }
   .projects > .project-gallery + .card { padding-top: 88px; }
 }
-/* Кадры стенда маленькими: три в ряд и на компьютере, и на телефоне */
-.project-gallery--small { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.project-gallery--small img:first-child { grid-column: auto; }
-@media (max-width: 600px) { .project-gallery.project-gallery--small { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-inline: 0; } .project-gallery--small img { border-radius: 6px; } }
+/* Хакасия: три небольших кадра в ряд на компьютере. */
+@media (min-width: 601px) {
+  .project-gallery--swipe { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .project-gallery--swipe img:first-child { grid-column: auto; }
+}
+.project-gallery__track { display: contents; }
+@media (max-width: 600px) {
+  .project-gallery--swipe { position: relative; display: block; }
+  .project-gallery__track {
+    --photo-gap: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--photo-gap);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .project-gallery__track::-webkit-scrollbar { display: none; }
+  .project-gallery__track > picture {
+    flex: 0 0 calc((100% - var(--photo-gap)) / 1.5);
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+  .project-gallery--swipe::before,
+  .project-gallery--swipe::after {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    width: clamp(20px, 7vw, 34px);
+    opacity: 0;
+    transition: opacity .22s ease;
+    pointer-events: none;
+  }
+  .project-gallery--swipe::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
+  .project-gallery--swipe::after { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
+  .project-gallery--swipe.can-scroll-left::before,
+  .project-gallery--swipe.can-scroll-right::after { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-gallery--swipe::before, .project-gallery--swipe::after { transition: none; }
+}
 /* Меню «Работы»: две колонки «Что делаем» и «Для кого», в каждой крупные теги и под ними мелкие */
 .mega__what { grid-column: 1 / 7; }
 .mega__who { grid-column: 7 / 13; }
@@ -677,12 +723,22 @@ a.card__media { display: block; }
 .mega__who h4 { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; }
 .top--v2 .top__menu .mega__all { margin: 0; padding: 0; font-family: var(--font-text); font-weight: 400; font-size: 15px; letter-spacing: 0; color: var(--ink); }
 /* Телефон: теги в бургер-меню и в шторке тегов — две группы, крупные и мелкие, как на компьютере */
-.mtags { margin: 18px 0 6px; padding-top: 6px; border-top: 1px solid var(--line); }
-.mtags h4 { margin: 18px 0 6px; font-family: var(--font-text); font-weight: 400; font-size: 14px; color: var(--muted); }
+#msheet .msheet__grip, .msheet--tags .msheet__grip { display: none; }
+.mtags { margin: 18px 0 6px; }
+.mtags__group + .mtags__group { margin-top: 22px; }
 .mtags ul { margin: 0; padding: 0; list-style: none; }
 .mtags__big a { display: block; padding: 7px 0; font-size: 24px; line-height: 1.15; letter-spacing: -.015em; }
 .mtags__small { display: flex; flex-wrap: wrap; gap: 0 18px; margin-top: 4px !important; }
 .mtags__small a { display: block; padding: 7px 0; font-family: var(--font-text); font-weight: 400; font-size: 16px; }
 .mtags a[aria-current] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .16em; }
 .msheet__main--after { margin-top: 10px; }
-.msheet__main--after a { font-size: 30px; }
+button.card__kind { background: none; border: 0; padding: 0; text-align: left; justify-self: start; }
+@media (max-width: 600px) {
+  .lnav__dd.is-open .lnav__menu { display: none; }
+  .msheet a { overflow-wrap: anywhere; }
+}
+@media (max-width: 359px) {
+  .about__text { min-width: 0; font-size: 34px; overflow-wrap: anywhere; hyphens: auto; }
+  .about__text .nowrap, .about__text .nw { white-space: normal; }
+}
+.studio-more-link { display: inline-block; margin-top: 20px; font: 400 16px/1.45 var(--font-text); }

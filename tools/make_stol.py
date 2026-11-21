@@ -9,7 +9,7 @@ SRC = 'cases/khakasia/'
 t = open('_src/' + SRC + 'index.html', encoding='utf-8').read()
 p = Page(B='../../../', W='../../', cta='museum')
 B, W = p.B, p.W
-TAGS = ['eksponaty', 'video', 'muzei', 'vystavki', 'regiony', 'developery']
+TAGS = ['interactive', 'video', 'museums', 'exhibitions', 'regions', 'developers']
 
 # Пути: ../../x — от корня, media/… — медиа кейса остаются в его папке, ../<кейс>/ — соседние кейсы
 def fix_one(val):
@@ -73,7 +73,7 @@ PLATE = p.plate('Из&nbsp;опыта на&nbsp;площадках',
 t, n = re.subn(r'(\n    <section class="case-offer">)', lambda m: PLATE + m.group(1), t, count=1); assert n
 
 # После «Стенд Хакасии на выставке „Россия“» (другие экспонаты проекта) — «Смотрите также»
-SEE = ['muzei', 'vystavki', 'regiony', 'developery', 'eksponaty', 'video']
+SEE = ['museums', 'exhibitions', 'regions', 'developers', 'interactive', 'video']
 t, n = re.subn(r'(    <section class="case-more">.*?</section>\n)', lambda m: m.group(1) + p.next_work(project_id='khakasia') + p.seealso(SEE), t, count=1, flags=re.S); assert n
 
 # Адрес страницы

@@ -3,6 +3,25 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = matchMedia('(pointer: fine)').matches;
   const saveData = navigator.connection?.saveData === true;
+  const touchPreview = !matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const overview = document.querySelector('.modal');
+  const backgroundBlocked = () => document.hidden || overview?.open;
+  const visible = el => {
+    const r = el.getBoundingClientRect();
+    return r.width > 0 && r.height > 0 && r.top < innerHeight && r.bottom > 0 && r.left < innerWidth && r.right > 0;
+  };
+  // Detaching the URL cancels an unfinished range request as well as playback.
+  const release = video => {
+    video.pause();
+    const sources = [video, ...video.querySelectorAll('source')].filter(el => el.hasAttribute('src'));
+    if (!sources.length) return;
+    for (const source of sources) {
+      source.dataset.src = source.getAttribute('src');
+      source.removeAttribute('src');
+    }
+    delete video.dataset.loaded;
+    video.load();
+  };
   const hydratePoster = (video) => {
     const poster = matchMedia('(max-width: 600px)').matches && video.dataset.posterM || video.dataset.poster;
     if (poster && video.getAttribute('poster') !== poster) video.poster = poster;
@@ -10,6 +29,7 @@
     if (poster && box) box.style.background = `var(--line) url("${poster}") center / cover no-repeat`;
   };
   const hydrateVideo = (video) => {
+    if (backgroundBlocked()) return;
     hydratePoster(video);
     if (video.dataset.src) { video.src = video.dataset.src; delete video.dataset.src; }
     video.querySelectorAll('source[data-src]').forEach(source => { source.src = source.dataset.src; delete source.dataset.src; });
@@ -21,15 +41,15 @@
   const nearMedia = new IntersectionObserver(entries => {
     for (const entry of entries) if (entry.isIntersecting) {
       hydratePoster(entry.target);
-      if (!reduce && !saveData) hydrateVideo(entry.target);
+      if (!touchPreview && !reduce && !saveData) hydrateVideo(entry.target);
       nearMedia.unobserve(entry.target);
     }
   }, { rootMargin: '250px 0px' });
   document.querySelectorAll('video[data-lazy]').forEach(video => nearMedia.observe(video));
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) { document.querySelectorAll('video').forEach(video => video.pause()); cards.forEach(card => { clearTimeout(card.timer); card.on=false; }); }
-    else { playCards(); document.querySelectorAll('.reel video, .pill video').forEach(video => {
-      const rect=video.getBoundingClientRect(); if (!reduce && !saveData && rect.top < innerHeight && rect.bottom > 0) video.play().catch(()=>{});
+    else if (!backgroundBlocked()) { playCards(); document.querySelectorAll('.reel video, .pill video').forEach(video => {
+      if (!reduce && !saveData && visible(video)) { hydrateVideo(video); video.play().catch(()=>{}); }
     }); }
   });
 
@@ -88,7 +108,7 @@
   const vio = new IntersectionObserver((entries) => {
     for (const e of entries) {
       const v = e.target;
-      if (e.isIntersecting && !reduce && !saveData && !document.hidden) { hydrateVideo(v); v.play().catch(() => {}); } else v.pause();
+      if (e.isIntersecting && !reduce && !saveData && !backgroundBlocked()) { hydrateVideo(v); v.play().catch(() => {}); } else v.pause();
     }
   }, { threshold: 0.2 });
   document.querySelectorAll('.reel video, .pill video').forEach((v) => vio.observe(v));
@@ -103,7 +123,7 @@
   // На телефоне — легкий вертикальный постер (сам ролик выбирается через <source media>)
   const phone = matchMedia('(max-width: 600px)').matches;
   const firstCardVideo=document.querySelector('.card__media video');
-  if(firstCardVideo) hydratePoster(firstCardVideo);
+  if(firstCardVideo && document.querySelector('.card__media')?.contains(firstCardVideo)) hydratePoster(firstCardVideo);
   const cards = [...document.querySelectorAll('.card__media video')].map((v, i) => {
     const card = { v, box: v.closest('.card__media'), on: false, timer: 0, first: i === 0 };
     /*
@@ -130,7 +150,7 @@
     const tileIO = new IntersectionObserver((entries) => {
       for (const e of entries) {
         const v = e.target;
-        if (e.isIntersecting && e.intersectionRatio >= 0.5 && !reduce && !saveData && !document.hidden) {
+        if (e.isIntersecting && e.intersectionRatio >= 0.5 && !reduce && !saveData && !backgroundBlocked()) {
           hydratePoster(v);
           if (!v.src) v.src = v.dataset.src;
           v.play().catch(() => {});
@@ -148,12 +168,14 @@
       // На телефоне первая карточка (она видна уже на первом экране) играет сразу, без прокрутки
       // Остальные на телефоне — как только карточка заметно въехала (верх выше 75% экрана), а не к середине
       const ready = phone ? (c.first ? r.top < vh : r.top < vh * 0.75) && r.bottom > 0 : mid < vh * 0.6 && r.bottom > 0;
-      if (reduce || saveData || document.hidden) { c.v.pause(); c.on = false; clearTimeout(c.timer); continue; }
+      if (reduce || saveData || backgroundBlocked()) { c.v.pause(); c.on = false; clearTimeout(c.timer); continue; }
       if (!c.on && ready) {
         // Перематываем, только если ролик не в начале: лишняя перемотка дает пустой кадр
         hydrateVideo(c.v); c.on = true; if (c.v.currentTime > 0) c.v.currentTime = 0; c.v.play().catch(() => {});
       } else if (c.on && (r.bottom < 0 || r.top > vh)) {
-        c.on = false; clearTimeout(c.timer); c.v.pause(); c.v.currentTime = 0;
+        c.on = false; clearTimeout(c.timer);
+        if (touchPreview) release(c.v);
+        else { c.v.pause(); c.v.currentTime = 0; }
       }
     }
   };
@@ -164,6 +186,7 @@
   const badge = document.querySelector('.badge:not(.badge--back)');
   const contact = document.querySelector('.contact');
   const contactBtn = document.querySelector('.contact__btn');
+  const desktopNav = matchMedia('(min-width: 901px)');
   let lastY = scrollY, ticking = false;
   const onScroll = () => {
     ticking = false;
@@ -176,7 +199,7 @@
     lightWords();
     playCards();
 
-    top.classList.toggle('is-solid', y > 40);
+    top.classList.toggle('is-solid', y > 40 || (top.hasAttribute('data-compact-entry') && desktopNav.matches));
     /*
       Шапка прячется при прокрутке вниз и возвращается при прокрутке вверх. Реагируем только на сдвиг
       больше 8 px: плавная прокрутка в конце движения может чуть «качнуть» страницу назад, и без порога
@@ -247,7 +270,7 @@
         img.src = a.dataset.peek;
         peek.classList.add('is-on');
         const v = a.peekVideo;
-        if (!v || reduce || saveData || document.hidden) return;
+        if (!v || reduce || saveData || backgroundBlocked()) return;
         if (!v.getAttribute('src')) v.src = a.dataset.peekVideo; // еще не скачался — грузим как обычно
         v.currentTime = 0;
         v.play().catch(() => {});
@@ -303,12 +326,14 @@
     document.querySelectorAll('.work[data-preview]').forEach((card) => {
       let v;
       card.addEventListener('mouseenter', () => {
+        if (backgroundBlocked() || reduce || saveData) return;
         if (!v) {
           v = document.createElement('video');
           v.src = card.dataset.preview; v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'auto';
           v.setAttribute('aria-hidden', 'true');
           card.querySelector('.work__media').append(v);
         }
+        if (!v.hasAttribute('src')) v.src = card.dataset.preview;
         card.classList.add('is-previewing');
         v.play().catch(() => {});
       });
@@ -317,20 +342,50 @@
   }
 
   /* Окно с полным видеообзором */
-  const modal = document.querySelector('.modal');
+  const modal = overview;
   const mv = modal.querySelector('video');
+  const phoneReview = matchMedia('(pointer: coarse) and (max-width: 600px), (pointer: coarse) and (max-height: 600px)');
+  let reviewTrigger;
+  const resumeLoops = new Set();
   document.querySelectorAll('[data-video]').forEach((el) => {
     el.addEventListener('click', () => {
-      mv.src = el.dataset.video;
+      reviewTrigger = el;
       modal.setAttribute('aria-label', el.dataset.title || 'Видео');
       modal.showModal();
+      document.dispatchEvent(new Event('pb:review'));
+      for (const video of document.querySelectorAll('video')) {
+        if (video === mv) continue;
+        if (!video.paused && !video.closest('.card__media, .work, .peek')) resumeLoops.add(video);
+        if (video.loop || video.hasAttribute('data-lazy')) release(video);
+        else video.pause();
+      }
+      for (const card of cards) { card.on = false; clearTimeout(card.timer); }
+      mv.src = phoneReview.matches && el.dataset.videoMobile ? el.dataset.videoMobile : el.dataset.video;
       document.dispatchEvent(new CustomEvent('pb:goal', { detail: { name: 'video_open' } }));
       lenis?.stop(); // страница под окном не прокручивается
       mv.play().catch(() => {});
       cursor.classList.remove('is-on');
     });
   });
-  const close = () => { mv.pause(); mv.removeAttribute('src'); mv.load(); modal.close(); lenis?.start(); };
+  const close = () => {
+    mv.pause(); mv.removeAttribute('src'); mv.load(); modal.close(); lenis?.start();
+    reviewTrigger?.focus({ preventScroll: true });
+    document.dispatchEvent(new Event('pb:review'));
+    playCards();
+    for (const video of resumeLoops) if (!reduce && !saveData && !backgroundBlocked() && visible(video) && !video.controls) {
+      hydrateVideo(video);
+      video.play().catch(() => {});
+    }
+    resumeLoops.clear();
+    document.querySelectorAll('video[autoplay][data-src], .case-circle video[data-src]').forEach(video => nativeLoops.observe(video));
+  };
+  const nativeLoops = new IntersectionObserver(entries => {
+    for (const { target, isIntersecting } of entries) if (isIntersecting && !backgroundBlocked() && !reduce && !saveData) {
+      hydrateVideo(target);
+      target.play().catch(() => {});
+      nativeLoops.unobserve(target);
+    }
+  });
   modal.querySelector('.modal__close').addEventListener('click', close);
   modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
   modal.addEventListener('cancel', (e) => { e.preventDefault(); close(); });
@@ -445,7 +500,7 @@
     Обратный звонок: маска +7 XXX XXX-XX-XX, проверка номера и согласия, отправка {phone} на /api/contact
     (тот же обработчик, что на старом сайте: бот в Telegram и письмо). Без сервера — понятная ошибка с запасным путем.
   */
-  document.querySelectorAll('.callback').forEach((cb) => {
+  document.querySelectorAll('.callback').forEach((cb, index) => {
     const input = cb.querySelector('input[type="tel"]');
     const agree = cb.querySelector('input[name="agree"]');
     const btn = cb.querySelector('button[type="submit"]');
@@ -469,20 +524,45 @@
       return out;
     };
     const say = (text, err) => { msg.textContent = text; msg.classList.toggle('is-error', !!err); };
-    // Кнопка активна, только когда набраны все 11 цифр (+7 или 8 и еще 10) и отмечено согласие
-    const ready = () => digitsOf(input.value).length === 11 && agree.checked;
-    const sync = () => { btn.disabled = submitting || sent || !ready(); };
+    const sync = () => {
+      btn.disabled = submitting || sent;
+      btn.classList.toggle('needs-input', digitsOf(input.value).length !== 11 || !agree.checked);
+    };
     input.addEventListener('input', () => { input.value = fmt(digitsOf(input.value)); say(''); sync(); });
-    agree.addEventListener('change', () => { say(''); sync(); });
+    msg.id = 'callback-status-' + index;
+    input.setAttribute('aria-describedby', msg.id);
+    agree.setAttribute('aria-describedby', msg.id);
+    const checkPhone = () => {
+      const incomplete = input.value !== '' && digitsOf(input.value).length !== 11;
+      input.setAttribute('aria-invalid', String(incomplete));
+      if (incomplete) say('Введите номер полностью, например +7 915 123-45-67.', true);
+      return incomplete;
+    };
+    input.addEventListener('input', () => input.removeAttribute('aria-invalid'));
+    input.addEventListener('blur', checkPhone);
+    agree.addEventListener('change', () => {
+      agree.removeAttribute('aria-invalid');
+      if (!checkPhone()) say('');
+      sync();
+    });
     cb.addEventListener('reset', () => setTimeout(sync));
     sync();
     cb.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (submitting || sent) return;
       const d = digitsOf(input.value);
-      if (d.length !== 11) { say('Проверьте номер: +7 и 10 цифр', true); input.focus(); return; }
-      if (!agree.checked) { say('Отметьте согласие на обработку данных', true); return; }
-      if (!ready()) return;
+      if (d.length !== 11) {
+        input.setAttribute('aria-invalid', 'true');
+        say('Введите номер полностью, например +7 915 123-45-67.', true);
+        input.focus();
+        return;
+      }
+      if (!agree.checked) {
+        agree.setAttribute('aria-invalid', 'true');
+        agree.focus();
+        say('Подтвердите согласие на\u00a0обработку персональных данных.', true);
+        return;
+      }
       submitting = true; sync(); cb.setAttribute('aria-busy','true');
       btn.classList.add('is-sending'); say('Отправляем…');
       try {
@@ -495,12 +575,12 @@
         sent = true;
         document.dispatchEvent(new CustomEvent('pb:goal', { detail: { name: 'callback_success' } }));
         cb.classList.add('is-sent');
-        say('Спасибо! Перезвоним в рабочее время');
+        say('Спасибо! Перезвоним в\u00a0рабочее время');
         cb.dispatchEvent(new Event('sent', { bubbles: true }));
         // Когда плашка закроется — форма снова чистая
         setTimeout(() => { sent=false; cb.classList.remove('is-sent'); cb.reset(); say(''); sync(); }, 3200);
       } catch {
-        say('Не получилось отправить. Позвоните нам или напишите в Telegram', true);
+        say('Не получилось отправить. Позвоните нам или напишите в\u00a0Telegram', true);
       } finally { submitting=false; cb.removeAttribute('aria-busy'); btn.classList.remove('is-sending'); sync(); }
     });
   });

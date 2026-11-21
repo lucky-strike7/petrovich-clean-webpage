@@ -4,9 +4,10 @@ import { transform } from 'esbuild';
 import { brotliCompressSync, gzipSync } from 'node:zlib';
 import { resolve, relative, dirname, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { bindPrepositions } from './typography.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url)),out=resolve(root,'dist');
 await rm(out,{recursive:true,force:true});await mkdir(out,{recursive:true});
-const entries=['index.html','404.html','robots.txt','sitemap.xml','site.webmanifest','favicon.svg','favicon.ico','favicon-32.png','apple-touch-icon.png','icon-192.png','icon-512.png','fresh','fonts','Video','cases','works','privacy','consent'];
+const entries=['index.html','404.html','robots.txt','sitemap.xml','site.webmanifest','favicon.svg','favicon.ico','favicon-32.png','apple-touch-icon.png','icon-192.png','icon-512.png','fresh','fonts','Video','cases','works','prices','services','about','privacy','consent'];
 for(const name of entries)await cp(resolve(root,name),resolve(out,name),{recursive:true});
 // Карта сайта: главная и все страницы «Работ» (теги, проекты, экспонаты, кейсы), кроме закрытых от поиска.
 // Старые /cases/ теперь только папки с картинками — страницы кейсов переехали в /works/.
@@ -23,11 +24,17 @@ async function collect(dir){
     await collect(sub);
   }
 }
-const worksIndex=await readFile(resolve(out,'works','index.html'),'utf8');
-workPages.push(worksIndex.match(/<link rel="canonical" href="([^"]+)"/)[1]);
+for(const section of ['works','prices','services','about']){
+  const index=await readFile(resolve(out,section,'index.html'),'utf8');
+  const canonical=index.match(/<link rel="canonical" href="([^"]+)"/);
+  if(!canonical)throw Error(`Missing canonical: ${section}`);
+  workPages.push(canonical[1]);
+}
 await collect(resolve(out,'works'));
 const sitemapUrls=['https://petrovichbrothers.ru/',...[...new Set(workPages)].sort()];
-await writeFile(resolve(out,'sitemap.xml'),'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+sitemapUrls.map(url=>`  <url><loc>${url}</loc></url>`).join('\n')+'\n</urlset>\n');
+const sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+sitemapUrls.map(url=>`  <url><loc>${url}</loc></url>`).join('\n')+'\n</urlset>\n';
+await writeFile(resolve(out,'sitemap.xml'),sitemap);
+await writeFile(resolve(root,'sitemap.xml'),sitemap);
 async function list(dir){const result=[];for(const item of await readdir(dir,{withFileTypes:true})){const p=resolve(dir,item.name);if(item.isSymbolicLink())throw Error('Symlink not allowed');if(item.isDirectory())result.push(...await list(p));else result.push(p);}return result;}
 const files=await list(out),hashes=new Map(),digest=bytes=>createHash('sha256').update(bytes).digest('hex').slice(0,12);
 for(const file of files){
@@ -46,9 +53,9 @@ for(const file of files.filter(f=>extname(f)==='.css')){
   await writeFile(file,code);hashes.set(file,digest(code));
 }
 for(const file of files.filter(f=>extname(f)==='.html')){
-  let text=await readFile(file,'utf8');
+  let text=bindPrepositions(await readFile(file,'utf8'));
   text=text.replace(/(<script\b[^>]*>[\s\S]*?<\/script\s*>|<style\b[^>]*>[\s\S]*?<\/style\s*>)|<!--[\s\S]*?-->/gi,(_,raw)=>raw||'');
-  text=text.replace(/\b(src|href|poster|data-poster|data-src|data-poster-m|data-video|data-peek|data-peek-video)="([^"]*)"/g,(_,name,value)=>`${name}="${version(value,file)}"`);
+  text=text.replace(/\b(src|href|poster|data-poster|data-src|data-poster-m|data-video|data-video-mobile|data-preview|data-peek|data-peek-video)="([^"]*)"/g,(_,name,value)=>`${name}="${version(value,file)}"`);
   text=text.replace(/\b(srcset|imagesrcset)="([^"]*)"/g,(_,name,value)=>`${name}="${value.split(',').map(part=>{const[url,...size]=part.trim().split(/\s+/);return[version(url,file),...size].join(' ');}).join(', ')}"`);
   text=text.replace(/data-frames="(\d+)" data-src="([^"]+)" data-v="[^"]*"/g,(_,n,src)=>{
     const dir=resolve(dirname(file),src),sequence=[...hashes].filter(([p])=>p.startsWith(dir+'/')).map(([,h])=>h).sort().join('');

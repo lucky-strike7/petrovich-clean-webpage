@@ -1,0 +1,21 @@
+/* Общие стили посадочных страниц направлений. */
+@media (hover: none) {
+  .page-video .landing-scope .text-link { text-decoration: none; background-size: 0 1px; }
+}
+.page-landing .landing-scope .about__desc { margin-top: 0; }
+.page-landing .contact__lead { max-width: 48em; }
+
+@media (max-width: 600px) {
+  .page-landing .landing-scope .about__desc { margin-top: 20px; }
+  .page-landing .work-big .card__info { display: block; padding-top: 12px; }
+  .page-landing .works-mix--tiles .work-big .card__meta { display: none; }
+  .page-landing .contact__lead { display: block; }
+}
+
+/* Сохраняем полное название работы и разрешаем перенос длинных слов. */
+.page-interactive .card__title { hyphens: auto; overflow-wrap: anywhere; }
+
+/* Длинное слово в заголовке не обрезается на узких экранах. */
+@media (max-width: 600px) {
+  .page-industry .about__text { hyphens: auto; overflow-wrap: anywhere; }
+}

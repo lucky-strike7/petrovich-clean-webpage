@@ -71,7 +71,7 @@ MAIN = f'''<main>
     <section class="works-mix project-exhibits" id="exhibits">
       <h2 class="sr-only">Экспонаты</h2>
 {''.join(cards)}    </section>
-{p.next_work(project_id='khersones')}{p.seealso(['muzei', 'eksponaty', 'video', 'vystavki', 'regiony'])}
+{p.next_work(project_id='khersones')}{p.seealso(['museums', 'interactive', 'video', 'exhibitions', 'regions'])}
 '''
 
 t = home

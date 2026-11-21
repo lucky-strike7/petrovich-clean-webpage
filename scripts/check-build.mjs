@@ -1,8 +1,9 @@
 import assert from 'node:assert/strict';
 import {checkShareMetadata} from './check-share-metadata.mjs';
 import {readdir,readFile,stat,open} from 'node:fs/promises';
-import {resolve,relative,extname} from 'node:path';
-const root=resolve(new URL('../dist/',import.meta.url).pathname);
+import {resolve,relative,extname,basename} from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=fileURLToPath(new URL('../dist/',import.meta.url));
 async function list(dir){const out=[];for(const item of await readdir(dir,{withFileTypes:true})){const p=resolve(dir,item.name);if(item.isDirectory())out.push(...await list(p));else out.push(p);}return out;}
 const files=await list(root);let references=0,videos=0;
 const sitemap=await readFile(resolve(root,'sitemap.xml'),'utf8');
@@ -20,10 +21,10 @@ async function check(value,from){
 for(const file of files.filter(p=>extname(p)==='.html')){
  const html=await readFile(file,'utf8');assert(!/<<<<<<<|>>>>>>>/.test(html),'Merge markers');
  assert(!html.includes('<!--'),'HTML comments must not be published: '+file);
- for(const m of html.matchAll(/\b(?:src|href|poster|data-poster|data-src|data-poster-m|data-video|data-peek|data-peek-video)="([^"]*)"/g))await check(m[1],file);
+ for(const m of html.matchAll(/\b(?:src|href|poster|data-poster|data-src|data-poster-m|data-video|data-video-mobile|data-preview|data-peek|data-peek-video)="([^"]*)"/g))await check(m[1],file);
  for(const m of html.matchAll(/\b(?:srcset|imagesrcset)="([^"]*)"/g))for(const part of m[1].split(','))await check(part.trim().split(/\s+/)[0],file);
  for(const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g))JSON.parse(m[1]);
- if(!file.endsWith('/404.html')){
+ if(basename(file)!=='404.html'){
   if(relative(root,file).replace(/\\/g,'/').startsWith('works/')&&!/<meta name="robots" content="noindex/.test(html)){const canonical=html.match(/<link rel="canonical" href="([^"]+)"/);assert(canonical && sitemapUrls.includes(canonical[1]),'Page missing from sitemap: '+file);}
   checkShareMetadata(html,relative(root,file),message=>console.warn(`::warning::${message}`));
   const image=html.match(/property="og:image" content="([^"]+)"/)[1],url=new URL(image);

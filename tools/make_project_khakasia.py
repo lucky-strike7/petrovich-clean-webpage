@@ -68,12 +68,15 @@ BRIEF = f'''
       <ul class="sect__body seealso__list project-brief__done reveal">{''.join(f'<li>{typo(x)}</li>' for x in DONE_ITEMS)}</ul>
     </section>
 '''
-# Стенд вокруг стола: три кадра из презентации после первого экспоната, маленькими в ряд
+# Стенд вокруг стола: три кадра в ряд на компьютере, лента с прокруткой на телефоне
 HALL = [('khakasia-stand-05.webp', 'Стена с менгирами и экранами под степной панорамой'),
         ('khakasia-stand-04.webp', 'Менгир и карта Хакасии у стены с наскальными рисунками'),
         ('khakasia-stand-06.webp', 'Стенд сверху: два купола, менгиры и полукруглая стена')]
-GALLERY = ('    <div class="project-gallery project-gallery--small reveal">\n'
-           + ''.join(f'      <img src="fresh/media/{f}" alt="{a}" width="1600" height="1200" loading="lazy">\n' for f, a in HALL)
+GALLERY = ('    <div class="project-gallery project-gallery--swipe reveal">\n'
+           + '      <div class="project-gallery__track" role="region" aria-label="Фотографии стенда Республики Хакасия">\n'
+           + ''.join(f'        <picture><source media="(max-width: 600px)" srcset="fresh/media/{f[:-5]}-mobile.webp">'
+                     f'<img src="fresh/media/{f}" alt="{a}" width="1600" height="1200" loading="lazy"></picture>\n' for f, a in HALL)
+           + '      </div>\n'
            + '    </div>\n')
 
 CRUMBS = f'<a href="{W}">Работы</a><span>→</span>Хакасия&nbsp;на&nbsp;ВДНХ'
@@ -96,7 +99,7 @@ MAIN = f'''<main>
       <ul class="pjump reveal" aria-label="Экспонаты проекта">{JUMP}</ul>
     </section>
 
-{p.project_photo('fresh/media/khakasia-stand.webp', 'Стенд Республики Хакасия на выставке «Россия», ВДНХ: общий вид')}{BRIEF}
+{p.project_photo('fresh/media/khakasia-stand.webp', 'Стенд Республики Хакасия на выставке «Россия», ВДНХ: общий вид', mobile='fresh/media/khakasia-stand-mobile.webp')}{BRIEF}
     <section class="projects" id="exhibits">
       <h2 class="sr-only">Экспонаты</h2>
 {cards['khakasia']}
@@ -104,7 +107,7 @@ MAIN = f'''<main>
 {cards['mengiry']}
 {DOST}{PLATE}
     </section>
-{p.next_work(project_id='khakasia')}{p.seealso(['muzei', 'vystavki', 'regiony', 'developery', 'eksponaty', 'video'])}
+{p.next_work(project_id='khakasia')}{p.seealso(['museums', 'exhibitions', 'regions', 'developers', 'interactive', 'video'])}
 '''
 
 t = home

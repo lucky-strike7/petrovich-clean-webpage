@@ -147,7 +147,7 @@ t = re.sub(r'\n  <link rel="preload"[^>]*hbo[^>]*>', '', t)
 t = t.replace('"media/hbo-', '"../../cases/hbo/media/hbo-')
 # Новая шапка, низ страницы
 t, n = re.subn(r'<header class="top">.*?</header>', lambda m: p.header(), t, count=1, flags=re.S); assert n
-t, n = re.subn(r'(    <section class="case-more">.*?</section>\n)', lambda m: m.group(1) + p.next_work(item_id='hbo') + p.seealso(['kino', 'video']), t, count=1, flags=re.S); assert n
+t, n = re.subn(r'(    <section class="case-more">.*?</section>\n)', lambda m: m.group(1) + p.next_work(item_id='hbo') + p.seealso(['film', 'video']), t, count=1, flags=re.S); assert n
 t = p.finish(t)
 os.makedirs('works/hbo', exist_ok=True)
 open('works/hbo/index.html', 'w', encoding='utf-8', newline='').write(t)

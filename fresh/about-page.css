@@ -1,0 +1,4 @@
+.page-about .studio-intro { padding-bottom: clamp(64px, 9vw, 130px); }
+.page-about .studio-note .about__desc { margin-top: 0; }
+.page-about .studio-note .about__desc + .about__desc { margin-top: 1em; }
+.page-about .studio-note .text-link { display: inline-block; margin-top: 14px; }

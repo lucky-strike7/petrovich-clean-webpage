@@ -12,15 +12,15 @@
   <link rel="preload" as="font" href="../../fonts/Milligram-Medium.woff2" type="font/woff2" crossorigin>
   <link rel="preload" as="font" href="../../fonts/MilligramText-Regular.woff2" type="font/woff2" crossorigin>
   <meta name="theme-color" content="#F6F6F3">
-  <title>Видеомэппинг на фасадах — студия братьев Петрович</title>
-  <meta name="description" content="Придумываем концепцию и сценарий, делаем мэппинг под площадку. У нас третье место на конкурсе «Страна Света-2025» за мэппинг на Дворцовой площади.">
+  <title>Видеомэппинг на фасады: концепция и контент | студия братьев Пе́трович</title>
+  <meta name="description" content="Придумываем концепцию и сценарий мэппинга, делаем графику, анимацию и монтаж под конкретный фасад или поверхность. Работаем с нуля или по готовой концепции. Учитываем форму здания, место зрителя и технические условия показа.">
 
   <link rel="canonical" href="https://petrovichbrothers.ru/works/mapping/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Студия братьев Пе́трович">
   <meta property="og:locale" content="ru_RU">
-  <meta property="og:title" content="Студия братьев Пе́трович — интерактивные экспонаты">
-  <meta property="og:description" content="Придумываем и создаем интерактивные экспонаты для музеев и выставок.">
+  <meta property="og:title" content="Видеомэппинг на фасады: концепция и контент | студия братьев Пе́трович">
+  <meta property="og:description" content="Придумываем концепцию и сценарий мэппинга, делаем графику, анимацию и монтаж под конкретный фасад или поверхность. Работаем с нуля или по готовой концепции. Учитываем форму здания, место зрителя и технические условия показа.">
   <meta property="og:url" content="https://petrovichbrothers.ru/works/mapping/">
   <meta property="og:image" content="https://petrovichbrothers.ru/fresh/media/og-home.jpg">
   <meta property="og:image:width" content="1200">
@@ -29,21 +29,33 @@
   <meta property="og:image:alt" content="Интерактивные экспонаты студии братьев Петрович">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Студия братьев Петрович",
-    "alternateName": ["Студия братьев Пе́трович", "Petrovich Brothers"],
-    "url": "https://petrovichbrothers.ru/works/mapping/",
-    "logo": "https://petrovichbrothers.ru/fresh/logo-vertical.svg",
-    "email": "art@petrovichbrothers.ru",
-    "telephone": "+7 915 197-86-52",
-    "address": { "@type": "PostalAddress", "streetAddress": "ул. Бауманская, 6, стр. 2", "addressLocality": "Москва", "addressCountry": "RU" },
-    "sameAs": ["https://www.youtube.com/@PetrovichBrothers-b7q", "https://t.me/artem_petrovich_1"]
-  }
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Студия братьев Петрович",
+  "alternateName": [
+    "Студия братьев Пе́трович",
+    "Petrovich Brothers"
+  ],
+  "url": "https://petrovichbrothers.ru/",
+  "logo": "https://petrovichbrothers.ru/fresh/logo-vertical.svg",
+  "email": "art@petrovichbrothers.ru",
+  "telephone": "+7 915 197-86-52",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "ул. Бауманская, 6, стр. 2",
+    "addressLocality": "Москва",
+    "addressCountry": "RU"
+  },
+  "sameAs": [
+    "https://www.youtube.com/@PetrovichBrothers-b7q",
+    "https://t.me/artem_petrovich_1"
+  ],
+  "@id": "https://petrovichbrothers.ru/#organization"
+}
   </script>
-  <link rel="stylesheet" href="../../fresh/fresh.css?v=1120e">
-  <link rel="stylesheet" href="../../fresh/v2.css?v=115">
+  <link rel="stylesheet" href="../../fresh/fresh.css?v=1120j">
+  <link rel="stylesheet" href="../../fresh/v2.css?v=122">
   <script>
     document.documentElement.classList.add('js');
     /*
@@ -58,10 +70,14 @@
       addEventListener('resize', () => { if (innerWidth !== w) { w = innerWidth; set(); } });
     })();
   </script>
+  <link rel="preload" as="image" href="../../fresh/media/strana-storm-tile.webp" media="(max-width: 600px)" fetchpriority="high">
+  <link rel="preload" as="image" href="../../fresh/media/strana-storm.webp" media="(min-width: 601px)" fetchpriority="high">
+  <link rel="stylesheet" href="../../fresh/landings.css?v=3">
 </head>
-<body class="page-v2">
+<body class="page-v2 page-mapping page-landing">
 
   <header class="top top--v2">
+    <script src="../../fresh/header-state.js?v=1"></script>
     <a class="top__logo" href="../../" aria-label="Студия братьев Пе́трович, на главную">
       <img src="../../fresh/logo-vertical.svg" alt="Petrovich Brothers" width="244" height="121">
     </a>
@@ -69,10 +85,13 @@
       <div class="top__dd">
         <a class="is-on" href="../">Работы <i aria-hidden="true"></i></a>
         <div class="top__menu mega">
-          <div class="mega__what"><h4>Что делаем</h4><ul class="mega__big"><li><a href="../eksponaty/" data-peek="../../fresh/media/archive/referus.jpg" data-peek-video="../../fresh/media/archive/referus-preview.mp4"><span>Интерактивные экспонаты</span></a></li><li><a href="./" aria-current="page" data-peek="../../fresh/media/strana-sveta.webp" data-peek-video="../../fresh/media/strana-sveta.mp4"><span>Мэппинг</span></a></li><li><a href="../scena/" data-peek="../../fresh/media/archive/premiarb.jpg" data-peek-video="../../fresh/media/archive/premiarb-preview.mp4"><span>Графика для мероприятия</span></a></li><li><a href="../dizayn/" data-peek="../../fresh/media/archive/cyberbug.jpg" data-peek-video="../../fresh/media/archive/cyberbug-preview.mp4"><span>Дизайн продукта</span></a></li></ul><ul class="mega__small"><li><a href="../video/"><span>Видео и 3D-анимация</span></a></li><li><a href="../sayty/"><span>Сайты</span></a></li></ul></div>
-          <div class="mega__who"><h4>Для кого <a class="mega__all" href="../"><span>Все работы</span>&nbsp;→</a></h4><ul class="mega__big"><li><a href="../muzei/" data-peek="../../fresh/media/shturval-peek.webp" data-peek-video="../../fresh/media/shturval-peek.mp4"><span>Музеи</span></a></li><li><a href="../vystavki/" data-peek="../../fresh/media/khakasy-peek.webp" data-peek-video="../../fresh/media/khakasy-peek.mp4"><span>Выставки</span></a></li></ul><ul class="mega__small"><li><a href="../zastr/"><span>Застройщики стендов</span></a></li><li><a href="../kino/"><span>Кино</span></a></li><li><a href="../regiony/"><span>Регионы и города</span></a></li><li><a href="../meropr/"><span>Организаторы мероприятий</span></a></li><li><a href="../developery/"><span>Девелоперы</span></a></li><li><a href="../prom/"><span>Промышленность</span></a></li></ul></div>
+          <div class="mega__what"><h4>Что делаем</h4><ul class="mega__big"><li><a href="../interactive/" data-peek="../../fresh/media/archive/referus.jpg" data-peek-video="../../fresh/media/archive/referus-preview.mp4"><span>Интерактивные экспонаты</span></a></li><li><a href="./" aria-current="page" data-peek="../../fresh/media/strana-sveta.webp" data-peek-video="../../fresh/media/strana-sveta.mp4"><span>Мэппинг</span></a></li><li><a href="../event-graphics/" data-peek="../../fresh/media/archive/premiarb.jpg" data-peek-video="../../fresh/media/archive/premiarb-preview.mp4"><span>Графика для&nbsp;мероприятия</span></a></li><li><a href="../product-design/" data-peek="../../cases/cyberbug/media/cb-hero.webp"><span>Дизайн продукта</span></a></li></ul><ul class="mega__small"><li><a href="../video/"><span>Видео и&nbsp;3D-анимация</span></a></li><li><a href="../websites/"><span>Сайты</span></a></li></ul></div>
+          <div class="mega__who"><h4>Для&nbsp;кого <a class="mega__all" href="../"><span>Все работы</span>&nbsp;→</a></h4><ul class="mega__big"><li><a href="../museums/" data-peek="../../fresh/media/shturval-peek.webp" data-peek-video="../../fresh/media/shturval-peek.mp4"><span>Музеи</span></a></li><li><a href="../exhibitions/" data-peek="../../fresh/media/khakasy-peek.webp" data-peek-video="../../fresh/media/khakasy-peek.mp4"><span>Выставки</span></a></li></ul><ul class="mega__small"><li><a href="../stand-builders/"><span>Застройщики стендов</span></a></li><li><a href="../film/"><span>Кино</span></a></li><li><a href="../regions/"><span>Регионы и&nbsp;города</span></a></li><li><a href="../events/"><span>Организаторы мероприятий</span></a></li><li><a href="../developers/"><span>Девелоперы</span></a></li><li><a href="../industry/"><span>Промышленность</span></a></li></ul></div>
         </div>
       </div>
+      <a href="../../services/">Услуги</a>
+      <a href="../../prices/">Цены</a>
+      <a href="../../about/">О&nbsp;студии</a>
       <a href="#contact" data-panel>Контакты</a>
     </nav>
     <button class="top__ctx" type="button" data-ctx-for="nav.lnav--switch" aria-controls="tsheet" aria-expanded="false">Мэппинг <i aria-hidden="true"></i></button>
@@ -81,8 +100,8 @@
       <div class="lnav__dd">
         <button class="lnav__btn" type="button" aria-expanded="false" aria-controls="tsheet" data-phone-only>Мэппинг <i aria-hidden="true"></i></button>
         <div class="lnav__menu">
-          <div><h4>Что делаем</h4><ul><li><a href="../eksponaty/">Интерактивные экспонаты</a></li><li><a href="./" aria-current="page">Мэппинг</a></li><li><a href="../scena/">Графика для мероприятия</a></li><li><a href="../dizayn/">Дизайн продукта</a></li><li><a href="../video/">Видео и 3D-анимация</a></li><li><a href="../sayty/">Сайты</a></li></ul></div>
-          <div><h4>Для кого</h4><ul><li><a href="../muzei/">Музеи</a></li><li><a href="../vystavki/">Выставки</a></li><li><a href="../zastr/">Застройщики стендов</a></li><li><a href="../kino/">Кино</a></li><li><a href="../regiony/">Регионы и города</a></li><li><a href="../meropr/">Организаторы мероприятий</a></li><li><a href="../developery/">Девелоперы</a></li><li><a href="../prom/">Промышленность</a></li></ul></div>
+          <div><h4>Что делаем</h4><ul><li><a href="../interactive/">Интерактивные экспонаты</a></li><li><a href="./" aria-current="page">Мэппинг</a></li><li><a href="../event-graphics/">Графика для&nbsp;мероприятия</a></li><li><a href="../product-design/">Дизайн продукта</a></li><li><a href="../video/">Видео и&nbsp;3D-анимация</a></li><li><a href="../websites/">Сайты</a></li></ul></div>
+          <div><h4>Для&nbsp;кого</h4><ul><li><a href="../museums/">Музеи</a></li><li><a href="../exhibitions/">Выставки</a></li><li><a href="../stand-builders/">Застройщики стендов</a></li><li><a href="../film/">Кино</a></li><li><a href="../regions/">Регионы и&nbsp;города</a></li><li><a href="../events/">Организаторы мероприятий</a></li><li><a href="../developers/">Девелоперы</a></li><li><a href="../industry/">Промышленность</a></li></ul></div>
         </div>
       </div></div>
   </header>
@@ -94,16 +113,16 @@
       <div class="lnav__dd">
         <button class="lnav__btn" type="button" aria-expanded="false" aria-controls="tsheet" data-phone-only>Мэппинг <i aria-hidden="true"></i></button>
         <div class="lnav__menu">
-          <div><h4>Что делаем</h4><ul><li><a href="../eksponaty/">Интерактивные экспонаты</a></li><li><a href="./" aria-current="page">Мэппинг</a></li><li><a href="../scena/">Графика для мероприятия</a></li><li><a href="../dizayn/">Дизайн продукта</a></li><li><a href="../video/">Видео и 3D-анимация</a></li><li><a href="../sayty/">Сайты</a></li></ul></div>
-          <div><h4>Для кого</h4><ul><li><a href="../muzei/">Музеи</a></li><li><a href="../vystavki/">Выставки</a></li><li><a href="../zastr/">Застройщики стендов</a></li><li><a href="../kino/">Кино</a></li><li><a href="../regiony/">Регионы и города</a></li><li><a href="../meropr/">Организаторы мероприятий</a></li><li><a href="../developery/">Девелоперы</a></li><li><a href="../prom/">Промышленность</a></li></ul></div>
+          <div><h4>Что делаем</h4><ul><li><a href="../interactive/">Интерактивные экспонаты</a></li><li><a href="./" aria-current="page">Мэппинг</a></li><li><a href="../event-graphics/">Графика для&nbsp;мероприятия</a></li><li><a href="../product-design/">Дизайн продукта</a></li><li><a href="../video/">Видео и&nbsp;3D-анимация</a></li><li><a href="../websites/">Сайты</a></li></ul></div>
+          <div><h4>Для&nbsp;кого</h4><ul><li><a href="../museums/">Музеи</a></li><li><a href="../exhibitions/">Выставки</a></li><li><a href="../stand-builders/">Застройщики стендов</a></li><li><a href="../film/">Кино</a></li><li><a href="../regions/">Регионы и&nbsp;города</a></li><li><a href="../events/">Организаторы мероприятий</a></li><li><a href="../developers/">Девелоперы</a></li><li><a href="../industry/">Промышленность</a></li></ul></div>
         </div>
       </div>
     </nav>
 
     <section class="about">
       <p class="about__label reveal">Студия братьев<br class="about__br"> Пе́трович</p>
-      <h1 class="about__text reveal">Видеомэппинг на&nbsp;фасадах</h1>
-      <p class="about__desc reveal">Придумываем концепцию и&nbsp;сценарий, делаем мэппинг под&nbsp;площадку. У&nbsp;нас&nbsp;третье место на&nbsp;конкурсе «Страна <span class="nowrap">Света-2025»</span> за&nbsp;мэппинг на&nbsp;Дворцовой площади.</p>
+      <h1 class="about__text reveal">Мэппинг и&nbsp;видео для&nbsp;проекций</h1>
+      <p class="about__desc reveal">Придумываем концепцию и&nbsp;сценарий мэппинга, делаем графику, анимацию и&nbsp;монтаж под&nbsp;конкретный фасад или&nbsp;поверхность. Работаем с&nbsp;нуля или&nbsp;по&nbsp;готовой концепции. Учитываем форму здания, место зрителя и&nbsp;технические условия показа.</p>
     </section>
 
     <section class="works-mix works-mix--tiles">
@@ -113,9 +132,9 @@
         <a class="card__media" href="../../works/strana-sveta/" data-cursor="Посмотреть" aria-label="Страна Света-2025"><video data-poster="../../fresh/media/strana-storm.webp" data-poster-m="../../fresh/media/strana-storm-tile.webp" muted loop playsinline data-lazy preload="none"><source data-src="../../fresh/media/strana-tile.mp4" type="video/mp4" media="(max-width: 600px)"><source data-src="../../fresh/media/strana-loop.mp4" type="video/mp4"></video></a>
         <div class="card__row">
           <h3 class="card__title reveal">Страна Света-2025 <span class="event__place">Третье место</span></h3>
-          <a class="card__kind" href="../../works/strana-sveta/">2025&nbsp;· Мэппинг на фасаде, третье место</a>
+          <a class="card__kind" href="../../works/strana-sveta/">«Устьянские легенды» · Дворцовая площадь, <span class="nowrap">Санкт-Петербург</span>, 2025</a>
           <div class="card__info">
-            <p class="card__desc reveal">Мэппинг на&nbsp;фасаде в&nbsp;<span class="nowrap">Санкт-Петербурге</span> перед тысячами зрителей. Рассказали легенды села Устье под&nbsp;Вологдой.</p>
+            <p class="card__desc reveal"><span class="card__q">Как&nbsp;рассказать местные легенды на&nbsp;фасаде Дворцовой площади?</span> Для&nbsp;проекта «Устьянские легенды» придумали сценарий и&nbsp;визуальный стиль по&nbsp;мотивам вологодской глиняной игрушки, сделали ключевые кадры, анимацию и&nbsp;монтаж. Работа заняла третье место на&nbsp;конкурсе «Страна <span class="nowrap">Света-2025»</span>.</p>
             <p class="card__meta reveal"><span>Конкурс современного медиаискусства «Страна <span class="nowrap">Света-2025»</span> при&nbsp;поддержке ПФКИ</span></p>
             <div class="card__actions"></div>
           </div>
@@ -123,18 +142,55 @@
       </article>
     </section>
     </section>
+    <section class="sect landing-scope">
+      <h2 class="sect__label reveal">Что берем на&nbsp;себя</h2>
+      <p class="sect__body about__desc reveal">Сначала изучаем поверхность и&nbsp;задачу показа, придумываем концепцию: историю, визуальный стиль и&nbsp;то, как&nbsp;изображение связано с&nbsp;архитектурой. Это&nbsp;отдельный этап со&nbsp;своими сроками, стоимостью и&nbsp;составом материалов. Если концепция уже&nbsp;есть, работаем по&nbsp;ней. Затем пишем сценарий, собираем ключевые кадры, делаем графику, анимацию и&nbsp;монтаж. Проектируем привязку контента к&nbsp;фасаду и&nbsp;вместе с&nbsp;технической командой согласуем схему проекций, маску, разрешение и&nbsp;звук. Если проект требует инженерных работ и&nbsp;монтажа мультимедиа, заранее договариваемся, какую часть берем на&nbsp;площадке.</p>
+    </section>
+
+      <section class="plate plate--page" aria-labelledby="plate-title">
+        <div class="plate__text">
+          <h2 class="plate__title reveal" id="plate-title">Из&nbsp;опыта на&nbsp;площадках</h2>
+          <p class="plate__body reveal">В&nbsp;мэппинге звук помогает связать изображение, ритм и&nbsp;настроение в&nbsp;одну историю. В&nbsp;коротком фрагменте из&nbsp;«10 ошибок мультимедиа» рассказываем, почему звуку стоит уделять столько же&nbsp;внимания, сколько картинке.</p>
+        </div>
+        <figure class="plate__video reveal">
+          <button class="plate__btn" type="button" data-full="../../Video/errors/oshibka-10.mp4" aria-label="Смотреть разбор: роль звука, 0:22">
+            <img src="../../fresh/media/oshibka-10.webp" alt="Артем Петрович рассказывает о роли звука в видео, мэппинге и интерактиве" width="1280" height="720" loading="lazy">
+            <span class="case-review__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></span>
+          </button>
+        </figure>
+      </section>
+    <section class="sect landing-scope landing-cost" id="cost">
+      <h2 class="sect__label reveal">Стоимость проекта</h2>
+      <div class="sect__body">
+        <p class="about__desc reveal">Пришлите фотографии фасада или&nbsp;поверхности, адрес площадки, дату показа и&nbsp;примерную длительность программы. Если есть концепция, модель здания, маска проекции или&nbsp;требования технической команды, добавьте их. Отдельно оценим концепцию, сценарий, графику, анимацию и&nbsp;подготовку к&nbsp;показу. Оборудование и&nbsp;техническую часть обсудим с&nbsp;вашим подрядчиком или&nbsp;подключим партнеров.</p>
+        <a class="sect__link reveal" href="../../prices/">Цены и&nbsp;примеры</a>
+      </div>
+    </section>
+
+    <section class="sect faq" id="faq">
+      <h2 class="sect__label reveal">Частые вопросы</h2>
+      <div class="sect__body">
+        <details class="faq__item reveal"><summary>Вы&nbsp;можете придумать концепцию и&nbsp;сценарий мэппинга?</summary><p>Да. Разберемся в&nbsp;теме и&nbsp;особенностях площадки, предложим историю и&nbsp;визуальный стиль. Продумываем, как&nbsp;использовать форму фасада в&nbsp;анимации. Концепцию и&nbsp;сценарий включаем в&nbsp;оценку отдельным этапом и&nbsp;согласуем до&nbsp;производства контента.</p></details>
+        <details class="faq__item reveal"><summary>А&nbsp;если концепция или&nbsp;раскадровка уже&nbsp;готовы?</summary><p>Изучим материалы и&nbsp;требования площадки. Уточним, какие решения утверждены и&nbsp;что&nbsp;нужно разработать нам. Затем сделаем графику, анимацию и&nbsp;монтаж, сохранив общую идею. Если сценарий нужно адаптировать к&nbsp;поверхности или&nbsp;длительности, сначала обсудим это&nbsp;с&nbsp;вами.</p></details>
+        <details class="faq__item reveal"><summary>Какие материалы нужны по&nbsp;фасаду?</summary><p>Для&nbsp;первого разговора подойдут фотографии и&nbsp;размеры. Для&nbsp;точной работы понадобятся согласованная маска проекции, разрешение и&nbsp;требования к&nbsp;воспроизведению; в&nbsp;некоторых проектах полезна <span class="nowrap">3D-модель</span>. Вместе с&nbsp;технической командой определим, что&nbsp;нужно именно для&nbsp;вашей площадки и&nbsp;кто&nbsp;готовит эти&nbsp;материалы.</p></details>
+        <details class="faq__item reveal"><summary>Можно заказать только контент, если проекторы и&nbsp;команда уже&nbsp;есть?</summary><p>Да. Подготовим видео под&nbsp;согласованную маску и&nbsp;технические требования. Заранее договоримся о&nbsp;форматах, версиях и&nbsp;проверке на&nbsp;площадке. Важно связать нас&nbsp;с&nbsp;командой показа до&nbsp;начала анимации.</p></details>
+        <details class="faq__item reveal"><summary>Как&nbsp;работаете со&nbsp;звуком?</summary><p>Обсуждаем звук вместе со&nbsp;сценарием, потому что&nbsp;музыка, эффекты и&nbsp;паузы влияют на&nbsp;ритм анимации. Определим, какие материалы уже&nbsp;есть и&nbsp;кто&nbsp;готовит звуковое сопровождение, включим нужные работы в&nbsp;план. С&nbsp;технической командой согласуем способ синхронного воспроизведения.</p></details>
+        <details class="faq__item reveal"><summary>Поможете с&nbsp;оборудованием и&nbsp;подготовкой площадки?</summary><p>Да, можем подключить партнеров и&nbsp;вместе определить состав технической команды. Если мэппинг входит в&nbsp;стенд или&nbsp;экспозицию, весь проект можно вести через&nbsp;студию с&nbsp;нашими проверенными застройщиками. Мы&nbsp;отвечаем за&nbsp;концепцию и&nbsp;контент, партнеры берут на&nbsp;себя конструкции, оборудование и&nbsp;технический запуск. Можем работать и&nbsp;с&nbsp;вашим подрядчиком.</p></details>
+        <details class="faq__item reveal"><summary>Будет ли&nbsp;проверка на&nbsp;самом фасаде?</summary><p>Сроки и&nbsp;возможность проверки согласуем с&nbsp;площадкой заранее. Вместе с&nbsp;технической командой проверяем попадание изображения в&nbsp;маску, читаемость деталей, яркость и&nbsp;воспроизведение. В&nbsp;плане работы важно оставить время на&nbsp;корректировки после&nbsp;этой проверки.</p></details>
+      </div>
+    </section>
 
     <section class="sect seealso">
       <h2 class="sect__label reveal">Смотрите также</h2>
-      <ul class="sect__body seealso__list reveal"><li><a href="../eksponaty/">Интерактивные экспонаты</a></li><li><a href="../scena/">Графика для мероприятия</a></li><li><a href="../dizayn/">Дизайн продукта</a></li><li><a href="../video/">Видео и 3D-анимация</a></li><li><a href="../sayty/">Сайты</a></li><li><a href="../muzei/">Музеи</a></li><li><a href="../vystavki/">Выставки</a></li><li><a href="../zastr/">Застройщики стендов</a></li></ul>
+      <ul class="sect__body seealso__list reveal"><li><a href="../events/">Организаторы мероприятий</a></li><li><a href="../video/">Видео и&nbsp;3D-анимация</a></li><li><a href="../regions/">Регионы и&nbsp;города</a></li><li><a href="../event-graphics/">Графика для&nbsp;мероприятия</a></li></ul>
     </section>
 
 
     <section class="contact" id="contact">
-      <p class="contact__lead reveal">Нужны ролик, графика или&nbsp;сайт?<br>Пришлите задачу и&nbsp;сроки, обсудим</p>
+      <p class="contact__lead reveal">На&nbsp;каком здании или&nbsp;поверхности хотите показать историю? Пришлите фотографии, задачу и&nbsp;дату события. Можем начать с&nbsp;концепции или&nbsp;подключиться к&nbsp;уже&nbsp;разработанному проекту.</p>
       <h2 class="contact__title">
-        <span class="line"><span>Давайте <span class="acc">обсудим</span></span></span>
-        <span class="line"><span><span class="acc">задачу</span> <i class="pill"><video data-src="../../fresh/media/mengiry.mp4" data-poster="../../fresh/media/mengiry.webp" muted loop playsinline data-lazy preload="none"></video></i></span></span>
+        <span class="line"><span>Придумаем историю</span></span>
+        <span class="line"><span>для&nbsp;вашего фасада <i class="pill"><video data-src="../../fresh/media/footer/mapping.mp4" data-poster="../../fresh/media/footer/mapping.webp" muted loop playsinline data-lazy preload="none"></video></i></span></span>
       </h2>
       <div class="contact__links">
         <div class="contact__ways">
@@ -143,7 +199,7 @@
           <a class="contact__mail contact__tg" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Telegram&nbsp;↗</a>
           <a class="yt yt--m" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener" aria-label="YouTube-канал студии"><svg viewBox="0 0 48 34" aria-hidden="true"><rect width="48" height="34" rx="9" fill="currentColor"/><path d="M19.5 10v14l12-7z" fill="#111110"/></svg></a>
         </div>
-        <a class="contact__btn contact__btn--m" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Написать в Telegram ↗</a>
+        <a class="contact__btn contact__btn--m" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Написать в&nbsp;Telegram ↗</a>
 
         <form class="callback contact__form" novalidate>
           <div class="contact__row">
@@ -162,7 +218,7 @@
     <span class="cpanel__grip" aria-hidden="true"></span>
     <button class="cpanel__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
     <div class="cpanel__top">
-      <p class="cpanel__title"><span class="nw">Давайте сделаем</span><br>экспонат</p>
+      <p class="cpanel__title">Придумаем историю<br>для&nbsp;вашего фасада</p>
       <form class="callback cpanel__form" novalidate>
         <input class="cpanel__input" type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="телефон" aria-label="Телефон">
         <label class="callback__agree"><input type="checkbox" name="agree"><span><a class="callback__doc" href="../../consent/" target="_blank">Согласие на&nbsp;обработку<br>персональных данных</a></span></label>
@@ -187,24 +243,26 @@
     <span class="msheet__grip" aria-hidden="true"></span>
     <button class="msheet__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
     <div class="msheet__main">
-      <a href="../" aria-current="page">Работы</a>
+      <a href="../" aria-current="page">Все работы</a>
     </div>
     <div class="mtags">
-      <h4>Что делаем</h4><ul class="mtags__big"><li><a href="../eksponaty/">Интерактивные экспонаты</a></li><li><a href="./" aria-current="page">Мэппинг</a></li><li><a href="../scena/">Графика для мероприятия</a></li><li><a href="../dizayn/">Дизайн продукта</a></li></ul><ul class="mtags__small"><li><a href="../video/">Видео и 3D-анимация</a></li><li><a href="../sayty/">Сайты</a></li></ul>
-      <h4>Для кого</h4><ul class="mtags__big"><li><a href="../muzei/">Музеи</a></li><li><a href="../vystavki/">Выставки</a></li></ul><ul class="mtags__small"><li><a href="../zastr/">Застройщики стендов</a></li><li><a href="../kino/">Кино</a></li><li><a href="../regiony/">Регионы и города</a></li><li><a href="../meropr/">Организаторы мероприятий</a></li><li><a href="../developery/">Девелоперы</a></li><li><a href="../prom/">Промышленность</a></li></ul>
+      <div class="mtags__group" role="group" aria-label="Что делаем"><ul class="mtags__big"><li><a href="../interactive/">Интерактивные экспонаты</a></li><li><a href="./" aria-current="page">Мэппинг</a></li><li><a href="../event-graphics/">Графика для&nbsp;мероприятия</a></li><li><a href="../product-design/">Дизайн продукта</a></li></ul><ul class="mtags__small"><li><a href="../video/">Видео и&nbsp;3D-анимация</a></li><li><a href="../websites/">Сайты</a></li></ul></div>
+      <div class="mtags__group" role="group" aria-label="Для кого"><ul class="mtags__big"><li><a href="../museums/">Музеи</a></li><li><a href="../exhibitions/">Выставки</a></li></ul><ul class="mtags__small"><li><a href="../stand-builders/">Застройщики стендов</a></li><li><a href="../film/">Кино</a></li><li><a href="../regions/">Регионы и&nbsp;города</a></li><li><a href="../events/">Организаторы мероприятий</a></li><li><a href="../developers/">Девелоперы</a></li><li><a href="../industry/">Промышленность</a></li></ul></div>
     </div>
-    <div class="msheet__main msheet__main--after"><a href="#contact">Контакты</a>
+    <div class="msheet__main msheet__main--after"><a href="../../services/">Услуги</a><a href="../../prices/">Цены</a><a href="../../about/">О студии</a><a href="#contact">Контакты</a>
     </div>
   </div>
   <div class="msheet__shade"></div>
 
-  <div class="msheet tsheet" id="tsheet" role="dialog" aria-label="Работы по направлениям">
+  <div class="msheet msheet--tags" id="tsheet" role="dialog" aria-label="Работы по направлениям">
     <span class="msheet__grip" aria-hidden="true"></span>
     <button class="msheet__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
-    <a class="tsheet__all" href="../">Все работы</a>
+    <div class="msheet__main">
+      <a href="../">Все работы</a>
+    </div>
     <div class="mtags">
-      <h4>Что делаем</h4><ul class="mtags__big"><li><a href="../eksponaty/">Интерактивные экспонаты</a></li><li><a href="./" aria-current="page">Мэппинг</a></li><li><a href="../scena/">Графика для мероприятия</a></li><li><a href="../dizayn/">Дизайн продукта</a></li></ul><ul class="mtags__small"><li><a href="../video/">Видео и 3D-анимация</a></li><li><a href="../sayty/">Сайты</a></li></ul>
-      <h4>Для кого</h4><ul class="mtags__big"><li><a href="../muzei/">Музеи</a></li><li><a href="../vystavki/">Выставки</a></li></ul><ul class="mtags__small"><li><a href="../zastr/">Застройщики стендов</a></li><li><a href="../kino/">Кино</a></li><li><a href="../regiony/">Регионы и города</a></li><li><a href="../meropr/">Организаторы мероприятий</a></li><li><a href="../developery/">Девелоперы</a></li><li><a href="../prom/">Промышленность</a></li></ul>
+      <div class="mtags__group" role="group" aria-label="Что делаем"><ul class="mtags__big"><li><a href="../interactive/">Интерактивные экспонаты</a></li><li><a href="./" aria-current="page">Мэппинг</a></li><li><a href="../event-graphics/">Графика для&nbsp;мероприятия</a></li><li><a href="../product-design/">Дизайн продукта</a></li></ul><ul class="mtags__small"><li><a href="../video/">Видео и&nbsp;3D-анимация</a></li><li><a href="../websites/">Сайты</a></li></ul></div>
+      <div class="mtags__group" role="group" aria-label="Для кого"><ul class="mtags__big"><li><a href="../museums/">Музеи</a></li><li><a href="../exhibitions/">Выставки</a></li></ul><ul class="mtags__small"><li><a href="../stand-builders/">Застройщики стендов</a></li><li><a href="../film/">Кино</a></li><li><a href="../regions/">Регионы и&nbsp;города</a></li><li><a href="../events/">Организаторы мероприятий</a></li><li><a href="../developers/">Девелоперы</a></li><li><a href="../industry/">Промышленность</a></li></ul></div>
     </div>
   </div>
   <div class="msheet__shade"></div>
@@ -224,8 +282,8 @@
     <video class="modal__video" controls playsinline></video>
   </dialog>
 
-  <script src="../../fresh/fresh.js?v=1119x"></script>
-  <script src="../../fresh/v2.js?v=29"></script>
+  <script src="../../fresh/fresh.js?v=1121c"></script>
+  <script src="../../fresh/v2.js?v=32"></script>
   <script src="../../fresh/cookies.js?v=1119i"></script>
 </body>
 </html>

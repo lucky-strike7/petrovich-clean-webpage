@@ -1,8 +1,10 @@
 // Migration map from the legacy site. Keep specific project matches before the fallback.
 const exact = new Map([
-  ['/video-content', '/'],
-  ['/videocontent', '/'],
-  ['/about-us', '/#process'],
+  ['/video-content', '/works/exhibitions/'],
+  ['/videocontent', '/works/exhibitions/'],
+  ['/projects', '/works/'],
+  ['/blogs', '/'],
+  ['/about-us', '/about/'],
   ['/testimonials', '/'],
   ['/contacts', '/#contact'],
   ['/contact', '/#contact'],
@@ -43,15 +45,26 @@ const exact = new Map([
   ['/cases/rosnano', '/works/rosnano/'],
   ['/cases/yantarny', '/works/yantarny/'],
   ['/cases/zebralog', '/works/zebralog/'],
+  // Теги получили английские адреса вместо транслита
+  ['/works/eksponaty', '/works/interactive/'],
+  ['/works/scena', '/works/event-graphics/'],
+  ['/works/dizayn', '/works/product-design/'],
+  ['/works/sayty', '/works/websites/'],
+  ['/works/muzei', '/works/museums/'],
+  ['/works/vystavki', '/works/exhibitions/'],
+  ['/works/zastr', '/works/stand-builders/'],
+  ['/works/kino', '/works/film/'],
+  ['/works/regiony', '/works/regions/'],
+  ['/works/meropr', '/works/events/'],
+  ['/works/developery', '/works/developers/'],
+  ['/works/prom', '/works/industry/'],
   ['/blog-list', '/'],
   ['/p', '/'],
 ]);
 
 export function legacyRedirect(pathname, search = '') {
   const path = pathname.replace(/\/+$/, '') || '/';
-  let target = exact.get(path);
-  if (!target && (path === '/projects' || path.startsWith('/projects/'))) target = '/#projects';
-  if (!target && (path === '/blogs' || path.startsWith('/blogs/'))) target = '/';
+  const target = exact.get(path);
   if (!target) return null;
   const [base, fragment] = target.split('#');
   // Keep the original query bytes, order and repeated parameters; fragment must follow them.

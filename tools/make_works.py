@@ -66,7 +66,7 @@ def fix(m):
     return f'{attr}="{B}{val}"'
 t = re.sub(r'\b(href|src|data-src|data-poster|data-poster-m|data-video|data-preview|srcset)="([^"]*)"', fix, t)
 t = t.replace(f'href="{B}./"', f'href="{B}"')
-# Ссылки тегов «eksponaty/» и т. п. — относительные, от /works/: их fix не трогает только если без точки; проверим
+# Ссылки тегов «interactive/» и т. п. — относительные, от /works/: их fix не трогает только если без точки; проверим
 t = p.finish(t)
 os.makedirs('works', exist_ok=True)
 open('works/index.html', 'w', encoding='utf-8', newline='').write(t)

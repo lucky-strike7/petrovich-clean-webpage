@@ -132,7 +132,7 @@ t = t.replace('https://petrovichbrothers.ru/cases/hbo/', URL)
 t = re.sub(r'\n  <link rel="preload"[^>]*hbo[^>]*>', '', t)
 # Новая шапка, низ страницы
 t, n = re.subn(r'<header class="top">.*?</header>', lambda m: p.header(), t, count=1, flags=re.S); assert n
-t, n = re.subn(r'(    <section class="case-more">.*?</section>\n)', lambda m: m.group(1) + p.next_work(item_id='strana-sveta') + p.seealso(['mapping', 'video', 'meropr', 'regiony', 'scena']), t, count=1, flags=re.S); assert n
+t, n = re.subn(r'(    <section class="case-more">.*?</section>\n)', lambda m: m.group(1) + p.next_work(item_id='strana-sveta') + p.seealso(['mapping', 'video', 'events', 'regions', 'event-graphics']), t, count=1, flags=re.S); assert n
 t = p.finish(t)
 os.makedirs('works/strana-sveta', exist_ok=True)
 open('works/strana-sveta/index.html', 'w', encoding='utf-8', newline='').write(t)

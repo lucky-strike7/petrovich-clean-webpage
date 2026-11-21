@@ -8,7 +8,7 @@ import { legacyRedirect } from './redirects.mjs';
 
 const project = fileURLToPath(new URL('../', import.meta.url));
 const files = new Set(['index.html','404.html','robots.txt','sitemap.xml','site.webmanifest','favicon.svg','favicon.ico','favicon-32.png','apple-touch-icon.png','icon-192.png','icon-512.png']);
-const directories = new Set(['fresh','fonts','Video','cases','works','privacy','consent']);
+const directories = new Set(['fresh','fonts','Video','cases','works','prices','services','about','privacy','consent']);
 const types = { '.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.avif':'image/avif','.mp4':'video/mp4','.webm':'video/webm','.xml':'application/xml; charset=utf-8','.txt':'text/plain; charset=utf-8','.woff2':'font/woff2','.ttf':'font/ttf','.ico':'image/x-icon','.webmanifest':'application/manifest+json' };
 
 export function byteRange(header, size) {
@@ -32,8 +32,9 @@ export function createApp({ root=resolve(project,process.env.NODE_ENV==='product
       if(!['GET','HEAD'].includes(req.method)){res.setHeader('Allow','GET, HEAD');send(405,'Method not allowed');return;}
       let path;try{path=decodeURIComponent(url.pathname);}catch{send(400,'Bad path');return;}
       if(path.split('/').some(p=>p.startsWith('.')||p.includes('\\')||p.includes('\0'))){send(404,'Not found');return;}
+      const canonicalOrigin=req.headers.host?.toLowerCase()==='www.petrovichbrothers.ru'?'https://petrovichbrothers.ru':'';
       const redirect=legacyRedirect(path,url.search);
-      if(redirect){res.writeHead(301,{'Location':redirect,'Cache-Control':'public, max-age=3600','Content-Length':0});res.end();return;}
+      if(redirect){res.writeHead(301,{'Location':canonicalOrigin+redirect,'Cache-Control':'public, max-age=3600','Content-Length':0});res.end();return;}
       if(path.endsWith('/'))path+='index.html';
       let file=resolve(root,'.'+path),info,status=200;
       const rel=relative(root,file);
@@ -42,12 +43,17 @@ export function createApp({ root=resolve(project,process.env.NODE_ENV==='product
           const actual=await realpath(file);if(relative(await canonicalRoot,actual).startsWith('..'))throw Error();info=await stat(actual);
           if(info.isDirectory()&&!url.pathname.endsWith('/')){
             const index=await stat(resolve(actual,'index.html'));
-            if(index.isFile()){res.writeHead(308,{'Location':url.pathname+'/'+url.search,'Cache-Control':'no-cache'});res.end();return;}
+            if(index.isFile()){res.writeHead(308,{'Location':canonicalOrigin+url.pathname+'/'+url.search,'Cache-Control':'no-cache'});res.end();return;}
           }
           if(!info.isFile())info=null;
         }catch{info=null;}
       }
       if(!info){file=resolve(root,'404.html');info=await stat(file);status=404;}
+      if(status===200 && (canonicalOrigin || url.pathname.endsWith('/index.html')) && !url.pathname.startsWith('//')){
+        const cleanPath=url.pathname.replace(/\/index\.html$/, '/');
+        res.writeHead(301,{'Location':canonicalOrigin+cleanPath+url.search,'Cache-Control':'public, max-age=3600'});
+        res.end();return;
+      }
       const type=types[extname(file)]||'application/octet-stream';
       const isText=/^(?:text\/|image\/svg|application\/(?:xml|manifest))/.test(type);
       const cache=type.startsWith('text/html')||status!==200?'no-cache':url.searchParams.has('v')?'public, max-age=31536000, immutable':'public, max-age=0, must-revalidate';

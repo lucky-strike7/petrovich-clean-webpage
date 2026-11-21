@@ -1,0 +1,10 @@
+/* Страница выставок: описание первой работы и приглашение видны и на телефоне. */
+.page-exhibitions .landing-scope .about__desc { margin-top: 0; }
+.page-exhibitions .contact__lead { max-width: 48em; }
+
+@media (max-width: 600px) {
+  .page-exhibitions .landing-scope .about__desc { margin-top: 20px; }
+  .page-exhibitions #w-khakasia .card__info { display: block; padding-top: 12px; }
+  .page-exhibitions #w-khakasia .card__meta { display: none; }
+  .page-exhibitions .contact__lead { display: block; }
+}

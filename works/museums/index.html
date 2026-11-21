@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../../favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <link rel="preload" as="font" href="../../fonts/Milligram-Medium.woff2" type="font/woff2" crossorigin>
+  <link rel="preload" as="font" href="../../fonts/MilligramText-Regular.woff2" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#F6F6F3">
+  <title>Видео и интерактивные экспонаты для музеев | студия братьев Пе́трович</title>
+  <meta name="description" content="Придумываем концепцию мультимедийной части музея и доводим ее до работающих экспонатов. Пишем сценарии, создаем видео, 3D-анимацию, интерфейсы и программы. Если концепция уже есть, работаем по ней вместе с музеем и командой проекта.">
+
+  <link rel="canonical" href="https://petrovichbrothers.ru/works/museums/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Студия братьев Пе́трович">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:title" content="Видео и интерактивные экспонаты для музеев | студия братьев Пе́трович">
+  <meta property="og:description" content="Придумываем концепцию мультимедийной части музея и доводим ее до работающих экспонатов. Пишем сценарии, создаем видео, 3D-анимацию, интерфейсы и программы. Если концепция уже есть, работаем по ней вместе с музеем и командой проекта.">
+  <meta property="og:url" content="https://petrovichbrothers.ru/works/museums/">
+  <meta property="og:image" content="https://petrovichbrothers.ru/fresh/media/og-home.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="Интерактивные экспонаты студии братьев Петрович">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Студия братьев Петрович",
+  "alternateName": [
+    "Студия братьев Пе́трович",
+    "Petrovich Brothers"
+  ],
+  "url": "https://petrovichbrothers.ru/",
+  "logo": "https://petrovichbrothers.ru/fresh/logo-vertical.svg",
+  "email": "art@petrovichbrothers.ru",
+  "telephone": "+7 915 197-86-52",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "ул. Бауманская, 6, стр. 2",
+    "addressLocality": "Москва",
+    "addressCountry": "RU"
+  },
+  "sameAs": [
+    "https://www.youtube.com/@PetrovichBrothers-b7q",
+    "https://t.me/artem_petrovich_1"
+  ],
+  "@id": "https://petrovichbrothers.ru/#organization"
+}
+  </script>
+  <link rel="stylesheet" href="../../fresh/fresh.css?v=1120j">
+  <link rel="stylesheet" href="../../fresh/v2.css?v=122">
+  <script>
+    document.documentElement.classList.add('js');
+    /*
+      --vh — сотая доля высоты экрана, запомненная при загрузке. На телефоне высоты считаем от нее, а не от svh:
+      встроенный браузер Telegram меняет высоту окна, когда показывает свою панель, и страница прыгала.
+      Пересчитываем только при смене ширины (поворот телефона).
+    */
+    (() => {
+      const h = document.documentElement;
+      const set = () => h.style.setProperty('--vh', `${innerHeight / 100}px`);
+      let w = innerWidth; set();
+      addEventListener('resize', () => { if (innerWidth !== w) { w = innerWidth; set(); } });
+    })();
+  </script>
+  <link rel="preload" as="image" href="../../fresh/media/shturval-render.webp" fetchpriority="high">
+  <link rel="stylesheet" href="../../fresh/museums.css?v=3">
+</head>
+<body class="page-v2 page-museums">
+
+  <header class="top top--v2">
+    <script src="../../fresh/header-state.js?v=1"></script>
+    <a class="top__logo" href="../../" aria-label="Студия братьев Пе́трович, на главную">
+      <img src="../../fresh/logo-vertical.svg" alt="Petrovich Brothers" width="244" height="121">
+    </a>
+    <nav class="top__nav" aria-label="Основное меню">
+      <div class="top__dd">
+        <a class="is-on" href="../">Работы <i aria-hidden="true"></i></a>
+        <div class="top__menu mega">
+          <div class="mega__what"><h4>Что делаем</h4><ul class="mega__big"><li><a href="../interactive/" data-peek="../../fresh/media/archive/referus.jpg" data-peek-video="../../fresh/media/archive/referus-preview.mp4"><span>Интерактивные экспонаты</span></a></li><li><a href="../mapping/" data-peek="../../fresh/media/strana-sveta.webp" data-peek-video="../../fresh/media/strana-sveta.mp4"><span>Мэппинг</span></a></li><li><a href="../event-graphics/" data-peek="../../fresh/media/archive/premiarb.jpg" data-peek-video="../../fresh/media/archive/premiarb-preview.mp4"><span>Графика для&nbsp;мероприятия</span></a></li><li><a href="../product-design/" data-peek="../../cases/cyberbug/media/cb-hero.webp"><span>Дизайн продукта</span></a></li></ul><ul class="mega__small"><li><a href="../video/"><span>Видео и&nbsp;3D-анимация</span></a></li><li><a href="../websites/"><span>Сайты</span></a></li></ul></div>
+          <div class="mega__who"><h4>Для&nbsp;кого <a class="mega__all" href="../"><span>Все работы</span>&nbsp;→</a></h4><ul class="mega__big"><li><a href="./" aria-current="page" data-peek="../../fresh/media/shturval-peek.webp" data-peek-video="../../fresh/media/shturval-peek.mp4"><span>Музеи</span></a></li><li><a href="../exhibitions/" data-peek="../../fresh/media/khakasy-peek.webp" data-peek-video="../../fresh/media/khakasy-peek.mp4"><span>Выставки</span></a></li></ul><ul class="mega__small"><li><a href="../stand-builders/"><span>Застройщики стендов</span></a></li><li><a href="../film/"><span>Кино</span></a></li><li><a href="../regions/"><span>Регионы и&nbsp;города</span></a></li><li><a href="../events/"><span>Организаторы мероприятий</span></a></li><li><a href="../developers/"><span>Девелоперы</span></a></li><li><a href="../industry/"><span>Промышленность</span></a></li></ul></div>
+        </div>
+      </div>
+      <a href="../../services/">Услуги</a>
+      <a href="../../prices/">Цены</a>
+      <a href="../../about/">О&nbsp;студии</a>
+      <a href="#contact" data-panel>Контакты</a>
+    </nav>
+    <button class="top__ctx" type="button" data-ctx-for="nav.lnav--switch" aria-controls="tsheet" aria-expanded="false">Музеи <i aria-hidden="true"></i></button>
+    <button class="top__burger" type="button" aria-expanded="false" aria-controls="msheet" aria-label="Меню"><i></i><i></i><i></i></button>
+    <div class="top__sub lnav--switch" data-sub-for=".lnav--switch:not(.top__sub)"><a class="lnav__up" href="../">Работы</a><span class="lnav__sep" aria-hidden="true">→</span>
+      <div class="lnav__dd">
+        <button class="lnav__btn" type="button" aria-expanded="false" aria-controls="tsheet" data-phone-only>Музеи <i aria-hidden="true"></i></button>
+        <div class="lnav__menu">
+          <div><h4>Что делаем</h4><ul><li><a href="../interactive/">Интерактивные экспонаты</a></li><li><a href="../mapping/">Мэппинг</a></li><li><a href="../event-graphics/">Графика для&nbsp;мероприятия</a></li><li><a href="../product-design/">Дизайн продукта</a></li><li><a href="../video/">Видео и&nbsp;3D-анимация</a></li><li><a href="../websites/">Сайты</a></li></ul></div>
+          <div><h4>Для&nbsp;кого</h4><ul><li><a href="./" aria-current="page">Музеи</a></li><li><a href="../exhibitions/">Выставки</a></li><li><a href="../stand-builders/">Застройщики стендов</a></li><li><a href="../film/">Кино</a></li><li><a href="../regions/">Регионы и&nbsp;города</a></li><li><a href="../events/">Организаторы мероприятий</a></li><li><a href="../developers/">Девелоперы</a></li><li><a href="../industry/">Промышленность</a></li></ul></div>
+        </div>
+      </div></div>
+  </header>
+
+  <main>
+
+    <nav class="lnav lnav--switch" aria-label="Работы по направлениям" hidden>
+      <a class="lnav__up" href="../">Работы</a><span class="lnav__sep" aria-hidden="true">→</span>
+      <div class="lnav__dd">
+        <button class="lnav__btn" type="button" aria-expanded="false" aria-controls="tsheet" data-phone-only>Музеи <i aria-hidden="true"></i></button>
+        <div class="lnav__menu">
+          <div><h4>Что делаем</h4><ul><li><a href="../interactive/">Интерактивные экспонаты</a></li><li><a href="../mapping/">Мэппинг</a></li><li><a href="../event-graphics/">Графика для&nbsp;мероприятия</a></li><li><a href="../product-design/">Дизайн продукта</a></li><li><a href="../video/">Видео и&nbsp;3D-анимация</a></li><li><a href="../websites/">Сайты</a></li></ul></div>
+          <div><h4>Для&nbsp;кого</h4><ul><li><a href="./" aria-current="page">Музеи</a></li><li><a href="../exhibitions/">Выставки</a></li><li><a href="../stand-builders/">Застройщики стендов</a></li><li><a href="../film/">Кино</a></li><li><a href="../regions/">Регионы и&nbsp;города</a></li><li><a href="../events/">Организаторы мероприятий</a></li><li><a href="../developers/">Девелоперы</a></li><li><a href="../industry/">Промышленность</a></li></ul></div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="about">
+      <p class="about__label reveal">Студия братьев<br class="about__br"> Пе́трович</p>
+      <h1 class="about__text reveal">Видео и&nbsp;интерактивные экспонаты для&nbsp;музеев</h1>
+      <p class="about__desc reveal">Придумываем концепцию мультимедийной части музея и&nbsp;доводим ее&nbsp;до&nbsp;работающих экспонатов. Пишем сценарии, создаем видео, <span class="nowrap">3D-анимацию</span>, интерфейсы и&nbsp;программы. Если концепция уже&nbsp;есть, работаем по&nbsp;ней&nbsp;вместе с&nbsp;музеем и&nbsp;командой проекта.</p>
+    </section>
+
+    <section class="works-mix works-mix--tiles">
+      <h2 class="sr-only">Работы</h2>
+      <article class="card work-big" id="w-khersones">
+        <a class="card__media" href="../../works/khersones/" data-cursor="Посмотреть" aria-label="Зал Черноморского флота"><video data-poster="../../fresh/media/shturval-render.webp" data-poster-m="../../fresh/media/shturval-render.webp" muted loop playsinline data-lazy preload="none"><source data-src="../../fresh/media/shturval-card.mp4" type="video/mp4" media="(max-width: 600px)"><source data-src="../../fresh/media/shturval-render.mp4" type="video/mp4"></video></a>
+        <div class="card__row">
+          <h3 class="card__title reveal">Зал Черноморского флота</h3>
+          <a class="card__kind" href="../../works/khersones/">Музей «Новый Херсонес», 2025</a>
+          <div class="card__info">
+            <p class="card__desc reveal">Корабельный симулятор, сканеры кораблей, исторический таймлайн и&nbsp;игра на&nbsp;тачскрине. Придумали взаимодействие, создали интерфейсы, <span class="nowrap">3D-модели</span> и&nbsp;видео, написали программы и&nbsp;запустили экспонаты в&nbsp;зале.</p>
+            <p class="card__meta reveal"><span>Музей «Новый Херсонес», Севастополь, 2025</span></p>
+            <div class="card__actions"></div>
+          </div>
+        </div>
+      </article>
+      <section class="museum-film" id="museum-video" aria-labelledby="museum-film-title">
+        <div class="museum-film__copy">
+          <h2 id="museum-film-title">Видео для&nbsp;музейной экспозиции</h2>
+          <p>Можно заказать один ролик или серию для&nbsp;целого зала. Придумаем сценарий, сделаем графику и&nbsp;соберем видео под&nbsp;ваши экраны. Если сценарий уже готов, начнем с&nbsp;него.</p>
+          <p>Для&nbsp;зала Черноморского флота мы построили 3D-модели кораблей по&nbsp;чертежам и&nbsp;сделали около&nbsp;30 минут видео. Один из&nbsp;этих роликов — о&nbsp;бриге «Меркурий».</p>
+          <a class="text-link" href="../../works/khersones/" data-peek="../../fresh/media/mercury-tile.webp" data-peek-video="../../fresh/media/mercury-preview.mp4">Посмотреть весь проект →</a>
+        </div>
+        <figure>
+          <video controls playsinline preload="none" width="720" height="1280" poster="../../fresh/media/mercury.webp" src="../../Video/mercury.mp4" aria-label="Бриг «Меркурий», ролик из экспозиции"></video>
+          <figcaption>Бриг «Меркурий» · 0:40</figcaption>
+        </figure>
+      </section>
+      <ul class="works works--all">
+          <li class="reveal"><a class="work" href="../../works/khakasia/" data-cursor="Посмотреть" data-preview="../../fresh/media/khakasy-card.mp4">
+            <span class="work__media"><img src="../../fresh/media/khakasy-render.webp" alt="" width="650" height="500" loading="lazy"></span>
+            <span class="work__title">Стенд Республики Хакасия</span>
+            <span class="work__meta">Три&nbsp;интерактивных экспоната для&nbsp;выставки «Россия»</span>
+          </a></li>
+          <li class="reveal"><a class="work" href="../../works/yantarny/" data-cursor="Посмотреть" data-preview="../../fresh/media/archive/yantarny-preview.mp4">
+            <span class="work__media"><img src="../../fresh/media/archive/yantarny.jpg" alt="" width="650" height="500" loading="lazy"></span>
+            <span class="work__title">Янтарный форум</span>
+            <span class="work__meta"><span class="nowrap">3D-анимация</span> для&nbsp;комнаты с&nbsp;тремя экранами</span>
+          </a></li>
+      </ul>
+    </section>
+    <section class="sect landing-scope">
+      <h2 class="sect__label reveal">Что берем на&nbsp;себя</h2>
+      <p class="sect__body about__desc reveal">Начинаем с&nbsp;концепции: что&nbsp;рассказываем посетителю, как&nbsp;это&nbsp;выглядит и&nbsp;что&nbsp;он&nbsp;сможет сделать сам. Это&nbsp;отдельный этап работы, на&nbsp;котором идеи складываются в&nbsp;будущие видео и&nbsp;экспонаты. Если концепция уже&nbsp;готова, берем ее&nbsp;за&nbsp;основу. Дальше пишем сценарии, рисуем графику и&nbsp;интерфейсы, делаем видео и&nbsp;программы. Проектируем мультимедиа и&nbsp;берем на&nbsp;себя инженерные работы: увязываем экраны, датчики и&nbsp;управление. С&nbsp;подрядчиком согласуем, где&nbsp;и&nbsp;как&nbsp;все&nbsp;разместить, а&nbsp;на&nbsp;площадке монтируем и&nbsp;запускаем нашу часть.</p>
+    </section>
+
+      <section class="plate plate--page" aria-labelledby="plate-title">
+        <div class="plate__text">
+          <h2 class="plate__title reveal" id="plate-title">Из&nbsp;опыта на&nbsp;площадках</h2>
+          <p class="plate__body reveal">Если у&nbsp;экспоната есть интернет и&nbsp;удаленный доступ, мы&nbsp;можем проверить его&nbsp;работу и&nbsp;обновить контент без&nbsp;поездки в&nbsp;музей. В&nbsp;коротком видео объясняем, почему об&nbsp;этом стоит подумать заранее.</p>
+        </div>
+        <figure class="plate__video reveal">
+          <button class="plate__btn" type="button" data-full="../../Video/errors/oshibka-05.mp4" aria-label="Смотреть разбор: нет проводного интернета, 0:18">
+            <img src="../../fresh/media/oshibka-05.webp" alt="Артем Петрович рассказывает, почему экспонатам нужен проводной интернет, а не Wi-Fi" width="1280" height="720" loading="lazy">
+            <span class="case-review__play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M5 2.5 13.5 8 5 13.5z"/></svg></span>
+          </button>
+        </figure>
+      </section>
+    <section class="sect landing-scope landing-cost" id="cost">
+      <h2 class="sect__label reveal">Стоимость проекта</h2>
+      <div class="sect__body">
+        <p class="about__desc reveal">Чтобы посчитать ваш&nbsp;проект, расскажите о&nbsp;музее и&nbsp;задаче, пришлите план зала и&nbsp;дату открытия, если они&nbsp;уже&nbsp;известны. Обсудим, нужна ли&nbsp;концепция с&nbsp;нуля, какие видео и&nbsp;программы предстоит сделать. Отдельно оценим концепцию, создание контента и&nbsp;запуск на&nbsp;площадке. Если нужна вся&nbsp;экспозиция с&nbsp;конструкциями и&nbsp;оборудованием, подключим к&nbsp;расчету наших партнеров.</p>
+        <a class="sect__link reveal" href="../../prices/">Цены и&nbsp;примеры</a>
+      </div>
+    </section>
+
+    <section class="sect faq" id="faq">
+      <h2 class="sect__label reveal">Частые вопросы</h2>
+      <div class="sect__body">
+        <details class="faq__item reveal"><summary>Что&nbsp;входит в&nbsp;разработку концепции?</summary><p>Сначала разбираемся, какую историю рассказывает музей и&nbsp;кто&nbsp;придет ее&nbsp;смотреть. Затем придумываем, где&nbsp;уместно видео, а&nbsp;где&nbsp;посетителю стоит дать возможность <span class="nowrap">что-то</span> выбрать, собрать или&nbsp;привести в&nbsp;движение. Продумываем связь экспонатов, их&nbsp;внешний вид&nbsp;и&nbsp;логику работы. Концепцию выделяем в&nbsp;отдельный этап: заранее договариваемся, что&nbsp;подготовим, сколько это&nbsp;займет и&nbsp;сколько будет стоить.</p></details>
+        <details class="faq__item reveal"><summary>А&nbsp;если концепция музея уже&nbsp;есть?</summary><p>Работаем по&nbsp;готовой. Изучим ее&nbsp;и&nbsp;план залов, обсудим задачу с&nbsp;вашей командой. Затем разработаем сценарии, видео, интерфейсы и&nbsp;программы в&nbsp;рамках общей идеи. Если <span class="nowrap">какие-то</span> решения еще&nbsp;нужно придумать, отдельно договоримся об&nbsp;этой работе.</p></details>
+        <details class="faq__item reveal"><summary>Можно заказать только видео или&nbsp;программу для&nbsp;одного экспоната?</summary><p>Да. Можно заказать отдельный ролик, <span class="nowrap">3D-анимацию</span>, приложение для&nbsp;тачскрина или&nbsp;интерактивный экспонат. Необязательно передавать нам&nbsp;всю&nbsp;мультимедийную часть музея.</p></details>
+        <details class="faq__item reveal"><summary>Можно заказать через&nbsp;вас&nbsp;экспозицию вместе с&nbsp;конструкциями и&nbsp;оборудованием?</summary><p>Да. У&nbsp;нас&nbsp;есть проверенные застройщики, с&nbsp;которыми можно сделать экспозицию целиком и&nbsp;вести проект через&nbsp;нас. Мы&nbsp;придумываем концепцию мультимедийной части, делаем контент и&nbsp;программы, а&nbsp;партнеры берут на&nbsp;себя конструкции, оборудование и&nbsp;застройку. Вместе обсуждаем, как&nbsp;все&nbsp;будет работать, и&nbsp;готовим запуск. Если у&nbsp;вас&nbsp;уже&nbsp;есть свой подрядчик, можем работать с&nbsp;ним.</p></details>
+        <details class="faq__item reveal"><summary>Как&nbsp;обновлять контент после&nbsp;открытия?</summary><p>Это&nbsp;лучше продумать заранее. Можно предусмотреть удаленный доступ или&nbsp;панель, через&nbsp;которую сотрудники музея сами меняют материалы. Выберем способ под&nbsp;вашу задачу и&nbsp;договоримся, какая помощь понадобится после&nbsp;открытия.</p></details>
+      </div>
+    </section>
+
+    <section class="sect seealso">
+      <h2 class="sect__label reveal">Смотрите также</h2>
+      <ul class="sect__body seealso__list reveal"><li><a href="../interactive/">Интерактивные экспонаты</a></li><li><a href="../video/">Видео и&nbsp;3D-анимация</a></li><li><a href="../exhibitions/">Выставки</a></li></ul>
+    </section>
+
+
+    <section class="contact" id="contact">
+      <p class="contact__lead reveal">Расскажите, чему посвящен музей и&nbsp;что&nbsp;вы&nbsp;хотите показать посетителям. Если уже&nbsp;есть концепция или&nbsp;план зала, пришлите их. Если пока есть только задача, начнем с&nbsp;разработки концепции. Обсудим сроки и&nbsp;стоимость каждого этапа.</p>
+      <h2 class="contact__title">
+        <span class="line"><span>Обсудим мультимедиа</span></span>
+        <span class="line"><span>для&nbsp;вашего музея <i class="pill"><video data-src="../../fresh/media/footer/museums.mp4" data-poster="../../fresh/media/footer/museums.webp" muted loop playsinline data-lazy preload="none"></video></i></span></span>
+      </h2>
+      <div class="contact__links">
+        <div class="contact__ways">
+          <a class="contact__mail" href="mailto:art@petrovichbrothers.ru">art@petrovichbrothers.ru</a>
+          <a class="contact__mail" href="tel:+79151978652">+7&nbsp;915&nbsp;197-86-52</a>
+          <a class="contact__mail contact__tg" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Telegram&nbsp;↗</a>
+          <a class="yt yt--m" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener" aria-label="YouTube-канал студии"><svg viewBox="0 0 48 34" aria-hidden="true"><rect width="48" height="34" rx="9" fill="currentColor"/><path d="M19.5 10v14l12-7z" fill="#111110"/></svg></a>
+        </div>
+        <a class="contact__btn contact__btn--m" href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Написать в&nbsp;Telegram ↗</a>
+
+        <form class="callback contact__form" novalidate>
+          <div class="contact__row">
+            <input class="cpanel__input" type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="телефон" aria-label="Телефон">
+            <button class="cpanel__btn" type="submit">Перезвоните мне</button>
+          </div>
+          <label class="callback__agree"><input type="checkbox" name="agree"><span><a class="callback__doc" href="../../consent/" target="_blank">Согласие на&nbsp;обработку персональных данных</a></span></label>
+          <p class="callback__msg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <p class="contact__foot"><span>Москва, ул.&nbsp;Бауманская, 6, стр.&nbsp;2&nbsp;&nbsp;·&nbsp;&nbsp;<a class="contact__doc" href="../../privacy/">Политика конфиденциальности</a></span><a class="yt" href="https://www.youtube.com/@PetrovichBrothers-b7q" target="_blank" rel="noopener" aria-label="YouTube-канал студии"><svg viewBox="0 0 48 34" aria-hidden="true"><rect width="48" height="34" rx="9" fill="currentColor"/><path d="M19.5 10v14l12-7z" fill="#111110"/></svg></a></p>
+    </section>
+  </main>
+
+  <aside class="cpanel" id="cpanel" aria-label="Контакты" inert>
+    <span class="cpanel__grip" aria-hidden="true"></span>
+    <button class="cpanel__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
+    <div class="cpanel__top">
+      <p class="cpanel__title">Обсудим мультимедиа<br>для&nbsp;вашего музея</p>
+      <form class="callback cpanel__form" novalidate>
+        <input class="cpanel__input" type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="телефон" aria-label="Телефон">
+        <label class="callback__agree"><input type="checkbox" name="agree"><span><a class="callback__doc" href="../../consent/" target="_blank">Согласие на&nbsp;обработку<br>персональных данных</a></span></label>
+        <button class="cpanel__btn" type="submit">Перезвоните мне</button>
+        <p class="callback__msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+    <div class="cpanel__ways">
+      <a href="mailto:art@petrovichbrothers.ru">art@petrovichbrothers.ru</a>
+      <a href="tel:+79151978652">+7&nbsp;915&nbsp;197-86-52</a>
+      <a href="https://t.me/artem_petrovich_1" target="_blank" rel="noopener">Telegram&nbsp;↗</a>
+    </div>
+  </aside>
+
+  <a class="badge" href="#contact" aria-label="Контакты">
+    <span class="badge__label roll"><span>Контакты</span><span aria-hidden="true">Написать нам</span></span>
+    <span class="badge__arrow" aria-hidden="true">→</span>
+  </a>
+
+
+  <div class="msheet" id="msheet" role="dialog" aria-label="Меню">
+    <span class="msheet__grip" aria-hidden="true"></span>
+    <button class="msheet__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
+    <div class="msheet__main">
+      <a href="../" aria-current="page">Все работы</a>
+    </div>
+    <div class="mtags">
+      <div class="mtags__group" role="group" aria-label="Что делаем"><ul class="mtags__big"><li><a href="../interactive/">Интерактивные экспонаты</a></li><li><a href="../mapping/">Мэппинг</a></li><li><a href="../event-graphics/">Графика для&nbsp;мероприятия</a></li><li><a href="../product-design/">Дизайн продукта</a></li></ul><ul class="mtags__small"><li><a href="../video/">Видео и&nbsp;3D-анимация</a></li><li><a href="../websites/">Сайты</a></li></ul></div>
+      <div class="mtags__group" role="group" aria-label="Для кого"><ul class="mtags__big"><li><a href="./" aria-current="page">Музеи</a></li><li><a href="../exhibitions/">Выставки</a></li></ul><ul class="mtags__small"><li><a href="../stand-builders/">Застройщики стендов</a></li><li><a href="../film/">Кино</a></li><li><a href="../regions/">Регионы и&nbsp;города</a></li><li><a href="../events/">Организаторы мероприятий</a></li><li><a href="../developers/">Девелоперы</a></li><li><a href="../industry/">Промышленность</a></li></ul></div>
+    </div>
+    <div class="msheet__main msheet__main--after"><a href="../../services/">Услуги</a><a href="../../prices/">Цены</a><a href="../../about/">О студии</a><a href="#contact">Контакты</a>
+    </div>
+  </div>
+  <div class="msheet__shade"></div>
+
+  <div class="msheet msheet--tags" id="tsheet" role="dialog" aria-label="Работы по направлениям">
+    <span class="msheet__grip" aria-hidden="true"></span>
+    <button class="msheet__close" type="button" aria-label="Закрыть"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 3 25 25M25 3 3 25"/></svg></button>
+    <div class="msheet__main">
+      <a href="../">Все работы</a>
+    </div>
+    <div class="mtags">
+      <div class="mtags__group" role="group" aria-label="Что делаем"><ul class="mtags__big"><li><a href="../interactive/">Интерактивные экспонаты</a></li><li><a href="../mapping/">Мэппинг</a></li><li><a href="../event-graphics/">Графика для&nbsp;мероприятия</a></li><li><a href="../product-design/">Дизайн продукта</a></li></ul><ul class="mtags__small"><li><a href="../video/">Видео и&nbsp;3D-анимация</a></li><li><a href="../websites/">Сайты</a></li></ul></div>
+      <div class="mtags__group" role="group" aria-label="Для кого"><ul class="mtags__big"><li><a href="./" aria-current="page">Музеи</a></li><li><a href="../exhibitions/">Выставки</a></li></ul><ul class="mtags__small"><li><a href="../stand-builders/">Застройщики стендов</a></li><li><a href="../film/">Кино</a></li><li><a href="../regions/">Регионы и&nbsp;города</a></li><li><a href="../events/">Организаторы мероприятий</a></li><li><a href="../developers/">Девелоперы</a></li><li><a href="../industry/">Промышленность</a></li></ul></div>
+    </div>
+  </div>
+  <div class="msheet__shade"></div>
+
+  <a class="orb" href="#contact" data-panel aria-label="Контакты">
+    <svg viewBox="0 0 100 100" aria-hidden="true"><defs><path id="orb-c" d="M50 50m-37 0a37 37 0 1 1 74 0a37 37 0 1 1-74 0"/></defs>
+      <text><textPath href="#orb-c" textLength="230" lengthAdjust="spacing">КОНТАКТЫ · НАПИСАТЬ НАМ · </textPath></text></svg>
+    <span class="orb__arrow" aria-hidden="true">→</span>
+  </a>
+
+  <div class="cursor" aria-hidden="true"><span></span></div>
+
+  <div class="peek" aria-hidden="true"><div class="peek__c"><img alt=""></div></div>
+
+  <dialog class="modal" aria-label="Видео">
+    <button class="modal__close" type="button" aria-label="Закрыть">✕</button>
+    <video class="modal__video" controls playsinline></video>
+  </dialog>
+
+  <script src="../../fresh/fresh.js?v=1121c"></script>
+  <script src="../../fresh/v2.js?v=32"></script>
+  <script src="../../fresh/cookies.js?v=1119i"></script>
+</body>
+</html>

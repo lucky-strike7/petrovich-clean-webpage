@@ -1,0 +1,31 @@
+.page-services .services-intro { padding-bottom: clamp(64px, 9vw, 130px); }
+.service-offer + .service-offer { margin-top: clamp(36px, 5vw, 72px); }
+.services-primary .service-offer h3 {
+  font: 500 clamp(25px, 2.7vw, 42px)/1.1 var(--font);
+  letter-spacing: -.02em;
+}
+.service-offer > p {
+  max-width: 58ch;
+  margin-top: 14px;
+  font: 400 clamp(16px, 1.4vw, 22px)/1.4 var(--font-text);
+}
+.page-services .services-cases .works { margin: 0; padding: 0; }
+.services-more__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 32px;
+}
+.page-services .services-more__grid p { max-width: 40ch; color: inherit; }
+.page-services .services-copy .about__desc { margin-top: 0; }
+.page-services .services-teams {
+  flex-wrap: wrap;
+  overflow: visible;
+  margin: 18px 0 0;
+  padding: 0;
+}
+.services-price-link { margin-top: 18px; font: 400 16px/1.45 var(--font-text); }
+
+@media (max-width: 600px) {
+  .services-more__grid { grid-template-columns: 1fr; }
+  .page-services .services-cases :is(.work__title, .work__meta) { padding-inline: 0; }
+}

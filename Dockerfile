@@ -4,13 +4,16 @@ COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund
 
 FROM dependencies AS assets
-COPY scripts/build.mjs scripts/check-build.mjs scripts/check-share-metadata.mjs ./scripts/
+COPY scripts/build.mjs scripts/check-build.mjs scripts/check-share-metadata.mjs scripts/typography.mjs ./scripts/
 COPY index.html 404.html robots.txt sitemap.xml site.webmanifest favicon.svg favicon.ico favicon-32.png apple-touch-icon.png icon-192.png icon-512.png ./
 COPY fresh ./fresh
 COPY fonts ./fonts
 COPY Video ./Video
 COPY cases ./cases
 COPY works ./works
+COPY services ./services
+COPY prices ./prices
+COPY about ./about
 COPY privacy ./privacy
 COPY consent ./consent
 RUN npm run build && npm run verify:build
