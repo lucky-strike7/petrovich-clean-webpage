@@ -2,3 +2,136 @@
 .page-about .studio-note .about__desc { margin-top: 0; }
 .page-about .studio-note .about__desc + .about__desc { margin-top: 1em; }
 .page-about .studio-note .text-link { display: inline-block; margin-top: 14px; }
+
+.studio-geography__places { grid-column: 1 / -1; }
+.studio-geography__note { display: none; }
+.studio-geography__list-title { grid-column: 1 / -1; }
+.studio-geography__note h2 { font: 400 20px/1.2 var(--font-text); margin: 0 0 .3rem; }
+.geo-city__note { display: none; }
+.geo-city { border-bottom: 1px solid var(--line); }
+.geo-city summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  cursor: pointer;
+  list-style: none;
+}
+.geo-city summary::-webkit-details-marker { display: none; }
+.geo-city summary::after { content: '+'; margin-left: auto; }
+.geo-city[open] summary::after { content: '−'; }
+.geo-city__projects ul { display: grid; gap: .55em; margin: 0; padding: 0 0 15px; list-style: none; }
+.geo-city__projects a { font-family: var(--font-text); font-weight: 400; font-size: 17px; }
+
+@media (hover: hover) {
+  .geo-city summary:is(:hover, :focus-visible) span { text-decoration: underline; text-underline-offset: .15em; }
+}
+
+@media (min-width: 1024px) {
+  .studio-geography__list-title { display: none; }
+  .studio-geography { position: relative; }
+  .studio-geography__note {
+    display: block;
+    position: absolute;
+    grid-column: 1 / 12;
+    grid-row: 1 / 2;
+    inset-inline: 0;
+    top: calc(10px + (100% - 10px) * .19275);
+    pointer-events: none;
+  }
+  .studio-geography__note .about__text {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: none;
+    margin-top: -.5em;
+  }
+  .studio-geography__note .about__text::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #77776f66;
+  }
+  .geo-city__note { display: inline; }
+  .geo-city__note + ul { display: none; }
+  .studio-geography__places {
+    transform: translateX(-11.7633%); /* Visible western coastline starts at x=141.16 of 1200. */
+    grid-column: 4 / 13;
+    grid-row: 1;
+    container-type: inline-size;
+    --geo-marker-time: 120ms;
+    --geo-type: clamp(24px, 2.3vw, 36px);
+    --geo-gap: clamp(30px, 2.5vw, 44px);
+    position: relative;
+    aspect-ratio: 1200 / 535;
+    margin-top: 10px;
+    background: url('media/studio-world.svg') center / 100% 100% no-repeat;
+  }
+  .geo-city {
+    position: absolute;
+    left: var(--geo-x);
+    top: var(--geo-y);
+    width: 0;
+    height: 0;
+    border: 0;
+  }
+  .geo-city summary {
+    position: absolute;
+    top: -10.5px;
+    left: -10.5px;
+    width: 21px;
+    min-height: 21px;
+    border-radius: 50%;
+    white-space: nowrap;
+    font: 500 var(--geo-type)/1.08 var(--font);
+  }
+  .geo-city summary::before {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    background: var(--ink);
+    border-radius: 50%;
+    transition: transform var(--geo-marker-time) ease-out, opacity var(--geo-marker-time) ease-out;
+  }
+  .geo-city[open] summary::before { transform: scale(2.04); }
+  .studio-geography__places:has(.geo-city[open]) .geo-city:not([open]) summary::before { opacity: 0; }
+  .geo-city summary span {
+    position: absolute;
+    right: calc(50% + var(--geo-gap));
+    top: calc(50% - .54em);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .geo-city[open] summary span, .geo-city summary:focus-visible span { opacity: 1; }
+  .geo-city summary:is(:hover, :focus-visible) span { text-decoration: none; }
+  .geo-city summary::after { display: none; }
+  .geo-city[open] { z-index: 2; }
+  .geo-city::details-content { content-visibility: visible; }
+  .geo-city:not([open]) .geo-city__projects { display: none; }
+  .geo-city__projects {
+    position: absolute;
+    font: 500 var(--geo-type)/1.08 var(--font);
+    top: -.54em;
+    left: 10px;
+    width: max-content;
+    max-width: calc(var(--geo-space) - 14px);
+    padding-left: calc(var(--geo-gap) - 10px);
+  }
+  .geo-city__projects ul { padding: 0; }
+  .geo-city__projects a { font: inherit; }
+  @media (prefers-reduced-motion: no-preference) {
+    .geo-city summary span { --geo-enter: var(--geo-gap); }
+    .geo-city__projects { --geo-enter: calc(0px - var(--geo-gap)); }
+    .geo-city[open] summary span, .geo-city[open] .geo-city__projects {
+      animation: geo-label-in .44s cubic-bezier(.22, .8, .28, 1) var(--geo-marker-time) both;
+    }
+  }
+}
+
+@keyframes geo-label-in {
+  from { opacity: 0; transform: translateX(var(--geo-enter)); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .geo-city summary::before { transition: none; }
+}

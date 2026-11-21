@@ -9,9 +9,8 @@
 .case-hero { padding: clamp(200px, 23svh, 260px) var(--pad) 0; } /* подпись — на той же высоте, что «Что мы делаем» на главной */
 .case-back {
   display: inline-block; margin-bottom: clamp(24px, 3vw, 48px);
-  font-family: var(--font-text); font-weight: 400; font-size: 17px; transition: color .3s;
+  font-family: var(--font-text); font-weight: 400; font-size: 17px;
 }
-.case-back:hover { color: var(--accent); }
 /* Тихая строка над названием: что это за проект (для людей и поисковиков) */
 .case-kicker { margin-bottom: 14px; font-family: var(--font-text); font-weight: 400; font-size: 20px; color: var(--muted); }
 .case-hero__title {

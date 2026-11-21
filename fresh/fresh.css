@@ -278,8 +278,6 @@ main > .about:first-child { padding-top: clamp(150px, 20svh, 240px); }
 .card__more[aria-expanded="true"] .card__plus::before { transform: rotate(45deg); }
 .card__more[aria-expanded="true"] .card__plus::after { transform: rotate(135deg); }
 .card__more:hover .card__play { transform: scale(1.15); }
-.card__review span, .card__more span { transition: color .3s; }
-.card__more:hover span { color: var(--accent); }
 .card__how {
   display: grid; grid-template-rows: 0fr;
   transition: grid-template-rows .6s var(--ease);
@@ -317,7 +315,6 @@ html:not(.js) .card__how ul { opacity: 1; }
 }
 .card__play svg { width: 11px; height: 11px; fill: var(--on-accent); margin-left: 2px; }
 .card__review:hover .card__play { transform: scale(1.15); }
-.card__review:hover span { color: var(--accent); }
 
 /* Текст только для поиска и экранных дикторов */
 /* Не переносить по дефису: «3D-сцены», «3D-графика» */
@@ -707,11 +704,6 @@ html:not(.js) .line > span, html:not(.js) .reveal, html:not(.js) .pill { transfo
   .process__photo { width: 120px; }
 }
 
-/* Ссылка-подтверждение у достижения: открывается в новой вкладке, стрелка синяя, при наведении синеет и название */
-.facts__link span { color: var(--accent); }
-.facts__link { transition: color .3s; }
-.facts__link:hover { color: var(--accent); }
-
 /*
   Картинка у достижения. На компьютере: при наведении на ссылку рядом с курсором
   раскрывается кружок с картинкой (как «Смотреть обзор»), идет за мышью без задержки.
@@ -1038,8 +1030,9 @@ h1, h2, h3, .sect__lead, .case-lead, .contact__title, .case-more__title { text-w
 .doc p, .doc ul { margin: 14px 0 0; font-family: var(--font-text); font-weight: 400; font-size: 17px; line-height: 1.5; }
 .doc ul { padding-left: 1.2em; }
 .doc li + li { margin-top: 8px; }
-.doc a { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
-.doc a:hover { color: var(--accent); }
+@media (hover: none) {
+  .doc a { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+}
 .doc__fill { background: #ffe58a; } /* реквизиты еще не заполнены — подсветка, чтобы не забыть */
 @media (max-width: 900px) { .doc > * { grid-column: 1 / -1; } }
 @media (max-width: 600px) {
@@ -1099,4 +1092,18 @@ h1, h2, h3, .sect__lead, .case-lead, .contact__title, .case-more__title { text-w
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+}
+
+/* Подчеркивание работает и у многострочных ссылок. */
+@media (hover: hover) {
+  :is(.facts__link, .card__link, a.card__kind, .case-back, .doc a, .card__review span, .card__more span) {
+    text-decoration: underline transparent;
+    text-decoration-thickness: 1px;
+    text-underline-offset: .15em;
+    transition: text-decoration-color .25s var(--ease);
+  }
+  :is(.facts__link, .card__link, a.card__kind, .case-back, .doc a):is(:hover, :focus-visible),
+  :is(.card__review, .card__more):is(:hover, :focus-visible) span {
+    text-decoration-color: currentColor;
+  }
 }
