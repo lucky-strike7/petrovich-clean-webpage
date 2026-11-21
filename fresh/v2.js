@@ -111,6 +111,31 @@
     const openers = [...document.querySelectorAll(`[aria-controls="${sheet.id}"]`)];
     if (openers.length) makeSheet(sheet, openers);
   });
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  document.querySelectorAll('.faq__item').forEach(item => {
+    const summary = item.querySelector('summary');
+    let motion = null;
+    let expanding = false;
+    summary.addEventListener('click', event => {
+      if (reducedMotion.matches && !motion) return;
+      event.preventDefault();
+      expanding = motion ? !expanding : !item.open;
+      const start = item.getBoundingClientRect().height;
+      motion?.cancel();
+      item.classList.add('is-resizing');
+      item.open = expanding;
+      const end = item.getBoundingClientRect().height;
+      item.open = true;
+      motion = item.animate([{ height: start + 'px' }, { height: end + 'px' }], {
+        duration: reducedMotion.matches ? 0 : 260, easing: 'ease-in-out'
+      });
+      motion.onfinish = () => {
+        item.open = expanding;
+        item.classList.remove('is-resizing');
+        motion = null;
+      };
+    });
+  });
   const ctx = document.querySelector('.top__ctx');
 
   /*

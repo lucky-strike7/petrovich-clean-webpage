@@ -93,6 +93,8 @@
 
 /* ---------- Частые вопросы ---------- */
 .faq__item { border-top: 1px solid var(--line); }
+.faq__item.reveal { opacity: 1; transform: none; transition: none; }
+.faq__item.is-resizing { overflow: clip; }
 .faq__item:last-child { border-bottom: 1px solid var(--line); }
 .faq__item summary {
   position: relative; display: block; padding: 22px 56px 22px 0; cursor: pointer; list-style: none;
@@ -140,6 +142,9 @@
   transition: transform .32s cubic-bezier(.5, 0, .75, 0), visibility 0s .32s, box-shadow 0s .32s;
 }
 .msheet.is-open { transform: translateY(var(--drag, 0px)); visibility: visible; transition: transform .45s var(--ease); }
+html:has(.msheet.is-open) { overflow: hidden; overscroll-behavior: none; }
+.msheet { overscroll-behavior-y: contain; }
+.msheet__shade { touch-action: none; }
 .msheet.is-dragging { transition: none; }
 /* Фон шторки уходит ниже края экрана: когда браузер прячет или показывает свою панель, внизу не остается белой полосы */
 /* Под открытой шторкой — заливка того же цвета: когда браузер прячет свою панель, внизу нет щели.
@@ -738,7 +743,7 @@ button.card__kind { background: none; border: 0; padding: 0; text-align: left; j
   .msheet a { overflow-wrap: anywhere; }
 }
 @media (max-width: 359px) {
-  .about__text { min-width: 0; font-size: 34px; overflow-wrap: anywhere; hyphens: auto; }
+  .about__text { min-width: 0; font-size: 34px; overflow-wrap: normal; hyphens: manual; }
   .about__text .nowrap, .about__text .nw { white-space: normal; }
 }
 .studio-more-link { display: inline-block; margin-top: 20px; font: 400 16px/1.45 var(--font-text); }

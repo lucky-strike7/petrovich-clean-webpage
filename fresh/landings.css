@@ -13,9 +13,9 @@
 }
 
 /* Сохраняем полное название работы и разрешаем перенос длинных слов. */
-.page-interactive .card__title { hyphens: auto; overflow-wrap: anywhere; }
+.page-interactive .card__title { hyphens: manual; overflow-wrap: normal; }
 
 /* Длинное слово в заголовке не обрезается на узких экранах. */
 @media (max-width: 600px) {
-  .page-industry .about__text { hyphens: auto; overflow-wrap: anywhere; }
+  .page-industry .about__text { hyphens: manual; overflow-wrap: normal; }
 }
