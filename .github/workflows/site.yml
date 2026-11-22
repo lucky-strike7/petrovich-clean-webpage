@@ -26,7 +26,7 @@ jobs:
       - run: npm run build
       - run: npm run verify:build
   deploy:
-    name: Publish new.petrovichbrothers.ru
+    name: Publish petrovichbrothers.ru
     needs: check
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest

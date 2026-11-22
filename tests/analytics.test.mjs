@@ -12,7 +12,7 @@ function sandbox(host,choice,options={}){
  return{context,handlers,scripts,nodes};
 }
 test('analytics never loads on previews even with previously accepted consent',()=>{
- for(const host of ['localhost','127.0.0.1','preview.petrovichbrothers.ru','old.petrovichbrothers.ru','lucky-strike7.github.io'])assert.equal(sandbox(host,'ok').scripts.length,0);
+ for(const host of ['localhost','127.0.0.1','preview.petrovichbrothers.ru','new.petrovichbrothers.ru','old.petrovichbrothers.ru','lucky-strike7.github.io'])assert.equal(sandbox(host,'ok').scripts.length,0);
 });
 test('production initializes automatically without a banner or saved-choice dependency',()=>{
  for(const host of ['petrovichbrothers.ru','www.petrovichbrothers.ru'])for(const choice of [null,'ok','declined']){
