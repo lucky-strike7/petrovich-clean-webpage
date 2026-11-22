@@ -1,7 +1,7 @@
 # Страница «Работы» (/works/): строка тегов и все работы карточками. Собирается из works.json.
 import os, re, sys, html
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from v2parts import SITE, Page, DATA, WHAT, WHO, COUNT, DAT
+from v2parts import SITE, Page, DATA, WHAT, WHO, COUNT, DAT, work_order
 
 os.chdir(SITE)
 home = open('_src/index.html', encoding='utf-8').read()
@@ -28,10 +28,11 @@ def plural(n, one, few, many):
 items = [w for w in DATA['items'] if not w.get('hidden')]
 # Сначала крупные проекты целиком (их экспонаты отдельно видны на страницах тегов), потом отдельные работы, новые выше
 entries = [dict(pr, kind=pr['short'], desc=pr['meta'], meta=pr['where']) for pr in DATA['projects']]
-entries += [dict(w, meta=f"{w['year']}&nbsp;· {w['kind']}") for w in sorted((w for w in items if not w.get('project')), key=lambda w: -w['year'])]
+entries += [dict(w, meta=f"{w['year']}&nbsp;· {w['kind']}") for w in sorted((w for w in items if not w.get('project')), key=work_order)]
 
 def chips(tags, count):
-    return ''.join(f'<li><a href="./{s}/">{n}</a></li>' for s, n in tags)
+    # Число работ у тега видно только на десктопе (на телефоне скрыто в CSS)
+    return ''.join(f'<li><a href="./{s}/">{n}<sup class="tagbar__n">{COUNT[s]}</sup></a></li>' for s, n in tags)
 
 MAIN = f'''<main>
 
@@ -42,7 +43,7 @@ MAIN = f'''<main>
 
     <nav class="tagbar tagbar--works" aria-label="Работы по направлениям">
       <span class="tagbar__label">Что делаем</span>
-      <ul class="tagbar__list"><li><a href="./" aria-current="page">Все</a></li>{chips(WHAT, True)}</ul>
+      <ul class="tagbar__list"><li><a href="./" aria-current="page">Все<sup class="tagbar__n">{len(entries)}</sup></a></li>{chips(WHAT, True)}</ul>
       <button class="tagbar__more" type="button" aria-expanded="false" aria-controls="tagbar-who">Для кого <i aria-hidden="true"></i></button>
       <span class="tagbar__label tagbar__label--who">Для кого</span>
       <ul class="tagbar__list tagbar__list--who" id="tagbar-who">{chips([(k, DAT[k]) for k, _ in WHO], True)}</ul>

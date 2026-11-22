@@ -3,6 +3,7 @@ from pathlib import Path
 
 from make_info_page import build_info_page
 from v2parts import SITE, Page, typo
+from clients import render_clients
 
 
 # Percent positions on the Natural Earth map. Nearby northern cities are offset
@@ -76,6 +77,7 @@ page = Page(B='../', W='../works/', nav_page='about', cta_text=tuple(map(typo, (
 ))))
 body = (Path(SITE) / '_src/about-content.html').read_text(encoding='utf-8')
 body = body.replace('    <!-- studio geography -->', render_geography(), 1)
+body = body.replace('    <!-- clients -->\n', render_clients(), 1)
 build_info_page(
     page, 'about', body,
     'О студии братьев Петрович | Команда, подход и проекты',

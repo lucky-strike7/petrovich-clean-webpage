@@ -3,6 +3,7 @@ import re
 from pathlib import Path
 
 from v2parts import DATA, SITE, VISIBLE
+from clients import render_clients
 
 
 CTA = ('Расскажите, что за площадка, что хотите показать и к какому сроку. Если пока есть только идея, с неё и начнём.',
@@ -23,7 +24,7 @@ def render_home(shell, page):
         work = dict(works[slug], kind=kind, desc=description)
         cards.append(page.big_card(work, anchor=anchor, meta=False, link_title=True))
     prices = re.search(r'    <section class="sect prices".*?</section>', shell, flags=re.S)[0]
-    body = body.replace('<!-- featured works -->', ''.join(cards)).replace('<!-- prices -->', prices)
+    body = body.replace('<!-- featured works -->', ''.join(cards)).replace('<!-- prices -->', prices).replace('<!-- clients -->\n', render_clients())
     # The homepage introduces whole projects, including examples linked in the price list.
     projects = {project['id']: project['href'] for project in DATA['projects']}
     for work in VISIBLE:

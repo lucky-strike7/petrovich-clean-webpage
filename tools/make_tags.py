@@ -1,7 +1,7 @@
 # Посадочные страницы из texts/tags.md и данных работ. make_landing.py вызывает этот сборщик для интерактива.
 import os, re, sys, html
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from v2parts import SITE, Page, DATA, WHAT, WHO, TAG_PROJECTS, NAME, VISIBLE, typo
+from v2parts import SITE, Page, DATA, WHAT, WHO, TAG_PROJECTS, NAME, VISIBLE, typo, work_order, tag_card_ids
 
 os.chdir(SITE)
 home = open('_src/index.html', encoding='utf-8').read()
@@ -67,7 +67,7 @@ def build(slug):
     items = [w for w in VISIBLE if slug in w['what'] + w['who']]
     # Сначала экспонаты крупных проектов (по порядку проектов), потом отдельные работы — новые выше
     order = {pid: k for k, pid in enumerate(PROJECTS)}
-    items.sort(key=lambda w: (0, order[w['project']]) if w.get('project') else (1, -w['year']))
+    items.sort(key=lambda w: (0, order[w['project']]) if w.get('project') else (1,) + work_order(w))
 
     # Подпись плитки: год · что это · проект
     entries = [dict(w, meta=f"{w['year']}&nbsp;· {w['kind']}" + (f"&nbsp;· {PROJECTS[w['project']]['short']}" if w.get('project') else '')) for w in items]
@@ -93,7 +93,9 @@ def build(slug):
         missing = [work_id for work_id in selected if work_id not in by_id]
         if missing:
             raise ValueError(f'{slug}: работы нет в подборке тега: {", ".join(missing)}')
-        entries = [by_id[work_id] for work_id in selected]
+        # Подборка первой, за ней остальные отдельные работы тега (экспонаты крупных проектов только по подборке)
+        entries = [by_id[work_id] for work_id in selected] + [e for e in entries if e['id'] not in selected and not e.get('project') and e['id'] not in PROJECTS]
+    assert [e['id'] for e in entries] == tag_card_ids(slug), slug
 
     # Локальные подписи подборки не меняют исходную работу и другие страницы.
     entries = [dict(e, **tx['cards'].get(e['id'], {})) for e in entries]
@@ -144,7 +146,9 @@ def build(slug):
     if slug == 'museums':
         with open(os.path.join(SITE, '_src/museum-video.html'), encoding='utf-8') as source:
             museum_film = source.read()
-    works = p.works_mix(entries, after_first=museum_film)
+    # Музеи: крупно оба больших проекта (Херсонес и Хакасия), остальное маленькими карточками
+    big = {0, 1} if slug == 'museums' else None
+    works = p.works_mix(entries, after_first=museum_film, big=big)
     if slug == 'interactive':
         # Сохраняем крупные карточки и старые якоря посадочной.
         anchors = {'stol': 'khakasia', 'skanery': 'scanner'}

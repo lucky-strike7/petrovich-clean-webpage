@@ -290,6 +290,7 @@ html:has(.msheet.is-open) { overflow: hidden; overscroll-behavior: none; }
 .tagbar--works { margin-bottom: clamp(56px, 6vw, 96px); }
 .tagbar sup { margin-left: .3em; font-size: .7em; vertical-align: .5em; color: var(--muted); }
 .tagbar__list a[aria-current] sup { color: inherit; }
+@media (max-width: 900px) { .tagbar__n { display: none; } }
 .tagbar__more { display: none; }
 /* Все работы: сетка в три столбика, как «Еще работы» на главной */
 .works-all { margin: 0 var(--pad) clamp(120px, 14vw, 220px); }
@@ -747,3 +748,16 @@ button.card__kind { background: none; border: 0; padding: 0; text-align: left; j
   .about__text .nowrap, .about__text .nw { white-space: normal; }
 }
 .studio-more-link { display: inline-block; margin-top: 20px; font: 400 16px/1.45 var(--font-text); }
+
+/* ---------- Клиенты: черно-белые логотипы, каждый ведет на работу ----------
+   Подпись слева, как у остальных разделов; логотипы в правой колонке по 5 в ряд (на телефоне по 3), прижаты влево. */
+.clients__grid { display: grid; grid-template-columns: repeat(5, 1fr); row-gap: 48px; column-gap: 20px; margin: 0; padding: 0; list-style: none; }
+.clients__grid a { display: flex; align-items: center; justify-content: flex-start; height: 80px; }
+.clients__grid img { display: block; height: auto; filter: grayscale(1) brightness(0); opacity: .7; } /* при наведении ничего не меняется */
+@media (max-width: 900px) {
+  .clients__grid { grid-template-columns: repeat(3, 1fr); row-gap: 22px; column-gap: 16px; }
+  .clients__grid a { height: 48px; }
+}
+
+/* Главная на телефоне: после темной «Страны Света» сразу картинка следующей работы, между ними тонкая светлая полоска */
+@media (max-width: 900px) { .home-works .work-dark + .work-big { margin-top: 6px; } }

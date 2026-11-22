@@ -5,7 +5,7 @@ NL = chr(10)
 
 # Корень сайта — папка над tools/ (сборщики лежат в репозитории рядом со страницами)
 SITE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V2CSS = 'v2.css?v=122'
+V2CSS = 'v2.css?v=131'
 V2JS = 'v2.js?v=33'
 # Включаем только готовые самостоятельные страницы.
 READY_PAGES = {'prices', 'services', 'about'}
@@ -20,7 +20,7 @@ NAME = dict(WHAT + WHO)
 # Две оси, как раньше: «Что делаем» и «Для кого». В каждой — крупные теги (главное) и мелкие (остальное).
 # Музеи и выставки крупные: с них начинаются проекты Херсонеса и Хакасии. Порядок здесь — порядок в меню и на «Работах».
 WHAT_BIG = [(k, NAME[k]) for k in ('interactive', 'mapping', 'event-graphics', 'product-design')]
-WHAT_SMALL = [(k, NAME[k]) for k in ('video', 'websites')]
+WHAT_SMALL = [(k, NAME[k]) for k in ('video', 'websites', 'annual-reports', 'spaces')]
 WHO_BIG = [(k, NAME[k]) for k in ('museums', 'exhibitions')]
 WHO_SMALL = [(k, NAME[k]) for k in ('stand-builders', 'film', 'regions', 'events', 'developers', 'industry')]
 WHAT, WHO = WHAT_BIG + WHAT_SMALL, WHO_BIG + WHO_SMALL
@@ -48,7 +48,8 @@ WORKS_MD = os.path.join(SITE, 'texts', 'works.md')
 _FIELDS = {'Название': 'title', 'Проект': 'project', 'Что это': 'kind', 'Год': 'year', 'Что делаем': 'what', 'Для кого': 'who',
            'Описание': 'desc', 'Где и когда': 'where', 'Картинка': 'img', 'Превью': 'preview', 'Крупное видео': 'big',
            'Крупное видео, телефон': 'big_m', 'Ссылка': 'href', 'Обзор': 'video', 'Скрыть': 'hidden',
-           'Награда': 'award', 'Фон': 'dark', 'Картинка, телефон': 'img_m', 'Обложка крупной': 'big_img', 'Превью только в плитке': 'tile_preview_only'}
+           'Награда': 'award', 'Фон': 'dark', 'Картинка, телефон': 'img_m', 'Обложка крупной': 'big_img', 'Превью только в плитке': 'tile_preview_only',
+           'Группа': 'group'}
 def _load_works():
     items = []
     for block in re.split(r'^## ', open(WORKS_MD, encoding='utf-8').read(), flags=re.M)[1:]:
@@ -66,9 +67,35 @@ def _load_works():
         items.append(w)
     return items
 DATA['items'] = _load_works()
+
+_PROJECT_HREF = {p['id']: p['href'] for p in DATA['projects']}
+def card_href(w):
+    """Карточка экспоната ведет наверх страницы проекта, а не к якорю экспоната внутри нее."""
+    href = w.get('href')
+    if href and '#' in href and w.get('project') in _PROJECT_HREF:
+        return _PROJECT_HREF[w['project']]
+    return href
 # Число работ под каждым направлением — из файла данных (экспонаты крупных проектов по одному, скрытые не считаем)
 VISIBLE = [w for w in DATA['items'] if not w.get('hidden')]
-COUNT = {slug: sum(1 for w in VISIBLE if slug in w['what'] + w['who']) for slug, _ in WHAT + WHO}
+# Порядок отдельных работ: сначала профильные (новые выше), потом непрофильные для крупных клиентов, в конце архив
+GROUPS = {'': 0, 'крупный клиент': 1, 'архив': 2}
+def work_order(w):
+    return (GROUPS[w.get('group', '').strip().lower()], -w['year'])
+# Подборки тегов из texts/tags.md («Работы: ...»): эти карточки идут первыми, остальные работы тега — за ними
+SELECTION = {}
+for _block in re.split(r'^## ', open(os.path.join(SITE, 'texts', 'tags.md'), encoding='utf-8').read(), flags=re.M)[1:]:
+    _m = re.search(r'^Работы:[ \t]*(.+?)[ \t]*$', _block, flags=re.M)
+    if _m: SELECTION[_block.split()[0]] = [s.strip() for s in _m.group(1).split(',')]
+def tag_card_ids(slug):
+    """Какие карточки стоят на странице тега, по порядку. По ним же считаем число работ у тега."""
+    items = [w for w in VISIBLE if slug in w['what'] + w['who']]
+    rest = [w['id'] for w in sorted((w for w in items if not w.get('project')), key=work_order)]
+    if slug in SELECTION:
+        return SELECTION[slug] + [i for i in rest if i not in SELECTION[slug]]
+    if slug in TAG_PROJECTS:
+        return TAG_PROJECTS[slug] + rest
+    return [w['id'] for w in items if w.get('project')] + rest
+COUNT = {slug: len(tag_card_ids(slug)) for slug, _ in WHAT + WHO}
 # Кружок у курсора в меню: кадр и короткий ролик направления
 PEEK = {'interactive': ('fresh/media/archive/referus.jpg', 'fresh/media/archive/referus-preview.mp4'),
         'video': ('fresh/media/hbo-intro.webp', 'fresh/media/hbo-intro.mp4'),
@@ -76,6 +103,8 @@ PEEK = {'interactive': ('fresh/media/archive/referus.jpg', 'fresh/media/archive/
         'event-graphics': ('fresh/media/archive/premiarb.jpg', 'fresh/media/archive/premiarb-preview.mp4'),
         'websites': ('fresh/media/archive/zebralog.jpg', 'fresh/media/archive/zebralog-preview.mp4'),
         'product-design': ('cases/cyberbug/media/cb-hero.webp', None),
+        'annual-reports': ('fresh/media/archive/rusal-report-2017.jpg', None),
+        'spaces': ('fresh/media/archive/rusal-stand.jpg', None),
         'museums': ('fresh/media/shturval-peek.webp', 'fresh/media/shturval-peek.mp4'),
         'exhibitions': ('fresh/media/khakasy-peek.webp', 'fresh/media/khakasy-peek.mp4')}
 
@@ -347,7 +376,7 @@ class Page:
     def _media_attrs(self, w):
         """Куда ведет карточка: своя страница — ссылка, иначе открываем видео."""
         if w.get('href'):
-            href = self.B + w['href']
+            href = self.B + card_href(w)
             # Ссылка-обложка без текста внутри: имя для экранного диктора и поиска — название работы
             return 'a', f'href="{href}" data-cursor="Посмотреть" aria-label="{html.escape(plain(w["title"]))}"', href
         if w.get('video'):
@@ -361,7 +390,7 @@ class Page:
                  f'\n            <span class="work__title">{w["title"]}</span>\n            <span class="work__meta">{w["meta"]}</span>\n          ')
         if w.get('video') and not w.get('href'):
             return f'          <li class="reveal"><button class="work" type="button" data-video="{B}{w["video"]}" data-title="{html.escape(plain(w["title"]))}" data-cursor="Смотреть видео"{prev}>{inner}</button></li>\n'
-        return f'          <li class="reveal"><a class="work" href="{B}{w["href"]}" data-cursor="Посмотреть"{prev}>{inner}</a></li>\n'
+        return f'          <li class="reveal"><a class="work" href="{B}{card_href(w)}" data-cursor="Посмотреть"{prev}>{inner}</a></li>\n'
 
     def big_card(self, w, review=False, anchor=None, meta=True, tile_phone=False, link_title=False):
         """Крупная карточка как у экспоната на главной: ролик 2:1 (на телефоне 4:5), слева название,
@@ -382,7 +411,7 @@ class Page:
             media = (f'<video data-poster="{B}{w.get("big_img") or w["img"]}" data-poster-m="{B}{poster_m}" muted loop playsinline data-lazy preload="none">'
                      f'<source data-src="{B}{big_m}" type="video/mp4" media="(max-width: 600px)"><source data-src="{B}{big}" type="video/mp4"></video>')
         else:
-            media = f'<img src="{B}{w["img"]}" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">'
+            media = f'<img src="{B}{w.get("big_img") or w["img"]}" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">'
         desc = typo(w.get('desc', ''))
         if '? ' in desc:
             q, rest = desc.split('? ', 1)
@@ -422,9 +451,9 @@ class Page:
             return f'    <section class="event work-dark">\n{card}    </section>\n'
         return card
 
-    def works_mix(self, entries, after_first=''):
-        """Работы по порядку: крупные по правилу big_positions, между ними — плитка в две колонки."""
-        big = self.big_positions(len(entries))
+    def works_mix(self, entries, after_first='', big=None):
+        """Работы по порядку: крупные по правилу big_positions (или заданные номера), между ними — плитка в две колонки."""
+        big = self.big_positions(len(entries)) if big is None else big
         out, tiles = '', ''
         def flush():
             return f'      <ul class="works works--all">\n{tiles}      </ul>\n' if tiles else ''
@@ -452,7 +481,7 @@ class Page:
         """«Следующая работа →»: следующая по порядку страницы «Работы» (проекты целиком, потом отдельные работы, новые выше).
         Для экспоната крупного проекта — следующий проект: соседние экспонаты и так показаны выше на странице."""
         order = [dict(p, _kind='project') for p in DATA['projects']] + sorted(
-            (w for w in VISIBLE if not w.get('project')), key=lambda w: -w['year'])
+            (w for w in VISIBLE if not w.get('project')), key=work_order)
         cur = project_id or item_id
         i = next(k for k, w in enumerate(order) if w['id'] == cur)
         nx = order[(i + 1) % len(order)]

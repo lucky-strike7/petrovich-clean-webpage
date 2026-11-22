@@ -2,7 +2,7 @@ import { readFile, writeFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 
-const boundWords = 'в во на о об обо к ко с со от ото до по за из изо у без безо для под подо над надо при про через чрез перед передо между меж около возле вокруг внутри вне вдоль вдали вместо кроме среди посреди сквозь после против из-за из-под из‑за из‑под ради мимо близ поверх сверх ввиду вследствие насчёт насчет путём путем посредством благодаря вопреки согласно относительно а и';
+const boundWords = 'в во на о об обо к ко с со от ото до по за из изо у без безо для под подо над надо при про через чрез перед передо между меж около возле вокруг внутри вне вдоль вдали вместо кроме среди посреди сквозь после против из-за из-под из‑за из‑под ради мимо близ поверх сверх ввиду вследствие насчёт насчет путём путем посредством благодаря вопреки согласно относительно а и но или не ни';
 const binding = new RegExp('(?<![\\p{L}\\p{M}\\p{N}_-])(?:' + boundWords.split(' ').join('|') +
   ')([ \\t\\r\\n]+)(?=[\\p{L}\\p{N}«„“"(№]|&(?:laquo|quot);)', 'giu');
 const inlineTag = /^<\/?(?:a|b|i|em|strong|span|small|sup|sub|s|u|mark|abbr|label|time)\b/i;
@@ -28,7 +28,26 @@ function formatRun(parts) {
   }).join('');
 }
 
+// Short hyphenated words (3D-модели, IT-решения, QR-код, из-за) must not break at the hyphen.
+const shortHyphen = /(?<![\p{L}\p{N}_-])([\p{L}\p{N}]{1,3}[-‑][\p{L}\p{N}]+(?:[-‑][\p{L}\p{N}]+)*)/gu;
+const nowrapOpen = '<span class="nowrap">';
+function keepHyphens(html) {
+  return html.replace(/(<body\b[^>]*>)([\s\S]*?)(<\/body>)/i, (_, open, body, close) => {
+    let out = open, prev = '';
+    for (const [part] of body.matchAll(token)) {
+      if (part.startsWith('<') || prev === nowrapOpen) out += part;
+      else out += part.replace(shortHyphen, nowrapOpen + '$1</span>');
+      prev = part;
+    }
+    return out + close;
+  });
+}
+
 export function bindPrepositions(html) {
+  return keepHyphens(bindPrepositionsOnly(html));
+}
+
+function bindPrepositionsOnly(html) {
   return html.replace(/(<body\b[^>]*>)([\s\S]*?)(<\/body>)/i, (_, open, body, close) => {
     let out = open, parts = [];
     for (const [part] of body.matchAll(token)) {
