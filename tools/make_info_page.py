@@ -35,7 +35,7 @@ def build_info_page(page, slug, body, title, description):
     template = re.sub(r'\b(href|src|data-src|data-poster|data-poster-m|data-preview|data-peek|data-peek-video)="([^"]*)"',
                       relative_to_root, template)
     template = page.finish(template).replace('class="page-v2"', f'class="page-v2 page-{slug}"', 1)
-    template = template.replace('</head>', f'  <link rel="stylesheet" href="{base}fresh/{slug}-page.css">\n</head>', 1)
+    template = template.replace('</head>', f'  <link rel="stylesheet" href="{base}fresh/{slug}-page.css?v=4">\n</head>', 1)
     out = root / slug / 'index.html'
     out.parent.mkdir(exist_ok=True)
     out.write_text(template, encoding='utf-8', newline='\n')

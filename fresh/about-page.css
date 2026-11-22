@@ -1,7 +1,7 @@
 .page-about .studio-intro { padding-bottom: clamp(64px, 9vw, 130px); }
 .page-about .studio-note .about__desc { margin-top: 0; }
 .page-about .studio-note .about__desc + .about__desc { margin-top: 1em; }
-.page-about .studio-note .text-link { display: inline-block; margin-top: 14px; }
+.page-about .studio-note .sect__body > .text-link { display: inline-block; margin-top: 14px; }
 
 .studio-geography__places { grid-column: 1 / -1; }
 .studio-geography__note { display: none; }
@@ -135,3 +135,10 @@
 @media (prefers-reduced-motion: reduce) {
   .geo-city summary::before { transition: none; }
 }
+/* «Как мы пришли в мультимедиа» использует стили studio-note; «Кто ведет проекты»: текст слева, фото справа */
+.page-about .studio-team .about__desc { margin-top: 0; }
+.page-about .studio-team .about__desc + .about__desc { margin-top: 1em; }
+.page-about .studio-team__copy { max-width: 36em; }
+.page-about .studio-team strong { font-weight: 600; }
+.page-about .process > .sect__body > .sect__lead { margin-bottom: clamp(32px, 4vw, 56px); }
+@media (min-width: 901px) { .page-about .studio-team .process__head { align-items: flex-start; } }
