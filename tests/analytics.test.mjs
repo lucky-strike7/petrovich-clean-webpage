@@ -25,10 +25,12 @@ test('goal allowlist only sends event names, not arbitrary payloads',()=>{
  assert.equal(s.context.ym.a.length,2);assert.deepEqual([...s.context.ym.a[1]],[46078563,'reachGoal','callback_success']);
 });
 
-test('PB Search uses the existing same-origin collector and respects DNT/admin/deduplication',()=>{
+test('PB Search uses the existing same-origin collector regardless of DNT and respects admin/deduplication',()=>{
  const sourceFor=s=>s.scripts.filter(x=>x.src==='/pb-search/t/script.js');
  for(const host of ['petrovichbrothers.ru','www.petrovichbrothers.ru']){
-  const s=sandbox(host,null);assert.equal(sourceFor(s).length,1);assert.equal(sourceFor(s)[0].async,true);
+  for(const dnt of [undefined,'0','1']){
+   const s=sandbox(host,null,{dnt});assert.equal(sourceFor(s).length,1);assert.equal(sourceFor(s)[0].async,true);
+  }
  }
- for(const options of [{dnt:'1'},{path:'/pb-search/'},{loaded:true},{loading:true}])assert.equal(sourceFor(sandbox('petrovichbrothers.ru',null,options)).length,0);
+ for(const options of [{path:'/pb-search/'},{loaded:true},{loading:true}])assert.equal(sourceFor(sandbox('petrovichbrothers.ru',null,options)).length,0);
 });
