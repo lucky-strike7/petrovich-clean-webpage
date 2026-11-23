@@ -25,7 +25,7 @@
     else { try { if(new URL(link.href).hostname==='t.me')goal('contact_telegram'); } catch {} }
   });
   function initializeOwnAnalytics() {
-    if (!production || navigator.doNotTrack === '1' || location.pathname.startsWith('/pb-search') || window.__pbMini || window.__pbMiniLoading) return;
+    if (!production || location.pathname.startsWith('/pb-search') || window.__pbMini || window.__pbMiniLoading) return;
     window.__pbMiniLoading = true;
     const script=document.createElement('script');
     script.async=true;
