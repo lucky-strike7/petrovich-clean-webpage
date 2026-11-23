@@ -32,7 +32,7 @@ def render_home(shell, page):
             body = body.replace(f'href="{work["href"]}"', f'href="{projects[work["project"]]}"')
     shell = re.sub(r'(<main>).*?(    <section class="contact" id="contact">)',
                    lambda m: m[1] + '\n' + body + '\n' + m[2], shell, count=1, flags=re.S)
-    title = 'Мультимедиа-студия братьев Петрович: интерактивные экспонаты, видео и мэппинг'
+    title = 'Мультимедиа-студия братьев Пе́трович: интерактивные экспонаты, видео и мэппинг'
     description = 'Делаем интерактивные экспонаты, видео и мэппинг для музеев, выставок и событий. Придумываем концепцию или работаем по готовой. Москва, работаем по всей России.'
     shell = re.sub(r'<title>.*?</title>', f'<title>{title}</title>', shell, count=1)
     for attr, value in [('name="description"', description), ('property="og:title"', title), ('property="og:description"', description)]:

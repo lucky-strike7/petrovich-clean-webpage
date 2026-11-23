@@ -122,7 +122,7 @@ t = re.sub(r'\n    <div class="case-fabs">.*?\n    </div>\n', '\n', t, count=1, 
 # Шапка документа
 TITLE = 'Мэппинг «Устьянские легенды» для конкурса «Страна Света-2025»'
 DESC = 'Мэппинг о легендах села Устье на фасаде на Дворцовой площади: третье место на конкурсе «Страна Света-2025». Как делали: сценарий, стиль глиняной игрушки, нейросети и сборка в After Effects.'
-t = re.sub(r'<title>.*?</title>', f'<title>{TITLE} | студия братьев Петрович</title>', t, count=1)
+t = re.sub(r'<title>.*?</title>', f'<title>{TITLE} | студия братьев Пе́трович</title>', t, count=1)
 t = re.sub(r'<meta name="description" content="[^"]*">', f'<meta name="description" content="{html.escape(DESC)}">', t, count=1)
 t = re.sub(r'<meta property="og:title" content="[^"]*">', f'<meta property="og:title" content="{html.escape(TITLE)}">', t, count=1)
 t = re.sub(r'<meta property="og:description" content="[^"]*">', f'<meta property="og:description" content="{html.escape(DESC)}">', t, count=1)

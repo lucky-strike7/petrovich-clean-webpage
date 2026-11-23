@@ -114,7 +114,7 @@ MAIN = f'''<main>
 t = home
 t = re.sub(r'<header class="top">.*?</header>', lambda m: p.header(p.sub_crumbs(CRUMBS).replace('data-sub-for=".case-kicker.crumbs, .case-hero__title"', 'data-sub-for=".project-hero .crumbs, .project-hero h1"'), CTX), t, count=1, flags=re.S)
 t, n = re.subn(r'<main>.*?(\n    <section class="contact" id="contact">)', lambda m: MAIN + m.group(1), t, count=1, flags=re.S); assert n
-t = re.sub(r'<title>.*?</title>', '<title>Интерактивные экспонаты для стенда Республики Хакасия на выставке «Россия», ВДНХ | студия братьев Петрович</title>', t, count=1)
+t = re.sub(r'<title>.*?</title>', '<title>Интерактивные экспонаты для стенда Республики Хакасия на выставке «Россия», ВДНХ | студия братьев Пе́трович</title>', t, count=1)
 t = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="Стенд Республики Хакасия на выставке «Россия» на ВДНХ: интерактивный стол о достопримечательностях, игра про менгиры и стол Displax с картой достижений. Графика, программирование, монтаж.">', t, count=1)
 t = t.replace('https://petrovichbrothers.ru/"', 'https://petrovichbrothers.ru/works/khakasia/"')
 t = re.sub(r'\n  <link rel="preload" as="image" href="fresh/media/khakasy-render[^>]*>', '', t)

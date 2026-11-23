@@ -175,8 +175,8 @@
 Где и когда: Стенд «Эталона», форум 100+ TechnoBuild, 2023
 Картинка: fresh/media/archive/etalon.jpg
 Превью: fresh/media/archive/etalon-preview.mp4
-Крупное видео: fresh/media/archive/etalon-big.mp4
-Крупное видео, телефон: fresh/media/archive/etalon-big-m.mp4
+Обложка крупной: fresh/media/archive/etalon-big.jpg
+Превью только в плитке: да
 Ссылка: works/etalon/
 
 ## yantarny
@@ -261,8 +261,8 @@
 Где и когда: 
 Картинка: fresh/media/archive/zebralog.jpg
 Превью: fresh/media/archive/zebralog-preview.mp4
-Крупное видео: fresh/media/archive/zebralog-big.mp4
-Крупное видео, телефон: fresh/media/archive/zebralog-big-m.mp4
+Обложка крупной: fresh/media/archive/zebralog-big.jpg
+Превью только в плитке: да
 Ссылка: works/zebralog/
 
 ## donstroy
@@ -300,7 +300,8 @@
 Что делаем: product-design, websites
 Описание: Как сделать пайку интересной? Серия наборов для «Амперки» в киберпанк-стилистике: дизайн печатных плат, упаковки и лендинг.
 Где и когда: 
-Картинка: cases/cyberbug/media/cb-hero.webp
+Картинка: fresh/media/archive/cyberbug.jpg
+Обложка крупной: fresh/media/archive/cyberbug-big.jpg
 Превью: fresh/media/archive/cyberbug-preview.mp4
 Превью только в плитке: да
 Ссылка: works/cyberbug/

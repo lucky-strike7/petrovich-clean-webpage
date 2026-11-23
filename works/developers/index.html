@@ -70,7 +70,6 @@
       addEventListener('resize', () => { if (innerWidth !== w) { w = innerWidth; set(); } });
     })();
   </script>
-  <link rel="preload" as="image" href="../../fresh/media/archive/etalon.jpg" fetchpriority="high">
   <link rel="stylesheet" href="../../fresh/landings.css?v=3">
 </head>
 <body class="page-v2 page-developers page-landing">
@@ -127,7 +126,7 @@
     <section class="works-mix works-mix--tiles">
       <h2 class="sr-only">Работы</h2>
       <article class="card work-big" id="w-etalon">
-        <a class="card__media" href="../../works/etalon/" data-cursor="Посмотреть" aria-label="Эталон"><video data-poster="../../fresh/media/archive/etalon.jpg" data-poster-m="../../fresh/media/archive/etalon.jpg" muted loop playsinline data-lazy preload="none"><source data-src="../../fresh/media/archive/etalon-preview.mp4" type="video/mp4" media="(max-width: 600px)"><source data-src="../../fresh/media/archive/etalon-big.mp4" type="video/mp4"></video></a>
+        <a class="card__media" href="../../works/etalon/" data-cursor="Посмотреть" aria-label="Эталон"><img src="../../fresh/media/archive/etalon-big.jpg" alt="" loading="eager" fetchpriority="high" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></a>
         <div class="card__row">
           <h3 class="card__title reveal">Эталон</h3>
           <a class="card__kind" href="../../works/etalon/">Видео и&nbsp;интерактив для&nbsp;стенда «Эталона» · 100+ TechnoBuild, 2023</a>

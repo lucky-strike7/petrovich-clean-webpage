@@ -177,7 +177,7 @@ def build(slug):
     t = re.sub(r'<header class="top">.*?</header>', lambda m: p.header(p.sub_switch(), p.ctx_tags()), t, count=1, flags=re.S)
     t, k = re.subn(r'<main>.*?(\n    <section class="contact" id="contact">)', lambda m: main + m.group(1), t, count=1, flags=re.S); assert k
     title = tx.get('title') or re.sub(r'&nbsp;', ' ', tx['h1'])
-    t = re.sub(r'<title>.*?</title>', f'<title>{title} | студия братьев Петрович</title>', t, count=1)
+    t = re.sub(r'<title>.*?</title>', f'<title>{title} | студия братьев Пе́трович</title>', t, count=1)
     desc = re.sub(r'<[^>]+>', '', re.sub(r'&nbsp;', ' ', tx['lead']))
     t = re.sub(r'<meta name="description" content="[^"]*">', f'<meta name="description" content="{html.escape(desc)}">', t, count=1)
     t = t.replace('https://petrovichbrothers.ru/"', f'https://petrovichbrothers.ru/works/{slug}/"')

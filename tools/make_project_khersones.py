@@ -79,7 +79,7 @@ MAIN = f'''<main>
 t = home
 t = re.sub(r'<header class="top">.*?</header>', lambda m: p.header(p.sub_crumbs(CRUMBS).replace('data-sub-for=".case-kicker.crumbs, .case-hero__title"', 'data-sub-for=".project-hero .crumbs, .project-hero h1"'), CTX), t, count=1, flags=re.S)
 t, n = re.subn(r'<main>.*?(\n    <section class="contact" id="contact">)', lambda m: MAIN + m.group(1), t, count=1, flags=re.S); assert n
-t = re.sub(r'<title>.*?</title>', '<title>Интерактивные экспонаты для зала Черноморского флота в музее «Новый Херсонес» | студия братьев Петрович</title>', t, count=1)
+t = re.sub(r'<title>.*?</title>', '<title>Интерактивные экспонаты для зала Черноморского флота в музее «Новый Херсонес» | студия братьев Пе́трович</title>', t, count=1)
 t = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="Зал Черноморского флота в музее «Новый Херсонес», Севастополь: корабельный симулятор со штурвалом, сканеры кораблей, таймлайн истории флота и игра «Сборка кораблей». Концепция, дизайн, 3D, программирование.">', t, count=1)
 t = t.replace('https://petrovichbrothers.ru/"', 'https://petrovichbrothers.ru/works/khersones/"')
 t = re.sub(r'\n  <link rel="preload" as="image" href="fresh/media/khakasy-render[^>]*>', '', t)

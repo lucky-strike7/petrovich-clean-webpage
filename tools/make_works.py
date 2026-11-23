@@ -55,7 +55,7 @@ t = home
 t = re.sub(r'<header class="top">.*?</header>', lambda m: p.header(), t, count=1, flags=re.S)
 # Вместо содержимого главной — эта страница; контакты внизу остаются
 t, n = re.subn(r'<main>.*?(\n    <section class="contact" id="contact">)', lambda m: MAIN + m.group(1), t, count=1, flags=re.S); assert n
-t = re.sub(r'<title>.*?</title>', '<title>Работы студии братьев Петрович: интерактивные экспонаты, видео, мэппинг, сайты</title>', t, count=1)
+t = re.sub(r'<title>.*?</title>', '<title>Работы студии братьев Пе́трович: интерактивные экспонаты, видео, мэппинг, сайты</title>', t, count=1)
 t = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="Интерактивные экспонаты для музеев и выставок, видео и 3D-анимация, мэппинг, графика для сцены и сайты: Новый Херсонес, стенд Хакасии на ВДНХ, HBO Max, «Иннопром», Эталон и другие работы студии.">', t, count=1)
 t = t.replace('https://petrovichbrothers.ru/"', 'https://petrovichbrothers.ru/works/"')
 # Предзагрузка картинки стола с главной здесь не нужна
