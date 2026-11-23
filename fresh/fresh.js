@@ -111,7 +111,7 @@
       if (e.isIntersecting && !reduce && !saveData && !backgroundBlocked()) { hydrateVideo(v); v.play().catch(() => {}); } else v.pause();
     }
   }, { threshold: 0.2 });
-  document.querySelectorAll('.reel video, .pill video').forEach((v) => vio.observe(v));
+  document.querySelectorAll('.reel video, .pill video, .case-loop video').forEach((v) => vio.observe(v));
 
   /*
     Ролики в карточках проектов: стоят на первом кадре, пока карточку не докрутили.

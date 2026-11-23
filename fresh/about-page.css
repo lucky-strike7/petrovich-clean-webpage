@@ -24,7 +24,7 @@
 .geo-city__projects a { font-family: var(--font-text); font-weight: 400; font-size: 17px; }
 
 @media (hover: hover) {
-  .geo-city summary:is(:hover, :focus-visible) span { text-decoration: underline; text-underline-offset: .15em; }
+  .geo-city summary:is(:hover, :focus-visible) > span { text-decoration: underline; text-underline-offset: .15em; }
 }
 
 @media (min-width: 1024px) {
@@ -95,15 +95,15 @@
   }
   .geo-city[open] summary::before { transform: scale(2.04); }
   .studio-geography__places:has(.geo-city[open]) .geo-city:not([open]) summary::before { opacity: 0; }
-  .geo-city summary span {
+  .geo-city summary > span {
     position: absolute;
     right: calc(50% + var(--geo-gap));
     top: calc(50% - .54em);
     opacity: 0;
     pointer-events: none;
   }
-  .geo-city[open] summary span, .geo-city summary:focus-visible span { opacity: 1; }
-  .geo-city summary:is(:hover, :focus-visible) span { text-decoration: none; }
+  .geo-city[open] summary > span, .geo-city summary:focus-visible > span { opacity: 1; }
+  .geo-city summary:is(:hover, :focus-visible) > span { text-decoration: none; }
   .geo-city summary::after { display: none; }
   .geo-city[open] { z-index: 2; }
   .geo-city::details-content { content-visibility: visible; }
@@ -120,9 +120,9 @@
   .geo-city__projects ul { padding: 0; }
   .geo-city__projects a { font: inherit; }
   @media (prefers-reduced-motion: no-preference) {
-    .geo-city summary span { --geo-enter: var(--geo-gap); }
+    .geo-city summary > span { --geo-enter: var(--geo-gap); }
     .geo-city__projects { --geo-enter: calc(0px - var(--geo-gap)); }
-    .geo-city[open] summary span, .geo-city[open] .geo-city__projects {
+    .geo-city[open] summary > span, .geo-city[open] .geo-city__projects {
       animation: geo-label-in .44s cubic-bezier(.22, .8, .28, 1) var(--geo-marker-time) both;
     }
   }
@@ -142,3 +142,7 @@
 .page-about .studio-team strong { font-weight: 600; }
 .page-about .process > .sect__body > .sect__lead { margin-bottom: clamp(32px, 4vw, 56px); }
 @media (min-width: 901px) { .page-about .studio-team .process__head { align-items: flex-start; } }
+/* «Кто ведет проекты» на одной линии с первой строкой справа (только компьютер) */
+@media (min-width: 901px) {
+  .studio-team > .sect__label { padding-top: 0; }
+}

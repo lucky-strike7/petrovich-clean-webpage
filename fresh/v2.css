@@ -653,7 +653,7 @@ a.card__media { display: block; }
 
 /* Страница проекта: задача, решение и «Что сделали» сразу под общим кадром — подпись слева, текст справа, как «Смотрите также» */
 .project-brief { row-gap: 40px; }
-.project-brief .sect__label { padding-top: .2em; }
+.project-brief .sect__label { padding-top: 0; line-height: calc(clamp(18px, 1.4vw, 22px) * 1.45); } /* подпись на одной линии с первой строкой справа */
 .project-brief__text { max-width: 34em; font-family: var(--font-text); font-weight: 400; font-size: clamp(18px, 1.4vw, 22px); line-height: 1.45; }
 .project-brief__done { font-size: clamp(18px, 1.4vw, 22px); }
 @media (max-width: 900px) { .project-brief { row-gap: 0; } .project-brief .sect__body + .sect__label { margin-top: 36px; } }
@@ -761,3 +761,9 @@ button.card__kind { background: none; border: 0; padding: 0; text-align: left; j
 
 /* Главная на телефоне: после темной «Страны Света» сразу картинка следующей работы, между ними тонкая светлая полоска */
 @media (max-width: 900px) { .home-works .work-dark + .work-big { margin-top: 6px; } }
+/* Кейс: ролики, которые играют по кругу, пока видны (сетка 2 × 2 и широкие) */
+.case-grid .case-vgrid { grid-column: 4 / 13; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin: 0; }
+.case-loop video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius); background: var(--line); }
+.case-wide.case-loop { background: none; }
+@media (max-width: 900px) { .case-grid .case-vgrid { grid-column: 1 / -1; gap: 8px; } }
+.case-vgrid img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius); background: var(--line); }

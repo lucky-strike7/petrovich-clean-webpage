@@ -5,6 +5,8 @@ import { pathToFileURL, fileURLToPath } from 'node:url';
 const boundWords = 'в во на о об обо к ко с со от ото до по за из изо у без безо для под подо над надо при про через чрез перед передо между меж около возле вокруг внутри вне вдоль вдали вместо кроме среди посреди сквозь после против из-за из-под из‑за из‑под ради мимо близ поверх сверх ввиду вследствие насчёт насчет путём путем посредством благодаря вопреки согласно относительно а и но или не ни';
 const binding = new RegExp('(?<![\\p{L}\\p{M}\\p{N}_-])(?:' + boundWords.split(' ').join('|') +
   ')([ \\t\\r\\n]+)(?=[\\p{L}\\p{N}«„“"(№]|&(?:laquo|quot);)', 'giu');
+// A number stays on the same line as the word after it: «100 проектов», «30 дней», «500 тыс. ₽».
+const numberBinding = /(?<![\p{L}\p{N}_.,:-])\p{N}+([ \t\r\n]+)(?=[\p{L}₽%«])/gu;
 const inlineTag = /^<\/?(?:a|b|i|em|strong|span|small|sup|sub|s|u|mark|abbr|label|time)\b/i;
 const token = /<!--[\s\S]*?-->|<(script|style|svg|textarea|pre|code|template)\b[^>]*>[\s\S]*?<\/\1\s*>|<\/?[a-z][\w:-]*\b(?:[^"'<>]|"[^"]*"|'[^']*')*>|[^<]+|</gi;
 
@@ -13,7 +15,7 @@ const token = /<!--[\s\S]*?-->|<(script|style|svg|textarea|pre|code|template)\b[
 function formatRun(parts) {
   const text = parts.filter(part => !part.startsWith('<')).join('');
   const edits = new Map();
-  for (const match of text.matchAll(binding)) {
+  for (const match of [...text.matchAll(binding), ...text.matchAll(numberBinding)]) {
     const start = match.index + match[0].length - match[1].length;
     edits.set(start, '&nbsp;');
     for (let i = 1; i < match[1].length; i++) edits.set(start + i, '');

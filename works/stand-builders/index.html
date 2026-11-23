@@ -55,7 +55,7 @@
 }
   </script>
   <link rel="stylesheet" href="../../fresh/fresh.css?v=1121d">
-  <link rel="stylesheet" href="../../fresh/v2.css?v=131">
+  <link rel="stylesheet" href="../../fresh/v2.css?v=137">
   <script>
     document.documentElement.classList.add('js');
     /*
@@ -70,7 +70,7 @@
       addEventListener('resize', () => { if (innerWidth !== w) { w = innerWidth; set(); } });
     })();
   </script>
-  <link rel="preload" as="image" href="../../fresh/media/archive/referus.jpg" fetchpriority="high">
+  <link rel="preload" as="image" href="../../fresh/media/khakasy-render.webp" fetchpriority="high">
   <link rel="stylesheet" href="../../fresh/landings.css?v=3">
 </head>
 <body class="page-v2 page-stand-builders page-landing">
@@ -126,19 +126,24 @@
 
     <section class="works-mix works-mix--tiles">
       <h2 class="sr-only">Работы</h2>
-      <article class="card work-big" id="w-referus">
-        <a class="card__media" href="../../works/referus/" data-cursor="Посмотреть" aria-label="Реферус"><video data-poster="../../fresh/media/archive/referus.jpg" data-poster-m="../../fresh/media/archive/referus.jpg" muted loop playsinline data-lazy preload="none"><source data-src="../../fresh/media/archive/referus-preview.mp4" type="video/mp4" media="(max-width: 600px)"><source data-src="../../fresh/media/archive/referus-big.mp4" type="video/mp4"></video></a>
+      <article class="card work-big" id="w-khakasia">
+        <a class="card__media" href="../../works/khakasia/" data-cursor="Посмотреть" aria-label="Стенд Республики Хакасия"><video data-poster="../../fresh/media/khakasy-render.webp" data-poster-m="../../fresh/media/khakasy-render.webp" muted loop playsinline data-lazy preload="none"><source data-src="../../fresh/media/khakasy-card.mp4" type="video/mp4" media="(max-width: 600px)"><source data-src="../../fresh/media/khakasy-render.mp4" type="video/mp4"></video></a>
         <div class="card__row">
-          <h3 class="card__title reveal">Реферус</h3>
-          <a class="card__kind" href="../../works/referus/">Игра для&nbsp;стенда <span class="nowrap">«Арнест-Юнирус»</span> · «Иннопром», 2025</a>
+          <h3 class="card__title reveal">Стенд Республики Хакасия</h3>
+          <a class="card__kind" href="../../works/khakasia/">Три&nbsp;интерактивных экспоната для&nbsp;выставки «Россия», 2023</a>
           <div class="card__info">
-            <p class="card__desc reveal"><span class="card__q">Как&nbsp;объяснить инженерную систему за&nbsp;минуту у&nbsp;стенда?</span> <span class="nowrap">Игра-лабиринт</span> про&nbsp;систему «Реферус»: посетитель ведет фишку, а&nbsp;физика столкновений работает плавно, 60 кадров в&nbsp;секунду.</p>
-            <p class="card__meta reveal"><span>Стенд <span class="nowrap">«Арнест-Юнирус»</span>, «Иннопром», 2025</span></p>
+            <p class="card__desc reveal"><span class="card__q">Как&nbsp;работать вместе с&nbsp;застройщиком?</span> Стенд собирал застройщик, а&nbsp;мы&nbsp;сделали три&nbsp;интерактивных экспоната, поставили датчики и&nbsp;запустили их&nbsp;на&nbsp;площадке.</p>
+            <p class="card__meta reveal"><span>Выставка «Россия», ВДНХ, 2023</span></p>
             <div class="card__actions"></div>
           </div>
         </div>
       </article>
       <ul class="works works--all">
+          <li class="reveal"><a class="work" href="../../works/referus/" data-cursor="Посмотреть" data-preview="../../fresh/media/archive/referus-preview.mp4">
+            <span class="work__media"><img src="../../fresh/media/archive/referus.jpg" alt="" width="650" height="500" loading="lazy"></span>
+            <span class="work__title">Реферус</span>
+            <span class="work__meta">Игра для&nbsp;стенда <span class="nowrap">«Арнест-Юнирус»</span> · «Иннопром», 2025</span>
+          </a></li>
           <li class="reveal"><a class="work" href="../../works/etalon/" data-cursor="Посмотреть" data-preview="../../fresh/media/archive/etalon-preview.mp4">
             <span class="work__media"><img src="../../fresh/media/archive/etalon.jpg" alt="" width="650" height="500" loading="lazy"></span>
             <span class="work__title">Эталон</span>
@@ -164,16 +169,23 @@
             <span class="work__title">Артмонта</span>
             <span class="work__meta">2023&nbsp;· Сайт с&nbsp;<span class="nowrap">3D-анимацией</span> технологий стендов</span>
           </a></li>
-          <li class="reveal"><a class="work" href="../../works/rostec-skolkovo/" data-cursor="Посмотреть">
-            <span class="work__media"><img src="../../fresh/media/archive/rostec-skolkovo.jpg" alt="" width="650" height="500" loading="lazy"></span>
-            <span class="work__title">Ростех на&nbsp;«Открытых инновациях»</span>
-            <span class="work__meta">2018&nbsp;· Видео для&nbsp;стенда</span>
-          </a></li>
       </ul>
+      <article class="card work-big" id="w-rostec-skolkovo">
+        <a class="card__media" href="../../works/rostec-skolkovo/" data-cursor="Посмотреть" aria-label="Ростех на «Открытых инновациях»"><img src="../../fresh/media/archive/rostec-skolkovo-big.jpg" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></a>
+        <div class="card__row">
+          <h3 class="card__title reveal">Ростех на&nbsp;«Открытых инновациях»</h3>
+          <a class="card__kind" href="../../works/rostec-skolkovo/">2018 · Видео для&nbsp;стенда</a>
+          <div class="card__info">
+            <p class="card__desc reveal"><span class="card__q">Как&nbsp;оформить экраны разной формы в&nbsp;одном стиле?</span> Видеозаставки для&nbsp;стенда «Ростеха» в&nbsp;Сколково: основной экран и&nbsp;боковые панели из&nbsp;мониторов под&nbsp;углом.</p>
+            <p class="card__meta reveal"><span>2018</span></p>
+            <div class="card__actions"></div>
+          </div>
+        </div>
+      </article>
     </section>
     <section class="sect landing-scope">
       <h2 class="sect__label reveal">Что берем на&nbsp;себя</h2>
-      <p class="sect__body about__desc reveal">Если концепции видео и&nbsp;интерактива еще&nbsp;нет, придумываем ее: что&nbsp;рассказать, что&nbsp;показать и&nbsp;что&nbsp;посетитель сможет попробовать. Выделяем это&nbsp;в&nbsp;отдельный этап. Если концепция готова, развиваем ее&nbsp;в&nbsp;сценариях, графике и&nbsp;интерфейсах. Делаем видео и&nbsp;программы, проектируем мультимедиа и&nbsp;берем на&nbsp;себя инженерные работы. Заранее согласуем с&nbsp;вами, куда поставить экраны, компьютеры и&nbsp;датчики и&nbsp;как&nbsp;их&nbsp;подключить. Перед&nbsp;открытием монтируем и&nbsp;проверяем нашу часть на&nbsp;площадке.</p>
+      <p class="sect__body about__desc reveal">Если концепции видео и&nbsp;интерактива еще&nbsp;нет, придумываем ее: что&nbsp;рассказать, что&nbsp;показать и&nbsp;что&nbsp;посетитель сможет попробовать. Если концепция готова, развиваем ее&nbsp;в&nbsp;сценариях, графике и&nbsp;интерфейсах. Делаем видео и&nbsp;программы, проектируем мультимедиа и&nbsp;берем на&nbsp;себя инженерные работы. Заранее согласуем с&nbsp;вами, куда поставить экраны, компьютеры и&nbsp;датчики и&nbsp;как&nbsp;их&nbsp;подключить. Перед&nbsp;открытием монтируем и&nbsp;проверяем нашу часть на&nbsp;площадке.</p>
     </section>
 
       <section class="plate plate--page" aria-labelledby="plate-title">
@@ -191,7 +203,7 @@
     <section class="sect landing-scope landing-cost" id="cost">
       <h2 class="sect__label reveal">Стоимость проекта</h2>
       <div class="sect__body">
-        <p class="about__desc reveal">Пришлите проект стенда, задачу и&nbsp;дату открытия. Посмотрим, что&nbsp;уже&nbsp;придумано и&nbsp;какие материалы готовы, какие нужны экраны и&nbsp;программы. Отдельно посчитаем концепцию, контент, программирование и&nbsp;работу на&nbsp;площадке. Если задача пока описана в&nbsp;двух словах, начнем с&nbsp;разговора и&nbsp;уточним детали вместе.</p>
+        <p class="about__desc reveal">Для&nbsp;оценки хватит проекта стенда, задачи и&nbsp;даты открытия. Ориентир: программа для&nbsp;тачскрина от&nbsp;500&nbsp;тыс. ₽, видеоролик от&nbsp;700&nbsp;тыс. ₽, интерактивный экспонат от&nbsp;900&nbsp;тыс. ₽.</p>
         <a class="sect__link reveal" href="../../prices/">Цены и&nbsp;примеры</a>
       </div>
     </section>
@@ -199,11 +211,11 @@
     <section class="sect faq" id="faq">
       <h2 class="sect__label reveal">Частые вопросы</h2>
       <div class="sect__body">
-        <details class="faq__item reveal"><summary>Что&nbsp;входит в&nbsp;разработку концепции?</summary><p>Разбираемся в&nbsp;задаче стенда и&nbsp;предлагаем, как&nbsp;рассказать о&nbsp;продукте через&nbsp;видео и&nbsp;интерактив. Придумываем общую идею, визуальный стиль и&nbsp;действия посетителя. Учитываем архитектуру стенда и&nbsp;доступные экраны. Это&nbsp;отдельный этап: до&nbsp;начала договариваемся, что&nbsp;подготовим, сколько времени понадобится и&nbsp;сколько это&nbsp;будет стоить.</p></details>
+        <details class="faq__item reveal"><summary>Что&nbsp;входит в&nbsp;разработку концепции?</summary><p>Разбираемся в&nbsp;задаче стенда и&nbsp;предлагаем, как&nbsp;рассказать о&nbsp;продукте через&nbsp;видео и&nbsp;интерактив. Придумываем общую идею, визуальный стиль и&nbsp;действия посетителя. Учитываем архитектуру стенда и&nbsp;доступные экраны.</p></details>
         <details class="faq__item reveal"><summary>Концепция уже&nbsp;согласована с&nbsp;заказчиком. Сможете работать по&nbsp;ней?</summary><p>Да. Изучим концепцию, дизайн стенда и&nbsp;требования заказчика. На&nbsp;их&nbsp;основе сделаем сценарии, видео, интерфейсы и&nbsp;программы. Если заметим, что&nbsp;<span class="nowrap">какую-то</span> идею трудно реализовать на&nbsp;выбранном оборудовании, обсудим это&nbsp;с&nbsp;вами до&nbsp;начала производства контента.</p></details>
         <details class="faq__item reveal"><summary>Кто&nbsp;общается с&nbsp;заказчиком и&nbsp;согласует материалы?</summary><p>Договоримся об&nbsp;этом в&nbsp;начале. Можем обсуждать работу через&nbsp;вашего менеджера или&nbsp;подключаться к&nbsp;встречам вместе с&nbsp;вами. Заранее определим, кто&nbsp;собирает обратную связь и&nbsp;кто&nbsp;утверждает результат каждого этапа.</p></details>
         <details class="faq__item reveal"><summary>Что&nbsp;нужно согласовать до&nbsp;покупки оборудования?</summary><p>Размеры и&nbsp;разрешение экранов, способ воспроизведения видео, компьютеры, касания, датчики и&nbsp;управление. Для&nbsp;интерактива важно проверить, как&nbsp;устройства работают вместе. Мы&nbsp;объясним, что&nbsp;нужно нашим программам, и&nbsp;обсудим выбор с&nbsp;вашей технической командой.</p></details>
-        <details class="faq__item reveal"><summary>Можно обратиться к&nbsp;вам&nbsp;со&nbsp;всем стендом, включая застройку?</summary><p>Да. У&nbsp;нас&nbsp;есть проверенные застройщики, с&nbsp;которыми весь проект можно вести через&nbsp;студию. Мы&nbsp;делаем концепцию мультимедийной части, контент и&nbsp;программы, партнеры берут на&nbsp;себя конструкции, оборудование и&nbsp;застройку. Если застройку ведете вы, подключаемся к&nbsp;вашей команде и&nbsp;отвечаем за&nbsp;нашу часть работы.</p></details>
+        <details class="faq__item reveal"><summary>Можно обратиться к&nbsp;вам&nbsp;со&nbsp;всем стендом, включая застройку?</summary><p>Да. Если нужен весь стенд, подключим застройщика, с&nbsp;которым уже&nbsp;работали. Видео, интерактив и&nbsp;программы делаем мы, конструкции и&nbsp;оборудование берут на&nbsp;себя партнеры. Если застройку ведете вы, подключаемся к&nbsp;вашей команде и&nbsp;отвечаем за&nbsp;нашу часть работы.</p></details>
         <details class="faq__item reveal"><summary>Как&nbsp;организуем запуск и&nbsp;поддержку на&nbsp;выставке?</summary><p>Заранее определим, когда оборудование будет готово к&nbsp;проверке, кто&nbsp;приедет на&nbsp;площадку и&nbsp;сколько времени есть до&nbsp;открытия. Отдельно обсудим поддержку на&nbsp;дни&nbsp;выставки: что&nbsp;можно решить удаленно и&nbsp;когда нужен человек на&nbsp;месте. Если сроки короткие, сразу посмотрим, какой объем работы успеем сделать.</p></details>
       </div>
     </section>
@@ -310,7 +322,7 @@
     <video class="modal__video" controls playsinline></video>
   </dialog>
 
-  <script src="../../fresh/fresh.js?v=1121c"></script>
+  <script src="../../fresh/fresh.js?v=1121e"></script>
   <script src="../../fresh/v2.js?v=33"></script>
   <script src="../../fresh/cookies.js?v=1119i"></script>
 </body>

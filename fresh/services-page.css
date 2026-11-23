@@ -9,6 +9,7 @@
   margin-top: 14px;
   font: 400 clamp(16px, 1.4vw, 22px)/1.4 var(--font-text);
 }
+.service-offer > .service-offer__example { margin-top: 10px; font-size: clamp(15px, 1.2vw, 18px); color: var(--muted, inherit); }
 .page-services .services-cases .works { margin: 0; padding: 0; }
 .services-more__grid {
   display: grid;
@@ -28,4 +29,9 @@
 @media (max-width: 600px) {
   .services-more__grid { grid-template-columns: 1fr; }
   .page-services .services-cases :is(.work__title, .work__meta) { padding-inline: 0; }
+}
+/* Подпись слева на одной линии с первой строкой справа (только компьютер) */
+@media (min-width: 901px) {
+  .page-services .services-more > .sect__label { padding-top: 0; line-height: 23px; }
+  .page-services .services-cases > .sect__label { padding-top: 0; line-height: 1; }
 }

@@ -5,7 +5,7 @@ NL = chr(10)
 
 # Корень сайта — папка над tools/ (сборщики лежат в репозитории рядом со страницами)
 SITE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V2CSS = 'v2.css?v=131'
+V2CSS = 'v2.css?v=137'
 V2JS = 'v2.js?v=33'
 # Включаем только готовые самостоятельные страницы.
 READY_PAGES = {'prices', 'services', 'about'}
@@ -25,7 +25,7 @@ WHO_BIG = [(k, NAME[k]) for k in ('museums', 'exhibitions')]
 WHO_SMALL = [(k, NAME[k]) for k in ('stand-builders', 'film', 'regions', 'events', 'developers', 'industry')]
 WHAT, WHO = WHAT_BIG + WHAT_SMALL, WHO_BIG + WHO_SMALL
 # Теги, где вместо отдельных экспонатов крупных проектов стоят обложки самих проектов (тег → проект → экспонат)
-TAG_PROJECTS = {'museums': ['khersones', 'khakasia'], 'exhibitions': ['khakasia', 'khersones'], 'regions': ['khakasia', 'khersones']}
+TAG_PROJECTS = {'museums': ['khersones', 'khakasia'], 'exhibitions': ['khakasia', 'khersones'], 'regions': ['khakasia', 'khersones'], 'stand-builders': ['khakasia']}
 
 # Название карточки без разметки (для data-title и aria): перенос строки — запятая
 def plain(t):
@@ -538,7 +538,7 @@ class Page:
             elif first:
                 tag = first[1].replace('loading="lazy"', 'loading="eager" fetchpriority="high"')
                 t = t[:first.start(1)] + tag + t[first.end(1):]
-        t = re.sub(r'(fresh/fresh\.js\?v=)\w+', r'\g<1>1121c', t)
+        t = re.sub(r'(fresh/fresh\.js\?v=)\w+', r'\g<1>1121e', t)
         extra = (self.tsheet() if 'aria-controls="tsheet"' in t else '') + sheets
         t = t.replace('  <div class="cursor"', self.msheet() + extra + self.ORB + '\n  <div class="cursor"', 1)
         # Кружок у курсора для меню «Работы»: на страницах кейсов его не было
