@@ -233,6 +233,7 @@
 Где и когда: 
 Картинка: fresh/media/archive/rosnano.jpg
 Превью: fresh/media/archive/rosnano-preview.mp4
+Обложка крупной: fresh/media/archive/rosnano-big.jpg
 Крупное видео: fresh/media/archive/rosnano-big.mp4
 Крупное видео, телефон: fresh/media/archive/rosnano-big-m.mp4
 Ссылка: works/rosnano/
@@ -247,8 +248,7 @@
 Где и когда: 
 Картинка: fresh/media/archive/nanolek.jpg
 Превью: fresh/media/archive/nanolek-preview.mp4
-Крупное видео: fresh/media/archive/nanolek-big.mp4
-Крупное видео, телефон: fresh/media/archive/nanolek-big-m.mp4
+Обложка крупной: fresh/media/archive/nanolek-big.jpg
 Ссылка: works/nanolek/
 
 ## zebralog
@@ -289,8 +289,8 @@
 Где и когда: Форум «Город образования», ВДНХ, 2019
 Картинка: fresh/media/archive/gorodobrazovaniya.jpg
 Превью: fresh/media/archive/gorodobrazovaniya-preview.mp4
-Крупное видео: fresh/media/archive/gorodobrazovaniya-big.mp4
-Крупное видео, телефон: fresh/media/archive/gorodobrazovaniya-big-m.mp4
+Обложка крупной: fresh/media/archive/gorodobrazovaniya-big.jpg
+Превью только в плитке: да
 Ссылка: works/gorodobrazovaniya/
 
 ## cyberbug
