@@ -103,8 +103,7 @@ class Translator(HTMLParser):
 
 
 def contacts(text):
-    # International enquiries go directly to Arseny, without a Russian-only phone form.
-    text = re.sub(r'<form\b.*?</form>', '', text, flags=re.S)
+    # Keep the original forms and navigation; localise only the contact details.
     text = text.replace('art@petrovichbrothers.ru', 'ars@petrovichbrothers.com')
     text = text.replace('https://t.me/artem_petrovich_1', 'https://t.me/ArsenyPetrovich')
     text = text.replace('tel:+79151978652', 'https://wa.me/79268521102')

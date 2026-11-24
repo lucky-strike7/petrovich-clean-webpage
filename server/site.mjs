@@ -20,8 +20,9 @@ export function byteRange(header, size) {
   return Number.isSafeInteger(start)&&Number.isSafeInteger(end)&&start>=0&&start<size&&end>=start ? {start,end}:null;
 }
 
-export function createApp({ root=resolve(project,process.env.NODE_ENV==='production'?'dist':'.'),contact=createContactHandler(),locale=process.env.SITE_LOCALE||'ru' }={}) {
+export function createApp({ root=resolve(project,process.env.NODE_ENV==='production'?'dist':'.'),contact,locale=process.env.SITE_LOCALE||'ru' }={}) {
   if(!['ru','en'].includes(locale))throw new Error('Unsupported SITE_LOCALE');
+  const handleContact=contact||createContactHandler({locale});
   const localized=path=>locale==='en'&&(/\.html$/.test(path)||['/robots.txt','/sitemap.xml','/site.webmanifest'].includes(path))?resolve(root,'en','.'+path):resolve(root,'.'+path);
   const canonicalRoot=realpath(root);
   return createServer(async (req,res)=>{
@@ -30,7 +31,7 @@ export function createApp({ root=resolve(project,process.env.NODE_ENV==='product
     const send=(status,text)=>{res.writeHead(status,{'Content-Type':'text/plain; charset=utf-8','Cache-Control':'no-store'});res.end(text);};
     try {
       const url=new URL(req.url,'http://localhost');
-      if(url.pathname==='/api/contact'){if(locale==='en'){send(404,'Use the contact links on this website');return;}await contact(req,res);return;}
+      if(url.pathname==='/api/contact'||url.pathname==='/api/contact/'){await handleContact(req,res);return;}
       if(!['GET','HEAD'].includes(req.method)){res.setHeader('Allow','GET, HEAD');send(405,'Method not allowed');return;}
       let path;try{path=decodeURIComponent(url.pathname);}catch{send(400,'Bad path');return;}
       if(path.split('/').some(p=>p.startsWith('.')||p.includes('\\')||p.includes('\0'))){send(404,'Not found');return;}

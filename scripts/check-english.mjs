@@ -26,7 +26,16 @@ for (const page of pages) {
   const path = relative(english, page);
   const html = await readFile(page, 'utf8');
   assert.match(html, /<html\b[^>]*lang="en"/);
-  assert(!/<form\b/.test(html), `Russian callback form: ${path}`);
+  const original = await readFile(resolve(root, path), 'utf8');
+  assert.equal([...html.matchAll(/<form\b/g)].length, [...original.matchAll(/<form\b/g)].length, `Form parity: ${path}`);
+  const links = source => [...source.matchAll(/<a\b[^>]*\bhref="([^"]*)"/g)].map(match => match[1]);
+  const expectedLinks = links(original).map(value => value
+    .replace('mailto:art@petrovichbrothers.ru', 'mailto:ars@petrovichbrothers.com')
+    .replace('https://t.me/artem_petrovich_1', 'https://t.me/ArsenyPetrovich')
+    .replace('tel:+79151978652', 'https://wa.me/79268521102')
+    .replace('https://petrovichbrothers.ru', 'https://petrovichbrothers.com'));
+  const actualLinks = links(html.replace(/<a class="language-switch"[^>]*>.*?<\/a>/g, ''));
+  assert.deepEqual(actualLinks, expectedLinks, `Navigation parity: ${path}`);
   assert(!html.includes('art@petrovichbrothers.ru'), `Incorrect contact: ${path}`);
   assert(!/\bRUB\b/.test(html), `Unconverted service price: ${path}`);
   if (path !== '404.html') {

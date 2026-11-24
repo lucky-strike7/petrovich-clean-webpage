@@ -17,6 +17,7 @@ COPY about ./about
 COPY privacy ./privacy
 COPY consent ./consent
 RUN npm run build:en && npm run verify:build && npm run verify:en
+RUN npm prune --omit=dev --no-audit --no-fund
 
 FROM node:24-alpine
 WORKDIR /app
@@ -24,6 +25,7 @@ ARG BUILD_COMMIT=unversioned
 LABEL org.opencontainers.image.revision=$BUILD_COMMIT ru.petrovichbrothers.component=english-website-runtime
 ENV NODE_ENV=production SITE_LOCALE=en HOST=0.0.0.0 PORT=3000 SITE_RELEASE=$BUILD_COMMIT
 COPY --from=assets --chown=node:node /app/dist ./dist
+COPY --from=assets --chown=node:node /app/node_modules ./node_modules
 COPY --chown=node:node server ./server
 COPY --chown=node:node server.mjs package.json ./
 USER node

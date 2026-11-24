@@ -504,6 +504,7 @@
     (тот же обработчик, что на старом сайте: бот в Telegram и письмо). Без сервера — понятная ошибка с запасным путем.
   */
   document.querySelectorAll('.callback').forEach((cb, index) => {
+    const english = document.documentElement.lang === 'en';
     const input = cb.querySelector('input[type="tel"]');
     const agree = cb.querySelector('input[name="agree"]');
     const btn = cb.querySelector('button[type="submit"]');
@@ -512,12 +513,14 @@
     input.classList.add('ym-disable-keys');
     const digitsOf = (v) => {
       let d = v.replace(/\D/g, '');
+      if (english) return (d.startsWith('00') ? d.slice(2) : d).slice(0, 15);
       if (d[0] === '8') d = '7' + d.slice(1);
       if (d && d[0] !== '7') d = '7' + d;
       return d.slice(0, 11);
     };
     const fmt = (d) => {
       if (!d) return '';
+      if (english) return '+' + d;
       const p = [d.slice(1, 4), d.slice(4, 7), d.slice(7, 9), d.slice(9, 11)];
       let out = '+7';
       if (p[0]) out += ' ' + p[0];
@@ -527,18 +530,20 @@
       return out;
     };
     const say = (text, err) => { msg.textContent = text; msg.classList.toggle('is-error', !!err); };
+    const validPhone = () => english ? /^[1-9]\d{6,14}$/.test(digitsOf(input.value)) : digitsOf(input.value).length === 11;
+    const phoneError = english ? 'Enter your full phone number with country code, for example +86 138 0013 8000.' : 'Введите номер полностью, например +7 915 123-45-67.';
     const sync = () => {
       btn.disabled = submitting || sent;
-      btn.classList.toggle('needs-input', digitsOf(input.value).length !== 11 || !agree.checked);
+      btn.classList.toggle('needs-input', !validPhone() || !agree.checked);
     };
     input.addEventListener('input', () => { input.value = fmt(digitsOf(input.value)); say(''); sync(); });
     msg.id = 'callback-status-' + index;
     input.setAttribute('aria-describedby', msg.id);
     agree.setAttribute('aria-describedby', msg.id);
     const checkPhone = () => {
-      const incomplete = input.value !== '' && digitsOf(input.value).length !== 11;
+      const incomplete = input.value !== '' && !validPhone();
       input.setAttribute('aria-invalid', String(incomplete));
-      if (incomplete) say('Введите номер полностью, например +7 915 123-45-67.', true);
+      if (incomplete) say(phoneError, true);
       return incomplete;
     };
     input.addEventListener('input', () => input.removeAttribute('aria-invalid'));
@@ -554,22 +559,22 @@
       e.preventDefault();
       if (submitting || sent) return;
       const d = digitsOf(input.value);
-      if (d.length !== 11) {
+      if (!validPhone()) {
         input.setAttribute('aria-invalid', 'true');
-        say('Введите номер полностью, например +7 915 123-45-67.', true);
+        say(phoneError, true);
         input.focus();
         return;
       }
       if (!agree.checked) {
         agree.setAttribute('aria-invalid', 'true');
         agree.focus();
-        say('Подтвердите согласие на\u00a0обработку персональных данных.', true);
+        say(english ? 'Please consent to the processing of your personal data.' : 'Подтвердите согласие на\u00a0обработку персональных данных.', true);
         return;
       }
       submitting = true; sync(); cb.setAttribute('aria-busy','true');
-      btn.classList.add('is-sending'); say('Отправляем…');
+      btn.classList.add('is-sending'); say(english ? 'Sending…' : 'Отправляем…');
       try {
-        const r = await fetch('/api/contact', {
+        const r = await fetch(english ? '/api/contact/' : '/api/contact', {
           method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ phone: '+' + d, consent: true }), signal: AbortSignal.timeout(15000),
         });
         if (!r.ok) throw new Error(r.status);
@@ -578,12 +583,12 @@
         sent = true;
         document.dispatchEvent(new CustomEvent('pb:goal', { detail: { name: 'callback_success' } }));
         cb.classList.add('is-sent');
-        say('Спасибо! Перезвоним в\u00a0рабочее время');
+        say(english ? 'Thank you! We will call you back during business hours.' : 'Спасибо! Перезвоним в\u00a0рабочее время');
         cb.dispatchEvent(new Event('sent', { bubbles: true }));
         // Когда плашка закроется — форма снова чистая
         setTimeout(() => { sent=false; cb.classList.remove('is-sent'); cb.reset(); say(''); sync(); }, 3200);
       } catch {
-        say('Не получилось отправить. Позвоните нам или напишите в\u00a0Telegram', true);
+        say(english ? 'Could not send your request. Please call us or message us on Telegram.' : 'Не получилось отправить. Позвоните нам или напишите в\u00a0Telegram', true);
       } finally { submitting=false; cb.removeAttribute('aria-busy'); btn.classList.remove('is-sending'); sync(); }
     });
   });

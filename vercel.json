@@ -314,5 +314,11 @@
         }
       ]
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/contact/",
+      "destination": "https://petrovichbrothers.ru/api/contact-en"
+    }
   ]
 }
