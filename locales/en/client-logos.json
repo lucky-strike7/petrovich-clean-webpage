@@ -34,31 +34,31 @@
     "verification": "English brand name and symbol confirmed by https://rostec.ru/en/media/pressrelease/882/"
   },
   "rusnano.svg": {
-    "label": "RUSNANO",
-    "status": "Official English artwork not located; original mark retained with English caption."
+    "status": "Official English artwork not located; original mark retained without additional caption.",
+    "name": "RUSNANO"
   },
   "kret.svg": {
-    "label": "KRET",
-    "status": "Official English artwork not located; original mark retained with English caption."
+    "status": "Official English artwork not located; original mark retained without additional caption.",
+    "name": "KRET"
   },
   "donstroy.svg": {
-    "label": "Donstroy",
-    "status": "Official English artwork not located; original mark retained with English caption."
+    "status": "Official English artwork not located; original mark retained without additional caption.",
+    "name": "Donstroy"
   },
   "amber.svg": {
-    "label": "Kaliningrad Amber Combine",
-    "status": "Official English artwork not located; original mark retained with English caption."
+    "status": "Official English artwork not located; original mark retained without additional caption.",
+    "name": "Kaliningrad Amber Combine"
   },
   "novy-chersones.svg": {
-    "label": "New Chersonesus",
-    "status": "Official English artwork not located; original mark retained with English caption."
+    "status": "Official English artwork not located; original mark retained without additional caption.",
+    "name": "New Chersonesus"
   },
   "ator.svg": {
-    "label": "ATOR",
-    "status": "Official English artwork not located; original mark retained with English caption."
+    "status": "Official English artwork not located; original mark retained without additional caption.",
+    "name": "ATOR"
   },
   "tamozhennaya-karta.svg": {
-    "label": "Customs Card",
-    "status": "Official English artwork not located; original mark retained with English caption."
+    "status": "Official English artwork not located; original mark retained without additional caption.",
+    "name": "Customs Card"
   }
 }

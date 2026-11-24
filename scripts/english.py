@@ -111,7 +111,7 @@ def client_logos(text):
             return tag
         if 'asset' in item:
             return tag.replace('clients/' + filename, 'clients/en/' + item['asset'])
-        return tag + '<span class="client-english-name">' + html.escape(item['label']) + '</span>'
+        return tag
     return re.sub(r'<img\b[^>]*src=["\'][^"\']*fresh/media/clients/([^"\'/]+)["\'][^>]*>', replace, text)
 
 

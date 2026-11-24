@@ -1,0 +1,130 @@
+{
+  "reviewedEntries": 1904,
+  "changes": [
+    {
+      "source": "Штурвал",
+      "before": "Ship's wheel",
+      "after": "Sailing simulator"
+    },
+    {
+      "source": ", графику и монтаж. Создаем ролики для музеев, выставочных стендов, презентаций и мероприятий. Если идея и сценарий уже есть, работаем по ним. Готовим видео под конкретный экран: от обычной панели до нескольких экранов или проекции на фасад.",
+      "before": ", graphics and editing for museums, exhibition stands, presentations and events. We can work from your idea and script, delivering content for a single screen, multiple screens or architectural projection.",
+      "after": "and graphics, and edit films for museums, exhibition stands, presentations and events. We can work from your idea and script, delivering content for a single screen, multiple screens or architectural projection."
+    },
+    {
+      "source": "и монтаж. Если концепция или сценарий уже готовы, начинаем с них. Уточняем размеры и расположение экранов, чтобы важные детали и текст были видны зрителю, и готовим файлы для воспроизведения на площадке. Когда ролик становится частью экспозиции или стенда, можем также спроектировать мультимедиа и помочь команде с установкой и запуском на площадке.",
+      "before": "and editing, or build on your approved concept and script. We check screen dimensions and positioning so viewers can see key details and text, then deliver playback files. If the film is part of an exhibition or stand, we can also design the multimedia system and help the team install and launch it on site.",
+      "after": "and edit the film, or build on your approved concept and script. We check screen dimensions and positioning so viewers can see key details and text, then deliver playback files. If the film is part of an exhibition or stand, we can also design the multimedia system and help the team install and launch it on site."
+    },
+    {
+      "source": "Договариваемся об этапах заранее: идея и сценарий, внешний вид ключевых кадров, анимация и готовый ролик. На каждом этапе собираем обратную связь и утверждаем результат перед следующим. Количество правок, сроки ответа и состав готовых файлов обсуждаем до начала работы.",
+      "before": "We agree stages in advance: idea and script, keyframe look, animation and final film. Each stage is reviewed and approved before the next. Revision rounds, response times and final file formats are agreed before production.",
+      "after": "We agree the stages in advance: concept and script, visual style, animation and final film. Each stage is reviewed and approved before the next. Revision rounds, response times and final file formats are agreed before production."
+    },
+    {
+      "source": "Штурвал — видеообзор",
+      "before": "Ship's wheel: video overview",
+      "after": "Sailing simulator: video overview"
+    },
+    {
+      "source": "Сканер «Парусный флот» — видеообзор",
+      "before": "Sailing Fleet scanner: video overview",
+      "after": "Sailing-fleet viewer: video overview"
+    },
+    {
+      "source": "Сканер «Парусный флот»",
+      "before": "Sailing Fleet scanner",
+      "after": "Sailing-fleet viewer"
+    },
+    {
+      "source": "Программа для сборки заставок",
+      "before": "A custom title sequence generator",
+      "after": "A custom award category video generator"
+    },
+    {
+      "source": "За три недели сделали все видео церемонии: ролики к номерам на сцене и заставки примерно для ста номинаций",
+      "before": "In three weeks, we produced all the ceremony's films: stage sequences and titles for around a hundred categories",
+      "after": "In three weeks, we produced all the ceremony's videos: stage sequences and graphics for around a hundred award categories"
+    },
+    {
+      "source": "Чтобы успеть, мы написали свою программу для заставок: вводишь название номинации, и она сама собирает готовый ролик в стиле церемонии. Нейросетей тогда еще не было, поэтому сделать такую систему было намного сложнее, чем сейчас.",
+      "before": "We wrote a custom tool to generate the title sequences: entering a category name assembled a finished film in the ceremony's visual style. This was before today's generative AI tools, making such a system considerably harder to build.",
+      "after": "We wrote a custom tool to generate the award category videos: entering a category name produced a finished video in the ceremony's visual style. This was before today's generative AI tools, making such a system considerably harder to build."
+    },
+    {
+      "source": "и настроили 4 датчика поворота: на штурвале и на каждом из трех сканеров.",
+      "before": "and integrated four rotation sensors: one wheel and three scanners.",
+      "after": "and integrated four rotation sensors: one on the wheel and one on each of the three movable displays."
+    },
+    {
+      "source": "Сканеры кораблей",
+      "before": "Ship scanners",
+      "after": "Interactive ship viewers"
+    },
+    {
+      "source": "Сканеры кораблей — видеообзор",
+      "before": "Ship scanners: video overview",
+      "after": "Interactive ship viewers: video overview"
+    },
+    {
+      "source": "корабля с его данными. Три сканера в одном стиле: «Парусный флот», «Броненосный и разнородный флот» и «Подводный флот».",
+      "before": "of the vessel and its specifications. Three matching scanners explore sailing ships, armoured and other vessels, and submarines.",
+      "after": "of the vessel and its specifications. Three matching displays explore sailing ships, battleships and other surface vessels, and submarines."
+    },
+    {
+      "source": "В видео разбираем типичные ошибки мультимедиа-экспозиций. Например, к каждому экспонату нужен проводной интернет: с удаленным доступом обновить его можно за минуту, а без провода на это уходят дни",
+      "before": "Our film explores common multimedia exhibition mistakes. Each exhibit needs wired internet: remote updates can take a minute with it and days without it.",
+      "after": "Our film explores common multimedia exhibition mistakes. Each exhibit needs a wired internet connection: with remote access, an update can take a minute; without it, the same task can take days."
+    },
+    {
+      "source": "Плата не рассчитана на рисунок. У нее четыре слоя: текстолит, металл, маска и шелкография. Металл бывает серебряным или золотым, маска зеленой, красной или синей, шелкография белой или черной, и на каждом слое можно выбрать только один цвет. Эскизы жука художник рисовал только этими цветами, а каллиграф написал название в стилистике Cyberpunk 2077.",
+      "before": "A circuit board offers four layers: substrate, metal, solder mask and silkscreen. Metal can be silver or gold; mask green, red or blue; silkscreen white or black. Each layer uses a single colour. Our illustrator worked within this palette, while a calligrapher drew the name in a Cyberpunk 2077-inspired style.",
+      "after": "For this design, the circuit board provided four visual layers: substrate, metal, solder mask and silkscreen. Metal could be silver or gold; the mask green, red or blue; and the silkscreen white or black. Each layer used a single colour. Our illustrator worked within this palette, while a calligrapher drew the name in a Cyberpunk 2077-inspired style."
+    },
+    {
+      "source": "Как оформить два мероприятия на одной сцене? Видеозаставки для премии Ator Travel Awards и конкурса IT-решений в туризме.",
+      "before": "How do you dress two events on one stage? Title sequences for Ator Travel Awards and a tourism IT competition.",
+      "after": "How do you create screen graphics for two events sharing one stage? Animated graphics for Ator Travel Awards and a tourism IT competition."
+    },
+    {
+      "source": "Как оформить два мероприятия на одной сцене?",
+      "before": "How do you dress two events on one stage?",
+      "after": "How do you create screen graphics for two events sharing one stage?"
+    },
+    {
+      "source": ", монтаж и версии под каждый экран. С режиссером и технической командой уточняем порядок показа, длительность и требования к файлам. Когда экранов несколько, помогаем спроектировать схему показа и согласовать установку с командой площадки.",
+      "before": ", editing and versions for each screen. We agree playback order, duration and formats with the director and technical team. For multiscreen setups, we help plan playback and coordinate installation.",
+      "after": ", edit the sequences and prepare versions for each screen. We agree playback order, duration and formats with the director and technical team. For multiscreen setups, we help plan playback and coordinate installation."
+    },
+    {
+      "source": "Анимационный ролик о конкурсе «Миллион Росатома» для городских экранов · 2018",
+      "before": "Animated Rosatom's Million competition film for public screens · 2018",
+      "after": "Animated film for Rosatom's Million competition, shown on public screens · 2018"
+    },
+    {
+      "source": ", монтаж, интерфейсы и программы. С режиссером и технической командой проектируем схему показа и согласуем экраны, звук и порядок запуска. Если делаем интерактив на площадке, берем на себя инженерные работы, установку и проверку нашей части.",
+      "before": ", editing, interfaces and software. We plan playback, screens, sound and cues with the director and technical team. For interactive installations, we handle engineering, installation and testing of our scope.",
+      "after": ", interfaces and software, and edit the films. We plan playback, screens, sound and cues with the director and technical team. For interactive installations, we handle engineering, installation and testing of our scope."
+    },
+    {
+      "source": "На всех поверхностях одна анимированная текстура: скругленные прямоугольники и точки. Так все предметы выглядят из одного мира. Линии от кнопок строятся процедурно: несколько настроек вместо ручной анимации сотен объектов.",
+      "before": "A single animated texture of rounded rectangles and dots unifies every surface. Button lines are generated procedurally through a few parameters, rather than manually animating hundreds of objects.",
+      "after": "A single animated texture of rounded rectangles and dots unifies every surface. Lines extending from the buttons are generated procedurally by adjusting a few parameters, rather than manually animating hundreds of objects."
+    },
+    {
+      "source": "Придумываем, что делает посетитель и как отвечает экспонат. Это может быть игра на тачскрине, стол с метками или настоящий штурвал, который управляет виртуальным кораблем. Проектируем, как будут работать вместе контент, программа, датчики и механика. Монтируем и проверяем мультимедиа на площадке.",
+      "before": "We develop the visitor action and exhibit response: a touchscreen game, token table or real wheel steering a virtual ship. We design the connections between content, software, sensors and mechanisms, then install and test the multimedia on site.",
+      "after": "We design what visitors do and how the exhibit responds: a touchscreen game, a table that recognises physical tokens or a real ship's wheel that steers a virtual ship. We plan how content, software, sensors and mechanisms work together, then install and test the multimedia on site."
+    },
+    {
+      "source": "Штурвал в Новом Херсонесе",
+      "before": "Ship's wheel at New Chersonesus",
+      "after": "Sailing simulator at New Chersonesus"
+    }
+  ],
+  "terminology": {
+    "штурвал": "ship’s wheel is correct for the physical control; Sailing simulator used as the exhibit title",
+    "сканеры кораблей": "interactive ship viewers: movable displays over ship plans, not scanning equipment"
+  },
+  "unchangedMedia": "Original audio and text embedded in project photographs and videos remain Russian. No subtitles added."
+}
