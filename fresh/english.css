@@ -1,0 +1,23 @@
+/* English copy shares the Russian layout and media. */
+html[lang="en"] .language-switch {
+  position: fixed;
+  z-index: 18;
+  left: var(--pad, 24px);
+  bottom: 20px;
+  padding: 8px 12px;
+  border: 1px solid currentColor;
+  border-radius: 24px;
+  color: #111110;
+  background: #fff;
+  font: 14px/1.2 sans-serif;
+}
+html[lang="en"] .language-switch:focus-visible { outline: 3px solid #225cff; outline-offset: 3px; }
+html[lang="en"] .contact__ways { flex-wrap: wrap; }
+html[lang="en"] .cpanel__ways a { overflow-wrap: anywhere; }
+html[lang="en"] .hero__title { overflow-wrap: normal; }
+html[lang="en"] .contact__foot { margin-top: 40px; }
+html[lang="en"] .contact__title { text-wrap: balance; }
+@media (max-width: 600px) {
+  html[lang="en"] .contact__mail { font-size: clamp(16px, 4.8vw, 24px); }
+  html[lang="en"] .language-switch { bottom: 14px; }
+}

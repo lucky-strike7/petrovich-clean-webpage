@@ -1,0 +1,42 @@
+name: Check English translation
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, codex/english-com]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  english:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: python3 tests/english_catalog_test.py
+      - name: Report new and changed Russian source strings
+        run: npm run i18n:status
+      - run: npm run i18n:check
+      - run: npm run build:en
+      - run: npm run verify:build
+      - run: npm run verify:en
+      - name: Translation summary
+        if: always()
+        run: |
+          python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          from pathlib import Path
+          path = Path('locales/en/pending.json')
+          if path.exists():
+              report = json.loads(path.read_text())
+              print(f"English pages: {report['pages']}. Source strings requiring review: {len(report['pending'])}.")
+              if report['pending']:
+                  print('Run npm run i18n:status and review locales/en/pending.json. The Russian deployment is independent; the English release must wait for reviewed translations.')
+          PY

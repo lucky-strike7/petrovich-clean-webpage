@@ -1,0 +1,31 @@
+FROM node:24-alpine AS assets
+WORKDIR /app
+RUN apk add --no-cache python3
+COPY package.json package-lock.json ./
+RUN npm ci --no-audit --no-fund
+COPY scripts ./scripts
+COPY locales ./locales
+COPY index.html 404.html robots.txt sitemap.xml site.webmanifest favicon.svg favicon.ico favicon-32.png apple-touch-icon.png icon-192.png icon-512.png ./
+COPY fresh ./fresh
+COPY fonts ./fonts
+COPY Video ./Video
+COPY cases ./cases
+COPY works ./works
+COPY services ./services
+COPY prices ./prices
+COPY about ./about
+COPY privacy ./privacy
+COPY consent ./consent
+RUN npm run build:en && npm run verify:build && npm run verify:en
+
+FROM node:24-alpine
+WORKDIR /app
+ARG BUILD_COMMIT=unversioned
+LABEL org.opencontainers.image.revision=$BUILD_COMMIT ru.petrovichbrothers.component=english-website-runtime
+ENV NODE_ENV=production SITE_LOCALE=en HOST=0.0.0.0 PORT=3000 SITE_RELEASE=$BUILD_COMMIT
+COPY --from=assets --chown=node:node /app/dist ./dist
+COPY --chown=node:node server ./server
+COPY --chown=node:node server.mjs package.json ./
+USER node
+EXPOSE 3000
+CMD ["node","server.mjs"]

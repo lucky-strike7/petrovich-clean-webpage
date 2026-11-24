@@ -1,0 +1,21 @@
+name: pb-website-en
+services:
+  web:
+    image: ${PB_EN_RELEASE:?Set the verified English image tag}
+    container_name: pb-website-en
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      SITE_LOCALE: en
+      HOST: 0.0.0.0
+      PORT: 3000
+    networks: [traefik-global]
+    mem_limit: 256m
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+    logging:
+      driver: json-file
+      options: {max-size: 10m, max-file: "3"}
+networks:
+  traefik-global:
+    external: true
