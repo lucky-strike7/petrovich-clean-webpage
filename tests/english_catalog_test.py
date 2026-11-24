@@ -8,6 +8,16 @@ english = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(english)
 
 class CatalogTests(unittest.TestCase):
+    def test_client_artwork_replaces_versioned_build_urls_only_for_english(self):
+        source = '<a href="works/rosatom/"><img src="fresh/media/clients/rosatom.svg?v=oldhash" style="width: 68.7%"></a>'
+        result = english.client_logos(source)
+        self.assertIn('clients/en/rosatom.svg?v=', result)
+        self.assertNotIn('oldhash', result)
+        self.assertIn('href="works/rosatom/"', result)
+        self.assertNotIn('<span', result)
+        untouched = '<img src="fresh/media/clients/donstroy.svg?v=original">'
+        self.assertEqual(english.client_logos(untouched), untouched)
+
     def test_changed_source_requires_review_and_never_reuses_old_translation(self):
         parser = english.Translator({'Старый текст': 'Approved English'}, 'works/example/index.html')
         parser.feed('<p>Новый текст</p>')

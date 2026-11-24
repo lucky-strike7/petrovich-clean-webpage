@@ -11,6 +11,8 @@ from pathlib import Path
 import re
 import sys
 import gzip
+import math
+import struct
 
 ROOT = Path(__file__).resolve().parent.parent
 CATALOG = ROOT / 'locales/en/messages.json'
@@ -105,12 +107,24 @@ class Translator(HTMLParser):
 def client_logos(text):
     manifest = json.loads((ROOT / 'locales/en/client-logos.json').read_text())
     def replace(match):
-        tag, filename = match.group(0), match.group(1)
+        tag, filename = match.group(0), match.group(1).split("?", 1)[0]
         item = manifest.get(filename)
         if not item:
             return tag
         if 'asset' in item:
-            return tag.replace('clients/' + filename, 'clients/en/' + item['asset'])
+            asset = ROOT / 'fresh/media/clients/en' / item['asset']
+            data = asset.read_bytes()
+            digest = hashlib.sha256(data).hexdigest()[:12]
+            tag = re.sub(r'clients/' + re.escape(filename) + r'(?:\?[^"\']*)?', 'clients/en/' + item['asset'] + '?v=' + digest, tag)
+            if asset.suffix == '.svg':
+                viewbox = re.search(r'viewBox=["\']([^"\']+)', data.decode())[1]
+                width, height = map(float, viewbox.replace(',', ' ').split()[2:])
+            else:
+                width, height = struct.unpack('>II', data[16:24])
+            ratio = width / height
+            scale = {'etalon.svg': .88, 'modul.svg': 1.15}.get(filename, 1)
+            width = min(math.sqrt(.1 * ratio), .76, .28 * ratio) * scale * 100
+            return re.sub(r'width:\s*[\d.]+%', f'width: {width:.1f}%', tag)
         return tag
     return re.sub(r'<img\b[^>]*src=["\'][^"\']*fresh/media/clients/([^"\'/]+)["\'][^>]*>', replace, text)
 
