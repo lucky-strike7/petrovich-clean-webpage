@@ -21,3 +21,8 @@ html[lang="en"] .contact__title { text-wrap: balance; }
   html[lang="en"] .contact__mail { font-size: clamp(16px, 4.8vw, 24px); }
   html[lang="en"] .language-switch { bottom: 14px; }
 }
+
+.clients__grid a:has(.client-english-name){flex-direction:column;align-items:flex-start;justify-content:center;gap:6px}
+.client-english-name{font-size:12px;line-height:1.2;color:#555;text-align:left;font-weight:400}
+
+@media(max-width:600px){.clients__grid a:has(.client-english-name){height:68px}.client-english-name{font-size:10px}}

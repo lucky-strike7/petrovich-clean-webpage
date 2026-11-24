@@ -1,0 +1,63 @@
+{
+  "rosatom.svg": {
+    "asset": "rosatom.svg",
+    "source": "https://logo-teka.com/wp-content/uploads/2025/07/rosatom-logo-eng.svg",
+    "verification": "English wordmark verified against official Rosatom identity guidance https://radon.ru/upload/iblock/400/400511052216ca996645fbf50eb41283.pdf"
+  },
+  "rusal.svg": {
+    "asset": "rusal.png",
+    "source": "https://rusal.ru/upload/iblock/71f/71f38d3feaffb1db5ad629ef25abb2b3.png"
+  },
+  "fosagro.svg": {
+    "asset": "fosagro.svg",
+    "source": "https://cdn.phosagro.com/local/templates/.default/img/fosagro-logo-en--coloured.svg"
+  },
+  "etalon.svg": {
+    "asset": "etalon.svg",
+    "source": "https://www.etalongroup.com/en/"
+  },
+  "amperka.svg": {
+    "asset": "amperka.svg",
+    "source": "https://amperka.com/svgs/logo-black.svg"
+  },
+  "nanolek.png": {
+    "asset": "nanolek.svg",
+    "source": "https://www.nanolek.ru/assets/images/graphic/nanolek-eng-15.svg"
+  },
+  "modul.svg": {
+    "asset": "modul.svg",
+    "source": "https://modul.global/i/svg/logo-en.svg"
+  },
+  "rostec.svg": {
+    "label": "Rostec",
+    "status": "Official English artwork not located; original mark retained with English caption."
+  },
+  "rusnano.svg": {
+    "label": "RUSNANO",
+    "status": "Official English artwork not located; original mark retained with English caption."
+  },
+  "kret.svg": {
+    "label": "KRET",
+    "status": "Official English artwork not located; original mark retained with English caption."
+  },
+  "donstroy.svg": {
+    "label": "Donstroy",
+    "status": "Official English artwork not located; original mark retained with English caption."
+  },
+  "amber.svg": {
+    "label": "Kaliningrad Amber Combine",
+    "status": "Official English artwork not located; original mark retained with English caption."
+  },
+  "novy-chersones.svg": {
+    "label": "New Chersonesus",
+    "status": "Official English artwork not located; original mark retained with English caption."
+  },
+  "ator.svg": {
+    "label": "ATOR",
+    "status": "Official English artwork not located; original mark retained with English caption."
+  },
+  "tamozhennaya-karta.svg": {
+    "label": "Customs Card",
+    "status": "Official English artwork not located; original mark retained with English caption."
+  }
+}

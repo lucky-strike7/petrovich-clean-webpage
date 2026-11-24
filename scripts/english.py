@@ -102,6 +102,19 @@ class Translator(HTMLParser):
         self.output.append('<!' + data + '>')
 
 
+def client_logos(text):
+    manifest = json.loads((ROOT / 'locales/en/client-logos.json').read_text())
+    def replace(match):
+        tag, filename = match.group(0), match.group(1)
+        item = manifest.get(filename)
+        if not item:
+            return tag
+        if 'asset' in item:
+            return tag.replace('clients/' + filename, 'clients/en/' + item['asset'])
+        return tag + '<span class="client-english-name">' + html.escape(item['label']) + '</span>'
+    return re.sub(r'<img\b[^>]*src=["\'][^"\']*fresh/media/clients/([^"\'/]+)["\'][^>]*>', replace, text)
+
+
 def contacts(text):
     # Keep the original forms and navigation; localise only the contact details.
     text = text.replace('art@petrovichbrothers.ru', 'ars@petrovichbrothers.com')
@@ -141,6 +154,7 @@ def main():
         translated = ''.join(parser.output)
         translated = translated.replace('https://petrovichbrothers.ru', 'https://petrovichbrothers.com')
         translated = translated.replace('ru_RU', 'en_US')
+        translated = client_logos(translated)
         translated = contacts(translated)
         translated = prices(translated)
         path_url = '/' if relative == 'index.html' else '/' + relative.removesuffix('index.html')

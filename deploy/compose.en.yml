@@ -6,6 +6,7 @@ services:
     restart: unless-stopped
     env_file:
       - /srv/docker/sites/petrovichbrothers/.env
+      - /srv/docker/sites/petrovich-english/state/relay.env
     environment:
       NODE_ENV: production
       SITE_LOCALE: en
@@ -13,6 +14,7 @@ services:
       PORT: 3000
       CONTACT_TRUST_PROXY: "true"
       CONTACT_ALLOWED_ORIGINS: https://petrovichbrothers.com,https://www.petrovichbrothers.com
+      TELEGRAM_RELAY_URL: https://petrovichbrothers.com/api/telegram-relay/
     networks: [traefik-global]
     mem_limit: 256m
     security_opt: [no-new-privileges:true]

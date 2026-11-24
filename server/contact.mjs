@@ -6,7 +6,11 @@ export async function deliverContact(phone,{locale='ru'}={}){
   const text=`Новая заявка с сайта ${site}\nТелефон: ${phone}\nВремя: ${new Date().toLocaleString('ru-RU',{timeZone:'Europe/Moscow'})}`;
   const token=env('TELEGRAM_BOT_TOKEN'),chat=env('TELEGRAM_CHAT_ID'),smtpUser=env('SMTP_USER'),smtpPass=env('SMTP_PASS');
   const results=await Promise.allSettled([
-    (async()=>{if(!token||!chat)return false;const response=await fetch(`https://api.telegram.org/bot${token}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:chat,text}),signal:AbortSignal.timeout(6000)});const data=await response.json();return response.ok&&data.ok===true;})(),
+    (async()=>{
+      const relay=locale==='en'&&env('TELEGRAM_RELAY_URL');
+      if(relay){const response=await fetch(relay,{method:'POST',headers:{'Content-Type':'application/json','x-pb-relay-secret':env('TELEGRAM_RELAY_SECRET')},body:JSON.stringify({phone}),signal:AbortSignal.timeout(10000)});const data=await response.json();return response.ok&&data.success===true;}
+      if(!token||!chat)return false;const response=await fetch(`https://api.telegram.org/bot${token}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:chat,text}),signal:AbortSignal.timeout(6000)});const data=await response.json();return response.ok&&data.ok===true;
+    })(),
     (async()=>{
       if(!smtpUser||!smtpPass)return false;
       const {default:nodemailer}=await import('nodemailer');
