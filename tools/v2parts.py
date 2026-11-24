@@ -415,6 +415,9 @@ class Page:
                      f'{src_m}<source data-src="{B}{big}" type="video/mp4"></video>')
         else:
             media = f'<img src="{B}{w.get("big_img") or w["img"]}" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">'
+            # «Картинка, телефон» — свой вертикальный кадр для крупной карточки на телефоне (кроме карточек «как плитка»)
+            if w.get('img_m') and not tile_phone:
+                media = f'<picture><source media="(max-width: 600px)" srcset="{B}{w["img_m"]}">{media}</picture>'
         desc = typo(w.get('desc', ''))
         if '? ' in desc:
             q, rest = desc.split('? ', 1)

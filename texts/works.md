@@ -176,6 +176,7 @@
 Картинка: fresh/media/archive/etalon.jpg
 Превью: fresh/media/archive/etalon-preview.mp4
 Обложка крупной: fresh/media/archive/etalon-big.jpg
+Картинка, телефон: fresh/media/archive/etalon-m.jpg
 Превью только в плитке: да
 Ссылка: works/etalon/
 
@@ -290,6 +291,7 @@
 Картинка: fresh/media/archive/gorodobrazovaniya.jpg
 Превью: fresh/media/archive/gorodobrazovaniya-preview.mp4
 Обложка крупной: fresh/media/archive/gorodobrazovaniya-big.jpg
+Картинка, телефон: fresh/media/archive/gorodobrazovaniya-m.jpg
 Превью только в плитке: да
 Ссылка: works/gorodobrazovaniya/
 
@@ -394,6 +396,7 @@
 Где и когда: 
 Картинка: fresh/media/archive/yantarny-2019.jpg
 Обложка крупной: fresh/media/archive/yantarny-2019-big.jpg
+Картинка, телефон: fresh/media/archive/yantarny-2019-m.jpg
 Ссылка: works/yantarny-2019/
 
 ## fosagro
