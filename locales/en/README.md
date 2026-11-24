@@ -33,6 +33,8 @@ The separate **Check English translation** workflow runs for main updates and pu
 
 ## Deployment preparation
 
+The live `.com` currently responds through Cloudflare and Vercel; `.ru` runs on FirstVDS. The Docker option below is an alternative hosting path, not a description of the current `.com` setup. Using it would also require changing the `.com` origin/DNS and verifying TLS. Keeping Vercel requires adapting its project/build configuration to the shared-source English edition instead. No hosting migration or domain switch is included in this branch.
+
 Build and check the separate image:
 
 ```sh
