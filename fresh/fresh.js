@@ -31,6 +31,8 @@
   const hydrateVideo = (video) => {
     if (backgroundBlocked()) return;
     hydratePoster(video);
+    // data-still-phone: на телефоне у карточки только картинка, ролик не грузим
+    if (video.hasAttribute('data-still-phone') && matchMedia('(max-width: 600px)').matches) return;
     if (video.dataset.src) { video.src = video.dataset.src; delete video.dataset.src; }
     video.querySelectorAll('source[data-src]').forEach(source => { source.src = source.dataset.src; delete source.dataset.src; });
     if (!video.dataset.loaded && (video.getAttribute('src') || video.querySelector('source[src]'))) {

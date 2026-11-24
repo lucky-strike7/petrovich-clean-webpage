@@ -402,14 +402,17 @@ class Page:
             tag, attrs = 'div', f'data-video="{B}{w["video"]}" data-title="{html.escape(plain(w["title"]))} — видеообзор" data-cursor="Смотреть обзор"'
         preview = None if w.get('tile_preview_only') else w.get('preview')
         big = w.get('big') or preview
-        big_m = w.get('big_m') or big
+        # «Крупное видео, телефон: нет» — на телефоне только картинка, ролик не грузится
+        still_m = w.get('big_m') == 'нет'
+        big_m = (None if still_m else w.get('big_m')) or big
         # tile_phone: на телефоне крупная карточка такая же, как плитка — горизонтальный ролик плитки и маленькая обложка
         poster_m = w.get('img_m') or w.get('big_img') or w['img']
         if tile_phone:
             big_m, poster_m = preview or big, w['img']
         if big:
-            media = (f'<video data-poster="{B}{w.get("big_img") or w["img"]}" data-poster-m="{B}{poster_m}" muted loop playsinline data-lazy preload="none">'
-                     f'<source data-src="{B}{big_m}" type="video/mp4" media="(max-width: 600px)"><source data-src="{B}{big}" type="video/mp4"></video>')
+            src_m = '' if still_m else f'<source data-src="{B}{big_m}" type="video/mp4" media="(max-width: 600px)">'
+            media = (f'<video data-poster="{B}{w.get("big_img") or w["img"]}" data-poster-m="{B}{poster_m}"{" data-still-phone" if still_m else ""} muted loop playsinline data-lazy preload="none">'
+                     f'{src_m}<source data-src="{B}{big}" type="video/mp4"></video>')
         else:
             media = f'<img src="{B}{w.get("big_img") or w["img"]}" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">'
         desc = typo(w.get('desc', ''))
@@ -538,7 +541,7 @@ class Page:
             elif first:
                 tag = first[1].replace('loading="lazy"', 'loading="eager" fetchpriority="high"')
                 t = t[:first.start(1)] + tag + t[first.end(1):]
-        t = re.sub(r'(fresh/fresh\.js\?v=)\w+', r'\g<1>1121e', t)
+        t = re.sub(r'(fresh/fresh\.js\?v=)\w+', r'\g<1>1124a', t)
         extra = (self.tsheet() if 'aria-controls="tsheet"' in t else '') + sheets
         t = t.replace('  <div class="cursor"', self.msheet() + extra + self.ORB + '\n  <div class="cursor"', 1)
         # Кружок у курсора для меню «Работы»: на страницах кейсов его не было
