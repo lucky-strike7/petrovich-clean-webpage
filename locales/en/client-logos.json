@@ -29,8 +29,9 @@
     "source": "https://modul.global/i/svg/logo-en.svg"
   },
   "rostec.svg": {
-    "label": "Rostec",
-    "status": "Official English artwork not located; original mark retained with English caption."
+    "asset": "rostec.svg",
+    "source": "https://logo-teka.com/wp-content/uploads/2025/10/rostec-logo-eng.svg",
+    "verification": "English brand name and symbol confirmed by https://rostec.ru/en/media/pressrelease/882/"
   },
   "rusnano.svg": {
     "label": "RUSNANO",
