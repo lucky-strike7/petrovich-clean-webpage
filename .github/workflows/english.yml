@@ -27,6 +27,7 @@ jobs:
       - run: npm run build:en
       - run: npm run verify:build
       - run: npm run verify:en
+      - run: node scripts/export-english.mjs
       - name: Translation summary
         if: always()
         run: |

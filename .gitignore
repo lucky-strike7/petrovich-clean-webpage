@@ -9,6 +9,8 @@ desktop.ini
 
 node_modules/
 dist/
+dist-com/
+.vercel/
 .env
 .env.*
 !.env.example
@@ -17,3 +19,4 @@ dist/
 __pycache__/
 *.pyc
 locales/en/pending.json
+.vercel

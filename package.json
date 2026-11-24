@@ -18,7 +18,8 @@
     "i18n:check": "python3 scripts/english.py check",
     "build:en": "npm run build && python3 scripts/english.py build",
     "verify:en": "node scripts/check-english.mjs",
-    "i18n:test": "python3 tests/english_catalog_test.py"
+    "i18n:test": "python3 tests/english_catalog_test.py",
+    "build:vercel": "npm run build:en && npm run verify:build && npm run verify:en && node scripts/export-english.mjs"
   },
   "dependencies": {
     "nodemailer": "10.3.1"
