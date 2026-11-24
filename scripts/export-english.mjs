@@ -30,6 +30,6 @@ async function verify(dir) {
 await verify(output);
 const config = JSON.parse(await readFile(resolve(root, 'vercel.json'), 'utf8'));
 for (const [source, destination] of legacyRedirects()) {
-  assert(config.redirects.some(rule => rule.source === source && rule.destination === destination), `Missing Vercel redirect: ${source}`);
+  assert(config.redirects.some(rule => rule.source === source + '/' && rule.destination === destination), `Missing Vercel redirect: ${source}`);
 }
 console.log(`Exported ${pages} English documents with shared media to dist-com/. No server credentials or application sources included.`);

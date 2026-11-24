@@ -25,277 +25,277 @@
       "permanent": true
     },
     {
-      "source": "/video-content",
+      "source": "/video-content/",
       "destination": "/works/exhibitions/",
       "permanent": true
     },
     {
-      "source": "/videocontent",
+      "source": "/videocontent/",
       "destination": "/works/exhibitions/",
       "permanent": true
     },
     {
-      "source": "/projects",
+      "source": "/projects/",
       "destination": "/works/",
       "permanent": true
     },
     {
-      "source": "/blogs",
+      "source": "/blogs/",
       "destination": "/",
       "permanent": true
     },
     {
-      "source": "/about-us",
+      "source": "/about-us/",
       "destination": "/about/",
       "permanent": true
     },
     {
-      "source": "/testimonials",
+      "source": "/testimonials/",
       "destination": "/",
       "permanent": true
     },
     {
-      "source": "/contacts",
+      "source": "/contacts/",
       "destination": "/#contact",
       "permanent": true
     },
     {
-      "source": "/contact",
+      "source": "/contact/",
       "destination": "/#contact",
       "permanent": true
     },
     {
-      "source": "/projects/khakasiya",
+      "source": "/projects/khakasiya/",
       "destination": "/works/khakasia/",
       "permanent": true
     },
     {
-      "source": "/cases/khakasia",
+      "source": "/cases/khakasia/",
       "destination": "/works/khakasia/stol/",
       "permanent": true
     },
     {
-      "source": "/projects/hersones",
+      "source": "/projects/hersones/",
       "destination": "/works/khersones/",
       "permanent": true
     },
     {
-      "source": "/cases/hersones",
+      "source": "/cases/hersones/",
       "destination": "/works/khersones/",
       "permanent": true
     },
     {
-      "source": "/projects/referus",
+      "source": "/projects/referus/",
       "destination": "/works/referus/",
       "permanent": true
     },
     {
-      "source": "/projects/etalon",
+      "source": "/projects/etalon/",
       "destination": "/works/etalon/",
       "permanent": true
     },
     {
-      "source": "/projects/yantarny",
+      "source": "/projects/yantarny/",
       "destination": "/works/yantarny/",
       "permanent": true
     },
     {
-      "source": "/projects/premiarb",
+      "source": "/projects/premiarb/",
       "destination": "/works/premiarb/",
       "permanent": true
     },
     {
-      "source": "/projects/hbo",
+      "source": "/projects/hbo/",
       "destination": "/works/hbo/",
       "permanent": true
     },
     {
-      "source": "/cases/hbo",
+      "source": "/cases/hbo/",
       "destination": "/works/hbo/",
       "permanent": true
     },
     {
-      "source": "/projects/rosnano",
+      "source": "/projects/rosnano/",
       "destination": "/works/rosnano/",
       "permanent": true
     },
     {
-      "source": "/projects/nanolek",
+      "source": "/projects/nanolek/",
       "destination": "/works/nanolek/",
       "permanent": true
     },
     {
-      "source": "/projects/donstroy",
+      "source": "/projects/donstroy/",
       "destination": "/works/donstroy/",
       "permanent": true
     },
     {
-      "source": "/projects/gorodobrazovaniyya",
+      "source": "/projects/gorodobrazovaniyya/",
       "destination": "/works/gorodobrazovaniya/",
       "permanent": true
     },
     {
-      "source": "/projects/rosatom",
+      "source": "/projects/rosatom/",
       "destination": "/works/rosatom/",
       "permanent": true
     },
     {
-      "source": "/projects/artmonta",
+      "source": "/projects/artmonta/",
       "destination": "/works/artmonta/",
       "permanent": true
     },
     {
-      "source": "/projects/zebralog",
+      "source": "/projects/zebralog/",
       "destination": "/works/zebralog/",
       "permanent": true
     },
     {
-      "source": "/projects/carrera",
+      "source": "/projects/carrera/",
       "destination": "/works/carrera/",
       "permanent": true
     },
     {
-      "source": "/projects/amperka",
+      "source": "/projects/amperka/",
       "destination": "/works/cyberbug/",
       "permanent": true
     },
     {
-      "source": "/cyberbug",
+      "source": "/cyberbug/",
       "destination": "/works/cyberbug/",
       "permanent": true
     },
     {
-      "source": "/cases/artmonta",
+      "source": "/cases/artmonta/",
       "destination": "/works/artmonta/",
       "permanent": true
     },
     {
-      "source": "/cases/carrera",
+      "source": "/cases/carrera/",
       "destination": "/works/carrera/",
       "permanent": true
     },
     {
-      "source": "/cases/cyberbug",
+      "source": "/cases/cyberbug/",
       "destination": "/works/cyberbug/",
       "permanent": true
     },
     {
-      "source": "/cases/donstroy",
+      "source": "/cases/donstroy/",
       "destination": "/works/donstroy/",
       "permanent": true
     },
     {
-      "source": "/cases/etalon",
+      "source": "/cases/etalon/",
       "destination": "/works/etalon/",
       "permanent": true
     },
     {
-      "source": "/cases/gorodobrazovaniya",
+      "source": "/cases/gorodobrazovaniya/",
       "destination": "/works/gorodobrazovaniya/",
       "permanent": true
     },
     {
-      "source": "/cases/nanolek",
+      "source": "/cases/nanolek/",
       "destination": "/works/nanolek/",
       "permanent": true
     },
     {
-      "source": "/cases/premiarb",
+      "source": "/cases/premiarb/",
       "destination": "/works/premiarb/",
       "permanent": true
     },
     {
-      "source": "/cases/referus",
+      "source": "/cases/referus/",
       "destination": "/works/referus/",
       "permanent": true
     },
     {
-      "source": "/cases/rosatom",
+      "source": "/cases/rosatom/",
       "destination": "/works/rosatom/",
       "permanent": true
     },
     {
-      "source": "/cases/rosnano",
+      "source": "/cases/rosnano/",
       "destination": "/works/rosnano/",
       "permanent": true
     },
     {
-      "source": "/cases/yantarny",
+      "source": "/cases/yantarny/",
       "destination": "/works/yantarny/",
       "permanent": true
     },
     {
-      "source": "/cases/zebralog",
+      "source": "/cases/zebralog/",
       "destination": "/works/zebralog/",
       "permanent": true
     },
     {
-      "source": "/works/eksponaty",
+      "source": "/works/eksponaty/",
       "destination": "/works/interactive/",
       "permanent": true
     },
     {
-      "source": "/works/scena",
+      "source": "/works/scena/",
       "destination": "/works/event-graphics/",
       "permanent": true
     },
     {
-      "source": "/works/dizayn",
+      "source": "/works/dizayn/",
       "destination": "/works/product-design/",
       "permanent": true
     },
     {
-      "source": "/works/sayty",
+      "source": "/works/sayty/",
       "destination": "/works/websites/",
       "permanent": true
     },
     {
-      "source": "/works/muzei",
+      "source": "/works/muzei/",
       "destination": "/works/museums/",
       "permanent": true
     },
     {
-      "source": "/works/vystavki",
+      "source": "/works/vystavki/",
       "destination": "/works/exhibitions/",
       "permanent": true
     },
     {
-      "source": "/works/zastr",
+      "source": "/works/zastr/",
       "destination": "/works/stand-builders/",
       "permanent": true
     },
     {
-      "source": "/works/kino",
+      "source": "/works/kino/",
       "destination": "/works/film/",
       "permanent": true
     },
     {
-      "source": "/works/regiony",
+      "source": "/works/regiony/",
       "destination": "/works/regions/",
       "permanent": true
     },
     {
-      "source": "/works/meropr",
+      "source": "/works/meropr/",
       "destination": "/works/events/",
       "permanent": true
     },
     {
-      "source": "/works/developery",
+      "source": "/works/developery/",
       "destination": "/works/developers/",
       "permanent": true
     },
     {
-      "source": "/works/prom",
+      "source": "/works/prom/",
       "destination": "/works/industry/",
       "permanent": true
     },
     {
-      "source": "/blog-list",
+      "source": "/blog-list/",
       "destination": "/",
       "permanent": true
     },
     {
-      "source": "/p",
+      "source": "/p/",
       "destination": "/",
       "permanent": true
     }
