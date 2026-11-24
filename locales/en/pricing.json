@@ -1,0 +1,12 @@
+{
+  "currency": "USD",
+  "rateDate": "2026-11-24",
+  "rubPerUsd": 82.1488,
+  "roundUpToUsd": 1000,
+  "source": "https://www.cbr.ru/eng/currency_base/daily/?UniDbQuery.Posted=True&UniDbQuery.To=24.11.2026",
+  "amountsRubToUsd": {
+    "500000": 7000,
+    "700000": 9000,
+    "900000": 11000
+  }
+}

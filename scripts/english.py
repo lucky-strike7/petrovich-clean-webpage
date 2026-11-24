@@ -114,6 +114,16 @@ def contacts(text):
     return text
 
 
+def prices(text):
+    pricing = json.loads((ROOT / 'locales/en/pricing.json').read_text())
+    def amount(match):
+        rub = str(int(match[2]) * 1000)
+        if rub not in pricing['amountsRubToUsd']:
+            raise ValueError(f'Unreviewed English starting price: RUB {rub}')
+        return match[1] + format(pricing['amountsRubToUsd'][rub], ',') + match[3]
+    return re.sub(r'(<span class="price__num">)(\d+)(</span>)', amount, text)
+
+
 def main():
     mode = sys.argv[1] if len(sys.argv) > 1 else 'check'
     messages = json.loads(CATALOG.read_text()) if CATALOG.exists() else {}
@@ -133,6 +143,7 @@ def main():
         translated = translated.replace('https://petrovichbrothers.ru', 'https://petrovichbrothers.com')
         translated = translated.replace('ru_RU', 'en_US')
         translated = contacts(translated)
+        translated = prices(translated)
         path_url = '/' if relative == 'index.html' else '/' + relative.removesuffix('index.html')
         if relative != '404.html':
             alternates = ''.join(f'<link rel="alternate" hreflang="{lang}" href="https://petrovichbrothers.{domain}{path_url}">'

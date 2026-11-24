@@ -2,7 +2,7 @@
 
 The English site targets exhibition stand builders, producers and museum teams, primarily in the CIS, China and the Middle East. It uses the Russian site's layout, routes, media and application code. No subtitles or new voiceovers are added. Film audio and text inside original media remain in their original language.
 
-Public contacts: Arseny, `ars@petrovichbrothers.com`, `https://t.me/ArsenyPetrovich`, `https://wa.me/79268521102`. The English edition has direct contact links instead of the Russian callback form. Its contact API is disabled. Prices are indicative RUB budgets; no exchange-rate conversion or international contract terms are invented.
+Public contacts: Arseny, `ars@petrovichbrothers.com`, `https://t.me/ArsenyPetrovich`, `https://wa.me/79268521102`. The English edition has direct contact links instead of the Russian callback form. Its contact API is disabled. Prices are indicative USD budgets, rounded up to the next USD 1,000 using the Bank of Russia rate for 24 November 2026 (RUB 82.1488 per USD). RUB 500,000 / 700,000 / 900,000 become USD 7,000 / 9,000 / 11,000. The reference rate and fixed display amounts are recorded in `pricing.json`; prices do not fluctuate daily. Historical amounts in case-study stories retain their original currency. International contract terms are agreed separately.
 
 ## Editing and synchronisation
 
