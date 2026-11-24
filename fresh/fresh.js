@@ -169,7 +169,8 @@
       const mid = r.top + r.height / 2;
       // На телефоне первая карточка (она видна уже на первом экране) играет сразу, без прокрутки
       // Остальные на телефоне — как только карточка заметно въехала (верх выше 75% экрана), а не к середине
-      const ready = phone ? (c.first ? r.top < vh : r.top < vh * 0.75) && r.bottom > 0 : mid < vh * 0.6 && r.bottom > 0;
+      // Первая карточка (на главной — как шоурил) играет сразу, как только видна, и на компьютере тоже
+      const ready = (c.first ? r.top < vh : phone ? r.top < vh * 0.75 : mid < vh * 0.6) && r.bottom > 0;
       if (reduce || saveData || backgroundBlocked()) { c.v.pause(); c.on = false; clearTimeout(c.timer); continue; }
       if (!c.on && ready) {
         // Перематываем, только если ролик не в начале: лишняя перемотка дает пустой кадр

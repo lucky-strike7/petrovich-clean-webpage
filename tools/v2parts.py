@@ -544,7 +544,7 @@ class Page:
             elif first:
                 tag = first[1].replace('loading="lazy"', 'loading="eager" fetchpriority="high"')
                 t = t[:first.start(1)] + tag + t[first.end(1):]
-        t = re.sub(r'(fresh/fresh\.js\?v=)\w+', r'\g<1>1124a', t)
+        t = re.sub(r'(fresh/fresh\.js\?v=)\w+', r'\g<1>1124b', t)
         extra = (self.tsheet() if 'aria-controls="tsheet"' in t else '') + sheets
         t = t.replace('  <div class="cursor"', self.msheet() + extra + self.ORB + '\n  <div class="cursor"', 1)
         # Кружок у курсора для меню «Работы»: на страницах кейсов его не было
