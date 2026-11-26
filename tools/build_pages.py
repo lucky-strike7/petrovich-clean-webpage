@@ -18,6 +18,7 @@ STEPS = [
     ('make_case_hbo.py', '/works/hbo/ — кейс «Игры Уолл-стрит»'),
     ('make_project_khersones.py', '/works/khersones/ — проект «Зал Черноморского флота»'),
     ('add_peeks.py', 'кружки с видеопетлей у ссылок на работы в тексте'),
+    ('add_video_widths.py', 'обзоры в нескольких размерах: data-video-widths у кнопок обзора'),
     ('make_share.py', 'превью ссылок: картинка, заголовок, описание (последним)'),
 ]
 env = dict(os.environ, PYTHONIOENCODING='utf-8')

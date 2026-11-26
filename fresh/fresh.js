@@ -6,6 +6,18 @@
   const touchPreview = !matchMedia('(hover: hover) and (pointer: fine)').matches;
   const overview = document.querySelector('.modal');
   const backgroundBlocked = () => document.hidden || overview?.open;
+  // Ролик в нескольких размерах: data-widths="1280 720 1920" — первая цифра — ширина основного файла x.mp4,
+  // остальные лежат рядом как x-720.mp4, x-1920.mp4. Берем наименьший, которого хватает на ширину блока
+  // на экране × плотность пикселей (не больше ×2). При экономии трафика — самый маленький.
+  const sizedSrc = (src, widths, box) => {
+    if (!src || !widths) return src;
+    const [base, ...rest] = widths.split(' ').map(Number);
+    const list = [base, ...rest].sort((a, b) => a - b);
+    const need = (box?.getBoundingClientRect().width || innerWidth) * Math.min(devicePixelRatio || 1, 2);
+    const w = saveData ? list[0] : (list.find(x => x >= need * 0.9) ?? list[list.length - 1]);
+    return w === base ? src : src.replace(/\.mp4(\?|$)/, `-${w}.mp4$1`);
+  };
+  window.pbSizedSrc = sizedSrc;
   const visible = el => {
     const r = el.getBoundingClientRect();
     return r.width > 0 && r.height > 0 && r.top < innerHeight && r.bottom > 0 && r.left < innerWidth && r.right > 0;
@@ -33,8 +45,13 @@
     hydratePoster(video);
     // data-still-phone: на телефоне у карточки только картинка, ролик не грузим
     if (video.hasAttribute('data-still-phone') && matchMedia('(max-width: 600px)').matches) return;
+    // data-phone-only: ролик только на телефоне, на компьютере у карточки картинка
+    if (video.hasAttribute('data-phone-only') && !matchMedia('(max-width: 600px)').matches) return;
     if (video.dataset.src) { video.src = video.dataset.src; delete video.dataset.src; }
-    video.querySelectorAll('source[data-src]').forEach(source => { source.src = source.dataset.src; delete source.dataset.src; });
+    video.querySelectorAll('source[data-src]').forEach(source => {
+      source.dataset.orig ??= source.dataset.src;   // исходный адрес: release() возвращает в data-src уже выбранный размер
+      source.src = sizedSrc(source.dataset.orig, source.dataset.widths, video); delete source.dataset.src;
+    });
     if (!video.dataset.loaded && (video.getAttribute('src') || video.querySelector('source[src]'))) {
       video.dataset.loaded = 'true'; video.preload = 'metadata'; video.load();
     }
@@ -332,11 +349,11 @@
         if (backgroundBlocked() || reduce || saveData) return;
         if (!v) {
           v = document.createElement('video');
-          v.src = card.dataset.preview; v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'auto';
+          v.src = sizedSrc(card.dataset.preview, card.dataset.widths, card.querySelector('.work__media')); v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'auto';
           v.setAttribute('aria-hidden', 'true');
           card.querySelector('.work__media').append(v);
         }
-        if (!v.hasAttribute('src')) v.src = card.dataset.preview;
+        if (!v.hasAttribute('src')) v.src = sizedSrc(card.dataset.preview, card.dataset.widths, card.querySelector('.work__media'));
         card.classList.add('is-previewing');
         v.play().catch(() => {});
       });
@@ -363,7 +380,8 @@
         else video.pause();
       }
       for (const card of cards) { card.on = false; clearTimeout(card.timer); }
-      mv.src = phoneReview.matches && el.dataset.videoMobile ? el.dataset.videoMobile : el.dataset.video;
+      // Обзор в нескольких размерах (data-video-widths): окно почти во весь экран, поэтому размер — по ширине окна браузера
+      mv.src = phoneReview.matches && el.dataset.videoMobile ? el.dataset.videoMobile : sizedSrc(el.dataset.video, el.dataset.videoWidths, null);
       document.dispatchEvent(new CustomEvent('pb:goal', { detail: { name: 'video_open' } }));
       lenis?.stop(); // страница под окном не прокручивается
       mv.play().catch(() => {});

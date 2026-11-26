@@ -156,7 +156,7 @@
       copy.addEventListener('click', () => {
         const v = document.createElement('video');
         v.className = 'case-review__video';
-        v.src = copy.dataset.video;
+        v.src = window.pbSizedSrc ? pbSizedSrc(copy.dataset.video, copy.dataset.videoWidths, copy) : copy.dataset.video;
         v.poster = copy.querySelector('img').currentSrc || copy.querySelector('img').src;
         v.controls = true; v.playsInline = true;
         // ровно в размер обложки: подпись под роликом не сдвигается

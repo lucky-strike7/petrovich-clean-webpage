@@ -511,6 +511,9 @@ html:has(.msheet.is-open) { overflow: hidden; overscroll-behavior: none; }
 .works-mix > .event { margin-bottom: 0; }
 .works-mix + .plate--page { margin-top: 0; }
 a.card__media { display: block; }
+/* Ролик только на телефоне («Крупное видео, телефон» без крупного видео): поверх картинки, на компьютере скрыт */
+.card__media video[data-phone-only] { position: absolute; inset: 0; }
+@media (min-width: 601px) { .card__media video[data-phone-only] { display: none; } }
 .card__go { text-decoration: none; color: inherit; }
 .card__go .card__play { font-style: normal; font-size: 15px; line-height: 1; color: var(--on-accent); }
 @media (max-width: 600px) {

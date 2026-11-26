@@ -364,7 +364,7 @@ html:not(.js) .card__how ul { opacity: 1; }
   border-radius: 50%; background: var(--accent); transform: translate(-50%, -50%); transition: transform .45s var(--ease);
 }
 .work__play svg { width: 64%; height: 64%; fill: var(--on-accent); }
-.work__media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .35s; }
+.work__media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--pv-x, 50%) 50%; opacity: 0; transition: opacity .35s; }
 .work.is-previewing .work__media video { opacity: 1; }
 .work.is-previewing .work__play { opacity: 0; transform: translate(-50%, -50%) scale(.8); }
 .work__play { transition: transform .45s var(--ease), opacity .3s; }

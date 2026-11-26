@@ -5,8 +5,8 @@ NL = chr(10)
 
 # Корень сайта — папка над tools/ (сборщики лежат в репозитории рядом со страницами)
 SITE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V2CSS = 'v2.css?v=137'
-V2JS = 'v2.js?v=33'
+V2CSS = 'v2.css?v=138'
+V2JS = 'v2.js?v=34'
 # Включаем только готовые самостоятельные страницы.
 READY_PAGES = {'prices', 'services', 'about'}
 
@@ -48,7 +48,7 @@ WORKS_MD = os.path.join(SITE, 'texts', 'works.md')
 _FIELDS = {'Название': 'title', 'Проект': 'project', 'Что это': 'kind', 'Год': 'year', 'Что делаем': 'what', 'Для кого': 'who',
            'Описание': 'desc', 'Где и когда': 'where', 'Картинка': 'img', 'Превью': 'preview', 'Крупное видео': 'big',
            'Крупное видео, телефон': 'big_m', 'Ссылка': 'href', 'Обзор': 'video', 'Скрыть': 'hidden',
-           'Награда': 'award', 'Фон': 'dark', 'Картинка, телефон': 'img_m', 'Обложка крупной': 'big_img', 'Превью только в плитке': 'tile_preview_only',
+           'Награда': 'award', 'Фон': 'dark', 'Картинка, телефон': 'img_m', 'Обложка крупной': 'big_img', 'Превью только в плитке': 'tile_preview_only', 'Превью, кадр': 'preview_x',
            'Группа': 'group'}
 def _load_works():
     items = []
@@ -63,10 +63,33 @@ def _load_works():
             elif k == 'year': v = int(v)
             elif k in ('hidden', 'tile_preview_only'): v = v.lower() in ('да', 'yes', '1')
             elif k == 'dark': v = v.lower().startswith('черн')
+            # «Превью, кадр: справа» — какую часть широкого ролика показывать в плитке
+            elif k == 'preview_x': v = {'слева': '0%', 'справа': '100%', 'по центру': '50%'}.get(v.lower(), v)
             w[k] = v
         items.append(w)
     return items
 DATA['items'] = _load_works()
+
+def video_widths(path):
+    """Ролик в нескольких размерах: рядом с файлом x.mp4 лежат x-720.mp4, x-1920.mp4 и т. п.
+    Возвращает атрибут data-widths="<ширина основного файла> <другие ширины>": по нему fresh.js
+    выбирает файл под ширину блока на экране и плотность пикселей. Если других размеров нет — пусто."""
+    if not path or not path.endswith('.mp4'): return ''
+    base = os.path.join(SITE, path)
+    folder, name = os.path.split(base)
+    if not os.path.isdir(folder): return ''
+    stem = name[:-4]
+    import subprocess
+    def width(p):
+        return subprocess.run(['ffprobe', '-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width', '-of', 'csv=p=0', p],
+                              capture_output=True, text=True).stdout.strip()
+    # размер — только если реальная ширина файла равна числу в имени (yantarny-2019.mp4 — другой ролик, а не «ширина 2019»)
+    others = sorted(int(m[1]) for f in os.listdir(folder)
+                    if (m := re.fullmatch(re.escape(stem) + r'-(\d{3,4})\.mp4', f)) and width(os.path.join(folder, f)) == m[1])
+    if not others: return ''
+    w = width(base)
+    if not w.isdigit(): return ''
+    return f' data-widths="{w} {" ".join(map(str, others))}"'
 
 _PROJECT_HREF = {p['id']: p['href'] for p in DATA['projects']}
 def card_href(w):
@@ -385,7 +408,8 @@ class Page:
 
     def tile(self, w):
         B = self.B
-        prev = f' data-preview="{B}{w["preview"]}"' if w.get('preview') else ''
+        prev = f' data-preview="{B}{w["preview"]}"{video_widths(w["preview"])}' if w.get('preview') else ''
+        if w.get('preview_x'): prev += f' style="--pv-x:{w["preview_x"]}"'
         inner = (f'\n            <span class="work__media"><img src="{B}{w["img"]}" alt="" width="650" height="500" loading="lazy"></span>'
                  f'\n            <span class="work__title">{w["title"]}</span>\n            <span class="work__meta">{w["meta"]}</span>\n          ')
         if w.get('video') and not w.get('href'):
@@ -410,14 +434,20 @@ class Page:
         if tile_phone:
             big_m, poster_m = preview or big, w['img']
         if big:
-            src_m = '' if still_m else f'<source data-src="{B}{big_m}" type="video/mp4" media="(max-width: 600px)">'
-            media = (f'<video data-poster="{B}{w.get("big_img") or w["img"]}" data-poster-m="{B}{poster_m}"{" data-still-phone" if still_m else ""} muted loop playsinline data-lazy preload="none">'
-                     f'{src_m}<source data-src="{B}{big}" type="video/mp4"></video>')
+            src_m = '' if still_m else f'<source data-src="{B}{big_m}" type="video/mp4" media="(max-width: 600px)"{video_widths(big_m)}>'
+            pv_x = f' style="object-position:{w["preview_x"]} 50%"' if w.get('preview_x') and preview and big_m == preview else ''
+            media = (f'<video data-poster="{B}{w.get("big_img") or w["img"]}" data-poster-m="{B}{poster_m}"{" data-still-phone" if still_m else ""}{pv_x} muted loop playsinline data-lazy preload="none">'
+                     f'{src_m}<source data-src="{B}{big}" type="video/mp4"{video_widths(big)}></video>')
         else:
             media = f'<img src="{B}{w.get("big_img") or w["img"]}" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">'
             # «Картинка, телефон» — свой вертикальный кадр для крупной карточки на телефоне (кроме карточек «как плитка»)
             if w.get('img_m') and not tile_phone:
                 media = f'<picture><source media="(max-width: 600px)" srcset="{B}{w["img_m"]}">{media}</picture>'
+            # Ролик только на телефоне: крупного видео нет, а «Крупное видео, телефон» есть (Эталон, Город образования —
+            # съемка мягкая, на большом экране видно, на телефоне нет). На компьютере остается картинка, ролик не грузится.
+            if w.get('big_m') and not still_m and not tile_phone:
+                media += (f'<video data-poster="{B}{w.get("big_img") or w["img"]}" data-poster-m="{B}{poster_m}" data-phone-only muted loop playsinline data-lazy preload="none">'
+                          f'<source data-src="{B}{w["big_m"]}" type="video/mp4" media="(max-width: 600px)"{video_widths(w["big_m"])}></video>')
         desc = typo(w.get('desc', ''))
         if '? ' in desc:
             q, rest = desc.split('? ', 1)
@@ -544,7 +574,7 @@ class Page:
             elif first:
                 tag = first[1].replace('loading="lazy"', 'loading="eager" fetchpriority="high"')
                 t = t[:first.start(1)] + tag + t[first.end(1):]
-        t = re.sub(r'(fresh/fresh\.js\?v=)\w+', r'\g<1>1124b', t)
+        t = re.sub(r'(fresh/fresh\.js\?v=)\w+', r'\g<1>1126a', t)
         extra = (self.tsheet() if 'aria-controls="tsheet"' in t else '') + sheets
         t = t.replace('  <div class="cursor"', self.msheet() + extra + self.ORB + '\n  <div class="cursor"', 1)
         # Кружок у курсора для меню «Работы»: на страницах кейсов его не было
@@ -553,7 +583,7 @@ class Page:
         # Класс новой страницы: к уже имеющемуся классу body (у кейсов там case-page) или новым атрибутом
         t = re.sub(r'<body(?: class="([^"]*)")?>', lambda m: f'<body class="{(m.group(1) + " ") if m.group(1) else ""}page-v2">', t, count=1)
         B = self.B
-        t = re.sub(r'(fresh/(?:fresh|case)\.css\?v=)\w+', r'\g<1>1121d', t)
+        t = re.sub(r'(fresh/(?:fresh|case)\.css\?v=)\w+', r'\g<1>1125a', t)
         t, n = re.subn(r'(<link rel="stylesheet" href="' + re.escape(B) + r'fresh/fresh\.css\?v=\w+">)', lambda m: m.group(1) + f'\n  <link rel="stylesheet" href="{B}fresh/{V2CSS}">', t, count=1); assert n
         t, n = re.subn(r'(<script src="' + re.escape(B) + r'fresh/fresh\.js\?v=\w+"></script>)', lambda m: m.group(1) + f'\n  <script src="{B}fresh/{V2JS}"></script>', t, count=1); assert n
         return t

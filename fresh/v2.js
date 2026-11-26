@@ -283,7 +283,8 @@
           pending.delete(card);
           if (document.hidden || document.querySelector('.modal[open]')) return;
           const video = document.createElement('video');
-          Object.assign(video, { muted: true, loop: true, playsInline: true, src: card.dataset.preview });
+          const src = window.pbSizedSrc ? pbSizedSrc(card.dataset.preview, card.dataset.widths, card.querySelector('.work__media')) : card.dataset.preview;
+          Object.assign(video, { muted: true, loop: true, playsInline: true, src });
           video.setAttribute('aria-hidden', 'true');
           active.set(card, video);
           video.addEventListener('playing', () => {

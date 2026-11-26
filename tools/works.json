@@ -25,8 +25,8 @@
       "id": "khakasia", "title": "Стенд Республики Хакасия", "short": "Хакасия на ВДНХ", "where": "Выставка «Россия», ВДНХ, 2023",
       "full": "Стенд Республики Хакасия на выставке «Россия» на ВДНХ", "year": 2023,
       "meta": "Для стенда республики мы сделали три интерактивных экспоната. Для всех трех рисовали графику и писали код: он управляет поворотом круглого стола, подсветкой менгира и столом Displax, который распознает фишки.",
-      "img": "fresh/media/khakasy-render.webp", "preview": "fresh/media/khakasy-card.mp4",
-      "img_m": "fresh/media/khakasy-render-m.webp", "big": "fresh/media/khakasy-render.mp4", "big_m": "fresh/media/khakasy-render-m.mp4",
+      "img": "fresh/media/khakasy-render.webp", "preview": "fresh/media/stol-montage.mp4",
+      "img_m": "fresh/media/khakasy-render-m.webp", "big": "fresh/media/stol-montage.mp4", "big_m": "fresh/media/stol-montage-m.mp4",
       "href": "works/khakasia/"
     },
     {

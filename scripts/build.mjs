@@ -41,6 +41,15 @@ for(const file of files){
   if(extname(file)==='.js'){const {code}=await transform(await readFile(file,'utf8'),{loader:'js',minify:true,target:'es2022',legalComments:'inline'});await writeFile(file,code);}
   hashes.set(file,digest(await readFile(file)));
 }
+// Ролик в нескольких размерах (x.mp4 и рядом x-720.mp4, x-1920.mp4): fresh.js берет адрес основного файла вместе с ?v=
+// и подставляет соседний размер, поэтому версия основного учитывает и соседние. Иначе после перезаливки одного размера
+// браузер год держал бы старый файл (кэш immutable).
+for(const [file,h] of [...hashes]){
+  if(extname(file)!=='.mp4')continue;
+  // только стандартные ширины: yantarny-2019.mp4 — другой ролик, а не размер yantarny.mp4
+  const stem=file.slice(0,-4),sizes=[...hashes].filter(([p])=>p.startsWith(stem+'-')&&/^-(?:480|640|720|960|1280|1440|1600|1920|2560|3840)\.mp4$/.test(p.slice(stem.length))).map(([,x])=>x).sort();
+  if(sizes.length)hashes.set(file,digest(h+sizes.join('')));
+}
 function version(value,from){
   if(!value||value.startsWith('#')||/^(?:[a-z]+:|\/\/)/i.test(value))return value;
   const url=new URL(value,'https://build.local/'+relative(out,from)),file=resolve(out,'.'+decodeURIComponent(url.pathname));
