@@ -27,9 +27,10 @@ for (const page of pages) {
   const html = await readFile(page, 'utf8');
   assert.match(html, /<html\b[^>]*lang="en"/);
   const original = await readFile(resolve(root, path), 'utf8');
-  assert.equal([...html.matchAll(/<form\b/g)].length, [...original.matchAll(/<form\b/g)].length, `Form parity: ${path}`);
+  assert.equal([...html.matchAll(/<form\b/g)].length, 0, `English forms removed: ${path}`);
   const links = source => [...source.matchAll(/<a\b[^>]*\bhref="([^"]*)"/g)].map(match => match[1]);
-  const expectedLinks = links(original).map(value => value
+  const withoutForms = original.replace(/<form\b[^>]*>[\s\S]*?<\/form>/g, '');
+  const expectedLinks = links(withoutForms).filter(value => !(path === 'privacy/index.html' && value === '../consent/')).map(value => value
     .replace('mailto:art@petrovichbrothers.ru', 'mailto:ars@petrovichbrothers.com')
     .replace('https://t.me/artem_petrovich_1', 'https://t.me/ArsenyPetrovich')
     .replace('tel:+79151978652', 'https://wa.me/79268521102')

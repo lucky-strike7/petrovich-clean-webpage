@@ -141,12 +141,14 @@ def contacts(text):
 
 
 def international_presentation(text, relative):
+    text = re.sub(r'<form\b[^>]*class="callback[^"]*"[^>]*>[\s\S]*?</form>', '', text)
     # Project locations remain factual; remove the studio's postal address and location label.
     text = re.sub(r'(<p class="about__label[^"\']*">)Moscow<br>', r'\1', text)
     if relative == 'index.html':
         text = text.replace('<h1 class="about__text">Petrovich Brothers Multimedia Studio</h1>', '<h1 class="about__text"><span class="title-line">Petrovich Brothers</span> <span class="title-line">Multimedia Studio</span></h1>')
     if relative == 'privacy/index.html':
         text = re.sub(r"<p>The studio's underlying policy refers to Russian Federal Law No\.[\s\S]*?</p>", '', text)
+        text = re.sub(r'<p>We process the phone number[\s\S]*?</p>', '<p>We use contact details and project information you choose to send us to respond to your enquiry and discuss your project.</p>', text)
         text = re.sub(r'<li>Yandex Metrica is not enabled on the English domain\.[\s\S]*?</li>', '<li>Yandex Metrica is not enabled on this website.</li>', text)
     return text
 

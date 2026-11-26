@@ -314,16 +314,5 @@
         }
       ]
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/contact/",
-      "destination": "https://petrovichbrothers.ru/api/contact-en"
-    }
-  ],
-  "functions": {
-    "api/telegram-relay.js": {
-      "maxDuration": 15
-    }
-  }
+  ]
 }
