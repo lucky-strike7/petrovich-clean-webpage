@@ -89,7 +89,7 @@ class Translator(HTMLParser):
                 if isinstance(value, list):
                     return [walk(x) for x in value]
                 if isinstance(value, dict):
-                    return {k: walk(v) for k, v in value.items()}
+                    return {k: walk(v) for k, v in value.items() if not (k == 'address' and value.get('@type') == 'Organization')}
                 return value
             self.output.append(json.dumps(walk(json.loads(data)), ensure_ascii=False).replace('</', '<\\/'))
         elif self.raw:
@@ -140,6 +140,17 @@ def contacts(text):
     return text
 
 
+def international_presentation(text, relative):
+    # Project locations remain factual; remove the studio's postal address and location label.
+    text = re.sub(r'(<p class="about__label[^"\']*">)Moscow<br>', r'\1', text)
+    if relative == 'index.html':
+        text = text.replace('<h1 class="about__text">Petrovich Brothers Multimedia Studio</h1>', '<h1 class="about__text"><span class="title-line">Petrovich Brothers</span> <span class="title-line">Multimedia Studio</span></h1>')
+    if relative == 'privacy/index.html':
+        text = re.sub(r"<p>The studio's underlying policy refers to Russian Federal Law No\.[\s\S]*?</p>", '', text)
+        text = re.sub(r'<li>Yandex Metrica is not enabled on the English domain\.[\s\S]*?</li>', '<li>Yandex Metrica is not enabled on this website.</li>', text)
+    return text
+
+
 def prices(text):
     pricing = json.loads((ROOT / 'locales/en/pricing.json').read_text())
     def amount(match):
@@ -171,13 +182,14 @@ def main():
         translated = client_logos(translated)
         translated = contacts(translated)
         translated = prices(translated)
+        translated = international_presentation(translated, relative)
         path_url = '/' if relative == 'index.html' else '/' + relative.removesuffix('index.html')
         if relative != '404.html':
             alternates = ''.join(f'<link rel="alternate" hreflang="{lang}" href="https://petrovichbrothers.{domain}{path_url}">'
                                  for lang, domain in [('ru', 'ru'), ('en', 'com')])
             translated = translated.replace('</head>', alternates + '</head>')
         # Language links are useful on both desktop and mobile and never redirect by IP.
-        language_link = f'<a class="language-switch" href="https://petrovichbrothers.ru{path_url}" lang="ru" hreflang="ru" aria-label="Russian version">RU</a>'
+        language_link = f'<a class="language-switch" href="https://petrovichbrothers.ru{path_url}" lang="ru" hreflang="ru" aria-label="Original version">RU</a>'
         translated = translated.replace('</body>', language_link + '</body>')
         style_hash = hashlib.sha256((ROOT / 'fresh/english.css').read_bytes()).hexdigest()[:12]
         script_hash = hashlib.sha256((ROOT / 'fresh/english.js').read_bytes()).hexdigest()[:12]

@@ -21,3 +21,8 @@ html[lang="en"] .contact__title { text-wrap: balance; }
   html[lang="en"] .contact__mail { font-size: clamp(16px, 4.8vw, 24px); }
   html[lang="en"] .language-switch { bottom: 14px; }
 }
+
+html[lang="en"] .home-intro .title-line { display: block; white-space: nowrap; }
+@media (max-width: 600px) {
+  html[lang="en"] .home-intro .about__text { font-size: clamp(26px, 8.4vw, 50px); }
+}
