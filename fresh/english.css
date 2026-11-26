@@ -1,0 +1,14 @@
+/* English copy shares the Russian layout and media. */
+html[lang="en"] .contact__ways { flex-wrap: wrap; }
+html[lang="en"] .cpanel__ways a { overflow-wrap: anywhere; }
+html[lang="en"] .hero__title { overflow-wrap: normal; }
+html[lang="en"] .contact__foot { margin-top: 40px; }
+html[lang="en"] .contact__title { text-wrap: balance; }
+@media (max-width: 600px) {
+  html[lang="en"] .contact__mail { font-size: clamp(16px, 4.8vw, 24px); }
+}
+
+html[lang="en"] .home-intro .title-line { display: block; white-space: nowrap; }
+@media (max-width: 600px) {
+  html[lang="en"] .home-intro .about__text { font-size: clamp(26px, 8.4vw, 50px); }
+}

@@ -1,0 +1,318 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "npm run build:vercel",
+  "installCommand": "npm ci --no-audit --no-fund",
+  "outputDirectory": "dist-com",
+  "cleanUrls": true,
+  "trailingSlash": true,
+  "git": {
+    "deploymentEnabled": {
+      "*": false,
+      "codex/english-com": true
+    }
+  },
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.petrovichbrothers.com"
+        }
+      ],
+      "destination": "https://petrovichbrothers.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/video-content/",
+      "destination": "/works/exhibitions/",
+      "permanent": true
+    },
+    {
+      "source": "/videocontent/",
+      "destination": "/works/exhibitions/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/",
+      "destination": "/works/",
+      "permanent": true
+    },
+    {
+      "source": "/blogs/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/about-us/",
+      "destination": "/about/",
+      "permanent": true
+    },
+    {
+      "source": "/testimonials/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/contacts/",
+      "destination": "/#contact",
+      "permanent": true
+    },
+    {
+      "source": "/contact/",
+      "destination": "/#contact",
+      "permanent": true
+    },
+    {
+      "source": "/projects/khakasiya/",
+      "destination": "/works/khakasia/",
+      "permanent": true
+    },
+    {
+      "source": "/cases/khakasia/",
+      "destination": "/works/khakasia/stol/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/hersones/",
+      "destination": "/works/khersones/",
+      "permanent": true
+    },
+    {
+      "source": "/cases/hersones/",
+      "destination": "/works/khersones/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/referus/",
+      "destination": "/works/referus/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/etalon/",
+      "destination": "/works/etalon/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/yantarny/",
+      "destination": "/works/yantarny/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/premiarb/",
+      "destination": "/works/premiarb/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/hbo/",
+      "destination": "/works/hbo/",
+      "permanent": true
+    },
+    {
+      "source": "/cases/hbo/",
+      "destination": "/works/hbo/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/rosnano/",
+      "destination": "/works/rosnano/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/nanolek/",
+      "destination": "/works/nanolek/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/donstroy/",
+      "destination": "/works/donstroy/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/gorodobrazovaniyya/",
+      "destination": "/works/gorodobrazovaniya/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/rosatom/",
+      "destination": "/works/rosatom/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/artmonta/",
+      "destination": "/works/artmonta/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/zebralog/",
+      "destination": "/works/zebralog/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/carrera/",
+      "destination": "/works/carrera/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/amperka/",
+      "destination": "/works/cyberbug/",
+      "permanent": true
+    },
+    {
+      "source": "/cyberbug/",
+      "destination": "/works/cyberbug/",
+      "permanent": true
+    },
+    {
+      "source": "/cases/artmonta/",
+      "destination": "/works/artmonta/",
+      "permanent": true
+    },
+    {
+      "source": "/cases/carrera/",
+      "destination": "/works/carrera/",
+      "permanent": true
+    },
+    {
+      "source": "/cases/cyberbug/",
+      "destination": "/works/cyberbug/",
+      "permanent": true
+    },
+    {
+      "source": "/cases/donstroy/",
+      "destination": "/works/donstroy/",
+      "permanent": true
+    },
+    {
+      "source": "/cases/etalon/",
+      "destination": "/works/etalon/",
+      "permanent": true
+    },
+    {
+      "source": "/cases/gorodobrazovaniya/",
+      "destination": "/works/gorodobrazovaniya/",
+      "permanent": true
+    },
+    {
+      "source": "/cases/nanolek/",
+      "destination": "/works/nanolek/",
+      "permanent": true
+    },
+    {
+      "source": "/cases/premiarb/",
+      "destination": "/works/premiarb/",
+      "permanent": true
+    },
+    {
+      "source": "/cases/referus/",
+      "destination": "/works/referus/",
+      "permanent": true
+    },
+    {
+      "source": "/cases/rosatom/",
+      "destination": "/works/rosatom/",
+      "permanent": true
+    },
+    {
+      "source": "/cases/rosnano/",
+      "destination": "/works/rosnano/",
+      "permanent": true
+    },
+    {
+      "source": "/cases/yantarny/",
+      "destination": "/works/yantarny/",
+      "permanent": true
+    },
+    {
+      "source": "/cases/zebralog/",
+      "destination": "/works/zebralog/",
+      "permanent": true
+    },
+    {
+      "source": "/works/eksponaty/",
+      "destination": "/works/interactive/",
+      "permanent": true
+    },
+    {
+      "source": "/works/scena/",
+      "destination": "/works/event-graphics/",
+      "permanent": true
+    },
+    {
+      "source": "/works/dizayn/",
+      "destination": "/works/product-design/",
+      "permanent": true
+    },
+    {
+      "source": "/works/sayty/",
+      "destination": "/works/websites/",
+      "permanent": true
+    },
+    {
+      "source": "/works/muzei/",
+      "destination": "/works/museums/",
+      "permanent": true
+    },
+    {
+      "source": "/works/vystavki/",
+      "destination": "/works/exhibitions/",
+      "permanent": true
+    },
+    {
+      "source": "/works/zastr/",
+      "destination": "/works/stand-builders/",
+      "permanent": true
+    },
+    {
+      "source": "/works/kino/",
+      "destination": "/works/film/",
+      "permanent": true
+    },
+    {
+      "source": "/works/regiony/",
+      "destination": "/works/regions/",
+      "permanent": true
+    },
+    {
+      "source": "/works/meropr/",
+      "destination": "/works/events/",
+      "permanent": true
+    },
+    {
+      "source": "/works/developery/",
+      "destination": "/works/developers/",
+      "permanent": true
+    },
+    {
+      "source": "/works/prom/",
+      "destination": "/works/industry/",
+      "permanent": true
+    },
+    {
+      "source": "/blog-list/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/p/",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    }
+  ]
+}

@@ -20,7 +20,10 @@ export function byteRange(header, size) {
   return Number.isSafeInteger(start)&&Number.isSafeInteger(end)&&start>=0&&start<size&&end>=start ? {start,end}:null;
 }
 
-export function createApp({ root=resolve(project,process.env.NODE_ENV==='production'?'dist':'.'),contact=createContactHandler() }={}) {
+export function createApp({ root=resolve(project,process.env.NODE_ENV==='production'?'dist':'.'),contact,locale=process.env.SITE_LOCALE||'ru' }={}) {
+  if(!['ru','en'].includes(locale))throw new Error('Unsupported SITE_LOCALE');
+  const handleContact=contact||createContactHandler({locale});
+  const localized=path=>locale==='en'&&(/\.html$/.test(path)||['/robots.txt','/sitemap.xml','/site.webmanifest'].includes(path))?resolve(root,'en','.'+path):resolve(root,'.'+path);
   const canonicalRoot=realpath(root);
   return createServer(async (req,res)=>{
     if(process.env.SITE_RELEASE)res.setHeader('X-Site-Release',process.env.SITE_RELEASE);
@@ -28,16 +31,17 @@ export function createApp({ root=resolve(project,process.env.NODE_ENV==='product
     const send=(status,text)=>{res.writeHead(status,{'Content-Type':'text/plain; charset=utf-8','Cache-Control':'no-store'});res.end(text);};
     try {
       const url=new URL(req.url,'http://localhost');
-      if(url.pathname==='/api/contact'){await contact(req,res);return;}
+      if(url.pathname==='/api/contact'||url.pathname==='/api/contact/'){await handleContact(req,res);return;}
       if(!['GET','HEAD'].includes(req.method)){res.setHeader('Allow','GET, HEAD');send(405,'Method not allowed');return;}
       let path;try{path=decodeURIComponent(url.pathname);}catch{send(400,'Bad path');return;}
       if(path.split('/').some(p=>p.startsWith('.')||p.includes('\\')||p.includes('\0'))){send(404,'Not found');return;}
-      const canonicalOrigin=req.headers.host?.toLowerCase()==='www.petrovichbrothers.ru'?'https://petrovichbrothers.ru':'';
+      const domain=locale==='en'?'petrovichbrothers.com':'petrovichbrothers.ru';
+      const canonicalOrigin=req.headers.host?.toLowerCase()===`www.${domain}`?`https://${domain}`:'';
       const redirect=legacyRedirect(path,url.search);
       if(redirect){res.writeHead(301,{'Location':canonicalOrigin+redirect,'Cache-Control':'public, max-age=3600','Content-Length':0});res.end();return;}
       if(path.endsWith('/'))path+='index.html';
-      let file=resolve(root,'.'+path),info,status=200;
-      const rel=relative(root,file);
+      let file=localized(path),info,status=200;
+      const rel=relative(root,resolve(root,'.'+path));
       if((files.has(rel)||directories.has(rel.split(sep)[0]))&&!rel.startsWith('..')){
         try{
           const actual=await realpath(file);if(relative(await canonicalRoot,actual).startsWith('..'))throw Error();info=await stat(actual);
@@ -48,7 +52,7 @@ export function createApp({ root=resolve(project,process.env.NODE_ENV==='product
           if(!info.isFile())info=null;
         }catch{info=null;}
       }
-      if(!info){file=resolve(root,'404.html');info=await stat(file);status=404;}
+      if(!info){file=localized('/404.html');info=await stat(file);status=404;}
       if(status===200 && (canonicalOrigin || url.pathname.endsWith('/index.html')) && !url.pathname.startsWith('//')){
         const cleanPath=url.pathname.replace(/\/index\.html$/, '/');
         res.writeHead(301,{'Location':canonicalOrigin+cleanPath+url.search,'Cache-Control':'public, max-age=3600'});

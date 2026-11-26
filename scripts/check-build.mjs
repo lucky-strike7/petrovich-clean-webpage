@@ -4,7 +4,7 @@ import {readdir,readFile,stat,open} from 'node:fs/promises';
 import {resolve,relative,extname,basename} from 'node:path';
 import {fileURLToPath} from 'node:url';
 const root=fileURLToPath(new URL('../dist/',import.meta.url));
-async function list(dir){const out=[];for(const item of await readdir(dir,{withFileTypes:true})){const p=resolve(dir,item.name);if(item.isDirectory())out.push(...await list(p));else out.push(p);}return out;}
+async function list(dir){const out=[];for(const item of await readdir(dir,{withFileTypes:true})){const p=resolve(dir,item.name);if(dir===root&&item.name==='en')continue;if(item.isDirectory())out.push(...await list(p));else out.push(p);}return out;}
 const files=await list(root);let references=0,videos=0;
 const sitemap=await readFile(resolve(root,'sitemap.xml'),'utf8');
 const sitemapUrls=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1]);

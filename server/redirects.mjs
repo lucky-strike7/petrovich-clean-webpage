@@ -62,6 +62,10 @@ const exact = new Map([
   ['/p', '/'],
 ]);
 
+export function legacyRedirects() {
+  return [...exact];
+}
+
 export function legacyRedirect(pathname, search = '') {
   const path = pathname.replace(/\/+$/, '') || '/';
   const target = exact.get(path);

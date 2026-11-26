@@ -13,7 +13,13 @@
     "update": "node scripts/update.mjs",
     "test": "node --test tests/*.test.mjs",
     "check": "node --check server.mjs && node --check server/site.mjs && node --check server/contact.mjs && node --check fresh/fresh.js && node --check fresh/case.js && node --check fresh/cookies.js && node --check server/redirects.mjs && node --check scripts/check-release.mjs && bash -n deploy/publish.sh deploy/receive.sh deploy/ssh-command.sh",
-    "verify:build": "node scripts/check-build.mjs"
+    "verify:build": "node scripts/check-build.mjs",
+    "i18n:status": "python3 scripts/english.py extract",
+    "i18n:check": "python3 scripts/english.py check",
+    "build:en": "npm run build && python3 scripts/english.py build",
+    "verify:en": "node scripts/check-english.mjs",
+    "i18n:test": "python3 tests/english_catalog_test.py",
+    "build:vercel": "npm run build:en && npm run verify:build && npm run verify:en && node scripts/export-english.mjs"
   },
   "dependencies": {
     "nodemailer": "10.3.1"

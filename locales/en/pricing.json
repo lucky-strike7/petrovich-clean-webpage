@@ -1,0 +1,10 @@
+{
+  "currency": "USD",
+  "pricingPolicy": "Owner-approved starting budgets; source RUB amounts identify the matching services, not an exchange-rate calculation.",
+  "approvedOn": "2026-11-26",
+  "amountsRubToUsd": {
+    "500000": 6000,
+    "700000": 10000,
+    "900000": 10000
+  }
+}
