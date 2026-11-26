@@ -200,6 +200,8 @@ def main():
             target.write_text(text)
         for name in ['sitemap.xml', 'robots.txt', 'site.webmanifest']:
             value = (source / name).read_text().replace('petrovichbrothers.ru', 'petrovichbrothers.com')
+            if name == 'robots.txt':
+                value = 'User-agent: Yandex\nDisallow: /\n\n' + value
             if name == 'site.webmanifest':
                 value = json.dumps({'name': 'Petrovich Brothers', 'short_name': 'Petrovich Brothers', 'lang': 'en',
                                     'start_url': '/', 'display': 'browser', 'icons': json.loads(value).get('icons', [])})
