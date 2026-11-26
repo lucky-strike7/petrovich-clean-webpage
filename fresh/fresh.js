@@ -531,7 +531,7 @@
     };
     const say = (text, err) => { msg.textContent = text; msg.classList.toggle('is-error', !!err); };
     const validPhone = () => english ? /^[1-9]\d{6,14}$/.test(digitsOf(input.value)) : digitsOf(input.value).length === 11;
-    const phoneError = english ? 'Enter your full phone number with country code, for example +86 138 0013 8000.' : 'Введите номер полностью, например +7 915 123-45-67.';
+    const phoneError = english ? 'Enter your WhatsApp number with country code, for example +44 7700 900123.' : 'Введите номер полностью, например +7 915 123-45-67.';
     const sync = () => {
       btn.disabled = submitting || sent;
       btn.classList.toggle('needs-input', !validPhone() || !agree.checked);
@@ -583,12 +583,12 @@
         sent = true;
         document.dispatchEvent(new CustomEvent('pb:goal', { detail: { name: 'callback_success' } }));
         cb.classList.add('is-sent');
-        say(english ? 'Thank you! We will call you back during business hours.' : 'Спасибо! Перезвоним в\u00a0рабочее время');
+        say(english ? 'Thank you! We will message you on WhatsApp.' : 'Спасибо! Перезвоним в\u00a0рабочее время');
         cb.dispatchEvent(new Event('sent', { bubbles: true }));
         // Когда плашка закроется — форма снова чистая
         setTimeout(() => { sent=false; cb.classList.remove('is-sent'); cb.reset(); say(''); sync(); }, 3200);
       } catch {
-        say(english ? 'Could not send your request. Please call us or message us on Telegram.' : 'Не получилось отправить. Позвоните нам или напишите в\u00a0Telegram', true);
+        say(english ? 'Could not send your request. Please message us on WhatsApp or Telegram, or email us.' : 'Не получилось отправить. Позвоните нам или напишите в\u00a0Telegram', true);
       } finally { submitting=false; cb.removeAttribute('aria-busy'); btn.classList.remove('is-sending'); sync(); }
     });
   });
