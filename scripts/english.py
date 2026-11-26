@@ -188,9 +188,6 @@ def main():
             alternates = ''.join(f'<link rel="alternate" hreflang="{lang}" href="https://petrovichbrothers.{domain}{path_url}">'
                                  for lang, domain in [('ru', 'ru'), ('en', 'com')])
             translated = translated.replace('</head>', alternates + '</head>')
-        # Language links are useful on both desktop and mobile and never redirect by IP.
-        language_link = f'<a class="language-switch" href="https://petrovichbrothers.ru{path_url}" lang="ru" hreflang="ru" aria-label="Original version">RU</a>'
-        translated = translated.replace('</body>', language_link + '</body>')
         style_hash = hashlib.sha256((ROOT / 'fresh/english.css').read_bytes()).hexdigest()[:12]
         script_hash = hashlib.sha256((ROOT / 'fresh/english.js').read_bytes()).hexdigest()[:12]
         translated = translated.replace('</head>', f'<link rel="stylesheet" href="/fresh/english.css?v={style_hash}"></head>')

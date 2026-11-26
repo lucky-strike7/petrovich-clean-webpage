@@ -34,7 +34,7 @@ for (const page of pages) {
     .replace('https://t.me/artem_petrovich_1', 'https://t.me/ArsenyPetrovich')
     .replace('tel:+79151978652', 'https://wa.me/79268521102')
     .replace('https://petrovichbrothers.ru', 'https://petrovichbrothers.com'));
-  const actualLinks = links(html.replace(/<a class="language-switch"[^>]*>.*?<\/a>/g, ''));
+  const actualLinks = links(html);
   assert.deepEqual(actualLinks, expectedLinks, `Navigation parity: ${path}`);
   assert(!html.includes('art@petrovichbrothers.ru'), `Incorrect contact: ${path}`);
   assert(!/\bRUB\b/.test(html), `Unconverted service price: ${path}`);
@@ -63,7 +63,7 @@ for (const page of pages) {
 }
 const home = await readFile(resolve(english, 'index.html'), 'utf8');
 for (const contact of ['mailto:ars@petrovichbrothers.com', 'https://wa.me/79268521102', 'https://t.me/ArsenyPetrovich']) assert(home.includes(contact), contact);
-for (const amount of ['7,000', '9,000', '11,000']) assert(home.includes(`class="price__num">${amount}</span>`), `Homepage USD amount: ${amount}`);
+for (const amount of ['6,000', '10,000', '10,000']) assert(home.includes(`class="price__num">${amount}</span>`), `Homepage USD amount: ${amount}`);
 const budgets = await readFile(resolve(english, 'prices/index.html'), 'utf8');
-for (const amount of ['$7,000', '$9,000', '$11,000']) assert(budgets.includes(amount), `Budgets page USD amount: ${amount}`);
+for (const amount of ['$6,000', '$10,000', '$10,000']) assert(budgets.includes(amount), `Budgets page USD amount: ${amount}`);
 console.log(`Verified ${pages.length} English pages, ${references} references, metadata, contacts and untranslated text.`);
