@@ -9,7 +9,7 @@ PROJECTS = {p['id']: p for p in DATA['projects']}
 TAG_FIRST = {'video': ['rosatom']}
 
 # Тексты. full=True — продающая посадочная со своим текстом, ценами и вопросами, открыта для поиска.
-# Остальные — простые: заголовок, одна фраза, работы; закрыты от поиска (noindex), пока не наполним.
+# Остальные — простые: заголовок, одна фраза, работы; тоже открыты для поиска (с 2026-11-26).
 # plate — ошибка из разбора «10 ошибок» для вставки «Из опыта на площадках».
 PLATES = {
   'internet': ('В&nbsp;видео разбираем типичные ошибки мультимедиа-экспозиций. Например, к&nbsp;каждому экспонату нужен проводной интернет: с&nbsp;удаленным доступом обновить его можно за&nbsp;минуту, а&nbsp;без провода на&nbsp;это уходят дни',
@@ -181,8 +181,6 @@ def build(slug):
     desc = re.sub(r'<[^>]+>', '', re.sub(r'&nbsp;', ' ', tx['lead']))
     t = re.sub(r'<meta name="description" content="[^"]*">', f'<meta name="description" content="{html.escape(desc)}">', t, count=1)
     t = t.replace('https://petrovichbrothers.ru/"', f'https://petrovichbrothers.ru/works/{slug}/"')
-    if not tx.get('full'):  # без своего текста — пока закрыта от поиска
-        t = t.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n  <meta name="robots" content="noindex, follow">', 1)
     t = re.sub(r'\n  <link rel="preload" as="image" href="fresh/media/khakasy-render[^>]*>', '', t)
     def fix(m):
         attr, val = m.group(1), m.group(2)
