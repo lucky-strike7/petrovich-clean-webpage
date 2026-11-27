@@ -46,7 +46,23 @@ function keepHyphens(html) {
 }
 
 export function bindPrepositions(html) {
-  return keepHyphens(bindPrepositionsOnly(html));
+  return markStress(keepHyphens(bindPrepositionsOnly(html)));
+}
+
+// «Петрович» в исходниках набран с отдельным знаком ударения U+0301. Поисковики рвут на нем слово
+// («Пе трович»), поэтому в <head>, атрибутах, скриптах и SVG знак убираем, а в видимом тексте
+// букву оборачиваем в .stress: штрих рисует CSS, при копировании получается цельное «Петрович».
+const stressed = /([еЕ])\u0301/g;
+export function markStress(html) {
+  if (!html.includes('\u0301')) return html;
+  const plain = (s) => s.replace(stressed, '$1');
+  return html.replace(/^([\s\S]*?<body\b[^>]*>)([\s\S]*?)(<\/body>[\s\S]*)$/i, (_, head, body, tail) => {
+    let out = '';
+    for (const [part] of body.matchAll(token)) {
+      out += part.startsWith('<') ? plain(part) : part.replace(stressed, '<span class="stress">$1</span>');
+    }
+    return plain(head) + out + plain(tail);
+  }).replace(stressed, '$1');
 }
 
 function bindPrepositionsOnly(html) {

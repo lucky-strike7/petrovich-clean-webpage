@@ -596,7 +596,7 @@ class Page:
         # Класс новой страницы: к уже имеющемуся классу body (у кейсов там case-page) или новым атрибутом
         t = re.sub(r'<body(?: class="([^"]*)")?>', lambda m: f'<body class="{(m.group(1) + " ") if m.group(1) else ""}page-v2">', t, count=1)
         B = self.B
-        t = re.sub(r'(fresh/(?:fresh|case)\.css\?v=)\w+', r'\g<1>1127a', t)
+        t = re.sub(r'(fresh/(?:fresh|case)\.css\?v=)\w+', r'\g<1>1127d', t)
         t, n = re.subn(r'(<link rel="stylesheet" href="' + re.escape(B) + r'fresh/fresh\.css\?v=\w+">)', lambda m: m.group(1) + f'\n  <link rel="stylesheet" href="{B}fresh/{V2CSS}">', t, count=1); assert n
         t, n = re.subn(r'(<script src="' + re.escape(B) + r'fresh/fresh\.js\?v=\w+"></script>)', lambda m: m.group(1) + f'\n  <script src="{B}fresh/{V2JS}"></script>', t, count=1); assert n
         return t

@@ -1115,3 +1115,13 @@ h1, h2, h3, .sect__lead, .case-lead, .contact__title, .case-more__title { text-w
     text-decoration-color: currentColor;
   }
 }
+
+/* Ударение в «Петрович»: в тексте страницы буква без знака U+0301 (поисковики рвут на нем слово),
+   штрих рисуем повторяя форму знака из Milligram; размеры в em от верха строки шрифта */
+.stress { position: relative; }
+.stress::after {
+  content: ""; position: absolute; pointer-events: none;
+  left: .2375em; top: .1275em; width: .165em; height: .145em;
+  background: currentColor;
+  clip-path: polygon(27% 0, 100% 0, 44% 100%, 0 100%);
+}
