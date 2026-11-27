@@ -5,8 +5,8 @@ NL = chr(10)
 
 # Корень сайта — папка над tools/ (сборщики лежат в репозитории рядом со страницами)
 SITE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V2CSS = 'v2.css?v=142'
-V2JS = 'v2.js?v=34'
+V2CSS = 'v2.css?v=147'
+V2JS = 'v2.js?v=37'
 # Включаем только готовые самостоятельные страницы.
 READY_PAGES = {'prices', 'services', 'about'}
 
@@ -270,7 +270,9 @@ class Page:
         B = self.B
         cls = 'top__reel top__reel--m' if mobile else 'top__reel'
         label = ' aria-label="Шоурил"' if mobile else ''   # на телефоне — только кружок с треугольником
-        text = '' if mobile else 'Шоурил'
+        # Компьютер: при наведении «Шоурил» уезжает вниз, сверху въезжает «Смотреть». Ширину держит невидимое «Смотреть».
+        text = '' if mobile else ('<span class="top__reel-t"><span class="top__reel-sizer" aria-hidden="true">Смотреть</span>'
+                                  '<span class="top__reel-a">Шоурил</span><span class="top__reel-b" aria-hidden="true">Смотреть</span></span>')
         return (f'<a class="{cls}"{label} href="#showreel" data-video="{B}Video/showreel.mp4" data-video-mobile="{B}Video/showreel-m.mp4" data-video-mobile-ratio="4 / 5" '
                 f'data-title="Шоурил студии братьев Пе́трович"><svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0v12l10-6z"/></svg>{text}</a>')
 
@@ -372,8 +374,8 @@ class Page:
 
     ORB = '''
   <a class="orb" href="#contact" data-panel aria-label="Контакты">
-    <svg viewBox="0 0 100 100" aria-hidden="true"><defs><path id="orb-c" d="M50 50m-37 0a37 37 0 1 1 74 0a37 37 0 1 1-74 0"/></defs>
-      <text><textPath href="#orb-c" textLength="230" lengthAdjust="spacing">КОНТАКТЫ · НАПИСАТЬ НАМ · </textPath></text></svg>
+    <span class="orb__ring"><svg viewBox="0 0 100 100" aria-hidden="true"><defs><path id="orb-c" d="M50 50m-37 0a37 37 0 1 1 74 0a37 37 0 1 1-74 0"/></defs>
+      <text><textPath href="#orb-c" textLength="230" lengthAdjust="spacing">КОНТАКТЫ · НАПИСАТЬ НАМ · </textPath></text></svg></span>
     <span class="orb__arrow" aria-hidden="true">→</span>
   </a>
 '''

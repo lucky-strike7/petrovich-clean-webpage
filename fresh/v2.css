@@ -119,12 +119,17 @@
   width: var(--d); height: var(--d); border-radius: 50%;
   display: grid; place-items: center;
   background: var(--accent); color: var(--on-accent);
-  transition: opacity .35s, transform .5s var(--ease), background-color .3s;
+  /* --mx/--my — магнит (v2.js, плавность считает скрипт, поэтому без перехода), --s — увеличение при наведении */
+  translate: var(--mx, 0px) var(--my, 0px); scale: var(--s, 1);
+  transition: opacity .35s, transform .5s var(--ease), scale .6s cubic-bezier(.22, 1, .36, 1);
 }
+.orb__ring { position: absolute; inset: 0; transition: transform 1.1s cubic-bezier(.22, 1, .36, 1); }
 .orb svg { position: absolute; inset: 0; width: 100%; height: 100%; animation: orb-spin 16s linear infinite; }
 .orb text { font-family: var(--font-text); font-size: 10.5px; letter-spacing: .08em; fill: currentColor; }
 .orb__arrow { font-size: 26px; line-height: 1; transition: transform .45s var(--ease); }
-.orb:hover { background: color-mix(in srgb, var(--accent) 82%, #000); }
+/* Наведение как у «Щуки»: круг чуть растет, кольцо с надписью проворачивается на полоборота; цвет не меняется */
+.orb:hover { --s: 1.1; }
+.orb:hover .orb__ring { transform: rotate(180deg); }
 .orb:hover .orb__arrow { transform: rotate(-45deg); }
 .orb.is-off, .is-panel .orb { opacity: 0; transform: scale(.6); pointer-events: none; }
 @keyframes orb-spin { to { transform: rotate(360deg); } }
@@ -778,7 +783,17 @@ button.card__kind { background: none; border: 0; padding: 0; text-align: left; j
   display: inline-flex; align-items: center; gap: .42em; padding: 9px 20px 9px 17px; margin-block: -9px; border-radius: 999px;
   background: var(--accent); color: var(--on-accent) !important; line-height: 1; transition: background-color .3s;
 }
-.top__reel:hover { background: color-mix(in srgb, var(--accent) 82%, #000); }
+.top__reel { overflow: hidden; }
+/* Наведение: «Шоурил» уезжает вниз, сверху въезжает «Смотреть»; цвет и положение плашки не меняются */
+.top__reel-t { display: inline-grid; }
+.top__reel-t > span { grid-area: 1 / 1; text-align: center; transition: transform .6s cubic-bezier(.22, 1, .36, 1), opacity .45s; }
+.top__reel-sizer { visibility: hidden; }
+.top__reel-b { transform: translateY(-110%); opacity: 0; }
+.top__reel:hover .top__reel-a, .top__reel:focus-visible .top__reel-a { transform: translateY(110%); opacity: 0; }
+.top__reel:hover .top__reel-b, .top__reel:focus-visible .top__reel-b { transform: none; opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .top__reel-t > span { transition: opacity .2s; transform: none !important; } }
+.top__reel--m:active { transform: scale(.92); }
+.top__reel--m { transition: transform .15s; }
 .top__nav .top__reel::after { display: none; }
 .top__reel svg { flex: none; width: .5em; height: .6em; fill: currentColor; }
 .top__reel--m { display: none; }

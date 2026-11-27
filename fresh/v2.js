@@ -38,6 +38,34 @@
   };
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
 
+  // Магнит: курсор рядом с кружком «Контакты» притягивает его. Сила плавно растет к кружку и плавно сходит на нет
+  // к краю зоны (110 px от края), сдвиг мягко стремится к 16 px без упора. Кружок каждый кадр догоняет цель
+  // на долю пути: быстрый старт, мягкое торможение. Кружок двигается целиком.
+  // Только мышь и без «уменьшить движение».
+  if (orb && matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const MAX = 16, REACH = 110, EASE = 0.12;
+    let tx = 0, ty = 0, cx = 0, cy = 0, loop = 0;
+    const smooth = (x) => (x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x));
+    const step = () => {
+      cx += (tx - cx) * EASE; cy += (ty - cy) * EASE;
+      if (Math.abs(tx - cx) < 0.05 && Math.abs(ty - cy) < 0.05) { cx = tx; cy = ty; loop = 0; } else loop = requestAnimationFrame(step);
+      orb.style.setProperty('--mx', cx.toFixed(2) + 'px'); orb.style.setProperty('--my', cy.toFixed(2) + 'px');
+    };
+    const aim = (x, y) => { tx = x; ty = y; if (!loop) loop = requestAnimationFrame(step); };
+    addEventListener('pointermove', (e) => {
+      if (orb.classList.contains('is-off')) return aim(0, 0);
+      const r = orb.getBoundingClientRect();
+      const ox = r.left + r.width / 2 - cx, oy = r.top + r.height / 2 - cy; // центр без текущего сдвига
+      const dx = e.clientX - ox, dy = e.clientY - oy, dist = Math.hypot(dx, dy);
+      const edge = Math.max(0, dist - r.width / 2);
+      const fall = 1 - smooth(edge / REACH);           // у кружка 1, к краю зоны плавно 0
+      if (!fall || !dist) return aim(0, 0);
+      const pull = MAX * Math.tanh(dist * 0.3 / MAX) * fall; // мягкий потолок вместо упора
+      aim(dx / dist * pull, dy / dist * pull);
+    }, { passive: true });
+    document.addEventListener('pointerleave', () => aim(0, 0));
+  }
+
   /*
     Шторки снизу (телефон): меню (бургер) и список тегов (подсказка в шапке). Закрываются крестиком,
     по фону, смахиванием вниз и кнопкой «Назад». Страница под открытой шторкой не прокручивается.
