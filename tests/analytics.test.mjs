@@ -16,7 +16,7 @@ test('analytics never loads on previews even with previously accepted consent',(
 });
 test('production initializes automatically without a banner or saved-choice dependency',()=>{
  for(const host of ['petrovichbrothers.ru','www.petrovichbrothers.ru'])for(const choice of [null,'ok','declined']){
-  const s=sandbox(host,choice);assert.equal(s.scripts.length,2);assert.equal(s.context.ym.a.length,1);assert.equal(s.nodes.length,0);
+  const s=sandbox(host,choice);assert.equal(s.scripts.length,3);assert.equal(s.context.ym.a.length,1);assert.equal(s.nodes.length,0);
   assert.deepEqual([...s.context.ym.a[0]].slice(0,2),[46078563,'init']);
  }
 });
@@ -33,4 +33,11 @@ test('PB Search uses the existing same-origin collector regardless of DNT and re
   }
  }
  for(const options of [{path:'/pb-search/'},{loaded:true},{loading:true}])assert.equal(sourceFor(sandbox('petrovichbrothers.ru',null,options)).length,0);
+});
+
+test('Avito pixel loads only on production, once',()=>{
+ for(const host of ['localhost','preview.petrovichbrothers.ru'])assert.equal(sandbox(host,null).scripts.filter(x=>x.src==='https://ac.avito.ru/tag.js').length,0);
+ const s=sandbox('petrovichbrothers.ru',null);
+ const tags=s.scripts.filter(x=>x.src==='https://ac.avito.ru/tag.js');assert.equal(tags.length,1);assert.equal(tags[0].async,true);assert.equal(tags[0].id,'apxl-code');
+ assert.equal(s.context._apxl[0].id,2033824);
 });

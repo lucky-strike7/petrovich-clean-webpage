@@ -33,6 +33,17 @@
     script.addEventListener('error',()=>{window.__pbMiniLoading=false;});
     document.head.append(script);
   }
+  // Пиксель Авито (счетчик 2033824): тот же код, что выдает кабинет Авито, только на боевом домене.
+  function initializeAvito() {
+    if (!production) return;
+    const apxl=window._apxl||(window._apxl=[]);
+    apxl.push({id:2033824,start:Date.now()});
+    apxl.q=apxl.q||[];
+    apxl.sendEvent=apxl.sendEvent||function(args){apxl.q.push([args,location.href,Date.now()]);};
+    if (document.getElementById?.('apxl-code')) return;
+    const script=document.createElement('script');script.async=true;script.id='apxl-code';script.src='https://ac.avito.ru/tag.js';document.head.append(script);
+  }
   initialize();
   initializeOwnAnalytics();
+  initializeAvito();
 })();
