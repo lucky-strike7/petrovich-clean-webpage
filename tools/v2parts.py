@@ -5,7 +5,7 @@ NL = chr(10)
 
 # Корень сайта — папка над tools/ (сборщики лежат в репозитории рядом со страницами)
 SITE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-V2CSS = 'v2.css?v=138'
+V2CSS = 'v2.css?v=142'
 V2JS = 'v2.js?v=34'
 # Включаем только готовые самостоятельные страницы.
 READY_PAGES = {'prices', 'services', 'about'}
@@ -251,6 +251,7 @@ class Page:
       <img src="{B}fresh/logo-vertical.svg" alt="Petrovich Brothers" width="244" height="121">
     </a>
     <nav class="top__nav" aria-label="Основное меню">
+      {self.reel()}
       <div class="top__dd">
         <a{works_active} href="{W}">Работы <i aria-hidden="true"></i></a>
         <div class="top__menu mega">
@@ -260,8 +261,18 @@ class Page:
       </div>
 {self.more_links()}      <a href="#contact" data-panel>Контакты</a>
     </nav>
-    {ctx}<button class="top__burger" type="button" aria-expanded="false" aria-controls="msheet" aria-label="Меню"><i></i><i></i><i></i></button>{sub}
+    {ctx}{self.reel(mobile=True)}<button class="top__burger" type="button" aria-expanded="false" aria-controls="msheet" aria-label="Меню"><i></i><i></i><i></i></button>{sub}
   </header>'''
+
+    def reel(self, mobile=False):
+        """Шоурил в шапке: синий пункт меню на компьютере и кнопка слева от бургера на телефоне.
+        Открывает то же окно, что обзоры; на телефоне — вертикаль 4:5 (showreel-m.mp4)."""
+        B = self.B
+        cls = 'top__reel top__reel--m' if mobile else 'top__reel'
+        label = ' aria-label="Шоурил"' if mobile else ''   # на телефоне — только кружок с треугольником
+        text = '' if mobile else 'Шоурил'
+        return (f'<a class="{cls}"{label} href="#showreel" data-video="{B}Video/showreel.mp4" data-video-mobile="{B}Video/showreel-m.mp4" data-video-mobile-ratio="4 / 5" '
+                f'data-title="Шоурил студии братьев Пе́трович"><svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0v12l10-6z"/></svg>{text}</a>')
 
     def msheet(self):
         B, W = self.B, self.W
@@ -574,7 +585,7 @@ class Page:
             elif first:
                 tag = first[1].replace('loading="lazy"', 'loading="eager" fetchpriority="high"')
                 t = t[:first.start(1)] + tag + t[first.end(1):]
-        t = re.sub(r'(fresh/fresh\.js\?v=)\w+', r'\g<1>1126a', t)
+        t = re.sub(r'(fresh/fresh\.js\?v=)\w+', r'\g<1>1127b', t)
         extra = (self.tsheet() if 'aria-controls="tsheet"' in t else '') + sheets
         t = t.replace('  <div class="cursor"', self.msheet() + extra + self.ORB + '\n  <div class="cursor"', 1)
         # Кружок у курсора для меню «Работы»: на страницах кейсов его не было
@@ -583,7 +594,7 @@ class Page:
         # Класс новой страницы: к уже имеющемуся классу body (у кейсов там case-page) или новым атрибутом
         t = re.sub(r'<body(?: class="([^"]*)")?>', lambda m: f'<body class="{(m.group(1) + " ") if m.group(1) else ""}page-v2">', t, count=1)
         B = self.B
-        t = re.sub(r'(fresh/(?:fresh|case)\.css\?v=)\w+', r'\g<1>1125a', t)
+        t = re.sub(r'(fresh/(?:fresh|case)\.css\?v=)\w+', r'\g<1>1127a', t)
         t, n = re.subn(r'(<link rel="stylesheet" href="' + re.escape(B) + r'fresh/fresh\.css\?v=\w+">)', lambda m: m.group(1) + f'\n  <link rel="stylesheet" href="{B}fresh/{V2CSS}">', t, count=1); assert n
         t, n = re.subn(r'(<script src="' + re.escape(B) + r'fresh/fresh\.js\?v=\w+"></script>)', lambda m: m.group(1) + f'\n  <script src="{B}fresh/{V2JS}"></script>', t, count=1); assert n
         return t

@@ -770,3 +770,24 @@ button.card__kind { background: none; border: 0; padding: 0; text-align: left; j
 .case-wide.case-loop { background: none; }
 @media (max-width: 900px) { .case-grid .case-vgrid { grid-column: 1 / -1; gap: 8px; } }
 .case-vgrid img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius); background: var(--line); }
+
+/* ---------- Шоурил в шапке ----------
+   Синяя плашка с белым треугольником: на компьютере — первый пункт меню, на телефоне (до 900 px) — слева от бургера.
+   Открывает окно обзора (fresh.js, data-video). */
+.top__reel {
+  display: inline-flex; align-items: center; gap: .42em; padding: 9px 20px 9px 17px; margin-block: -9px; border-radius: 999px;
+  background: var(--accent); color: var(--on-accent) !important; line-height: 1; transition: background-color .3s;
+}
+.top__reel:hover { background: color-mix(in srgb, var(--accent) 82%, #000); }
+.top__nav .top__reel::after { display: none; }
+.top__reel svg { flex: none; width: .5em; height: .6em; fill: currentColor; }
+.top__reel--m { display: none; }
+@media (max-width: 900px) {
+  /* Телефон: синий кружок с треугольником, без подписи (подпись — aria-label) */
+  .top__reel--m { display: inline-flex; justify-content: center; width: 36px; height: 36px; margin: 0 0 0 auto; padding: 0 0 0 2px; border-radius: 50%; }
+  .top__reel--m svg { width: 11px; height: 13px; }
+  .top__reel--m + .top__burger { margin-left: 14px; }
+}
+@media (max-width: 600px) {
+  .top__ctx { max-width: calc(100% - 2 * var(--pad) - 120px); }
+}

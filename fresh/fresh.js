@@ -368,7 +368,8 @@
   let reviewTrigger;
   const resumeLoops = new Set();
   document.querySelectorAll('[data-video]').forEach((el) => {
-    el.addEventListener('click', () => {
+    el.addEventListener('click', (e) => {
+      if (el.tagName === 'A') e.preventDefault(); // шоурил в шапке — ссылка, по адресу не переходим
       reviewTrigger = el;
       modal.setAttribute('aria-label', el.dataset.title || 'Видео');
       modal.showModal();
@@ -381,7 +382,12 @@
       }
       for (const card of cards) { card.on = false; clearTimeout(card.timer); }
       // Обзор в нескольких размерах (data-video-widths): окно почти во весь экран, поэтому размер — по ширине окна браузера
-      mv.src = phoneReview.matches && el.dataset.videoMobile ? el.dataset.videoMobile : sizedSrc(el.dataset.video, el.dataset.videoWidths, null);
+      const mobileSrc = phoneReview.matches && el.dataset.videoMobile;
+      mv.src = mobileSrc ? el.dataset.videoMobile : sizedSrc(el.dataset.video, el.dataset.videoWidths, null);
+      // Вертикальная версия для телефона (шоурил 4:5): окно принимает ее пропорции, а не 16:9
+      const ratio = mobileSrc && el.dataset.videoMobileRatio;
+      modal.classList.toggle('is-portrait', !!ratio);
+      if (ratio) modal.style.setProperty('--ratio', ratio); else modal.style.removeProperty('--ratio');
       document.dispatchEvent(new CustomEvent('pb:goal', { detail: { name: 'video_open' } }));
       lenis?.stop(); // страница под окном не прокручивается
       mv.play().catch(() => {});

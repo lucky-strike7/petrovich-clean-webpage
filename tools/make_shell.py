@@ -72,7 +72,7 @@ def build_404():
               .replace('href="#contact" data-panel', 'href="./#contact"'))
     t, n = re.subn(r'<header class="top top--doc">.*?</header>', lambda m: header, t, count=1, flags=re.S); assert n
     t = t.replace('<body class="doc-page">', '<body class="doc-page page-v2">', 1)
-    t = re.sub(r'(fresh/fresh\.css\?v=)\w+', r'\g<1>1125a', t)
+    t = re.sub(r'(fresh/fresh\.css\?v=)\w+', r'\g<1>1127a', t)
     t, n = re.subn(r'(<link rel="stylesheet" href="fresh/fresh\.css\?v=\w+">)', lambda m: m.group(1) + f'\n  <link rel="stylesheet" href="fresh/{V2CSS}">', t, count=1); assert n
     t = re.sub(r'<p class="nf__text">.*?</p>', '<p class="nf__text">Возможно, ссылка устарела: мы&nbsp;обновили сайт. Все работы собраны в&nbsp;разделе «Работы».</p>', t, count=1, flags=re.S)
     t = re.sub(r'<div class="nf__links">.*?</div>', '<div class="nf__links">\n      <a class="nf__btn" href="works/">Все работы</a>\n      <a class="sect__link" href="./">На&nbsp;главную</a>\n    </div>', t, count=1, flags=re.S)

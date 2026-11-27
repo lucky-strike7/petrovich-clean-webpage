@@ -618,7 +618,8 @@ html:not(.js) .card__how ul { opacity: 1; }
   width: min(92vw, 1600px); max-width: none; padding: 0; border: 0; background: #000; border-radius: var(--radius); overflow: hidden;
 }
 .modal::backdrop { background: rgba(10, 10, 9, .85); backdrop-filter: blur(6px); }
-.modal__video { aspect-ratio: 16 / 9; object-fit: contain; }
+.modal__video { aspect-ratio: var(--ratio, 16 / 9); object-fit: contain; }
+.modal.is-portrait { width: min(92vw, calc(86svh * 4 / 5)); }
 .modal__close {
   position: absolute; top: 14px; right: 14px; z-index: 1;
   width: 44px; height: 44px; border: 0; border-radius: 50%;
