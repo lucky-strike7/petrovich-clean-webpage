@@ -210,7 +210,7 @@ button.case-more__card { width: 100%; padding: 0; border: 0; background: none; c
   .case-scrub { grid-column: 1 / -1; height: 220svh; }
   .case-circle { justify-self: start; width: min(100%, 260px); }
   .case-aside__in { position: static; }
-  .case-aside__review { display: none; } /* вместо нее — плавающая кнопка */
+  .case-aside__review:not(.case-aside__review--keep) { display: none; } /* вместо нее — плавающая кнопка; --keep: на странице нет плавающих кнопок (Устье, HBO), кнопка остается в тексте */
   .case-more > .case-label, .case-more__body, .case-offer > * { grid-column: 1 / -1; }
   .case-more > .case-label { padding: 0 0 20px; }
 

@@ -52,12 +52,12 @@ ASIDE = f'''      <aside class="case-aside" style="--rows: 9">
             <li>Сборка и&nbsp;монтаж</li>
             <li>Генерация кадров в нейросетях</li>
           </ul>
-          {btn(MAPPING, 'Смотреть мэппинг', 'card__review case-aside__review')}
+          {btn(MAPPING, 'Смотреть мэппинг', 'card__review case-aside__review case-aside__review--keep')}
         </div>
       </aside>
 '''
-def REVIEW(v, name, label):
-    return (f'        <figure class="case-reviews__item">\n'
+def REVIEW(v, name, label, cls=''):
+    return (f'        <figure class="case-reviews__item{cls}">\n'
             f'          <button class="case-review__btn" type="button" data-video="{B}{v[0]}" data-title="{html.escape(v[1])}" aria-label="{label}, {video_len(v[0])}">\n'
             f'            <img src="media/cover-{name}.webp" alt="" width="1280" height="720" loading="lazy">\n'
             f'            <span class="case-review__play" aria-hidden="true">{PLAY}</span>\n'
@@ -72,7 +72,7 @@ BRIEF = f'''      <div class="case-main case-brief reveal">
       </div>
 
       <div class="case-review case-reviews reveal">
-{REVIEW(MAKING, 'making', 'Как делали')}{REVIEW(ARTYOM, 'artyom', 'Артем о проекте')}{REVIEW(ARSENY, 'arseny', 'Арсений о проекте')}      </div>
+{REVIEW(MAPPING, 'mapping', 'Мэппинг целиком', ' case-reviews__item--wide')}{REVIEW(MAKING, 'making', 'Как делали', ' case-reviews__item--wide')}{REVIEW(ARTYOM, 'artyom', 'Артем о проекте')}{REVIEW(ARSENY, 'arseny', 'Арсений о проекте')}      </div>
 '''
 QUOTE = '''      <figure class="case-main case-quote reveal">
         <img class="case-quote__photo" src="media/artyom.webp" alt="Артем Петрович" width="480" height="480" loading="lazy">

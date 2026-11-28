@@ -628,9 +628,9 @@ a.card__media { display: block; }
 .case-reviews .case-review__btn:hover .case-review__play { transform: scale(1.12); }
 @media (max-width: 600px) {
   .case-reviews { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 12px; }
-  .case-reviews__item:first-child { grid-column: 1 / -1; }
-  .case-reviews__item:not(:first-child) .case-review__btn { width: 100%; margin-inline: 0; border-radius: var(--radius); }
-  .case-reviews__item:not(:first-child) .case-review__cap { font-size: 14px; }
+  .case-reviews__item:first-child, .case-reviews__item--wide { grid-column: 1 / -1; } /* --wide: мэппинг и «Как делали» на Устье — оба во всю ширину */
+  .case-reviews__item:not(:first-child):not(.case-reviews__item--wide) .case-review__btn { width: 100%; margin-inline: 0; border-radius: var(--radius); }
+  .case-reviews__item:not(:first-child):not(.case-reviews__item--wide) .case-review__cap { font-size: 14px; }
 }
 
 /* Кейс: ряд кнопок с видео (как делали, интервью) */
