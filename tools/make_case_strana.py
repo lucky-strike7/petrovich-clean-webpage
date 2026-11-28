@@ -52,7 +52,7 @@ ASIDE = f'''      <aside class="case-aside" style="--rows: 9">
             <li>Сборка и&nbsp;монтаж</li>
             <li>Генерация кадров в нейросетях</li>
           </ul>
-          {btn(MAPPING, 'Смотреть мэппинг', 'card__review case-aside__review case-aside__review--keep')}
+          {btn(MAPPING, 'Смотреть мэппинг', 'card__review case-aside__review')}
         </div>
       </aside>
 '''

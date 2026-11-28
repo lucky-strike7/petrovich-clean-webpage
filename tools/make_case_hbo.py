@@ -70,7 +70,7 @@ ASIDE = f'''      <aside class="case-aside" style="--rows: 9">
           </ul>
           <h2 class="case-label case-aside__label case-aside__watch-label">Смотреть сериал</h2>
           <p class="case-aside__meta case-aside__watch">{WATCH}</p>
-          {btn(INTRO, 'Смотреть заставку', 'card__review case-aside__review case-aside__review--keep')}
+          {btn(INTRO, 'Смотреть заставку', 'card__review case-aside__review')}
         </div>
       </aside>
 '''
